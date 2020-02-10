@@ -9,6 +9,9 @@ DIRS += $(wildcard *App)
 DIRS += $(wildcard *Top)
 DIRS += $(wildcard iocBoot)
 
+all:
+	echo "DONE"
+
 # The build order is controlled by these dependency rules:
 
 # All dirs except configure depend on configure
