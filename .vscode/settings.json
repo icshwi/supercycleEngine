@@ -11,6 +11,7 @@
         "*.db": "python",
         "*.cmd": "python",
         "*.iocsh": "python",
+        "*.dbd": "r",
         "array": "cpp",
         "istream": "cpp",
         "tuple": "cpp",

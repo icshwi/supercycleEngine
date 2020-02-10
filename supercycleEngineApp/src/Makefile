@@ -4,6 +4,16 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
+USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
+
+# ============================
+# Build an IOC support library
+
+#LIBRARY_IOC += aiSecond
+
+#DBD += aiSecond.dbd
+#aiSecond_SRCS += devAiSecond.c
+#aiSecond_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #=============================
 # Build the IOC application
@@ -35,6 +45,7 @@ supercycleEngine_SRCS_vxWorks += -nil-
 supercycleEngine_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #===========================
+USR_SYS_LIBS += jsoncpp
 
 include $(TOP)/configure/RULES
 #----------------------------------------
