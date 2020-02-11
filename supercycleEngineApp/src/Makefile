@@ -35,6 +35,15 @@ supercycleEngine_DBD += testProc.dbd
 # supercycleEngine_registerRecordDeviceDriver.cpp derives from supercycleEngine.dbd
 supercycleEngine_SRCS += supercycleEngine_registerRecordDeviceDriver.cpp
 supercycleEngine_SRCS += testProc.cpp
+supercycleEngine_SRCS += cmnbase.cpp
+supercycleEngine_SRCS += dbuf.cpp
+supercycleEngine_SRCS += cacback.cpp
+supercycleEngine_SRCS += engine.cpp
+supercycleEngine_SRCS += json.cpp
+supercycleEngine_SRCS += csv.cpp
+supercycleEngine_SRCS += cach.cpp
+supercycleEngine_SRCS += ioblock.cpp
+supercycleEngine_SRCS += sequence.cpp
 
 # Build the main IOC entry point on workstation OSs.
 supercycleEngine_SRCS_DEFAULT += supercycleEngineMain.cpp

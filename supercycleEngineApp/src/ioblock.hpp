@@ -20,7 +20,7 @@ class IOBlock
         std::string psce = "TD-M:TS-SCE-01:";
         std::string pevg = "MTCA5U-EVG:";
 
-        std::string reftabs_TOP     = "../reftabs/";
+        std::string reftabs_TOP     = "../../../reftabs/";
         std::string init_dbuf_json  = "databuffer-ess.json";
         std::string init_mevts_json = "mevts-ess.json";
 
@@ -36,8 +36,10 @@ class IOBlock
         std::vector<std::string> keys = {"-e", "-g", "-r"};
         std::map<std::string, std::string> cliargs;
         IOBlock(int argc,char **argv);
+        IOBlock();
         ~IOBlock();
         int init(int argc,char **argv);
+        int init();
 
         std::string get_init_dbuf_json_link(){return  (reftabs_TOP + "init/"        + init_dbuf_json);};
         std::string get_init_mevts_json_link(){return (reftabs_TOP + "init/"        + init_mevts_json);};

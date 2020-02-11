@@ -26,6 +26,14 @@ IOBlock::IOBlock(int argc,char **argv)
     init(argc, argv);
 }
 
+IOBlock::IOBlock()
+:   json_dbuf(get_init_dbuf_json_link()),
+    json_evt(get_init_mevts_json_link())
+    //sctable(sctable_csv_strget())
+{
+    init();
+}
+
 int
 IOBlock::init(int argc,char **argv)
 {
@@ -67,5 +75,36 @@ IOBlock::init(int argc,char **argv)
     return 0;
 }
 
+
+int
+IOBlock::init()
+{
+    // Subscribe to PVs
+     //SCE
+    IdCycleCa.init      (psce+"IdCycle");
+    PeriodCa.init       (psce+"Period-I");
+
+    TgRastCa.init       (psce+"TgRast");
+    TgSegCa.init        (psce+"TgSeg");
+
+    RefTabsTopCa.init   (psce+"RefTabsTop-SP");
+    SCTableCa.init      (psce+"SCTable-SP");
+
+     //EVG
+    SoftEvtCa.init      (pevg+"SoftEvt-EvtCode-SP");
+    DbusSendCa.init     (pevg+"dbus-send-u32");
+    SEQ.init(pevg, json_evt.getEvtMap());
+
+    // Init .db
+    RefTabsTopCa.get(reftabs_TOP);
+    SCTableCa.get(sctable_csv);
+
+    io::LOG(io::INFO) << "IOBlock::init() psce " << psce << " pevg " << pevg;
+    io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() "   << get_init_dbuf_json_link();
+    io::LOG(io::INFO) << "IOBlock::init() get_init_mevts_json_link() "  << get_init_mevts_json_link();
+    io::LOG(io::INFO) << "IOBlock::init() get_sctable_csv_link() "      << get_sctable_csv_link();
+
+    return 0;
+}
 
 }

@@ -3,9 +3,20 @@
 #include <registryFunction.h>
 #include <epicsExport.h>
 
+#include "engine.hpp"
+#include "ioblock.hpp"
+#include "dlog.hpp"
+
+io::structlog io::LOGCFG(true,io::DEBUG);
+
 static int testProc(subRecord *precord) {
 
+    io::IOBlock io_block;
+
     precord->val++;
+    engineCycle(io_block);
+    io::LOG(io::DEBUG) << "static int testProc(subRecord *precord)";
+    //std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" <<std::endl;
 
     return 0;
 }
