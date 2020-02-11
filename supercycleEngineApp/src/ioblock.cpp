@@ -18,8 +18,8 @@ IOBlock::~IOBlock()
 
 IOBlock::IOBlock()
     : json_dbuf(get_init_dbuf_json_link()),
-      json_evt(get_init_mevts_json_link())
-//sctable(sctable_csv_strget())
+      json_evt(get_init_mevts_json_link()),
+      sctable(get_sctable_csv_link())
 {
     init();
 }

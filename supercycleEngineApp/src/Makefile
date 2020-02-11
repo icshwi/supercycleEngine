@@ -24,7 +24,7 @@ DBD += supercycleEngine.dbd
 
 # supercycleEngine.dbd will be made up from these files:
 supercycleEngine_DBD += base.dbd
-supercycleEngine_DBD += testProc.dbd
+supercycleEngine_DBD += engineCycle.dbd
 
 # Include dbd files from all support applications:
 #supercycleEngine_DBD += xxx.dbd
@@ -34,6 +34,7 @@ supercycleEngine_DBD += testProc.dbd
 
 # supercycleEngine_registerRecordDeviceDriver.cpp derives from supercycleEngine.dbd
 supercycleEngine_SRCS += supercycleEngine_registerRecordDeviceDriver.cpp
+ # SRC libraries
 supercycleEngine_SRCS += cmnbase.cpp
 supercycleEngine_SRCS += dbuf.cpp
 supercycleEngine_SRCS += engine.cpp
@@ -41,7 +42,8 @@ supercycleEngine_SRCS += json.cpp
 supercycleEngine_SRCS += csv.cpp
 supercycleEngine_SRCS += ioblock.cpp
 #supercycleEngine_SRCS += sequence.cpp
-supercycleEngine_SRCS += testProc.cpp
+ # Processes
+supercycleEngine_SRCS += engineCycle.cpp
 
 # Build the main IOC entry point on workstation OSs.
 supercycleEngine_SRCS_DEFAULT += supercycleEngineMain.cpp
