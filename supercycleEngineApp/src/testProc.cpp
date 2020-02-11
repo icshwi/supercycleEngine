@@ -7,9 +7,10 @@
 #include "ioblock.hpp"
 #include "dlog.hpp"
 
-io::structlog io::LOGCFG(true,io::DEBUG);
+io::structlog io::LOGCFG(true, io::DEBUG);
 
-static int testProc(subRecord *precord) {
+static int testProc(subRecord *precord)
+{
 
     io::IOBlock io_block;
 
