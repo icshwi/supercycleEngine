@@ -15,7 +15,7 @@ IOBlock::~IOBlock()
 {
     io::LOG(io::DEBUG) << "IOBlock::~IOBlock()";
     // Kill all not used processes
-    SEVCHK(ca_task_exit(), "ERROR ca_task_exit failure");
+//    SEVCHK(ca_task_exit(), "ERROR ca_task_exit failure");
 }
 
 IOBlock::IOBlock(int argc,char **argv)
@@ -50,23 +50,23 @@ IOBlock::init(int argc,char **argv)
 
     // Subscribe to PVs
      //SCE
-    IdCycleCa.init      (psce+"IdCycle");
-    PeriodCa.init       (psce+"Period-I");
+    //IdCycleCa.init      (psce+"IdCycle");
+    //PeriodCa.init       (psce+"Period-I");
 
-    TgRastCa.init       (psce+"TgRast");
-    TgSegCa.init        (psce+"TgSeg");
+    //TgRastCa.init       (psce+"TgRast");
+    //TgSegCa.init        (psce+"TgSeg");
 
-    RefTabsTopCa.init   (psce+"RefTabsTop-SP");
-    SCTableCa.init      (psce+"SCTable-SP");
+    //RefTabsTopCa.init   (psce+"RefTabsTop-SP");
+    //SCTableCa.init      (psce+"SCTable-SP");
 
      //EVG
-    SoftEvtCa.init      (pevg+"SoftEvt-EvtCode-SP");
-    DbusSendCa.init     (pevg+"dbus-send-u32");
-    SEQ.init(pevg, json_evt.getEvtMap());
+    //SoftEvtCa.init      (pevg+"SoftEvt-EvtCode-SP");
+    //DbusSendCa.init     (pevg+"dbus-send-u32");
+    //SEQ.init(pevg, json_evt.getEvtMap());
 
     // Init .db
-    RefTabsTopCa.get(reftabs_TOP);
-    SCTableCa.get(sctable_csv);
+    //RefTabsTopCa.get(reftabs_TOP);
+    //SCTableCa.get(sctable_csv);
 
     io::LOG(io::INFO) << "IOBlock::init() psce " << psce << " pevg " << pevg;
     io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() "   << get_init_dbuf_json_link();
@@ -81,23 +81,23 @@ IOBlock::init()
 {
     // Subscribe to PVs
      //SCE
-    IdCycleCa.init      (psce+"IdCycle");
-    PeriodCa.init       (psce+"Period-I");
+    //IdCycleCa.init      (psce+"IdCycle");
+    //PeriodCa.init       (psce+"Period-I");
 
-    TgRastCa.init       (psce+"TgRast");
-    TgSegCa.init        (psce+"TgSeg");
+    //TgRastCa.init       (psce+"TgRast");
+    //TgSegCa.init        (psce+"TgSeg");
 
-    RefTabsTopCa.init   (psce+"RefTabsTop-SP");
-    SCTableCa.init      (psce+"SCTable-SP");
+    //RefTabsTopCa.init   (psce+"RefTabsTop-SP");
+    //SCTableCa.init      (psce+"SCTable-SP");
 
      //EVG
-    SoftEvtCa.init      (pevg+"SoftEvt-EvtCode-SP");
-    DbusSendCa.init     (pevg+"dbus-send-u32");
-    SEQ.init(pevg, json_evt.getEvtMap());
+    //SoftEvtCa.init      (pevg+"SoftEvt-EvtCode-SP");
+    //DbusSendCa.init     (pevg+"dbus-send-u32");
+    //SEQ.init(pevg, json_evt.getEvtMap());
 
     // Init .db
-    RefTabsTopCa.get(reftabs_TOP);
-    SCTableCa.get(sctable_csv);
+    //RefTabsTopCa.get(reftabs_TOP);
+    //SCTableCa.get(sctable_csv);
 
     io::LOG(io::INFO) << "IOBlock::init() psce " << psce << " pevg " << pevg;
     io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() "   << get_init_dbuf_json_link();

@@ -4,11 +4,9 @@
 #include <string>
 #include <map>
 #include <scenv.hpp>
-#include "cach.hpp"
 #include "dbuf.hpp"
 #include "json.hpp"
 #include "csv.hpp"
-#include "sequence.hpp"
 
 namespace io
 {
@@ -52,10 +50,10 @@ class IOBlock
         dbf::DBufPacket dbuf;
 
         // Program parameters
-        CACh TgRastCa,TgSegCa,IdCycleCa,SoftEvtCa,DbusSendCa,PeriodCa;
-        CACh SCTableCa, RefTabsTopCa;
+        //CACh TgRastCa,TgSegCa,IdCycleCa,SoftEvtCa,DbusSendCa,PeriodCa;
+        //CACh SCTableCa, RefTabsTopCa;
 
-        SequenceHandler SEQ;
+        //SequenceHandler SEQ;
 };
 
 } //namespace

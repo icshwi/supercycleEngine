@@ -12,7 +12,6 @@
 #include "dbuf.hpp"
 #include "csv.hpp"
 #include "json.hpp"
-#include "cach.hpp"
 
 //#include <unistd.h>
 
@@ -165,33 +164,33 @@ engineCycle(io::IOBlock &io)
     io_dbuf_safe_write(io.dbuf, scrow, env::PBCurr);
 
     // Update the event sequence container
-    io.SEQ.update(scrow);
+    //io.SEQ.update(scrow);
 
     // GET Section - updates containers as well
-    uint arg_tmp=0; // support variable
+    //uint arg_tmp=0; // support variable
      // TgRast
-    io.dbuf.write(env::TgRast,  io.TgRastCa.get(arg_tmp));
+    //io.dbuf.write(env::TgRast,  io.TgRastCa.get(arg_tmp));
      // TgSeg
-    io.dbuf.write(env::TgSeg,   io.TgSegCa.get(arg_tmp));
+    //io.dbuf.write(env::TgSeg,   io.TgSegCa.get(arg_tmp));
      //update file for the nest cycle
-    io.SCTableCa.get(io.sctable_csv);
+    //io.SCTableCa.get(io.sctable_csv);
 
     // PUT Section - has to be last
      // Databuffer Send
-    io.DbusSendCa.put_vec(io.dbuf.vallist());     //Send the data buffer via the timing network
+    //io.DbusSendCa.put_vec(io.dbuf.vallist());     //Send the data buffer via the timing network
      // Sequence Send
-    io.SEQ.put();
+    //io.SEQ.put();
      // Other PVs
      // IdCycle Send
-    io.IdCycleCa.put(io.dbuf.read(env::IdCycle));
-    io.PeriodCa.put(sc_prd_us);
+    //io.IdCycleCa.put(io.dbuf.read(env::IdCycle));
+    //io.PeriodCa.put(sc_prd_us);
 
     usleep(5);     //Assure that data is in EVRs
 
-    io.SoftEvtCa.put(env::DATAS);
+    // io.SoftEvtCa.put(env::DATAS);
 
     //Check the buffer
-    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.SEQ.evttstbuf) " << cmn::map2str<uint,uint>(io.SEQ.getEvtTstSeq());
+    //io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.SEQ.evttstbuf) " << cmn::map2str<uint,uint>(io.SEQ.getEvtTstSeq());
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.dbuf.getDbuf()) " << cmn::map2str<uint,uint>(io.dbuf.getDbuf());
 
     //std::string tmp;
