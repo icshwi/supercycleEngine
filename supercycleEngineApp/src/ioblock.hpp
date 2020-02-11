@@ -1,5 +1,5 @@
-#ifndef MENU_HPP
-#define MENU_HPP
+#ifndef MENU_HPP_
+#define MENU_HPP_
 
 #include <string>
 #include <map>
@@ -52,4 +52,4 @@ public:
 
 } // namespace io
 
-#endif // MENU_HPP
+#endif // MENU_HPP_

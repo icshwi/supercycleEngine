@@ -1,5 +1,5 @@
-#ifndef JSON_HPP
-#define JSON_HPP
+#ifndef JSON_HPP_
+#define JSON_HPP_
 
 #include <string>
 #include <iostream>
@@ -17,6 +17,7 @@ protected:
     std::string filename;
     Json::Value value;
     std::vector<std::string> keys;
+
 public:
     JsonValue(std::string fname);
     //JSONValue(){};
@@ -31,29 +32,31 @@ public:
     //void init(std::string fname);
     uint ProtVer;
     uint ProtNum;
-    Json::Value& PBDest;
-    Json::Value& PBMod;
-    Json::Value& PBState;
-    uint getPBDestId    (std::string key){return PBDestId[key];};
-    uint getPBModId     (std::string key){return PBModId[key];};
-    uint getPBStateId   (std::string key){return PBStateId[key];};
+    Json::Value &PBDest;
+    Json::Value &PBMod;
+    Json::Value &PBState;
+    uint getPBDestId(std::string key) { return PBDestId[key]; };
+    uint getPBModId(std::string key) { return PBModId[key]; };
+    uint getPBStateId(std::string key) { return PBStateId[key]; };
+
 private:
-    std::map<std::string,uint> PBDestId;
-    std::map<std::string,uint> PBModId;
-    std::map<std::string,uint> PBStateId;
+    std::map<std::string, uint> PBDestId;
+    std::map<std::string, uint> PBModId;
+    std::map<std::string, uint> PBStateId;
 };
 
 class JsonEVT : public JsonValue
 {
 public:
     JsonEVT(std::string fname);
-    uint getEvtCode(std::string key){return evtm[key];};
-    std::map<std::string,uint> getEvtMap(){return evtm;};
+    uint getEvtCode(std::string key) { return evtm[key]; };
+    std::map<std::string, uint> getEvtMap() { return evtm; };
+
 private:
-    std::map<std::string,uint> evtm;
+    std::map<std::string, uint> evtm;
 };
 
-} //namespace
+} // namespace io
 
 // Test Space
 /*

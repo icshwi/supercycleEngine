@@ -1,12 +1,10 @@
 
-#ifndef ENGINE_HPP
-#define ENGINE_HPP
+#ifndef ENGINE_HPP_
+#define ENGINE_HPP_
 
 #include "scenv.hpp"
 #include "ioblock.hpp"
 
-void engineCbSpark(struct event_handler_args eha);
-void engineCycleWait();
 int engineCycle(io::IOBlock &);
 
 #endif // ENGINE_HPP

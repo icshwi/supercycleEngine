@@ -7,9 +7,9 @@
 #include <map>
 #include <vector>
 #include <assert.h>
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 #include <chrono>
-#include <ctime>
+//#include <ctime>
 
 namespace cmn
 {
@@ -30,7 +30,7 @@ std::string timestamp()
 {
     std::string timestamp;
     time_t curr_time;
-    tm * curr_tm;
+    tm *curr_tm;
     char time_str[100];
     struct timeval tp;
     gettimeofday(&tp, NULL);
@@ -80,14 +80,18 @@ uint period_us(uint &argtst)
     return p_us;
 }
 
-
 void gcc_info()
 {
-    if (__cplusplus == 201703L) std::cout << "C++17\n";
-    else if (__cplusplus == 201402L) std::cout << "C++14\n";
-    else if (__cplusplus == 201103L) std::cout << "C++11\n";
-    else if (__cplusplus == 199711L) std::cout << "C++98\n";
-    else std::cout << "pre-standard C++\n";
+    if (__cplusplus == 201703L)
+        std::cout << "C++17\n";
+    else if (__cplusplus == 201402L)
+        std::cout << "C++14\n";
+    else if (__cplusplus == 201103L)
+        std::cout << "C++11\n";
+    else if (__cplusplus == 199711L)
+        std::cout << "C++98\n";
+    else
+        std::cout << "pre-standard C++\n";
 
     std::cout << "__cplusplus " << __cplusplus << std::endl;
     //std::cout << "__STDC_VERSION__ " << __STDC_VERSION__ << std::endl;
@@ -98,16 +102,17 @@ void gcc_info()
 
 void gcc_assert(long ver)
 {
-    assert( (ver>=__cplusplus) && "The gcc version is too old.");
+    assert((ver >= __cplusplus) && "The gcc version is too old.");
 }
 
-std::string getDictSafe(std::map<std::string,std::string> dict_arg, std::string arg)
+std::string getDictSafe(std::map<std::string, std::string> dict_arg, std::string arg)
 {
-    std::string str_tmp="";
+    std::string str_tmp = "";
 
     str_tmp = dict_arg[arg];
 
-    if (str_tmp.empty()) return "NULL";
+    if (str_tmp.empty())
+        return "NULL";
     //cmn::LOG(cmn::DEBUG) << "engineCycle";
     return str_tmp;
 }
@@ -116,7 +121,8 @@ void vec2stdio(std::vector<uint> arg_v)
 {
     std::vector<uint>::iterator i;
 
-    for (i=arg_v.begin(); i!=arg_v.end(); ++i) std::cout << *i << ' ';
+    for (i = arg_v.begin(); i != arg_v.end(); ++i)
+        std::cout << *i << ' ';
 
     std::cout << std::endl;
 }
@@ -124,105 +130,78 @@ void vec2stdio(std::vector<uint> arg_v)
 int printVec(std::vector<std::string> vec)
 {
     if (vec.empty())
-        {
+    {
         std::cout << "Vector Empty" << std::endl;
         return -1;
-        }
+    }
 
-    for(std::string data : vec)
+    for (std::string data : vec)
     {
         std::cout << data << " ";
     }
-    std::cout<<std::endl;
+    std::cout << std::endl;
     return 0;
 }
 
-std::map<std::string,std::string> cli2map(int argc,char **argv,std::vector<std::string> keys)
+std::map<std::string, std::string> cli2map(int argc, char **argv, std::vector<std::string> keys)
 {
     std::map<std::string, std::string> argv_map;
     argv_map["argv0"] = argv[0]; //always reference to the executed file
 
     for (int i = 1; i < argc; ++i)
+    {
+        for (auto const &key : keys)
         {
-            for(auto const &key: keys)
-            {
-                if(key.compare(argv[i]) == 0) argv_map[key] = argv[i+1];
-            }
+            if (key.compare(argv[i]) == 0)
+                argv_map[key] = argv[i + 1];
         }
+    }
 
     return argv_map;
 }
 
-
-void
-getMapVal(std::string & out, std::string key, std::map<std::string, std::string> argm)
+void getMapVal(std::string &out, std::string key, std::map<std::string, std::string> argm)
 {
-    if(argm[key].empty()==false) out = argm[key];
+    if (argm[key].empty() == false)
+        out = argm[key];
 }
 
 std::string
 getSafeMapVal(std::map<std::string, std::string> argm, std::string key)
 {
     std::string tmps;
-    try {
+    try
+    {
         tmps = argm[key];
-        if(tmps.empty()==false) return tmps;
-    } catch(...) {
+        if (tmps.empty() == false)
+            return tmps;
+    }
+    catch (...)
+    {
+        std::cout << "getSafeMapVal() key does not exist, key " << key << std::endl;
         //io::LOG(io::ERROR) << "checkMap() argm[key] does not exist, key " << key;
     }
     return tmps;
 }
 
-void
-json2map(Json::Value &argjval, std::map<std::string,std::string> &argm, std::string key)
+void json2map(Json::Value &argjval, std::map<std::string, std::string> &argm, std::string key)
 {
     std::vector<std::string> tmpv = argjval.getMemberNames();
 
-    for(auto const &it: tmpv)
+    for (auto const &it : tmpv)
     {
-        argm[it]=argjval[it].get(key, "0").asString();
+        argm[it] = argjval[it].get(key, "").asString();
     }
 }
 
-void
-json2map(Json::Value &argjval, std::map<std::string,uint> &argm, std::string key)
+void json2map(Json::Value &argjval, std::map<std::string, uint> &argm, std::string key)
 {
     std::vector<std::string> tmpv = argjval.getMemberNames();
 
-    for(auto const &it: tmpv)
+    for (auto const &it : tmpv)
     {
-        argm[it]=argjval[it].get(key, "").asUInt();
+        argm[it] = argjval[it].get(key, "").asUInt();
     }
 }
 
-/*
-void stringClean(std::string &args)
-{
-    //args.replace("}","");
-    boost::erase_all(args, "}");
-    boost::erase_all(args, "{");
-    boost::erase_all(args, "\"");
-    boost::erase_all(args, "\n");
-    boost::erase_all(args, "\r");
-    boost::erase_all(args, " ");
-}
-
-void strdict2map(std::string args, std::map<std::string,std::string> &argm)
-{
-    std::vector<std::string> tmpv;
-    cmn::stringClean(args);
-
-    boost::algorithm::split(tmpv, args, boost::is_any_of(":"));
-    argm[tmpv[0]]=tmpv[1];
-}
-
-void strdict2map(std::string args, std::map<std::string,uint> &argm)
-{
-    std::vector<std::string> tmpv;
-    cmn::stringClean(args);
-
-    boost::algorithm::split(tmpv, args, boost::is_any_of(":"));
-    argm[tmpv[0]]=(uint)std::stoi(tmpv[1]);
-}
-*/
-} //namespace
+} // namespace cmn

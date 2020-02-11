@@ -10,6 +10,7 @@
     "editor.formatOnSave" : true,
     "editor.formatOnType" : false,
     "files.eol" : "\n",
+    "prettier.printWidth": 120,
 
     "C_Cpp.updateChannel": "Insiders",
     "C_Cpp.default.cppStandard": "c++11",
@@ -21,8 +22,8 @@
         "*.h" : "c",
         "*.c" : "c",
         "*.cpp" : "cpp",
-        "*.hpp" : "cpp",
         "*.cc" : "cpp",
+        "*.hpp" : "cpp",
         "*.tpp" : "cpp",
         "*.tcc" : "cpp",
         "*.db" : "r",

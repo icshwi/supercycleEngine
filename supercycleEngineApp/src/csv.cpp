@@ -9,7 +9,8 @@ namespace io
 CSVReader::CSVReader(std::string argfl)
 {
     init(argfl);
-    io::LOG(io::DEBUG2) << "CSVReader::CSVReader" << " filelink " << filelink << " delimeter " << delimeter;
+    io::LOG(io::DEBUG2) << "CSVReader::CSVReader"
+                        << " filelink " << filelink << " delimeter " << delimeter;
 }
 
 CSVReader::~CSVReader()
@@ -18,15 +19,14 @@ CSVReader::~CSVReader()
     close();
 }
 
-void
-CSVReader::close()
+void CSVReader::close()
 {
     io::LOG(io::DEBUG2) << "CSVReader::close()";
-    if (ifs.is_open()) ifs.close();
+    if (ifs.is_open())
+        ifs.close();
 }
 
-void
-CSVReader::init(std::string argfl)
+void CSVReader::init(std::string argfl)
 {
     io::LOG(io::DEBUG2) << "CSVReader::init";
 
@@ -43,11 +43,11 @@ CSVReader::init(std::string argfl)
  * Parses through csv file line by line and returns the data
  * in vector of vector of strings.
  */
-std::vector<std::vector<std::string> >
+std::vector<std::vector<std::string>>
 CSVReader::getContent()
 {
     //std::ifstream file(fileName);
-    std::vector<std::vector<std::string> > dataList;
+    std::vector<std::vector<std::string>> dataList;
     std::string line = "";
     // Iterate through each line and split the content using delimeter
     while (getline(ifs, line))
@@ -70,7 +70,7 @@ CSVReader::getRow()
     std::vector<std::string> vec;
 
     row_id++;
-    if(!getline(ifs, line))
+    if (!getline(ifs, line))
     {
         io::LOG(io::DEBUG) << "CSVReader::getRow() csv file ended at row_id " << row_id;
         return {}; //vec.empty() check
@@ -80,28 +80,29 @@ CSVReader::getRow()
     return vec;
 }
 
-std::map<std::string,std::string>
+std::map<std::string, std::string>
 CSVReader::getRowMap()
 {
     io::LOG(io::DEBUG3) << "CSVReader::getRowMap()";
 
-    std::map<std::string,std::string> mp;
+    std::map<std::string, std::string> mp;
     std::vector<std::string> row = getRow();
 
-    if (row.empty()) return {};
+    if (row.empty())
+        return {};
 
-    if ( row.size() != key_row.size() )
+    if (row.size() != key_row.size())
     {
         io::LOG(io::ERROR) << "CSVReader::getRowMap() row.size()!=key_row.size() row_id " << row_id;
         return {};
     }
 
-    for (uint i=0; i<key_row.size(); ++i)
+    for (uint i = 0; i < key_row.size(); ++i)
     {
-        mp.insert({ key_row[i], row[i] });
+        mp.insert({key_row[i], row[i]});
     }
 
     return mp;
 }
 
-} //namespace
+} // namespace io
