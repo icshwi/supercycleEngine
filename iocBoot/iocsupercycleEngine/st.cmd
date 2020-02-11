@@ -13,6 +13,7 @@ supercycleEngine_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
 #dbLoadRecords("db/xxx.db","user=jerzy")
+dbLoadRecords("db/testProc.db")
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
