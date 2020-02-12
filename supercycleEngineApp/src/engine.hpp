@@ -5,6 +5,6 @@
 #include "scenv.hpp"
 #include "ioblock.hpp"
 
-uint64_t engineStroke(io::IOBlock &);
+uint64_t engineCycle(io::IOBlock &);
 
 #endif // ENGINE_HPP

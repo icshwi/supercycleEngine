@@ -39,7 +39,7 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
     }
 }
 
-uint64_t engineStroke(io::IOBlock &io)
+uint64_t engineCycle(io::IOBlock &io)
 {
     // Performance improvement of the engineCycle()
     static uint64_t cycle_id = (cmn::wclock_s() - YEAR2020s) * CYCLE_fHz;

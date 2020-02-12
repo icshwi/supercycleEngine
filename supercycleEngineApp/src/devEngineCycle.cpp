@@ -12,7 +12,7 @@ io::IOBlock io_block;
 
 static uint64_t devEngineCycle(aSubRecord *prec)
 {
-    return engineStroke(io_block);
+    return engineCycle(io_block);
 }
 
 // Register the function

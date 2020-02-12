@@ -18,7 +18,7 @@ supercycleEngine_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
 #dbLoadRecords("db/xxx.db","user=jerzy")
-dbLoadRecords("db/devEngineCycle.db", "P=$(PSCE01)")
+dbLoadRecords("db/engine.db", "P=$(PSCE01)")
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
