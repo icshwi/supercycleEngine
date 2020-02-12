@@ -42,8 +42,8 @@ supercycleEngine_SRCS += json.cpp
 supercycleEngine_SRCS += csv.cpp
 supercycleEngine_SRCS += ioblock.cpp
 #supercycleEngine_SRCS += sequence.cpp
- # Device Support
-supercycleEngine_SRCS += devEngineCycle.cpp
+ # .db processes
+supercycleEngine_SRCS += engineProc.cpp
 
 # Build the main IOC entry point on workstation OSs.
 supercycleEngine_SRCS_DEFAULT += supercycleEngineMain.cpp

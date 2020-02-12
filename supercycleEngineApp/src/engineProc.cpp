@@ -10,10 +10,10 @@
 
 io::IOBlock io_block;
 
-static uint64_t devEngineCycle(aSubRecord *prec)
+static uint64_t engineCycleProc(aSubRecord *prec)
 {
     return engineCycle(io_block);
 }
 
 // Register the function
-epicsRegisterFunction(devEngineCycle);
+epicsRegisterFunction(engineCycleProc);
