@@ -134,7 +134,7 @@ uint64_t engineStroke(io::IOBlock &io)
     //io.IdCycleCa.put(io.dbuf.read(env::IdCycle));
     //io.PeriodCa.put(sc_prd_us);
 
-    usleep(5); //Assure that data is in EVRs
+    // usleep(5); //Assure that data is in EVRs
 
     // io.SoftEvtCa.put(env::DATAS);
 

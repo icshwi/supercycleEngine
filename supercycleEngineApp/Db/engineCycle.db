@@ -1,5 +1,16 @@
-record(sub, EngineCycle) {
+
+record(sub, "$(P)$(R=)EngineCycle") {
      field(SNAM, engineCycle)
      field(SCAN, "1 second")
-     alias("IdCycle")
+     alias("$(P)$(R=)IdCycle")
+     #field(FLINK, "$(P)$(R=)DATAS PP")
+     #field(FTVL, "ULONG")
+     #field(DTYP, "Obj Prop uint32")
+     #field(field_value, "DBF_ULONG")
+
+}
+
+record(longout, "$(P)$(R=)DATAS") {
+  field(SCAN, "Passive")
+  field(VAL , "17")
 }
