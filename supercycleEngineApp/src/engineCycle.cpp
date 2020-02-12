@@ -12,8 +12,7 @@ io::IOBlock io_block;
 
 static uint64_t engineCycle(aSubRecord *prec)
 {
-    uint64_t id_cycle = engineStroke(io_block);
-    return id_cycle; /* process output links */
+    return engineStroke(io_block);
 }
 
 /* Note the function must be registered at the end!*/

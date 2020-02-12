@@ -1,13 +1,21 @@
 
+record(calcout, "$(P)$(R=)HEARTBEAT")
+{
+    field(DESC, "1 Hz counter since startup")
+    field(CALC, "(A<2147483647)?A+1:1")
+    field(SCAN, "1 second")
+    field(INPA, "$(P)$(R=)HEARTBEAT")
+    field(FLNK, "$(P)$(R=)EngineCycle PP NMS")
+}
+
 record(aSub, "$(P)$(R=)EngineCycle") {
      field(SNAM, engineCycle)
-     field(SCAN, "1 second")
+     #field(SCAN, "1 second")
+     field(SCAN, "Passive")
      alias("$(P)$(R=)IdCycle")
-     #field(FLINK, "$(P)$(R=)DATAS PP")
+     field(FLNK, "$(P)$(R=)DATAS PP NMS")
      #field(FTVL, "ULONG")
      #field(DTYP, "Obj Prop uint32")
-     #field(field_value, "DBF_ULONG")
-
 }
 
 record(longout, "$(P)$(R=)DATAS") {
