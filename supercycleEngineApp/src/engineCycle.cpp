@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <subRecord.h>
+//#include <subRecord.h>
+#include <aSubRecord.h>
 #include <registryFunction.h>
 #include <epicsExport.h>
 
@@ -9,11 +10,10 @@
 
 io::IOBlock io_block;
 
-static int engineCycle(subRecord *precord)
+static uint64_t engineCycle(aSubRecord *prec)
 {
-    //precord->val++;
-    precord->val = engineStroke(io_block);
-    return 0;
+    uint64_t id_cycle = engineStroke(io_block);
+    return id_cycle; /* process output links */
 }
 
 /* Note the function must be registered at the end!*/

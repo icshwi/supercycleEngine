@@ -1,5 +1,5 @@
 
-record(sub, "$(P)$(R=)EngineCycle") {
+record(aSub, "$(P)$(R=)EngineCycle") {
      field(SNAM, engineCycle)
      field(SCAN, "1 second")
      alias("$(P)$(R=)IdCycle")
