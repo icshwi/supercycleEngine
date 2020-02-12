@@ -26,25 +26,7 @@ IOBlock::IOBlock()
 
 int IOBlock::init()
 {
-    // Subscribe to PVs
-    //SCE
-    //IdCycleCa.init      (psce+"IdCycle");
-    //PeriodCa.init       (psce+"Period-I");
-
-    //TgRastCa.init       (psce+"TgRast");
-    //TgSegCa.init        (psce+"TgSeg");
-
-    //RefTabsTopCa.init   (psce+"RefTabsTop-SP");
-    //SCTableCa.init      (psce+"SCTable-SP");
-
-    //EVG
-    //SoftEvtCa.init      (pevg+"SoftEvt-EvtCode-SP");
-    //DbusSendCa.init     (pevg+"dbus-send-u32");
-    //SEQ.init(pevg, json_evt.getEvtMap());
-
-    // Init .db
-    //RefTabsTopCa.get(reftabs_TOP);
-    //SCTableCa.get(sctable_csv);
+    SEQ.init(pevg, json_evt.getEvtMap());
 
     io::LOG(io::INFO) << "IOBlock::init() psce " << psce << " pevg " << pevg;
     io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() " << get_init_dbuf_json_link();

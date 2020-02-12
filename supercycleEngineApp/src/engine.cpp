@@ -12,6 +12,7 @@
 #include "dbuf.hpp"
 #include "csv.hpp"
 #include "json.hpp"
+#include "seq.hpp"
 
 void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
@@ -113,7 +114,7 @@ uint64_t engineCycle(io::IOBlock &io)
     io_dbuf_safe_write(io.dbuf, scrow, env::PBCurr);
 
     // Update the event sequence container
-    //io.SEQ.update(scrow);
+    io.SEQ.write(scrow);
 
     // GET Section - updates containers as well
     //uint arg_tmp=0; // support variable
@@ -139,14 +140,8 @@ uint64_t engineCycle(io::IOBlock &io)
     // io.SoftEvtCa.put(env::DATAS);
 
     //Check the buffer
-    //io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.SEQ.evttstbuf) " << cmn::map2str<uint,uint>(io.SEQ.getEvtTstSeq());
+    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.SEQ.getSeq()) " << cmn::map2str<uint, uint>(io.SEQ.getSeq());
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.dbuf.getDbuf()) " << cmn::map2str<uint, uint>(io.dbuf.getDbuf());
-
-    //std::string tmp;
-    //io.RefTabsTopCa.get(tmp);
-    //io::LOG(io::DEBUG) << "engineCycle() io.RefTabsTopCa.get(tmp) " << tmp;
-
-    usleep(io.get_ECInhibit());
 
     return cycle_id;
 }

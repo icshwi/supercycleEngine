@@ -12,7 +12,7 @@
 #include "iocsh.h"
 
 #include "dlog.hpp"
-io::structlog io::LOGCFG(true, io::INFO);
+io::structlog io::LOGCFG(true, io::DEBUG);
 
 int main(int argc, char *argv[])
 {

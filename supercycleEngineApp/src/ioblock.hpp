@@ -7,6 +7,7 @@
 #include "dbuf.hpp"
 #include "json.hpp"
 #include "csv.hpp"
+#include "seq.hpp"
 
 namespace io
 {
@@ -14,7 +15,6 @@ namespace io
 class IOBlock
 {
 private:
-    uint EC_INHIBIT = 30000; // [us] Block the engine cycles over this time
     std::string psce = "TD-M:TS-SCE-01:";
     std::string pevg = "MTCA5U-EVG:";
 
@@ -24,7 +24,6 @@ private:
 
 public:
     std::string sctable_csv = "example02.csv";
-    uint get_ECInhibit() { return EC_INHIBIT; };
     std::string get_PSCE() { return psce; };
     std::string get_PEVG() { return pevg; };
 
@@ -42,12 +41,7 @@ public:
     io::CSVReader sctable;
     // Set the send buffer
     dbf::DBufPacket dbuf;
-
-    // Program parameters
-    //CACh TgRastCa,TgSegCa,IdCycleCa,SoftEvtCa,DbusSendCa,PeriodCa;
-    //CACh SCTableCa, RefTabsTopCa;
-
-    //SequenceHandler SEQ;
+    SequenceHandler SEQ;
 };
 
 } // namespace io

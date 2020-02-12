@@ -15,10 +15,10 @@ namespace env
 
 enum EVT
 {
-    C14HZ = 0x0E,  // DOWNSTREAM		START OF CYCLE
-    DATA = 0x10,   // DOWNSTREAM		SEND DATA BUFFER
-    DATAS = 0x11,  // DOWNSTREAM		Trigger the cycle within the supercycle APP
-    SEQ_END = 127, // DOWNSTREAM		Trigger the cycle within the supercycle APP
+    C14HZ = 0x0E,  // DOWNSTREAM START OF CYCLE
+    DATA = 0x10,   // DOWNSTREAM SEND DATA BUFFER
+    DATAS = 0x11,  // DOWNSTREAM Trigger the cycle within the supercycle APP
+    SEQ_END = 127, // DOWNSTREAM Trigger the cycle within the supercycle APP
 };
 
 //std::cout << " enum ProtoVer " << EVTS2Str.at(ProtoVer) << std::endl;
@@ -40,7 +40,8 @@ enum DBFIDX
     TgSeg = 29,   //Upstream EVT_TGFM | PV-RB
 };
 
-const boost::unordered_map<DBFIDX, std::string> DBFIDX2Str = boost::assign::map_list_of(ProtNum, "ProtNum")(ProtVer, "ProtVer")(IdCycle, "IdCycle")(PBState, "PBState")(PBDest, "PBDest")(PBMod, "PBMod")(PBLen, "PBLen")(PBEn, "PBEn")(PBCurr, "PBCurr")(TgRast, "TgRast")(TgSeg, "TgSeg"); //std::cout << " enum ProtoVer " << DBFIDX2Str.at(ProtoVer) << std::endl;
+const boost::unordered_map<DBFIDX, std::string> DBFIDX2Str =
+    boost::assign::map_list_of(ProtNum, "ProtNum")(ProtVer, "ProtVer")(IdCycle, "IdCycle")(PBState, "PBState")(PBDest, "PBDest")(PBMod, "PBMod")(PBLen, "PBLen")(PBEn, "PBEn")(PBCurr, "PBCurr")(TgRast, "TgRast")(TgSeg, "TgSeg"); //std::cout << " enum ProtoVer " << DBFIDX2Str.at(ProtoVer) << std::endl;
 
 #define GetDbfIdx2Str(idx) (env::DBFIDX2Str.at(env::idx))
 

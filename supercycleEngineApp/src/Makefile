@@ -41,6 +41,7 @@ supercycleEngine_SRCS += engine.cpp
 supercycleEngine_SRCS += json.cpp
 supercycleEngine_SRCS += csv.cpp
 supercycleEngine_SRCS += ioblock.cpp
+supercycleEngine_SRCS += seq.cpp
 #supercycleEngine_SRCS += sequence.cpp
  # .db processes
 supercycleEngine_SRCS += engineProc.cpp
