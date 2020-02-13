@@ -48,6 +48,7 @@ supercycleEngine_SRCS += seq.cpp
  # .db processes
 supercycleEngine_SRCS += engineCfg.cpp	#should be first
 supercycleEngine_SRCS += engineProc.cpp
+supercycleEngine_SRCS += dbufProc.c
 
 
 # Build the main IOC entry point on workstation OSs.

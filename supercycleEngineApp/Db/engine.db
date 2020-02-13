@@ -22,3 +22,10 @@ record(longout, "$(P)$(R=)DATAS") {
   field(SCAN, "Passive")
   field(VAL , "17")
 }
+
+record(waveform, "$(P)$(R=)DBuf") {
+  field(DESC, "Send Buffer")
+  field(SCAN, "Passive")
+  field(FTVL, "ULONG")
+  field(NELM, "2046")
+}
