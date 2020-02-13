@@ -23,10 +23,10 @@ enum typelog
 struct structlog
 {
     bool headers;
-    typelog level;
+    typelog *level;
 
 public:
-    structlog(bool hdr, typelog lvl)
+    structlog(bool hdr, typelog *lvl)
     {
         headers = hdr;
         level = lvl;
@@ -42,14 +42,14 @@ public:
     LOG(typelog type)
     {
         msglevel = type;
-        if (LOGCFG.headers && (msglevel >= LOGCFG.level))
+        if (LOGCFG.headers && (msglevel >= *LOGCFG.level))
         {
             operator<<(cmn::timestamp() + " " + getLabel(type) + " ");
         }
     }
     ~LOG()
     {
-        if (opened && (msglevel >= LOGCFG.level))
+        if (opened && (msglevel >= *LOGCFG.level))
         {
             std::cout << std::endl;
         }
@@ -58,7 +58,7 @@ public:
     template <class T>
     LOG &operator<<(const T &msg)
     {
-        if (msglevel >= LOGCFG.level)
+        if (msglevel >= *LOGCFG.level)
         {
             std::cout << msg;
             opened = true;

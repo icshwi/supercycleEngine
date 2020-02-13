@@ -20,6 +20,8 @@ supercycleEngine_registerRecordDeviceDriver pdbbase
 #dbLoadRecords("db/xxx.db","user=jerzy")
 dbLoadRecords("db/engine.db", "P=$(PSCE01)")
 
+var iodebug 3
+
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
 

@@ -6,14 +6,22 @@
 
 #include "engine.hpp"
 #include "ioblock.hpp"
-#include "dlog.hpp"
 
-io::IOBlock io_block;
+static io::IOBlock io_block;
 
-static uint64_t engineCycleProc(aSubRecord *prec)
+static long InitEngineASub(aSubRecord *pRecord)
+{
+    //aSubRecord *prec = (aSubRecord *)pRecord;
+    //prec->valu = &enabled;
+    return 0;
+}
+
+static uint64_t ProcEngineCycleASub(aSubRecord *prec)
 {
     return engineCycle(io_block);
 }
 
 // Register the function
-epicsRegisterFunction(engineCycleProc);
+
+epicsRegisterFunction(InitEngineASub);
+epicsRegisterFunction(ProcEngineCycleASub);

@@ -15,6 +15,8 @@ USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
 #aiSecond_SRCS += devAiSecond.c
 #aiSecond_LIBS += $(EPICS_BASE_IOC_LIBS)
 
+#INC += engineCfg.hpp
+
 #=============================
 # Build the IOC application
 
@@ -44,7 +46,9 @@ supercycleEngine_SRCS += ioblock.cpp
 supercycleEngine_SRCS += seq.cpp
 #supercycleEngine_SRCS += sequence.cpp
  # .db processes
+supercycleEngine_SRCS += engineCfg.cpp	#should be first
 supercycleEngine_SRCS += engineProc.cpp
+
 
 # Build the main IOC entry point on workstation OSs.
 supercycleEngine_SRCS_DEFAULT += supercycleEngineMain.cpp

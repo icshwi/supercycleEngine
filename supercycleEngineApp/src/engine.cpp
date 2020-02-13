@@ -2,13 +2,6 @@
 #include "dlog.hpp"
 #include "cmnbase.hpp"
 
-// Epics
-#include "cadef.h"
-#include "dbDefs.h"
-#include "epicsString.h"
-#include "cantProceed.h"
-
-//#include "cacallback.hpp"
 #include "dbuf.hpp"
 #include "csv.hpp"
 #include "json.hpp"

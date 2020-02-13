@@ -11,9 +11,6 @@
 #include "epicsThread.h"
 #include "iocsh.h"
 
-#include "dlog.hpp"
-io::structlog io::LOGCFG(true, io::DEBUG);
-
 int main(int argc, char *argv[])
 {
     if (argc >= 2)

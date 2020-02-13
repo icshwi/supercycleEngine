@@ -2,13 +2,15 @@
 
 #include <sys/time.h>
 #include <string>
-#include <iostream>
+#include <iostream> // std::cout, std::endl
+#include <iomanip>  // std::setfill, std::setw
 #include <sstream>
 #include <map>
 #include <vector>
 #include <assert.h>
 //#include <boost/algorithm/string.hpp>
 #include <chrono>
+
 //#include <ctime>
 
 namespace cmn
@@ -38,8 +40,6 @@ std::string timestamp()
     time(&curr_time);
     curr_tm = localtime(&curr_time);
     strftime(time_str, 50, "%FT%T", curr_tm);
-    //std::cout << time_str << std::endl;
-    //std::cout << tp.tv_usec << std::endl;
     timestamp = time_str;
     timestamp += '.';
     timestamp += cmn::str(uint(tp.tv_usec));
