@@ -25,7 +25,15 @@ record(longout, "$(P)$(R=)DATAS") {
 
 record(waveform, "$(P)$(R=)DBuf") {
   field(DESC, "Send Buffer")
+  field(DTYP, "databuffer")
   field(SCAN, "Passive")
   field(FTVL, "ULONG")
   field(NELM, "2046")
 }
+
+# record(waveform, "$(NAME)") {
+#  field(DTYP, "Zero Copy Demo")
+#  field(FTVL, "SHORT")
+#  field(NELM, "100")
+#  field(SCAN, "I/O Intr")
+# }

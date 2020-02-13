@@ -14,44 +14,40 @@
 #include "link.h"
 #include "epicsExport.h"
 //#include "devAiSecond.h"
+#include "waveformRecord.h"
 
-/* Create the dset for devAiSecond */
-static long init_record();
-static long init_ai();
-static long read_ai();
+/* Create the dset */
+static long init_dbuf_wave();
+static long init_dbuf_record_wave();
+static long read_dbuf_wave();
+
 struct
 {
     long number;
     DEVSUPFUN report;
-    DEVSUPFUN init;
-    DEVSUPFUN init_record;
+    DEVSUPFUN init_wave;
+    DEVSUPFUN init_record_wave;
     DEVSUPFUN get_ioint_info;
-    DEVSUPFUN read_ai;
+    DEVSUPFUN read_wave;
     DEVSUPFUN special_linconv;
-} devAiSecond = {
+} devWaveDbuf = {
     6,
     NULL,
-    init_ai,
-    init_record,
+    init_dbuf_wave,
+    init_dbuf_record_wave,
     NULL,
-    read_ai,
+    read_dbuf_wave,
     NULL};
-epicsExportAddress(dset, devAiSecond);
+epicsExportAddress(dset, devWaveDbuf);
 
-/************************************************************************/
-/* Ai Record								*/
-/*  INP = "hostname-or-ipaddress:data-number"				*/
-/************************************************************************/
-
-/* init_ai for debug */
-static long init_ai(int after)
+static long init_dbuf_wave(int after)
 {
 }
 
-static long init_record(struct aiRecord *pai)
+static long init_dbuf_record_wave(struct waveformRecord *pwave)
 {
 }
 
-static long read_ai(struct aiRecord *pai)
+static long read_dbuf_wave(struct waveformRecord *pwave)
 {
 }

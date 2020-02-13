@@ -27,6 +27,7 @@ DBD += supercycleEngine.dbd
 # supercycleEngine.dbd will be made up from these files:
 supercycleEngine_DBD += base.dbd
 supercycleEngine_DBD += engine.dbd
+supercycleEngine_DBD += dbuf.dbd
 
 # Include dbd files from all support applications:
 #supercycleEngine_DBD += xxx.dbd
