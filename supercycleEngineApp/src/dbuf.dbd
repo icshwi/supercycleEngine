@@ -1,2 +1,1 @@
-function(InitDbufASub)
-function(ProcDbufASub)
+device(aao, INST_IO, regDevAaoDbuf, "devAaoDbuf")

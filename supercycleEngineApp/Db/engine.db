@@ -24,13 +24,12 @@ record(longout, "$(P)$(R=)DATAS") {
   field(VAL , "17")
 }
 
-record(aSub, "$(P)$(R=)Dbuf") {
-  field(INAM, InitDbufASub)
-  field(SNAM, ProcDbufASub)
+record(aao, "$(P)$(R=)DBuf") {
+  field(DESC, "Send Buffer")
+  field(DTYP, "devAaoDbuf")
   field(SCAN, "Passive")
-  #field(FTVL, "ULONG")
-  #field(NELM, "2046")
-  #field(DTYP, "Obj Prop uint32")
+  field(FTVL, "ULONG")
+  field(NELM, "2046")
 }
 
 #record(waveform, "$(P)$(R=)DBuf") {
