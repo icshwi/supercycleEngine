@@ -16,10 +16,12 @@
 //#include "devAiSecond.h"
 #include "waveformRecord.h"
 
+#include "test.hpp"
+
 /* Create the dset */
-static long init_dbuf_wave();
-static long init_dbuf_record_wave();
-static long read_dbuf_wave();
+static long init_dbuf_wf();
+static long init_dbuf_record_wf();
+static long read_dbuf_wf();
 
 struct
 {
@@ -33,21 +35,24 @@ struct
 } devWaveDbuf = {
     6,
     NULL,
-    init_dbuf_wave,
-    init_dbuf_record_wave,
+    init_dbuf_wf,
+    init_dbuf_record_wf,
     NULL,
-    read_dbuf_wave,
+    read_dbuf_wf,
     NULL};
 epicsExportAddress(dset, devWaveDbuf);
 
-static long init_dbuf_wave(int after)
+static long init_dbuf_wf(int after)
 {
+    print(1, 1111);
 }
 
-static long init_dbuf_record_wave(struct waveformRecord *pwave)
+static long init_dbuf_record_wf(struct waveformRecord *pwave)
 {
+    print(2, 2222);
 }
 
-static long read_dbuf_wave(struct waveformRecord *pwave)
+static long read_dbuf_wf(struct waveformRecord *pwave)
 {
+    print(3, 3333);
 }
