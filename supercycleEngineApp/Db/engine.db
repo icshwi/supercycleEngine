@@ -28,8 +28,8 @@ record(aao, "$(P)$(R=)DBuf") {
   field(DESC, "Send Buffer")
   field(DTYP, "devAaoDbuf")
   field(SCAN, "Passive")
-  field(FTVL, "ULONG")
-  field(NELM, "2046")
+  #field(FTVL, "ULONG")
+  #field(NELM, "2046")
 }
 
 #record(waveform, "$(P)$(R=)DBuf") {
