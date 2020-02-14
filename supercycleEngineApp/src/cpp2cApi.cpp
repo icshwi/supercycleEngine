@@ -1,4 +1,4 @@
-#include "test.hpp"
+#include "cpp2cApi.hpp"
 
 #include <iostream>
 extern "C" int print(int i, double d)

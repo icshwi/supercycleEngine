@@ -1,1 +1,1 @@
-device(aao, CONSTANT, regDevAaoDbuf, "devAaoDbuf")
+device(ai, CONSTANT, regDevAiDbuf, "devAiDbuf")

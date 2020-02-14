@@ -14,7 +14,7 @@ record(aSub, "$(P)$(R=)EngineCycle") {
   field(SCAN, "Passive")
   alias("$(P)$(R=)IdCycle")
   #field(FLNK, "$(P)$(R=)DATAS PP NMS")
-  field(FLNK, "$(P)$(R=)DBuf PP NMS")
+  field(FLNK, "$(P)$(R=)DBuf CPP")
   #field(FTVL, "ULONG")
   #field(DTYP, "Obj Prop uint32")
 }
@@ -24,13 +24,20 @@ record(longout, "$(P)$(R=)DATAS") {
   field(VAL , "17")
 }
 
-record(aao, "$(P)$(R=)DBuf") {
-  field(DESC, "Send Buffer")
-  field(DTYP, "devAaoDbuf")
+record(ai, "$(P)$(R=)Dbuf") {
+  field(DTYP, "devAiDbuf")
   field(SCAN, "Passive")
+#  field(LOW, "0")
+#  field(HIGH, "???")
+}
+
+#record(aai, "$(P)$(R=)DBuf") {
+#  field(DESC, "Send Buffer")
+#  field(DTYP, "devAaiDbuf")
+#  field(SCAN, "Passive")
   #field(FTVL, "ULONG")
   #field(NELM, "2046")
-}
+#}
 
 #record(waveform, "$(P)$(R=)DBuf") {
 #  field(DESC, "Send Buffer")
