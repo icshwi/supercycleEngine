@@ -16,7 +16,7 @@ static long InitEngineASub(aSubRecord *pRecord)
     return 0;
 }
 
-static uint64_t ProcEngineCycleASub(aSubRecord *prec)
+static uint64_t ProcEngineASub(aSubRecord *prec)
 {
     return engineCycle(io_block);
 }
@@ -24,4 +24,4 @@ static uint64_t ProcEngineCycleASub(aSubRecord *prec)
 // Register the function
 
 epicsRegisterFunction(InitEngineASub);
-epicsRegisterFunction(ProcEngineCycleASub);
+epicsRegisterFunction(ProcEngineASub);

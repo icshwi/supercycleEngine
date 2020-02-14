@@ -57,9 +57,12 @@ static long read_dbuf_wf(struct waveformRecord *prec)
     print(3, 3333);
     long nRequest = prec->nelm;
 
-    int inta[3000] = {5, 6, 7, 8};
+    int inta[10] = {5, 6, 7, 8};
+    prec->val = inta;
+    prec->bptr = inta;
 
-    dbPutLink(&prec->inp, prec->ftvl, inta, 4);
+    dbPutLink(&prec->inp, DBR_ULONG, &inta, 1);
+    //dbPutLink(&prec->inp, prec->ftvl, inta, 4);
 
     /*
     if (!prec->rarm)

@@ -1,1 +1,2 @@
-device(waveform,CONSTANT,devWaveDbuf,"databuffer")
+function(InitDbufASub)
+function(ProcDbufASub)
