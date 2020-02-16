@@ -6,7 +6,8 @@ extern "C"
 {
 #endif
 
-    int print(int i, double d);
+    void prints(char *args);
+    void printn(long int argl);
 
 #ifdef __cplusplus
 } // closing brace for extern "C"

@@ -1,34 +1,35 @@
 
 record(calcout, "$(P)$(R=)HEARTBEAT") {
-  field(DESC, "1 Hz counter since startup")
-  field(CALC, "(A<2147483647)?A+1:1")
-  field(SCAN, "1 second")
-  field(INPA, "$(P)$(R=)HEARTBEAT")
-  field(FLNK, "$(P)$(R=)EngineCycle PP NMS")
+    field(DESC, "1 Hz counter since startup")
+    field(CALC, "(A<2147483647)?A+1:1")
+    field(SCAN, "1 second")
+    field(INPA, "$(P)$(R=)HEARTBEAT")
+    field(FLNK, "$(P)$(R=)EngineCycle PP NMS")
 }
 
 record(aSub, "$(P)$(R=)EngineCycle") {
-  field(INAM, InitEngineASub)
-  field(SNAM, ProcEngineASub)
-  #field(SCAN, "1 second")
-  field(SCAN, "Passive")
-  alias("$(P)$(R=)IdCycle")
-  #field(FLNK, "$(P)$(R=)DATAS PP NMS")
-  field(FLNK, "$(P)$(R=)DBuf CPP")
-  #field(FTVL, "ULONG")
-  #field(DTYP, "Obj Prop uint32")
+    field(INAM, InitEngineASub)
+    field(SNAM, ProcEngineASub)
+    #field(SCAN, "1 second")
+    field(SCAN, "Passive")
+    alias("$(P)$(R=)IdCycle")
+    #field(FLNK, "$(P)$(R=)DATAS PP NMS")
+    field(FLNK, "$(P)$(R=)Period CPP")
+    #field(FTVL, "ULONG")
+    #field(DTYP, "Obj Prop uint32")
 }
 
 record(longout, "$(P)$(R=)DATAS") {
-  field(SCAN, "Passive")
-  field(VAL , "17")
+    field(SCAN, "Passive")
+    field(VAL , "17")
 }
 
-record(ai, "$(P)$(R=)Dbuf") {
-  field(DTYP, "devAiDbuf")
-  field(SCAN, "Passive")
-#  field(LOW, "0")
-#  field(HIGH, "???")
+record(ai, "$(P)$(R=)Period") {
+    field(DTYP, "Period")
+    #field(SCAN, "1 second")
+    field(SCAN, "Passive")
+    #field(LOW, "0")
+    #field(HIGH, "???")
 }
 
 #record(aai, "$(P)$(R=)DBuf") {

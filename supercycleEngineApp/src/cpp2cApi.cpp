@@ -1,7 +1,13 @@
 #include "cpp2cApi.hpp"
 
 #include <iostream>
-extern "C" int print(int i, double d)
+
+extern "C" void prints(char *args)
 {
-    std::cout << "i = " << i << ", d = " << d << std::endl;
+    std::cout << args << std::endl;
+}
+
+extern "C" void printn(long int argl)
+{
+    std::cout << argl << std::endl;
 }

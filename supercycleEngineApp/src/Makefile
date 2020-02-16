@@ -27,7 +27,8 @@ DBD += supercycleEngine.dbd
 # supercycleEngine.dbd will be made up from these files:
 supercycleEngine_DBD += base.dbd
 supercycleEngine_DBD += engine.dbd
-supercycleEngine_DBD += dbuf.dbd
+#supercycleEngine_DBD += dbuf.dbd
+supercycleEngine_DBD += devPeriod.dbd
 
 # Include dbd files from all support applications:
 #supercycleEngine_DBD += xxx.dbd
@@ -50,7 +51,7 @@ supercycleEngine_SRCS += seq.cpp
 supercycleEngine_SRCS += engineCfg.cpp	#should be first
 supercycleEngine_SRCS += engineProc.cpp
 supercycleEngine_SRCS += cpp2cApi.cpp
-supercycleEngine_SRCS += dbufProc.c
+supercycleEngine_SRCS += devPeriod.c
 
 
 # Build the main IOC entry point on workstation OSs.
