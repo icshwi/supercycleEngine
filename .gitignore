@@ -49,3 +49,4 @@ rtf
 # Other
 .DS_Store
 ._*
+*.vscode
