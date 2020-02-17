@@ -15,6 +15,7 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     alias("$(P)$(R=)IdCycle")
     #field(FLNK, "$(P)$(R=)DATAS PP NMS")
     field(FLNK, "$(P)$(R=)Period PP NMS")
+    field(FLNK, "$(P)$(R=)Dbuf PP NMS")
     #field(FTVL, "ULONG")
     #field(DTYP, "Obj Prop uint32")
 }
@@ -38,6 +39,15 @@ record(longout, "$(P)$(R=)DATAS") {
     field(VAL , "17")
 }
 
+record(aSub, "$(P)$(R=)Dbuf") {
+    field(INAM, initDbuf)
+    field(SNAM, ioDbuf)
+    field(SCAN, "Passive")
+    field(FTA, "ULONG")
+    field(NOA, "1")
+    field(FTVA, "ULONG")
+    field(NOVA, "10")
+}
 
 
 #record(aai, "$(P)$(R=)DBuf") {

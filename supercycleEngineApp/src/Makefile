@@ -49,9 +49,10 @@ supercycleEngine_SRCS += seq.cpp
 supercycleEngine_SRCS += engine.cpp
 
 supercycleEngine_SRCS += cpp2cApi.cpp
-supercycleEngine_SRCS += devEngineVars.cpp	#should be first
+supercycleEngine_SRCS += iocVars.cpp	#should be first
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devPeriod.c
+supercycleEngine_SRCS += devDbuf.cpp
 
 
 # Build the main IOC entry point on workstation OSs.
