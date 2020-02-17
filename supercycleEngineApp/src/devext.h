@@ -14,7 +14,7 @@ struct DevSupReg
     DEVSUPFUN special_linconv;
 };
 
-struct devState
+struct devPriv
 {
     unsigned int seed;
 };

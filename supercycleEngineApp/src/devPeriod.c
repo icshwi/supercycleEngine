@@ -13,7 +13,9 @@
 static long init_Period();
 static long read_Period();
 
-struct DevSupReg regDevPeriod = {
+//Naming: devXxYyyy
+
+struct DevSupReg devAiPeriod = {
     6,
     NULL,
     NULL,
@@ -22,7 +24,9 @@ struct DevSupReg regDevPeriod = {
     read_Period,
     NULL};
 
-epicsExportAddress(dset, regDevPeriod);
+epicsExportAddress(dset, devAiPeriod);
+
+extern int sc_prd_us;
 
 static long init_Period(int test)
 {
@@ -31,9 +35,7 @@ static long init_Period(int test)
 
 static long read_Period(struct aiRecord *prec)
 {
-    struct devState *priv = prec->dpvt;
-
-    prec->rval++;
-
+    //struct devPriv *priv = prec->dpvt;
+    prec->rval = sc_prd_us;
     return 0;
 }

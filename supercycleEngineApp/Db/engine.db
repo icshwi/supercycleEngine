@@ -14,9 +14,24 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     field(SCAN, "Passive")
     alias("$(P)$(R=)IdCycle")
     #field(FLNK, "$(P)$(R=)DATAS PP NMS")
-    field(FLNK, "$(P)$(R=)Period CPP")
+    field(FLNK, "$(P)$(R=)Period PP NMS")
     #field(FTVL, "ULONG")
     #field(DTYP, "Obj Prop uint32")
+}
+
+record(ai, "$(P)$(R=)Period") {
+    field(DESC, "Actuall Cycle Frequency")
+    field(DTYP, "Period")
+    field(SCAN, "Passive")
+    field(FTVL, "ULONG")
+    #field(HIHI, "2000000") #0.5Hz
+	#field(HIGH, "80000")
+	#field(LOW,  "70000")
+	#field(LOLO, "10000") #100Hz
+    #field(HHSV, "MAJOR")
+	#field(HSV,  "MINOR")
+	#field(LSV,  "MINOR")
+	#field(LLSV, "MAJOR")
 }
 
 record(longout, "$(P)$(R=)DATAS") {
@@ -24,13 +39,7 @@ record(longout, "$(P)$(R=)DATAS") {
     field(VAL , "17")
 }
 
-record(ai, "$(P)$(R=)Period") {
-    field(DTYP, "Period")
-    #field(SCAN, "1 second")
-    field(SCAN, "Passive")
-    #field(LOW, "0")
-    #field(HIGH, "???")
-}
+
 
 #record(aai, "$(P)$(R=)DBuf") {
 #  field(DESC, "Send Buffer")

@@ -7,6 +7,8 @@
 #include "json.hpp"
 #include "seq.hpp"
 
+extern int sc_prd_us;
+
 void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
     try
@@ -41,7 +43,7 @@ uint64_t engineCycle(io::IOBlock &io)
     static uint tst = 0; // The timestamp holder
 
     io::LOG(io::DEBUG1) << "engineCycle()";
-    uint sc_prd_us = cmn::period_us(tst);
+    sc_prd_us = cmn::period_us(tst);
     io::LOG(io::DEBUG) << "engineCycle() sc_prd_us " << sc_prd_us;
 
     // Engine Maintenance
