@@ -9,19 +9,19 @@
 
 static io::IOBlock io_block;
 
-static long InitEngineASub(aSubRecord *pRecord)
+static long initEngine(aSubRecord *pRecord)
 {
     //aSubRecord *prec = (aSubRecord *)pRecord;
     //prec->valu = &enabled;
     return 0;
 }
 
-static uint64_t ProcEngineASub(aSubRecord *prec)
+static uint64_t ioEngine(aSubRecord *prec)
 {
     return engineCycle(io_block);
 }
 
 // Register the function
 
-epicsRegisterFunction(InitEngineASub);
-epicsRegisterFunction(ProcEngineASub);
+epicsRegisterFunction(initEngine);
+epicsRegisterFunction(ioEngine);

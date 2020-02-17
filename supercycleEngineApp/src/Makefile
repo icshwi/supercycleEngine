@@ -49,7 +49,7 @@ supercycleEngine_SRCS += seq.cpp
 #supercycleEngine_SRCS += sequence.cpp
  # .db processes
 supercycleEngine_SRCS += engineCfg.cpp	#should be first
-supercycleEngine_SRCS += engineProc.cpp
+supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += cpp2cApi.cpp
 supercycleEngine_SRCS += devPeriod.c
 

@@ -8,8 +8,8 @@ record(calcout, "$(P)$(R=)HEARTBEAT") {
 }
 
 record(aSub, "$(P)$(R=)EngineCycle") {
-    field(INAM, InitEngineASub)
-    field(SNAM, ProcEngineASub)
+    field(INAM, initEngine)
+    field(SNAM, ioEngine)
     #field(SCAN, "1 second")
     field(SCAN, "Passive")
     alias("$(P)$(R=)IdCycle")

@@ -10,8 +10,8 @@
 #include "cpp2cApi.hpp"
 
 /* Create the dset */
-static long init_Period();
-static long read_Period();
+static long initPeriod();
+static long ioPeriod();
 
 //Naming: devXxYyyy
 
@@ -19,21 +19,21 @@ struct DevSupReg devAiPeriod = {
     6,
     NULL,
     NULL,
-    init_Period,
+    initPeriod,
     NULL,
-    read_Period,
+    ioPeriod,
     NULL};
 
 epicsExportAddress(dset, devAiPeriod);
 
 extern int sc_prd_us;
 
-static long init_Period(int test)
+static long initPeriod(int test)
 {
     return 0;
 }
 
-static long read_Period(struct aiRecord *prec)
+static long ioPeriod(struct aiRecord *prec)
 {
     //struct devPriv *priv = prec->dpvt;
     prec->rval = sc_prd_us;
