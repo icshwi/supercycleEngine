@@ -51,7 +51,7 @@ supercycleEngine_SRCS += engine.cpp
 supercycleEngine_SRCS += cpp2cApi.cpp
 supercycleEngine_SRCS += iocVars.cpp	#should be first
 supercycleEngine_SRCS += devEngine.cpp
-supercycleEngine_SRCS += devPeriod.c
+supercycleEngine_SRCS += devPeriod.cpp
 supercycleEngine_SRCS += devDbuf.cpp
 
 

@@ -35,7 +35,7 @@ static long ioDbuf(aSubRecord *prec)
             arr[i] = it;
             i++;
         }
-        cmn::vec2stdio(v);
+        //cmn::vec2stdio(v);
     }
 
     return i;
