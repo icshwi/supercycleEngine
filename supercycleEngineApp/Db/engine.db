@@ -23,7 +23,6 @@ record(ai, "$(P)$(R=)Period") {
     field(DESC, "Actuall Cycle Frequency")
     field(DTYP, "Period")
     field(SCAN, "Passive")
-    field(FTVL, "ULONG")
     #field(HIHI, "2000000") #0.5Hz
 	#field(HIGH, "80000")
 	#field(LOW,  "70000")

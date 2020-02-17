@@ -4,7 +4,8 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
-USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra -Wno-deprecated
+#USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
+USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
 
 # ============================
 # Build an IOC support library
@@ -41,16 +42,15 @@ supercycleEngine_SRCS += supercycleEngine_registerRecordDeviceDriver.cpp
  # SRC libraries
 supercycleEngine_SRCS += cmnbase.cpp
 supercycleEngine_SRCS += dbuf.cpp
-supercycleEngine_SRCS += engine.cpp
 supercycleEngine_SRCS += json.cpp
 supercycleEngine_SRCS += csv.cpp
 supercycleEngine_SRCS += ioblock.cpp
 supercycleEngine_SRCS += seq.cpp
-#supercycleEngine_SRCS += sequence.cpp
- # .db processes
-supercycleEngine_SRCS += engineCfg.cpp	#should be first
-supercycleEngine_SRCS += devEngine.cpp
+supercycleEngine_SRCS += engine.cpp
+
 supercycleEngine_SRCS += cpp2cApi.cpp
+supercycleEngine_SRCS += devEngineVars.cpp	#should be first
+supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devPeriod.c
 
 

@@ -7,7 +7,7 @@
 #include "engine.hpp"
 #include "ioblock.hpp"
 
-static io::IOBlock io_block;
+extern io::IOBlock io_block;
 
 static long initEngine(aSubRecord *pRecord)
 {

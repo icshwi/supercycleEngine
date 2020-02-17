@@ -1,4 +1,4 @@
-#include "engineCfg.hpp"
+#include "devEngineVars.hpp"
 
 #include "dlog.hpp"
 #include <epicsExport.h>
