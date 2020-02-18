@@ -48,6 +48,8 @@ record(longin, "$(P)$(R=)Period") {
     field(SCAN, "Passive")
     field(EGU, "us")
     field(INP, "$(P)$(R=)EngineCycle.VALA[2] CPP")
+
+    #field(FLNK, "$(P)$(R=)Seq0-En-Cmd CP NMS")
     #field(HIHI, "2000000") #0.5Hz
 	#field(HIGH, "80000")
 	#field(LOW,  "70000")
@@ -75,29 +77,56 @@ record(subArray, "$(P)$(R=)Dbuf-subA_") {
     alias("$(P)$(R=)Dbuf")
 }
 
-#record(aSub, "$(P)$(R=)Dbuf") {
-#    field(INAM, initDbuf)
-#    field(SNAM, ioDbuf)
-#    field(SCAN, "Passive")
-#    field(FTA, "ULONG")
-#    field(NOA, "1")
-#    field(FTVA, "ULONG")
-#    field(NOVA, "10")
-#}
-
-
-#record(aai, "$(P)$(R=)DBuf") {
-#  field(DESC, "Send Buffer")
-#  field(DTYP, "devAaiDbuf")
+#record(longout, "$(P)$(R=)Seq0-En-Cmd") {
 #  field(SCAN, "Passive")
-  #field(FTVL, "ULONG")
-  #field(NELM, "2046")
+#  field(DOL , "$(P)$(R=)Period.VAL")
 #}
 
-#record(waveform, "$(P)$(R=)DBuf") {
-#  field(DESC, "Send Buffer")
-#  field(DTYP, "databuffer")
+#record(longout, "$(P)$(R=)Seq0-Cmt-Cmd") {
 #  field(SCAN, "Passive")
-#  field(FTVL, "ULONG")
-#  field(NELM, "2046")
+#  field(VAL , "0")
 #}
+#
+#record(longout, "$(P)$(R=)Seq1-En-Cmd") {
+#  field(SCAN, "Passive")
+#  field(VAL , "0")
+#}
+#
+#record(longout, "$(P)$(R=)Seq1-Cmt-Cmd") {
+#  field(SCAN, "Passive")
+#  field(VAL , "0")
+#}
+#record(calcout, "$(P)$(R=)SoftSeq0-Enable-Calc_") {
+#    field( CALC, "A")
+#    field( INPA, "$(P)$(R=)SoftSeq0-Enable-RB NPP NMS")
+#    field( OOPT, "When Non-zero")
+#    field( OUT,  "$(P)$(R=)SoftSeq0-Enable-Cmd PP")
+#}
+
+record(calcout, "$(P)$(R=)Mux") {
+    field(DESC, "MUX 2 bit")
+    field(CALC, "(A<1)?A+1:0")
+    field(SCAN, "1 second")
+    field(INPA, "$(P)$(R=)Mux")
+    field(OUT,  "$(P)$(R=)SoftSeq0-Enable-Cmd PP")
+    #field(FLNK, "$(P)$(R=)EngineCycle NPP MS")
+}
+
+#record(calcout, "$(P)$(R=)SoftSeq0-Enable-Calc_") {
+#    field( CALC, "A")
+#    field( INPA, "$(P)$(R=)Mux NPP NMS")
+#    field( OOPT, "When Non-zero")
+#    field( OUT,  "$(P)$(R=)SoftSeq0-Enable-Cmd PP")
+#}
+
+record(bo, "$(P)$(R=)SoftSeq0-Enable-Cmd") {
+    field( DTYP, "Soft Channel")
+    field( DESC, "Enable EVG Sequence")
+    #field( OUT,  "")
+    field( VAL,  "1")
+    field( UDF,  "0")
+    field( ZNAM, "0")
+    field( ONAM, "1")
+    #field( FLNK, "")
+    field( ASG , "")
+}

@@ -17,7 +17,7 @@ static long initEngine(aSubRecord *pRecord)
     return 0;
 }
 
-static uint64_t ioEngine(aSubRecord *prec)
+static long ioEngine(aSubRecord *prec)
 {
     uint64_t IdCycle = engineCycle(io_block);
     // Update the meta
