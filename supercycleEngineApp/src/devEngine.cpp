@@ -24,7 +24,7 @@ static long ioEngine(aSubRecord *prec)
     uint64_t *pvala64 = (uint64_t *)prec->vala;
     uint32_t *pvala32 = (uint32_t *)prec->vala;
 
-    pvala64[0] = IdCycle;
+    pvala64[0] = IdCycle; // 0,1
     pvala32[2] = (uint32_t)io_block.sc_prd_us;
     pvala32[3] = (uint32_t)env::DATAS;
 
