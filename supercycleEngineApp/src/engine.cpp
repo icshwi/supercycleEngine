@@ -7,8 +7,6 @@
 #include "json.hpp"
 #include "seq.hpp"
 
-extern int sc_prd_us;
-
 void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
     try

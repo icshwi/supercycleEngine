@@ -20,14 +20,21 @@ static long initEngine(aSubRecord *pRecord)
 static uint64_t ioEngine(aSubRecord *prec)
 {
     uint64_t IdCycle = engineCycle(io_block);
-
     // Update the meta
-    uint32_t *pvala = (uint32_t *)prec->vala;
-    pvala[0] = (uint32_t)io_block.sc_prd_us;
+    uint64_t *pvala64 = (uint64_t *)prec->vala;
+    uint32_t *pvala32 = (uint32_t *)prec->vala;
+
+    pvala64[0] = IdCycle;
+    pvala32[2] = (uint32_t)io_block.sc_prd_us;
+    pvala32[3] = (uint32_t)env::DATAS;
 
     // Update the Dbuf
     prec->novb = cmn::vec2p(io_block.dbuf.vallist(), (uint32_t *)prec->valb);
-    return IdCycle;
+    // Update the sequence
+    prec->novc = cmn::vec2p(io_block.SEQ.getSeqTst(), (uint32_t *)prec->valc);
+    prec->novd = cmn::vec2p(io_block.SEQ.getSeqEvt(), (uint32_t *)prec->vald);
+
+    return 0;
 }
 
 // Register the function

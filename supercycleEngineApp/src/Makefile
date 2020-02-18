@@ -48,7 +48,7 @@ supercycleEngine_SRCS += ioblock.cpp
 supercycleEngine_SRCS += seq.cpp
 supercycleEngine_SRCS += engine.cpp
 
-supercycleEngine_SRCS += cpp2cApi.cpp
+#supercycleEngine_SRCS += cpp2cApi.cpp
 supercycleEngine_SRCS += iocVars.cpp	#should be first
 supercycleEngine_SRCS += devEngine.cpp
 #supercycleEngine_SRCS += devPeriod.cpp
