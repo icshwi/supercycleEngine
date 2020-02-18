@@ -43,8 +43,8 @@ uint64_t engineCycle(io::IOBlock &io)
     static uint tst = 0; // The timestamp holder
 
     io::LOG(io::DEBUG1) << "engineCycle()";
-    sc_prd_us = cmn::period_us(tst);
-    io::LOG(io::DEBUG) << "engineCycle() sc_prd_us " << sc_prd_us;
+    io.sc_prd_us = cmn::period_us(tst);
+    io::LOG(io::DEBUG) << "engineCycle() io.sc_prd_us " << io.sc_prd_us;
 
     // Engine Maintenance
     if (io.get_sctable_csv_link().compare(io.sctable.getFileLink()) != 0)

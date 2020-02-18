@@ -25,6 +25,7 @@ private:
 
 public:
     std::string sctable_csv = "example02.csv";
+    uint32_t sc_prd_us = 0; //sc engine period [us]
     std::string get_PSCE() { return psce; };
     std::string get_PEVG() { return pevg; };
 
