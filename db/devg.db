@@ -1,0 +1,54 @@
+
+#record(bo, "$(P)$(R=)SoftSeq0-Enable-Cmd") {
+#    field( DTYP, "Soft Channel")
+#    field( DESC, "Enable EVG Sequence")
+#    #field( OUT,  "")
+#    field( VAL,  "1")
+#    field( UDF,  "0")
+#    field( ZNAM, "0")
+#    field( ONAM, "1")
+#    #field( FLNK, "")
+#    field( ASG , "")
+#}
+#
+#record(bo, "$(P)$(R=)SoftSeq1-Enable-Cmd") {
+#    field( DTYP, "Soft Channel")
+#    field( DESC, "Enable EVG Sequence")
+#    #field( OUT,  "")
+#    field( VAL,  "1")
+#    field( UDF,  "0")
+#    field( ZNAM, "0")
+#    field( ONAM, "1")
+#    #field( FLNK, "")
+#    field( ASG , "")
+#}
+#record(longout, "$(P)$(R=)Seq0-En-Cmd") {
+#  field(SCAN, "Passive")
+#  field(DOL , "$(P)$(R=)Period.VAL")
+#}
+#record(longout, "$(P)$(R=)Seq0-Cmt-Cmd") {
+#  field(SCAN, "Passive")
+#  field(VAL , "0")
+#}
+#
+#record(longout, "$(P)$(R=)Seq1-En-Cmd") {
+#  field(SCAN, "Passive")
+#  field(VAL , "0")
+#}
+#
+#record(longout, "$(P)$(R=)Seq1-Cmt-Cmd") {
+#  field(SCAN, "Passive")
+#  field(VAL , "0")
+#}
+#record(calcout, "$(P)$(R=)SoftSeq0-Enable-Calc_") {
+#    field( CALC, "A")
+#    field( INPA, "$(P)$(R=)SoftSeq0-Enable-RB NPP NMS")
+#    field( OOPT, "When Non-zero")
+#    field( OUT,  "$(P)$(R=)SoftSeq0-Enable-Cmd PP")
+#}
+#record(calcout, "$(P)$(R=)SoftSeq0-Enable-Calc_") {
+#    field( CALC, "A")
+#    field( INPA, "$(P)$(R=)Mux NPP NMS")
+#    field( OOPT, "When Non-zero")
+#    field( OUT,  "$(P)$(R=)SoftSeq0-Enable-Cmd PP")
+#}
