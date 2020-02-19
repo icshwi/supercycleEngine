@@ -7,6 +7,9 @@
 
 cd "${TOP}"
 
+# Init environment
+iocshLoad("iocsh/TD-M.iocsh")
+
 epicsEnvUnset("PEVG01")
 epicsEnvSet("PEVG01", "MTCA5U-EVG:")
 
@@ -15,8 +18,9 @@ dbLoadDatabase "dbd/supercycleEngine.dbd"
 supercycleEngine_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
-iocshLoad("iocsh/TD-M.iocsh")
-dbLoadRecords("db/engine.db", "P=$(PSCE01), PEVG=, ENEVG=#")
+
+dbLoadRecords("db/devg.db",     "P=$(PEVG01),   PSCE=$(PSCE01)")
+dbLoadRecords("db/engine.db",   "P=$(PSCE01),   PEVG=$(PEVG01), ENEVG=")
 
 var iodebug 4
 
