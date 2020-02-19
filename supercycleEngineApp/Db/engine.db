@@ -1,5 +1,5 @@
 record(aSub, "$(P)$(R=)EngineCycle") {
-    field(INAM, initEngine)
+    #field(INAM, initEngine)
     field(SNAM, ioEngine)
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")

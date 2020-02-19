@@ -10,12 +10,12 @@
 
 extern io::IOBlock io_block;
 
-static long initEngine(aSubRecord *pRecord)
-{
-    //aSubRecord *prec = (aSubRecord *)pRecord;
-    //prec->valu = &enabled;
-    return 0;
-}
+//static long initEngine(aSubRecord *pRecord)
+//{
+//    //aSubRecord *prec = (aSubRecord *)pRecord;
+//    //prec->valu = &enabled;
+//    return 0;
+//}
 
 static long ioEngine(aSubRecord *prec)
 {
@@ -57,5 +57,5 @@ static long ioEngine(aSubRecord *prec)
 
 // Register the function
 
-epicsRegisterFunction(initEngine);
+//epicsRegisterFunction(initEngine);
 epicsRegisterFunction(ioEngine);

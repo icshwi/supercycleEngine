@@ -1,5 +1,5 @@
 record(aSub, "$(P)$(R=)EngineCycle") {
-    field(INAM, initEngine)
+    #field(INAM, initEngine)
     field(SNAM, ioEngine)
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
@@ -75,39 +75,38 @@ record(longin, "$(P)$(R=)Sync-lIn_") {
     field(INP, "$(P)$(R=)EngineCycle.VALA[3] CP")
 }
 
-record(subArray, "$(P)$(R=)Dbuf-subA_") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)EngineCycle.VALB CP")
-    field(INDX, "0")
-    field(NELM, "10") # "2046")
-    field(MALM, "2046") # "2046")
-    alias("$(P)$(R=)Dbuf")
-
-}
-
-record(subArray, "$(P)$(R=)Tst-subA_") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)EngineCycle.VALC CP MS")
-    field(INDX, "0")
-    field(NELM, "10") # "2046")
-    field(MALM, "2046") # "2046")
-    alias("$(P)$(R=)Tst")
-}
-
-record(subArray, "$(P)$(R=)Evt-subA_") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)EngineCycle.VALD CP MS")
-    field(INDX, "0")
-    field(NELM, "10") # "2046")
-    field(MALM, "2046") # "2046")
-    alias("$(P)$(R=)Evt")
-}
+#record(subArray, "$(P)$(R=)Dbuf-subA_") {
+#    field(DTYP, "Soft Channel")
+#    field(SCAN, "Passive")
+#    field(FTVL, "ULONG")
+#    field(INP, "$(P)$(R=)EngineCycle.VALB CP")
+#    field(INDX, "0")
+#    field(NELM, "10") # "2046")
+#    field(MALM, "2046") # "2046")
+#    alias("$(P)$(R=)Dbuf")
+#}
+#
+#record(subArray, "$(P)$(R=)Tst-subA_") {
+#    field(DTYP, "Soft Channel")
+#    field(SCAN, "Passive")
+#    field(FTVL, "ULONG")
+#    field(INP, "$(P)$(R=)EngineCycle.VALC CP MS")
+#    field(INDX, "0")
+#    field(NELM, "10") # "2046")
+#    field(MALM, "2046") # "2046")
+#    #alias("$(P)$(R=)Tst")
+#}
+#
+#record(subArray, "$(P)$(R=)Evt-subA_") {
+#    field(DTYP, "Soft Channel")
+#    field(SCAN, "Passive")
+#    field(FTVL, "ULONG")
+#    field(INP, "$(P)$(R=)EngineCycle.VALD CP MS")
+#    field(INDX, "0")
+#    field(NELM, "10") # "2046")
+#    field(MALM, "2046") # "2046")
+#    alias("$(P)$(R=)Evt")
+#}
 
 #record(calcout, "$(P)$(R=)DMux-Sel_") {
 #    field(DESC, "DMUX")
