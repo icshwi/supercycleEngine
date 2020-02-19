@@ -1,0 +1,12 @@
+# Maintenance
+epicsEnvSet("LOCATION","MBL-070ROW:CNPW-U-017") # Rack location
+epicsEnvSet("FBS","=ESS.INFR.K01.K01")          # The parent node of AS
+
+# Naming: AS:DS-ID
+epicsEnvSet("AS",        "TD-M")                # Area Structure
+ # SCE IOC
+epicsEnvSet("DSSCE",     "TS-SCE")              # Device Structure SCE
+epicsEnvSet("PSCE01",    "$(AS):$(DSSCE)-01:")  # Prefix of the SCE 01
+ # EVG IOC
+epicsEnvSet("DSEVG",     "TS-EVG")              # Device Structure EVG
+epicsEnvSet("PEVG01",    "$(AS):$(DSEVG)-01:")  # Prefix of the EVG 01
