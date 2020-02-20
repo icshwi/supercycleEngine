@@ -16,20 +16,16 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     #$(ENEVG=)field(OUTC, "$(PEVG)SoftSeq0-Timestamp-SP PP")
     #$(ENEVG=)field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP PP")
 
-    #field(FLNK, "$(P)$(R=)Splitter-FOut_")
+    field(FLNK, "$(P)$(R=)Trig-FOut_")
 }
 
-#record(fanout, "$(P)$(R=)Splitter-FOut_") {
-#    field(DESC, "Trigger Splitter")
-#    field(SELM, "All")
-#    field(PINI, "RUNNING")
-#    field(LNK1, "$(P)$(R=)DMux-Sel_")
-#    field(LNK2, "")
-#    field(LNK3, "")
-#    field(LNK4, "")
-#    field(LNK5, "")
-#    field(LNK6, "")
-#}
+record(fanout, "$(P)$(R=)Trig-FOut_") {
+    field(DESC, "Trigger Fanout")
+    field(SELM, "All")
+    field(PINI, "RUNNING")
+    field(LNK1, "$(P)$(R=)Sel-Addr_")
+    field(LNK2, "")
+}
 
 record(aSub, "$(P)$(R=)FOut1-aSub_") {
     field(SNAM, ioASubFOut)
@@ -37,7 +33,7 @@ record(aSub, "$(P)$(R=)FOut1-aSub_") {
     #alias("$(P)$(R=)IdCycle")
     field(FTA, "ULONG")
     field(NOA, "10")
-    field(INPA, "$(P)$(R=)EngineCycle.VALB CPP")
+    field(INPA, "$(P)$(R=)EngineCycle.VALB CP MS")
 
     field(FTVA, "ULONG")
     field(NOVA, "10")
@@ -49,36 +45,6 @@ record(aSub, "$(P)$(R=)FOut1-aSub_") {
     field(NOVD, "10")
 }
 
-record(aSub, "$(P)$(R=)DMux0-aSub_") {
-    field(SNAM, ioASubDMux)
-    field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
-    field(VAL, "0")
-    field(FTA, "ULONG")
-    field(NOA, "10")
-    field(FTVA, "ULONG")
-    field(NOVA, "10")
-    field(FTVB, "ULONG")
-    field(NOVB, "10")
-
-    field(INPA, "$(P)$(R=)EngineCycle.VALC CPP")
-}
-
-record(aSub, "$(P)$(R=)DMux1-aSub_") {
-    field(SNAM, ioASubDMux)
-    field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
-    field(FTA, "ULONG")
-    field(NOA, "10")
-    field(FTB, "ULONG")
-    field(NOB, "1")
-    field(FTVA, "ULONG")
-    field(NOVA, "10")
-    field(FTVB, "ULONG")
-    field(NOVB, "10")
-
-    field(INPA, "$(P)$(R=)EngineCycle.VALD CPP")
-}
 
 
 record(longin, "$(P)$(R=)IdCycle") {
@@ -114,77 +80,118 @@ record(longin, "$(P)$(R=)Sync-lIn_") {
     field(INP, "$(P)$(R=)EngineCycle.VALA[3] CP")
 }
 
-#record(subArray, "$(P)$(R=)Dbuf-subA_") {
-#    field(DTYP, "Soft Channel")
-#    field(SCAN, "Passive")
-#    field(FTVL, "ULONG")
-#    field(INP, "$(P)$(R=)EngineCycle.VALB CP")
-#    field(INDX, "0")
-#    field(NELM, "10") # "2046")
-#    field(MALM, "2046") # "2046")
-#    alias("$(P)$(R=)Dbuf")
-#}
-#
-#record(subArray, "$(P)$(R=)Tst-subA_") {
-#    field(DTYP, "Soft Channel")
-#    field(SCAN, "Passive")
-#    field(FTVL, "ULONG")
-#    field(INP, "$(P)$(R=)EngineCycle.VALC CP MS")
-#    field(INDX, "0")
-#    field(NELM, "10") # "2046")
-#    field(MALM, "2046") # "2046")
-#    #alias("$(P)$(R=)Tst")
-#}
-#
-#record(subArray, "$(P)$(R=)Evt-subA_") {
-#    field(DTYP, "Soft Channel")
-#    field(SCAN, "Passive")
-#    field(FTVL, "ULONG")
-#    field(INP, "$(P)$(R=)EngineCycle.VALD CP MS")
-#    field(INDX, "0")
-#    field(NELM, "10") # "2046")
-#    field(MALM, "2046") # "2046")
-#    alias("$(P)$(R=)Evt")
-#}
+record(subArray, "$(P)$(R=)Databuffer") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(FTVL, "ULONG")
+    field(INP, "$(P)$(R=)EngineCycle.VALB CP")
+    field(INDX, "0")
+    field(NELM, "10") # "2046")
+    field(MALM, "2046") # "2046")
+    alias("$(P)$(R=)Dbuf")
+}
 
-#record(calcout, "$(P)$(R=)DMux-Sel_") {
-#    field(DESC, "DMUX")
-#    field(CALC, "(A<1)?A+1:0")
-#    field(SCAN, "Passive")
-#    field(INPA, "$(P)$(R=)DMux-Sel_")
-#    #field(OUT,  "$(P)$(R=)DMux-FOut_ PP")
-#    #field(FLNK, "$(P)$(R=)EngineCycle NPP MS")
-#}
-#
-#record(calcout, "$(P)$(R=)DMux-Out0_") {
-#    field(DESC, "DMUX OUT0")
-#    field(CALC, "A")
-#    field(SCAN, "Passive")
-#    field(INPA, "$(P)$(R=)EngineCycle.VALA[4] CP MS")
-#    #field(OUT,  "$(P)$(R=)DMux-Out0-FOut_ PP MS")
-#}
-#
-#record(calcout, "$(P)$(R=)DMux-Out1_") {
-#    field(DESC, "DMUX OUT1")
-#    field(CALC, "!A")
-#    field(SCAN, "Passive")
-#    field(INPA, "$(P)$(R=)EngineCycle.VALA[4] CP MS")
-#    field(OUT,  "$(P)$(R=)DMux-Out1-FOut_ PP MS")
-#}
+record(subArray, "$(P)$(R=)Timestamps") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(FTVL, "ULONG")
+    field(INP, "$(P)$(R=)EngineCycle.VALC CP MS")
+    field(INDX, "0")
+    field(NELM, "10") # "2046")
+    field(MALM, "2046") # "2046")
+    #alias("$(P)$(R=)Tst")
+}
 
-record(dfanout, "$(P)$(R=)DMux-Out0-FOut_") {
-    field(OMSL, "closed_loop")
+record(subArray, "$(P)$(R=)Events") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(FTVL, "ULONG")
+    field(INP, "$(P)$(R=)EngineCycle.VALD CP MS")
+    field(INDX, "0")
+    field(NELM, "10") # "2046")
+    field(MALM, "2046") # "2046")
+    alias("$(P)$(R=)Evt")
+}
+
+record(calcout, "$(P)$(R=)Sel-Addr_") {
+    field(DESC, "Select Address")
+    field(CALC, "(A<1)?A+1:0")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R=)Sel-Addr_")
+    field(OUT,  "$(P)$(R=)Sel-Buf-dFOut_ PP MS")
+    #field(FLNK, "$(P)$(R=)EngineCycle NPP MS")
+}
+
+record(dfanout, "$(P)$(R=)Sel-Buf-dFOut_") {
+    field(OMSL, "supervisory")
     field(SCAN, "Passive")
     #field(DOL,  "$(P)$(R=)DMux-Out0_ CP MS")
-    field(DOL,  "$(P)$(R=)EngineCycle.VALA[4] CP MS")
+    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[4] CP MS")
+    #$(ENEVG=)field(OUTA, "$(P)$(R=)Not0_.INPA CP")
+    $(ENEVG=)field(OUTA, "$(P)$(R=)Seq1-dFout_ PP MS")
+    $(ENEVG=)field(OUTB, "$(P)$(R=)Tst-DMux-aSub_ PP MS")
+    $(ENEVG=)field(OUTC, "$(P)$(R=)Evt-DMux-aSub_ PP MS")
+}
+
+record(calcout, "$(P)$(R=)Not0_") {
+    field(DESC, "Not Gate")
+    field(CALC, "!A")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R=)Sel-Buf-dFOut_ CP MS")
+    field(OUT,  "$(P)$(R=)Seq0-dFout_ PP MS")
+}
+
+record(dfanout, "$(P)$(R=)Seq0-dFout_") {
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    #field(DOL,  "$(P)$(R=)DMux-Out0_ CP MS")
+    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[4] CP MS")
     $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-Commit-Cmd CP")
     $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq0-Enable-Cmd CP")
 }
 
-record(dfanout, "$(P)$(R=)DMux-Out1-FOut_") {
-    field(OMSL, "closed_loop")
+record(dfanout, "$(P)$(R=)Seq1-dFout_") {
+    field(OMSL, "supervisory")
     field(SCAN, "Passive")
-    field(DOL,  "$(P)$(R=)EngineCycle.VALA[5] CP MS")
+    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[5] CP MS")
     $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq1-Commit-Cmd CP")
     $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq1-Enable-Cmd CP")
+}
+
+record(aSub, "$(P)$(R=)Tst-DMux-aSub_") {
+    field(DESC, "Timestamp Array")
+    field(SNAM, ioASubDMux)
+    field(SCAN, "Passive")
+    #alias("$(P)$(R=)IdCycle")
+    field(VAL, "0")
+    field(FTA, "ULONG")
+    field(NOA, "10")
+    field(FTVA, "ULONG")
+    field(NOVA, "10")
+    field(FTVB, "ULONG")
+    field(NOVB, "10")
+
+    field(INPA, "$(P)$(R=)EngineCycle.VALC CP MS")
+
+    $(ENEVG=)field(OUTA, "$(P)$(R=)SoftSeq0-Timestamp-SP")
+    $(ENEVG=)field(OUTB, "$(P)$(R=)SoftSeq1-Timestamp-SP")
+}
+
+record(aSub, "$(P)$(R=)Evt-DMux-aSub_") {
+    field(DESC, "Event Array")
+    field(SNAM, ioASubDMux)
+    field(SCAN, "Passive")
+    #alias("$(P)$(R=)IdCycle")
+    field(VAL, "0")
+    field(FTA, "ULONG")
+    field(NOA, "10")
+    field(FTVA, "ULONG")
+    field(NOVA, "10")
+    field(FTVB, "ULONG")
+    field(NOVB, "10")
+
+    field(INPA, "$(P)$(R=)EngineCycle.VALD CP MS")
+
+    $(ENEVG=)field(OUTA, "$(P)$(R=)SoftSeq0-EvtCode-SP")
+    $(ENEVG=)field(OUTB, "$(P)$(R=)SoftSeq1-EvtCode-SP")
 }
