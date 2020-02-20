@@ -42,6 +42,43 @@ record(aSub, "$(P)$(R=)EngineCycle") {
 #    field(LNK6, "")
 #}
 
+record(aSub, "$(P)$(R=)FOut1-aSub_") {
+    field(SNAM, ioASubFOut)
+    field(SCAN, "Passive")
+    #alias("$(P)$(R=)IdCycle")
+    field(FTA, "ULONG")
+    field(NOA, "10")
+    field(INPA, "$(P)$(R=)EngineCycle.VALB CPP")
+
+    field(FTVA, "ULONG")
+    field(NOVA, "10")
+    field(FTVB, "ULONG")
+    field(NOVB, "10")
+    field(FTVC, "ULONG")
+    field(NOVC, "10")
+    field(FTVD, "ULONG")
+    field(NOVD, "10")
+}
+
+record(aSub, "$(P)$(R=)DMux1-aSub_") {
+    field(SNAM, ioASubDMux)
+    field(SCAN, "Passive")
+    #alias("$(P)$(R=)IdCycle")
+    field(FTA, "ULONG")
+    field(NOA, "10")
+    field(INPA, "$(P)$(R=)EngineCycle.VALC CPP")
+
+    field(FTVA, "ULONG")
+    field(NOVA, "10")
+    field(FTVB, "ULONG")
+    field(NOVB, "10")
+    field(FTVC, "ULONG")
+    field(NOVC, "10")
+    field(FTVD, "ULONG")
+    field(NOVD, "10")
+}
+
+
 record(longin, "$(P)$(R=)IdCycle") {
     field(DESC, "ID Cycle")
     field(DTYP, "Soft Channel")

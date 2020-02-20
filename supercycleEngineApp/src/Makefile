@@ -28,6 +28,8 @@ DBD += supercycleEngine.dbd
 # supercycleEngine.dbd will be made up from these files:
 supercycleEngine_DBD += base.dbd
 supercycleEngine_DBD += engine.dbd
+supercycleEngine_DBD += devASubFOut.dbd
+supercycleEngine_DBD += devASubDMux.dbd
 #supercycleEngine_DBD += dbuf.dbd
 #supercycleEngine_DBD += devPeriod.dbd
 
@@ -51,6 +53,8 @@ supercycleEngine_SRCS += engine.cpp
 #supercycleEngine_SRCS += cpp2cApi.cpp
 supercycleEngine_SRCS += iocVars.cpp	#should be first
 supercycleEngine_SRCS += devEngine.cpp
+supercycleEngine_SRCS += devASubFOut.cpp
+supercycleEngine_SRCS += devASubDMux.cpp
 #supercycleEngine_SRCS += devPeriod.cpp
 #supercycleEngine_SRCS += devDbuf.cpp
 

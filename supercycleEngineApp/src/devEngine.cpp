@@ -33,19 +33,20 @@ static long ioEngine(aSubRecord *prec)
     pvala32[5] = dmux_sel;  // 1 means active seq1
 
     // Update the Dbuf
-    prec->novb = cmn::vec2p(io_block.dbuf.vallist(), (uint32_t *)prec->valb);
+    // neva , novb (max)
+    prec->nevb = cmn::vec2p(io_block.dbuf.vallist(), (uint32_t *)prec->valb);
 
     switch (dmux_sel)
     {
     case 0:
         // Update the sequence 0
-        prec->novc = cmn::vec2p(io_block.SEQ.getSeqTst(), (uint32_t *)prec->valc);
-        prec->novd = cmn::vec2p(io_block.SEQ.getSeqEvt(), (uint32_t *)prec->vald);
+        prec->nevc = cmn::vec2p(io_block.SEQ.getSeqTst(), (uint32_t *)prec->valc);
+        prec->nevd = cmn::vec2p(io_block.SEQ.getSeqEvt(), (uint32_t *)prec->vald);
         break;
     case 1:
         // Update the sequence 1
-        prec->nove = cmn::vec2p(io_block.SEQ.getSeqTst(), (uint32_t *)prec->vale);
-        prec->novf = cmn::vec2p(io_block.SEQ.getSeqEvt(), (uint32_t *)prec->valf);
+        prec->neve = cmn::vec2p(io_block.SEQ.getSeqTst(), (uint32_t *)prec->vale);
+        prec->nevf = cmn::vec2p(io_block.SEQ.getSeqEvt(), (uint32_t *)prec->valf);
         break;
     default:
         break;
