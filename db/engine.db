@@ -27,7 +27,7 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK2, "")
 }
 
-record(aSub, "$(P)$(R=)FOut1-aSub_") {
+record(aSub, "$(P)$(R=)Dbuf-FOut-aSub_") {
     field(SNAM, ioASubFOut)
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
@@ -44,8 +44,6 @@ record(aSub, "$(P)$(R=)FOut1-aSub_") {
     field(FTVD, "ULONG")
     field(NOVD, "10")
 }
-
-
 
 record(longin, "$(P)$(R=)IdCycle") {
     field(DESC, "ID Cycle")

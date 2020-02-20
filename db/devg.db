@@ -91,6 +91,28 @@ record(waveform, "$(P)$(R=)SoftSeq1-Timestamp-SP") {
     field( FTVL, "DOUBLE")
 }
 
+record(bo, "$(P)$(R=)SoftSeq0-Disable-Cmd") {
+    field( DTYP, "Soft Channel")
+    field( DESC, "Disable EVG Sequence")
+    #field( OUT,  "")
+    field( VAL,  "0")
+    field( UDF,  "0")
+    field( ZNAM, "0")
+    field( ONAM, "1")
+    field( ASG , "")
+}
+
+record(bo, "$(P)$(R=)SoftSeq1-Disable-Cmd") {
+    field( DTYP, "Soft Channel")
+    field( DESC, "Disable EVG Sequence")
+    #field( OUT,  "")
+    field( VAL,  "0")
+    field( UDF,  "0")
+    field( ZNAM, "0")
+    field( ONAM, "1")
+    field( ASG , "")
+}
+
 # =======================================
 #record(longout, "$(P)$(R=)Seq0-En-Cmd") {
 #  field(SCAN, "Passive")
