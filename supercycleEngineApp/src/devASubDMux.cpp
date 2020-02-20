@@ -27,21 +27,26 @@ static long ioASubDMux(aSubRecord *prec)
     {
     case 0:
         memcpy(prec->vala, prec->a, std::min(prec->nea, prec->nova) * sizeof(epicsUInt32));
+        prec->neva = std::min(prec->nea, prec->nova);
+        //prec->nevb = 0;
         break;
     case 1:
         memcpy(prec->valb, prec->a, std::min(prec->nea, prec->novb) * sizeof(epicsUInt32));
+        prec->nevb = std::min(prec->nea, prec->novb);
         break;
     case 2:
         memcpy(prec->valc, prec->a, std::min(prec->nea, prec->novc) * sizeof(epicsUInt32));
+        prec->nevc = std::min(prec->nea, prec->novc);
         break;
     case 3:
         memcpy(prec->vald, prec->a, std::min(prec->nea, prec->novd) * sizeof(epicsUInt32));
+        prec->nevd = std::min(prec->nea, prec->novd);
         break;
     default:
         break;
     }
 
-    return prec->val;
+    return 0;
 }
 
 // Register the function
