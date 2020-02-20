@@ -204,19 +204,4 @@ void json2map(Json::Value &argjval, std::map<std::string, uint> &argm, std::stri
     }
 }
 
-int vec2p(std::vector<uint32_t> argv, uint32_t *argarr)
-{
-    int i = 0;
-    if (argv.empty() == false)
-    {
-        for (auto const &it : argv)
-        {
-            argarr[i] = it;
-            i++;
-        }
-        //cmn::vec2stdio(v);
-    }
-    return i;
-}
-
 } // namespace cmn

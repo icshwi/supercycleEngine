@@ -99,4 +99,21 @@ std::map<B, A> flip_map(const std::map<A, B> &argm)
     return dst;
 }
 
+template <class T>
+int vec2p(void *destarr, std::vector<T> srcv)
+{
+    T *dest = (T *)destarr;
+
+    int i = 0;
+    if (srcv.empty() == false)
+    {
+        for (auto const &it : srcv)
+        {
+            dest[i] = it;
+            i++;
+        }
+    }
+    return i;
+}
+
 #endif // CMNBASE_TPP

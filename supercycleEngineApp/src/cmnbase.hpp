@@ -31,8 +31,6 @@ void getMapVal(std::string &, std::string, std::map<std::string, std::string>);
 void json2map(Json::Value &, std::map<std::string, std::string> &, std::string key = "id");
 void json2map(Json::Value &, std::map<std::string, uint> &, std::string key = "id");
 
-int vec2p(std::vector<uint32_t> argv, uint32_t *argarr);
-
 #include "cmnbase.tpp"
 
 } // namespace cmn

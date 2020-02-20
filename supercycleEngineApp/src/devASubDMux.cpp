@@ -21,9 +21,9 @@
 // 1 to 4 DMUX
 static long ioASubDMux(aSubRecord *prec)
 {
-    epicsUInt32 *b = (epicsUInt32 *)prec->b;
+    //epicsUInt32 *b = (epicsUInt32 *)prec->b;
 
-    switch (*b)
+    switch (prec->val)
     {
     case 0:
         memcpy(prec->vala, prec->a, std::min(prec->nea, prec->nova) * sizeof(epicsUInt32));
@@ -41,7 +41,7 @@ static long ioASubDMux(aSubRecord *prec)
         break;
     }
 
-    return 0;
+    return prec->val;
 }
 
 // Register the function
