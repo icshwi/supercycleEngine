@@ -11,8 +11,6 @@
 #include "epicsThread.h"
 #include "iocsh.h"
 
-#include "engineInit.hpp"
-
 int main(int argc, char *argv[])
 {
     if (argc >= 2)
