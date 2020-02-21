@@ -21,18 +21,20 @@
 // 1 to 4 DMUX
 static long ioASubDMux(aSubRecord *prec)
 {
-    //epicsUInt32 *b = (epicsUInt32 *)prec->b;
+    epicsUInt32 *b = (epicsUInt32 *)prec->b;
 
-    switch (prec->val)
+    switch (*b)
     {
     case 0:
         memcpy(prec->vala, prec->a, std::min(prec->nea, prec->nova) * sizeof(epicsUInt32));
         prec->neva = std::min(prec->nea, prec->nova);
         //prec->nevb = 0;
+        prec->disp = 1;
         break;
     case 1:
         memcpy(prec->valb, prec->a, std::min(prec->nea, prec->novb) * sizeof(epicsUInt32));
         prec->nevb = std::min(prec->nea, prec->novb);
+        prec->disp = 0;
         break;
     case 2:
         memcpy(prec->valc, prec->a, std::min(prec->nea, prec->novc) * sizeof(epicsUInt32));

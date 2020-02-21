@@ -17,6 +17,7 @@ record(bo, "$(P)$(R=)SoftSeq0-Enable-Cmd") {
     field( ONAM, "1")
     #field( FLNK, "")
     field( ASG , "")
+    #field(TPRO, "1")
 }
 
 record(bo, "$(P)$(R=)SoftSeq1-Enable-Cmd") {
@@ -29,6 +30,7 @@ record(bo, "$(P)$(R=)SoftSeq1-Enable-Cmd") {
     field( ONAM, "1")
     #field( FLNK, "")
     field( ASG , "")
+    #field(TPRO, "1")
 }
 
 record(bo, "$(P)$(R=)SoftSeq0-Commit-Cmd") {
@@ -39,6 +41,7 @@ record(bo, "$(P)$(R=)SoftSeq0-Commit-Cmd") {
     field( UDF,  "0")
     field( ZNAM, "Commit")
     field( ONAM, "Commit")
+    #field(TPRO, "1")
 }
 
 record(bo, "$(P)$(R=)SoftSeq1-Commit-Cmd") {
@@ -49,6 +52,31 @@ record(bo, "$(P)$(R=)SoftSeq1-Commit-Cmd") {
     field( UDF,  "0")
     field( ZNAM, "Commit")
     field( ONAM, "Commit")
+    #field(TPRO, "1")
+}
+
+record(bo, "$(P)$(R=)SoftSeq0-Disable-Cmd") {
+    field( DTYP, "Soft Channel")
+    field( DESC, "Disable EVG Sequence")
+    #field( OUT,  "")
+    field( VAL,  "0")
+    field( UDF,  "0")
+    field( ZNAM, "0")
+    field( ONAM, "1")
+    field( ASG , "")
+    #field(TPRO, "1")
+}
+
+record(bo, "$(P)$(R=)SoftSeq1-Disable-Cmd") {
+    field( DTYP, "Soft Channel")
+    field( DESC, "Disable EVG Sequence")
+    #field( OUT,  "")
+    field( VAL,  "0")
+    field( UDF,  "0")
+    field( ZNAM, "0")
+    field( ONAM, "1")
+    field( ASG , "")
+    #field(TPRO, "1")
 }
 
 record(waveform, "$(P)$(R=)dbus-send-u32") {
@@ -89,28 +117,6 @@ record(waveform, "$(P)$(R=)SoftSeq1-Timestamp-SP") {
     #field( INP,  "")
     field( NELM, "2047")
     field( FTVL, "DOUBLE")
-}
-
-record(bo, "$(P)$(R=)SoftSeq0-Disable-Cmd") {
-    field( DTYP, "Soft Channel")
-    field( DESC, "Disable EVG Sequence")
-    #field( OUT,  "")
-    field( VAL,  "0")
-    field( UDF,  "0")
-    field( ZNAM, "0")
-    field( ONAM, "1")
-    field( ASG , "")
-}
-
-record(bo, "$(P)$(R=)SoftSeq1-Disable-Cmd") {
-    field( DTYP, "Soft Channel")
-    field( DESC, "Disable EVG Sequence")
-    #field( OUT,  "")
-    field( VAL,  "0")
-    field( UDF,  "0")
-    field( ZNAM, "0")
-    field( ONAM, "1")
-    field( ASG , "")
 }
 
 # =======================================
