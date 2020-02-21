@@ -116,46 +116,83 @@ record(calcout, "$(P)$(R=)Sel-Addr_") {
     field(CALC, "(A<1)?A+1:0")
     field(SCAN, "Passive")
     field(INPA, "$(P)$(R=)Sel-Addr_")
-    field(OUT,  "$(P)$(R=)Sel-Buf-dFOut_ PP MS")
+    #field(OUT,  "$(P)$(R=)Sel-Buf-dFOut_ PP MS")
+    #field(OUT,  "$(P)$(R=)Seq-Ctrl-seq_ CPP MS")
     #field(FLNK, "$(P)$(R=)EngineCycle NPP MS")
+    field(FLNK, "$(P)$(R=)Stimulus_ NPP MS")
 }
 
-record(dfanout, "$(P)$(R=)Sel-Buf-dFOut_") {
-    field(OMSL, "supervisory")
+record(calcout, "$(P)$(R=)Stimulus_") {
+    field(CALC, "(A<10)?A+1:0")
     field(SCAN, "Passive")
-    #field(DOL,  "$(P)$(R=)DMux-Out0_ CP MS")
-    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[4] CP MS")
-    #$(ENEVG=)field(OUTA, "$(P)$(R=)Not0_.INPA CP")
-    $(ENEVG=)field(OUTA, "$(P)$(R=)Seq1-dFout_ PP MS")
-    $(ENEVG=)field(OUTB, "$(P)$(R=)Tst-DMux-aSub_ PP NMS")
-    $(ENEVG=)field(OUTC, "$(P)$(R=)Evt-DMux-aSub_ PP NMS")
+    field(INPA, "$(P)$(R=)Stimulus_")
 }
 
-record(calcout, "$(P)$(R=)Not0_") {
-    field(DESC, "Not Gate")
-    field(CALC, "!A")
+record(calcout, "$(P)$(R=)Sel-Mask_") {
+    field(DESC, "Select Address")
+    field(CALC, "(A>0)?0xFF00:0xFF")
     field(SCAN, "Passive")
-    field(INPA, "$(P)$(R=)Sel-Buf-dFOut_ CP MS")
-    field(OUT,  "$(P)$(R=)Seq0-dFout_ PP MS")
+    field(INPA, "$(P)$(R=)Sel-Addr_ CP MS")
+    #field(OUT,  "$(P)$(R=)Sel-Buf-dFOut_ PP MS")
+    #field(OUT,  "$(P)$(R=)Seq-Ctrl-seq_ CP MS")
+    #field(FLNK, "$(P)$(R=)Seq-Ctrl-seq_ NPP MS")
 }
 
-record(dfanout, "$(P)$(R=)Seq0-dFout_") {
-    field(OMSL, "supervisory")
+#record(dfanout, "$(P)$(R=)Sel-Buf-dFOut_") {
+#    field(OMSL, "supervisory")
+#    field(SCAN, "Passive")
+#    #field(DOL,  "$(P)$(R=)DMux-Out0_ CP MS")
+#    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[4] CP MS")
+#    #$(ENEVG=)field(OUTA, "$(P)$(R=)Not0_.INPA CP")
+#    $(ENEVG=)field(OUTA, "$(P)$(R=)Sel-Buf-cal_ PP MS")
+#    $(ENEVG=)field(OUTB, "$(P)$(R=)Sel-Not-cal_ PP MS")
+#    $(ENEVG=)field(OUTC, "$(P)$(R=)Tst-DMux-aSub_ PP NMS")
+#    $(ENEVG=)field(OUTD, "$(P)$(R=)Evt-DMux-aSub_ PP NMS")
+#}
+
+#record(calcout, "$(P)$(R=)Sel-Buf-cal_") {
+#    field(DESC, "Buf Gate")
+#    field(CALC, "A")
+#    field(SCAN, "Passive")
+#    field(INPA, "$(P)$(R=)Sel-Addr_ CP MS")
+#    field(OUT,  "$(P)$(R=)Seq0-dFout_ PP MS")
+#    #field(SDIS, "$(P)$(R=)Seq0-dFout_ PP MS")
+#    #field(DISV, "0")
+#    #field(DISA, "1")
+#}
+
+record(seq, "$(P)$(R=)Seq-Ctrl-seq_") {
     field(SCAN, "Passive")
-    #field(DOL,  "$(P)$(R=)DMux-Out0_ CP MS")
-    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[4] CP MS")
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-Commit-Cmd CP")
-    $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq0-Enable-Cmd CP")
+    field(SELM, "Mask")
+    #field(SELM, "All")
+    #field(SELN, "1")
+    field(SELL, "$(P)$(R=)Sel-Mask_ CP")
+    field(DOL1, "$(P)$(R=)Stimulus_")
+    field(DOL2, "$(P)$(R=)Stimulus_")
+    field(DOL3, "$(P)$(R=)Stimulus_")
+    field(DOL8, "$(P)$(R=)Stimulus_")
+    field(DOL9, "$(P)$(R=)Stimulus_")
+    field(DOLA, "$(P)$(R=)Stimulus_")
+    #field(DO1, "1")
+    #field(LNK0,"")
+    field(LNK1, "$(PEVG)SoftSeq1-Disable-Cmd CP")
+    field(LNK2, "$(PEVG)SoftSeq0-Commit-Cmd CP")
+    field(LNK3, "$(PEVG)SoftSeq0-Enable-Cmd CP")
+    #field(LNK4, "")
+    #field(LNK5, "")
+    #field(LNK6, "")
+    #field(LNK7, "")
+    field(LNK8, "$(PEVG)SoftSeq0-Disable-Cmd CP")
+    field(LNK9, "$(PEVG)SoftSeq1-Commit-Cmd CP")
+    field(LNKA, "$(PEVG)SoftSeq1-Enable-Cmd CP")
+    #field(LNKB, "")
+    #field(LNKC, "")
+    #field(LNKD, "")
+    #field(LNKE, "")
+    #field(LNKF, "")
 }
 
-record(dfanout, "$(P)$(R=)Seq1-dFout_") {
-    field(OMSL, "supervisory")
-    field(SCAN, "Passive")
-    #field(DOL,  "$(P)$(R=)EngineCycle.VALA[5] CP MS")
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq1-Commit-Cmd CP")
-    $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq1-Enable-Cmd CP")
-}
-
+#==========
 record(aSub, "$(P)$(R=)Tst-DMux-aSub_") {
     field(DESC, "Timestamp Array")
     field(SNAM, ioASubDMux)
@@ -169,10 +206,10 @@ record(aSub, "$(P)$(R=)Tst-DMux-aSub_") {
     field(FTVB, "ULONG")
     field(NOVB, "10")
 
-    field(INPA, "$(P)$(R=)EngineCycle.VALC PP NMS")
+    field(INPA, "$(P)$(R=)EngineCycle.VALC CPP")
 
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-Timestamp-SP PP")
-    $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq1-Timestamp-SP PP")
+    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-Timestamp-SP CP")
+    $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq1-Timestamp-SP CP")
 }
 
 record(aSub, "$(P)$(R=)Evt-DMux-aSub_") {
@@ -188,8 +225,8 @@ record(aSub, "$(P)$(R=)Evt-DMux-aSub_") {
     field(FTVB, "ULONG")
     field(NOVB, "10")
 
-    field(INPA, "$(P)$(R=)EngineCycle.VALD PP NMS")
+    field(INPA, "$(P)$(R=)EngineCycle.VALD CPP")
 
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-EvtCode-SP PP")
-    $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq1-EvtCode-SP PP")
+    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-EvtCode-SP")
+    $(ENEVG=)field(OUTB, "$(PEVG)SoftSeq1-EvtCode-SP")
 }
