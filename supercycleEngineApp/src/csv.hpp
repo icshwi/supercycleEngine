@@ -10,6 +10,8 @@
 #include <boost/algorithm/string.hpp>
 #include <map>
 
+#include <epicsTypes.h>
+
 namespace io
 {
 
@@ -36,7 +38,7 @@ public:
     void close();
     std::vector<std::string> getKeys() { return key_row; };
     std::string getFileLink() { return filelink; };
-    std::uint64_t getRowId() { return row_id; };
+    epicsUInt64 getRowId() { return row_id; };
     std::map<std::string, std::string> getRowMap();
 };
 

@@ -11,11 +11,11 @@
 namespace dbf
 {
 
-DBufPacket::DBufPacket(uint32_t size)
+DBufPacket::DBufPacket(epicsUInt32 size)
 {
     io::LOG(io::DEBUG2) << "DBufPacket::DBufPacket()";
     assert((sizeof(size) == 4) && "The databuffer requires 4 byte uint");
-    for (uint32_t i=0; i<(size*4); i+=4)
+    for (decltype(size) i = 0; i < (size * 4); i += 4)
     {
         dbuf[i] = 0;
     }
@@ -31,33 +31,35 @@ int DBufPacket::clear()
 {
     io::LOG(io::DEBUG2) << "DBufPacket::clear()";
 
-    for (uint32_t i=0; i<(dbuf.size()*4); i+=4)
+    for (decltype(dbuf.size()) i = 0; i < (dbuf.size() * 4); i += 4)
     {
         dbuf[i] = 0;
     }
 
-return 0;
+    return 0;
 }
 
-int DBufPacket::write(uint32_t idx, uint32_t val)
+int DBufPacket::write(epicsUInt32 idx, epicsUInt32 val)
 {
-    uint32_t idx_shift, idx_base;
+    epicsUInt32 idx_shift, idx_base;
     io::LOG(io::DEBUG2) << "DBufPacket::write()";
 
     idx_shift = idx % 4;
-    idx_base = uint32_t(idx/4) * 4;
+    idx_base = epicsUInt32(idx / 4) * 4;
 
     //Clear the dbuf int field if it is the new entry
-    if (idx_shift == 0) dbuf[idx_base]=0;
+    if (idx_shift == 0)
+        dbuf[idx_base] = 0;
 
-    dbuf[idx_base] = uint32_t( ( dbuf[idx_base] | (val << (idx_shift * dbuf.size())) ) & 0xFFFFFFFF);
+    dbuf[idx_base] = epicsUInt32((dbuf[idx_base] | (val << (idx_shift * dbuf.size()))) & 0xFFFFFFFF);
 
-    io::LOG(io::DEBUG1) << "DBufPacket::write " << "idx_base " << idx_base << " idx_shift " << idx_shift << " dbuf[idx_base] " << dbuf[idx_base];
+    io::LOG(io::DEBUG1) << "DBufPacket::write "
+                        << "idx_base " << idx_base << " idx_shift " << idx_shift << " dbuf[idx_base] " << dbuf[idx_base];
 
     return 0;
 }
 
-int DBufPacket::read(uint32_t idx)
+int DBufPacket::read(epicsUInt32 idx)
 {
     return dbuf[idx];
 }
@@ -67,16 +69,14 @@ int DBufPacket::size()
     return dbuf.size();
 }
 
-std::vector<uint> DBufPacket::keylist()
+std::vector<epicsUInt32> DBufPacket::keylist()
 {
-    return cmn::map2vec<uint>(dbuf, 0);
+    return cmn::map2vec<epicsUInt32>(dbuf, 0);
 }
 
-std::vector<uint> DBufPacket::vallist()
+std::vector<epicsUInt32> DBufPacket::vallist()
 {
-    return cmn::map2vec<uint>(dbuf, 1);
+    return cmn::map2vec<epicsUInt32>(dbuf, 1);
 }
 
-
-} //namespace
-
+} // namespace dbf

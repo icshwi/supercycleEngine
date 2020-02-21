@@ -3,7 +3,7 @@
 #include "cmnbase.hpp"
 #include "scenv.hpp"
 
-SequenceHandler::SequenceHandler(std::string evgs, std::map<std::string, uint32_t> evtrm)
+SequenceHandler::SequenceHandler(std::string evgs, std::map<std::string, epicsUInt32> evtrm)
 {
     io::LOG(io::DEBUG2) << "SequenceHandler::SequenceHandler() evgs " << evgs;
     init(evgs, evtrm);
@@ -14,7 +14,7 @@ SequenceHandler::~SequenceHandler()
     io::LOG(io::DEBUG2) << "SequenceHandler::~SequenceHandler()";
 }
 
-void SequenceHandler::init(std::string evgs, std::map<std::string, uint32_t> evtrm)
+void SequenceHandler::init(std::string evgs, std::map<std::string, epicsUInt32> evtrm)
 {
     io::LOG(io::DEBUG2) << "SequenceHandler::init() evgs " << evgs;
     evtcoderef = evtrm;
@@ -37,8 +37,8 @@ void SequenceHandler::write(std::map<std::string, std::string> &rowm)
     }
 
     // Sort the timestamps
-    tst_evt_seq = cmn::flip_map<uint32_t, uint32_t>(evt_tst_seq);
+    tst_evt_seq = cmn::flip_map<epicsUInt32, epicsUInt32>(evt_tst_seq);
 
     io::LOG(io::DEBUG1) << "SequenceHandler::write() rowm " << cmn::map2str<std::string, std::string>(rowm);
-    io::LOG(io::DEBUG1) << "SequenceHandler::write() tst_evt_seq " << cmn::map2str<uint, uint>(tst_evt_seq);
+    io::LOG(io::DEBUG1) << "SequenceHandler::write() tst_evt_seq " << cmn::map2str<epicsUInt32, epicsUInt32>(tst_evt_seq);
 }

@@ -8,8 +8,13 @@
 #include <map>
 #include "scenv.hpp"
 
+#include <epicsTypes.h>
+
 namespace io
 {
+
+void json2map(Json::Value &, std::map<std::string, std::string> &, std::string key = "id");
+void json2map(Json::Value &, std::map<std::string, epicsUInt32> &, std::string key = "id");
 
 class JsonValue
 {

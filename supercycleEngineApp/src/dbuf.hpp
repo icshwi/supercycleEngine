@@ -4,6 +4,7 @@
 
 #include <map>
 #include <vector>
+#include <epicsTypes.h>
 
 namespace dbf
 {
@@ -12,18 +13,18 @@ class DBufPacket
 {
 public:
     //DataBuffer();
-    DBufPacket(uint32_t size = 8);
+    DBufPacket(epicsUInt32 size = 8);
     ~DBufPacket();
-    int write(uint32_t idx, uint32_t val);
-    int read(uint32_t idx);
+    int write(epicsUInt32 idx, epicsUInt32 val);
+    int read(epicsUInt32 idx);
     int clear();
     int size();
-    std::vector<uint32_t> keylist();
-    std::vector<uint32_t> vallist();
-    std::map<uint32_t, uint32_t> getDbuf() { return dbuf; };
+    std::vector<epicsUInt32> keylist();
+    std::vector<epicsUInt32> vallist();
+    std::map<epicsUInt32, epicsUInt32> getDbuf() { return dbuf; };
 
 private:
-    std::map<uint32_t, uint32_t> dbuf;
+    std::map<epicsUInt32, epicsUInt32> dbuf;
 };
 
 //void demo1();

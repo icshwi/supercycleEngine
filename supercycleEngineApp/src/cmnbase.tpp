@@ -3,7 +3,7 @@
 #define CMNBASE_TPP_
 
 template <class T>
-std::vector<T> map2vec(std::map<T, T> argm, uint col)
+std::vector<T> map2vec(std::map<T, T> argm, int col)
 {
     std::vector<T> v_tmp;
 
@@ -21,7 +21,7 @@ std::vector<T> map2vec(std::map<T, T> argm, uint col)
 }
 
 template <class T, class U>
-std::vector<std::string> map2vecstr(std::map<T, U> argm, uint col)
+std::vector<std::string> map2vecstr(std::map<T, U> argm, int col)
 {
     std::vector<std::string> tmpvs;
 
@@ -53,13 +53,13 @@ std::string vec2str(std::vector<T> argv)
 }
 
 template <class T>
-std::string mapcol2str(std::map<T, T> argm, uint col)
+std::string mapcol2str(std::map<T, T> argm, int col)
 {
     return vec2str<T>(map2vec<T>(argm, col));
 }
 
 template <class T, class U>
-std::string mapcol2str(std::map<T, U> argm, uint col)
+std::string mapcol2str(std::map<T, U> argm, int col)
 {
     if (col == 0)
         return vec2str<std::string>(map2vecstr<T, U>(argm, 0));

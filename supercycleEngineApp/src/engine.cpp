@@ -33,12 +33,12 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
     }
 }
 
-uint64_t engineCycle(io::IOBlock &io)
+epicsUInt64 engineCycle(io::IOBlock &io)
 {
     // Performance improvement of the engineCycle()
-    static uint64_t cycle_id = (cmn::wclock_s() - YEAR2020s) * CYCLE_fHz;
+    static epicsUInt64 cycle_id = (cmn::wclock_s() - YEAR2020s) * CYCLE_fHz;
     static std::map<std::string, std::string> scrow;
-    static uint tst = 0; // The timestamp holder
+    static epicsUInt32 tst = 0; // The timestamp holder
 
     io::LOG(io::DEBUG1) << "engineCycle()";
     io.sc_prd_us = cmn::period_us(tst);
@@ -71,7 +71,7 @@ uint64_t engineCycle(io::IOBlock &io)
     //Check row id
     try
     {
-        uint64_t row_id = std::stol(scrow["Id"]);
+        epicsUInt64 row_id = std::stoll(scrow["Id"]);
         if (row_id != io.sctable.getRowId())
             io::LOG(io::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink() << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
     }
@@ -90,7 +90,7 @@ uint64_t engineCycle(io::IOBlock &io)
     // ProtVer
     io.dbuf.write(env::ProtVer, io.json_dbuf.ProtVer);
     // IdCycle
-    io.dbuf.write(env::IdCycle, (uint32_t)cycle_id);
+    io.dbuf.write(env::IdCycle, (epicsUInt32)cycle_id);
 
     // SCTABLE operations
     // PBState
@@ -109,32 +109,9 @@ uint64_t engineCycle(io::IOBlock &io)
     // Update the event sequence container
     io.SEQ.write(scrow);
 
-    // GET Section - updates containers as well
-    //uint arg_tmp=0; // support variable
-    // TgRast
-    //io.dbuf.write(env::TgRast,  io.TgRastCa.get(arg_tmp));
-    // TgSeg
-    //io.dbuf.write(env::TgSeg,   io.TgSegCa.get(arg_tmp));
-    //update file for the nest cycle
-    //io.SCTableCa.get(io.sctable_csv);
-
-    // PUT Section - has to be last
-    // Databuffer Send
-    //io.DbusSendCa.put_vec(io.dbuf.vallist());     //Send the data buffer via the timing network
-    // Sequence Send
-    //io.SEQ.put();
-    // Other PVs
-    // IdCycle Send
-    //io.IdCycleCa.put(io.dbuf.read(env::IdCycle));
-    //io.PeriodCa.put(sc_prd_us);
-
-    // usleep(5); //Assure that data is in EVRs
-
-    // io.SoftEvtCa.put(env::DATAS);
-
     //Check the buffer
-    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.SEQ.getSeq()) " << cmn::map2str<uint, uint>(io.SEQ.getSeq());
-    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<uint,uint>(io.dbuf.getDbuf()) " << cmn::map2str<uint, uint>(io.dbuf.getDbuf());
+    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.SEQ.getSeq());
+    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 
     return cycle_id;
 }

@@ -5,6 +5,8 @@
 #include "scenv.hpp"
 #include "ioblock.hpp"
 
-uint64_t engineCycle(io::IOBlock &);
+#include <epicsTypes.h>
+
+epicsUInt64 engineCycle(io::IOBlock &);
 
 #endif // ENGINE_HPP

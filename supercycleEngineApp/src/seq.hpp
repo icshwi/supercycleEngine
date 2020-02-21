@@ -5,22 +5,24 @@
 #include <string>
 #include "cmnbase.hpp"
 
+#include <epicsTypes.h>
+
 class SequenceHandler
 {
 private:
-    std::map<std::string, uint32_t> evtcoderef;
-    std::map<uint32_t, uint32_t> evt_tst_seq;
-    std::map<uint32_t, uint32_t> tst_evt_seq;
+    std::map<std::string, epicsUInt32> evtcoderef;
+    std::map<epicsUInt32, epicsUInt32> evt_tst_seq;
+    std::map<epicsUInt32, epicsUInt32> tst_evt_seq;
 
 public:
-    SequenceHandler(std::string evgs, std::map<std::string, uint32_t> evtrm);
+    SequenceHandler(std::string evgs, std::map<std::string, epicsUInt32> evtrm);
     SequenceHandler(){};
     ~SequenceHandler();
-    void init(std::string evgs, std::map<std::string, uint32_t> evtrm);
+    void init(std::string evgs, std::map<std::string, epicsUInt32> evtrm);
     void write(std::map<std::string, std::string> &rowm);
-    std::map<uint32_t, uint32_t> getSeq() { return tst_evt_seq; };
-    std::vector<uint32_t> getSeqTst() { return cmn::map2vec<uint32_t>(tst_evt_seq, 0); };
-    std::vector<uint32_t> getSeqEvt() { return cmn::map2vec<uint32_t>(tst_evt_seq, 1); };
+    std::map<epicsUInt32, epicsUInt32> getSeq() { return tst_evt_seq; };
+    std::vector<epicsUInt32> getSeqTst() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 0); };
+    std::vector<epicsUInt32> getSeqEvt() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 1); };
 };
 
 #endif // SEQUENCE_HPP
