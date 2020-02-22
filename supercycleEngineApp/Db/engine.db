@@ -33,7 +33,7 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK6, "$(P)$(R=)Events")
 }
 
-record(longin, "$(P)$(R=)IdCycle") {
+record(int64in, "$(P)$(R=)IdCycle") {
     field(DESC, "ID Cycle")
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")

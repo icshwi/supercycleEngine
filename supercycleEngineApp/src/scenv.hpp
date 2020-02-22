@@ -10,7 +10,7 @@
 namespace env
 {
 
-#define YEAR2020s 1577836800
+#define EPICS2020s 946708560
 #define CYCLE_fHz 14
 
 enum EVT

@@ -8,14 +8,17 @@
 #include <algorithm>
 
 #include <epicsTypes.h>
+#include <epicsTime.h>
 //Common Libraries Namespace
 namespace cmn
 {
 
-std::string timestamp();
-epicsUInt64 wclock_s();
-epicsUInt64 tst_ms();
-epicsUInt64 tst_us();
+epicsUInt32 epicssTstSysNowSec();
+//epicsUInt32 wclock_s();
+epicsUInt32 tst_ms();
+epicsUInt32 tst_us();
+epicsUInt32 tst_ns();
+std::string epicssTstSysNow();
 epicsUInt32 period_us(epicsUInt32 &argtst);
 std::string str(int arg);
 std::string str(std::string arg);

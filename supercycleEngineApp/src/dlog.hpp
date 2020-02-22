@@ -44,7 +44,7 @@ public:
         msglevel = type;
         if (LOGCFG.headers && (msglevel >= *LOGCFG.level))
         {
-            operator<<(cmn::timestamp() + " " + getLabel(type) + " ");
+            operator<<(cmn::epicssTstSysNow() + " " + getLabel(type) + " ");
         }
     }
     ~LOG()

@@ -36,7 +36,7 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
 epicsUInt64 engineCycle(io::IOBlock &io)
 {
     // Performance improvement of the engineCycle()
-    static epicsUInt64 cycle_id = (cmn::wclock_s() - YEAR2020s) * CYCLE_fHz;
+    static epicsUInt64 cycle_id = (cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz;
     static std::map<std::string, std::string> scrow;
     static epicsUInt32 tst = 0; // The timestamp holder
 

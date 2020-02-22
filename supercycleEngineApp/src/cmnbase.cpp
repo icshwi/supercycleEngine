@@ -28,48 +28,43 @@ std::string str(std::string arg)
     return arg;
 }
 
-std::string timestamp()
+std::string epicssTstSysNow()
 {
-    std::string timestamp;
-    time_t curr_time;
-    tm *curr_tm;
-    char time_str[100];
-    struct timeval tp;
-    gettimeofday(&tp, NULL);
+    epicsTimeStamp ts;
+    char ts_buf[100];
 
-    time(&curr_time);
-    curr_tm = localtime(&curr_time);
-    strftime(time_str, 50, "%FT%T", curr_tm);
-    timestamp = time_str;
-    timestamp += '.';
-    timestamp += cmn::str(epicsUInt32(tp.tv_usec));
+    epicsTimeGetCurrent(&ts);
+    size_t r = epicsTimeToStrftime(ts_buf, sizeof(ts_buf),
+                                   "%Y-%m-%dT%H:%M:%S.%06f", &ts);
 
-    return timestamp;
+    if (r == 0)
+        return {};
+
+    std::string ts_str(ts_buf);
+
+    return ts_str;
 }
 
-/*
-int64_t tst_s()
+epicsUInt32 epicssTstSysNowSec()
 {
-    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-*/
-
-/*
-* Timestamp in seconds from epoc
-*/
-epicsUInt64 wclock_s()
-{
-    return (epicsUInt64)std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    epicsTimeStamp ts;
+    epicsTimeGetCurrent(&ts);
+    return ts.secPastEpoch;
 }
 
-epicsUInt64 tst_ms()
+//epicsUInt32 wclock_s()
+//{
+//    return (epicsUInt32)std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+//}
+
+epicsUInt32 tst_ms()
 {
-    return (epicsUInt64)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    return (epicsUInt32)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
-epicsUInt64 tst_us()
+epicsUInt32 tst_us()
 {
-    return (epicsUInt64)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    return (epicsUInt32)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
 epicsUInt32 period_us(epicsUInt32 &argtst)
