@@ -20,12 +20,10 @@ void SequenceHandler::init(std::string evgs, std::map<std::string, epicsUInt32> 
     evtcoderef = evtrm;
 }
 
-void SequenceHandler::write(std::map<std::string, std::string> &rowm, epicsUInt32 offset)
+void SequenceHandler::write(std::map<std::string, std::string> &rowm)
 {
     io::LOG(io::DEBUG2) << "SequenceHandler::write()";
     evt_tst_seq = {};
-
-    evt_tst_seq[env::DATA] = offset;
 
     for (auto const &it : evtcoderef)
     {

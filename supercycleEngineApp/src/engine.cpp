@@ -33,11 +33,16 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
     }
 }
 
+void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
+{
+    rowm.insert(argm.begin(), argm.end());
+}
+
 epicsUInt64 engineCycle(io::IOBlock &io)
 {
     // Performance improvement of the engineCycle()
     static epicsUInt64 cycle_id = (cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz;
-    static std::map<std::string, std::string> scrow;
+    static std::map<std::string, std::string> cycle_row;
     static epicsUInt32 tst = 0; // The timestamp holder
 
     io::LOG(io::DEBUG1) << "engineCycle()";
@@ -53,16 +58,16 @@ epicsUInt64 engineCycle(io::IOBlock &io)
 
     // Get sctable row
     cycle_id++;
-    scrow = io.sctable.getRowMap();
+    cycle_row = io.sctable.getRowMap();
     // Loop the supercycle table
-    if (scrow.empty())
+    if (cycle_row.empty())
     {
         io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() " << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
         io.sctable.init(io.sctable.getFileLink());
-        scrow = io.sctable.getRowMap();
-        if (scrow.empty())
+        cycle_row = io.sctable.getRowMap();
+        if (cycle_row.empty())
         {
-            io::LOG(io::ERROR) << "engineCycle() scrow.empty() corrupted file";
+            io::LOG(io::ERROR) << "engineCycle() cycle_row.empty() corrupted file";
             return 1; // if wrong file, inhibit the engine
         }
     }
@@ -71,7 +76,7 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     //Check row id
     try
     {
-        epicsUInt64 row_id = std::stoll(scrow["Id"]);
+        epicsUInt64 row_id = std::stoll(cycle_row["Id"]);
         if (row_id != io.sctable.getRowId())
             io::LOG(io::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink() << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
     }
@@ -81,7 +86,12 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     }
     // Start the cycle
     // ===============
+    // Write other cycle variables
+    std::map<std::string, std::string> cycle_row_adds = {};
+    cycle_row_adds[env::EVT2Str.at(env::DATA)] = cmn::str(io.cOffset);
 
+    // Insert other cycle variables
+    cycle_row_insert(cycle_row, cycle_row_adds);
     // Update the databuffer container
 
     io.dbuf.clear();
@@ -94,20 +104,20 @@ epicsUInt64 engineCycle(io::IOBlock &io)
 
     // SCTABLE operations
     // PBState
-    io_dbuf_safe_write(io.dbuf, scrow, env::PBState, io.json_dbuf.PBState);
+    io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.json_dbuf.PBState);
     // PBDest
-    io_dbuf_safe_write(io.dbuf, scrow, env::PBDest, io.json_dbuf.PBDest);
+    io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.json_dbuf.PBDest);
     // PBMod
-    io_dbuf_safe_write(io.dbuf, scrow, env::PBMod, io.json_dbuf.PBMod);
+    io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.json_dbuf.PBMod);
     // PBLen
-    io_dbuf_safe_write(io.dbuf, scrow, env::PBLen);
+    io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
     // PBEn
-    io_dbuf_safe_write(io.dbuf, scrow, env::PBEn);
+    io_dbuf_safe_write(io.dbuf, cycle_row, env::PBEn);
     // PBCurr
-    io_dbuf_safe_write(io.dbuf, scrow, env::PBCurr);
+    io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 
     // Update the event sequence container
-    io.SEQ.write(scrow, io.cOffset);
+    io.SEQ.write(cycle_row);
 
     //Check the buffer
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.SEQ.getSeq());

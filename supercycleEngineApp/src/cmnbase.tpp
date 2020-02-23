@@ -2,6 +2,9 @@
 #ifndef CMNBASE_TPP_
 #define CMNBASE_TPP_
 
+namespace cmn
+{
+
 template <class T>
 std::vector<T> map2vec(std::map<T, T> argm, int col)
 {
@@ -115,5 +118,7 @@ size_t vec2p(void *destarr, std::vector<T> srcv)
     }
     return i;
 }
+
+} // namespace cmn
 
 #endif // CMNBASE_TPP

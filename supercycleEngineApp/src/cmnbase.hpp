@@ -12,7 +12,8 @@
 //Common Libraries Namespace
 namespace cmn
 {
-
+std::string str(epicsUInt32 arg);
+std::string str(std::string arg);
 epicsUInt32 epicssTstSysNowSec();
 //epicsUInt32 wclock_s();
 epicsUInt32 tst_ms();
@@ -20,13 +21,11 @@ epicsUInt32 tst_us();
 epicsUInt32 tst_ns();
 std::string epicssTstSysNow();
 epicsUInt32 period_us(epicsUInt32 &argtst);
-std::string str(int arg);
-std::string str(std::string arg);
 void gcc_info();
 void gcc_assert(long ver = 201103L);
 
-#include "cmnbase.tpp"
-
 } // namespace cmn
+
+#include "cmnbase.tpp"
 
 #endif // CMNBASE_HPP

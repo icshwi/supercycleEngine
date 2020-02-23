@@ -97,7 +97,7 @@ CSVReader::getRowMap()
         return {};
     }
 
-    for (decltype(key_row.size()) i = 0; i < key_row.size(); ++i)
+    for (size_t i = 0; i < key_row.size(); ++i)
     {
         mp.insert({key_row[i], row[i]});
     }

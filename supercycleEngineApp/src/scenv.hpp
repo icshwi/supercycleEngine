@@ -45,6 +45,8 @@ const boost::unordered_map<DBFIDX, std::string> DBFIDX2Str =
 
 #define GetDbfIdx2Str(idx) (env::DBFIDX2Str.at(env::idx))
 
+//std::map<std::string, epicsUInt32> MEVTS = {{"EVT", 10}};
+
 } // namespace env
 
 #endif // SCENV_HPP_

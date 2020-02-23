@@ -16,7 +16,7 @@
 namespace cmn
 {
 
-std::string str(int arg)
+std::string str(epicsUInt32 arg)
 {
     std::stringstream ss;
     ss << arg;
