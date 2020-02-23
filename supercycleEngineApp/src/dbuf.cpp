@@ -15,7 +15,7 @@ DBufPacket::DBufPacket(epicsUInt32 size)
 {
     io::LOG(io::DEBUG2) << "DBufPacket::DBufPacket()";
     assert((sizeof(size) == 4) && "The databuffer requires 4 byte uint");
-    for (decltype(size) i = 0; i < (size * 4); i += 4)
+    for (size_t i = 0; i < (size * 4); i += 4)
     {
         dbuf[i] = 0;
     }
@@ -31,7 +31,7 @@ int DBufPacket::clear()
 {
     io::LOG(io::DEBUG2) << "DBufPacket::clear()";
 
-    for (decltype(dbuf.size()) i = 0; i < (dbuf.size() * 4); i += 4)
+    for (size_t i = 0; i < (dbuf.size() * 4); i += 4)
     {
         dbuf[i] = 0;
     }

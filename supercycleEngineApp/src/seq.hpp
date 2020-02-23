@@ -19,7 +19,7 @@ public:
     SequenceHandler(){};
     ~SequenceHandler();
     void init(std::string evgs, std::map<std::string, epicsUInt32> evtrm);
-    void write(std::map<std::string, std::string> &rowm);
+    void write(std::map<std::string, std::string> &rowm, epicsUInt32 offset = 30000);
     std::map<epicsUInt32, epicsUInt32> getSeq() { return tst_evt_seq; };
     std::vector<epicsUInt32> getSeqTst() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 0); };
     std::vector<epicsUInt32> getSeqEvt() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 1); };

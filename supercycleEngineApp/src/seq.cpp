@@ -20,13 +20,12 @@ void SequenceHandler::init(std::string evgs, std::map<std::string, epicsUInt32> 
     evtcoderef = evtrm;
 }
 
-void SequenceHandler::write(std::map<std::string, std::string> &rowm)
+void SequenceHandler::write(std::map<std::string, std::string> &rowm, epicsUInt32 offset)
 {
     io::LOG(io::DEBUG2) << "SequenceHandler::write()";
     evt_tst_seq = {};
 
-    evt_tst_seq[env::SEQ_END] = 50000;
-    evt_tst_seq[env::DATA] = 30000;
+    evt_tst_seq[env::DATA] = offset;
 
     for (auto const &it : evtcoderef)
     {
@@ -38,6 +37,9 @@ void SequenceHandler::write(std::map<std::string, std::string> &rowm)
 
     // Sort the timestamps
     tst_evt_seq = cmn::flip_map<epicsUInt32, epicsUInt32>(evt_tst_seq);
+
+    // Terminate the sequence
+    tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SEQ_END;
 
     io::LOG(io::DEBUG1) << "SequenceHandler::write() rowm " << cmn::map2str<std::string, std::string>(rowm);
     io::LOG(io::DEBUG1) << "SequenceHandler::write() tst_evt_seq " << cmn::map2str<epicsUInt32, epicsUInt32>(tst_evt_seq);

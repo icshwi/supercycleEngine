@@ -10,12 +10,13 @@
 
 extern io::IOBlock io_block;
 
-//static long initEngine(aSubRecord *pRecord)
-//{
-//    //aSubRecord *prec = (aSubRecord *)pRecord;
-//    //prec->valu = &enabled;
-//    return 0;
-//}
+static long initEngine(aSubRecord *prec)
+{
+    //aSubRecord *prec = (aSubRecord *)pRecord;
+    //prec->valu = &enabled;
+    io_block.cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); // [us]
+    return 0;
+}
 
 static long ioEngine(aSubRecord *prec)
 {
@@ -25,7 +26,7 @@ static long ioEngine(aSubRecord *prec)
     epicsUInt32 *pvalaU32 = (epicsUInt32 *)prec->vala;
 
     pvalaU64[0] = IdCycle; // 0,1
-    pvalaU32[2] = (epicsUInt32)io_block.sc_prd_us;
+    pvalaU32[2] = (epicsUInt32)io_block.cPeriod;
     pvalaU32[3] = (epicsUInt32)env::DATAS;
 
     // Update the Dbuf
@@ -34,10 +35,13 @@ static long ioEngine(aSubRecord *prec)
     prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io_block.SEQ.getSeqTst());
     prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io_block.SEQ.getSeqEvt());
 
+    epicsUInt32 *paU32 = (epicsUInt32 *)prec->a;
+    io_block.cOffset = paU32[0];
+
     return 0;
 }
 
 // Register the function
 
-//epicsRegisterFunction(initEngine);
+epicsRegisterFunction(initEngine);
 epicsRegisterFunction(ioEngine);

@@ -100,11 +100,11 @@ std::map<B, A> flip_map(const std::map<A, B> &argm)
 }
 
 template <class T>
-int vec2p(void *destarr, std::vector<T> srcv)
+size_t vec2p(void *destarr, std::vector<T> srcv)
 {
     T *dest = (T *)destarr;
 
-    int i = 0;
+    size_t i = 0;
     if (srcv.empty() == false)
     {
         for (auto const &it : srcv)

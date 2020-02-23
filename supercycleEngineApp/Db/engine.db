@@ -9,25 +9,38 @@ record(longin, "$(P)$(R=)Trig-Cnt") {
     field(FLNK, "$(P)$(R=)EngineCycle")
 }
 
+record(longout, "$(P)$(R=)Offset") {
+    field(DESC, "Cycle offset")
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(EGU, "us")
+    field(VAL, 30000)
+}
+
 record(aSub, "$(P)$(R=)EngineCycle") {
-    #field(INAM, initEngine)
+    field(INAM, initEngine)
     field(SNAM, ioEngine)
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
-    field(FTVA, "ULONG")
-    field(NOVA, "100")
-    field(FTVB, "ULONG")
-    field(NOVB, "100")
-    field(FTVC, "ULONG")
-    field(NOVC, "100")
-    field(FTVD, "ULONG")
-    field(NOVD, "100")
+    field(FTVA, ULONG)
+    field(NOVA, 100)
+    field(FTVB, ULONG)
+    field(NOVB, 100)
+    field(FTVC, ULONG)
+    field(NOVC, 100)
+    field(FTVD, ULONG)
+    field(NOVD, 100)
 
     $(ENEVG=)field(OUTB, "$(PEVG)dbus-send-u32 CP")
 
     # Alternate
     #$(ENEVG=)field(OUTC, "$(PEVG)SoftSeq0-Timestamp-SP")
     #$(ENEVG=)field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP")
+
+    #inputs
+    field(FTA, ULONG)
+    field(NOA, 10)
+    field(INPA, "$(P)$(R=)Offset.VAL")
 
     field(FLNK, "$(P)$(R=)Trig-FOut_")
 }

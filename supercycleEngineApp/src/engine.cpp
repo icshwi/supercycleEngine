@@ -41,8 +41,8 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     static epicsUInt32 tst = 0; // The timestamp holder
 
     io::LOG(io::DEBUG1) << "engineCycle()";
-    io.sc_prd_us = cmn::period_us(tst);
-    io::LOG(io::DEBUG) << "engineCycle() io.sc_prd_us " << io.sc_prd_us;
+    io.cPeriod = cmn::period_us(tst);
+    io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod;
 
     // Engine Maintenance
     if (io.get_sctable_csv_link().compare(io.sctable.getFileLink()) != 0)
@@ -107,7 +107,7 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     io_dbuf_safe_write(io.dbuf, scrow, env::PBCurr);
 
     // Update the event sequence container
-    io.SEQ.write(scrow);
+    io.SEQ.write(scrow, io.cOffset);
 
     //Check the buffer
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.SEQ.getSeq());
