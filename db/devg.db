@@ -4,7 +4,8 @@ record(calcout, "$(P)$(R=)Trig") {
     field(CALC, "(A<2147483647)?A+1:1")
     field(SCAN, "1 second")
     field(INPA, "$(P)$(R=)Trig")
-    field(FLNK, "$(PSCE)EngineCycle NPP MS")
+
+    #field(FLNK, "$ (PSCE)EngineCycle NPP MS")
 }
 
 record(bo, "$(P)$(R=)SoftSeq0-Enable-Cmd") {

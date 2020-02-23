@@ -19,7 +19,7 @@ supercycleEngine_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
 
-dbLoadRecords("db/devg.db",     "P=$(PEVG01),   PSCE=$(PSCE01)")
+dbLoadRecords("db/devg.db",     "P=$(PEVG01)")
 dbLoadRecords("db/engine.db",   "P=$(PSCE01),   PEVG=$(PEVG01), ENEVG=")
 
 var iodebug 4

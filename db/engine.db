@@ -1,3 +1,14 @@
+record(longin, "$(P)$(R=)Trig-Cnt") {
+    field(DESC, "Trigger Counter")
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(EGU, "-")
+    $(ENEVG=)field(INP, "$(PEVG)Trig CP")
+    #$(ENEVG=)field(TSEL, "$(PEVG)Trig.TSEL")
+
+    field(FLNK, "$(P)$(R=)EngineCycle")
+}
+
 record(aSub, "$(P)$(R=)EngineCycle") {
     #field(INAM, initEngine)
     field(SNAM, ioEngine)
