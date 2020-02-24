@@ -21,11 +21,17 @@ private:
     std::string psce = "TD-M:TS-SCE-01:";
     std::string pevg = "MTCA5U-EVG:";
 
-    std::string reftabs_TOP = "../../../reftabs/";
     std::string init_dbuf_json = "databuffer-ess.json";
     std::string init_mevts_json = "mevts-ess.json";
+    std::string reftabs_TOP = "../../../reftabs/";
 
 public:
+    IOBlock();
+    ~IOBlock();
+    //int init(int argc, char **argv);
+    int init();
+    int init(char *args);
+
     std::string sctable_csv = "example02.csv";
     epicsUInt32 cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); //sc engine period [us]
     epicsUInt32 cOffset = 30000;
@@ -33,12 +39,6 @@ public:
 
     std::string get_PSCE() { return psce; };
     std::string get_PEVG() { return pevg; };
-
-    IOBlock();
-    ~IOBlock();
-    int init(int argc, char **argv);
-    int init();
-
     std::string get_init_dbuf_json_link() { return (reftabs_TOP + "init/" + init_dbuf_json); };
     std::string get_init_mevts_json_link() { return (reftabs_TOP + "init/" + init_mevts_json); };
     std::string get_sctable_csv_link() { return (reftabs_TOP + "supercycles/" + sctable_csv); };

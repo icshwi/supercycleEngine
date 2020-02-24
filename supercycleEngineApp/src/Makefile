@@ -5,7 +5,7 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 #USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
-USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
+USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra -Wno-deprecated-declarations
 
 # ============================
 # Build an IOC support library
@@ -29,6 +29,7 @@ DBD += supercycleEngine.dbd
 supercycleEngine_DBD += base.dbd
 supercycleEngine_DBD += engine.dbd
 supercycleEngine_DBD += devASubBuf.dbd
+supercycleEngine_DBD += devStringoutCtrl.dbd
 
 # Include dbd files from all support applications:
 #supercycleEngine_DBD += xxx.dbd
@@ -49,6 +50,7 @@ supercycleEngine_SRCS += engine.cpp
  # Devs
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp
+supercycleEngine_SRCS += devStringoutCtrl.dbd
  # Env last
 supercycleEngine_SRCS += iocVars.cpp
 supercycleEngine_SRCS += engineInit.cpp

@@ -7,14 +7,13 @@
 #include "engine.hpp"
 #include "ioblock.hpp"
 #include "cmnbase.hpp"
+#include "iocVars.hpp"
 
 extern io::IOBlock io_block;
 
 static long initEngine(aSubRecord *prec)
 {
-    //aSubRecord *prec = (aSubRecord *)pRecord;
-    //prec->valu = &enabled;
-    //io_block.cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); // [us]
+    init_io_block();
     return 0;
 }
 

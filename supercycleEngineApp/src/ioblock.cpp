@@ -36,4 +36,12 @@ int IOBlock::init()
     return 0;
 }
 
+int IOBlock::init(char *args)
+{
+    std::string tmps(args);
+    reftabs_TOP = tmps;
+
+    return 0;
+}
+
 } // namespace io

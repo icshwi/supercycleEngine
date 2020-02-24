@@ -4,7 +4,7 @@
 #include <epicsExport.h>
 
 #include <algorithm> // std::min
-#include <stdio.h>
+//#include <stdio.h>
 #include <string.h>
 
 static long ioASubBuf(aSubRecord *prec)

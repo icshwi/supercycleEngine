@@ -21,8 +21,9 @@ supercycleEngine_registerRecordDeviceDriver pdbbase
 
 dbLoadRecords("db/devg.db",     "P=$(PEVG01)")
 dbLoadRecords("db/engine.db",   "P=$(PSCE01),   PEVG=$(PEVG01), ENEVG=")
+dbLoadRecords("db/engineCtrl.db",   "P=$(PSCE01)")
 
-var iodebug 3
+var iodebug 4
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
