@@ -3,8 +3,8 @@ record(longin, "$(P)$(R=)Trig-Cnt") {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")
     field(EGU, "-")
-    $(ENEVG=)field(INP, "$(PEVG)Trig CP")
-    #$(ENEVG=)field(TSEL, "$(PEVG)Trig.TSEL")
+    field(INP, "$(PEVG)Trig CP")
+    #field(TSEL, "$(PEVG)Trig.TSEL")
 
     field(FLNK, "$(P)$(R=)EngineCycle")
 }
@@ -31,11 +31,11 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     field(FTVD, ULONG)
     field(NOVD, 100)
 
-    $(ENEVG=)field(OUTB, "$(PEVG)dbus-send-u32 CP")
+    field(OUTB, "$(PEVG)dbus-send-u32 CP")
 
     # Alternate
-    #$(ENEVG=)field(OUTC, "$(PEVG)SoftSeq0-Timestamp-SP")
-    #$(ENEVG=)field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP")
+    #field(OUTC, "$(PEVG)SoftSeq0-Timestamp-SP")
+    #field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP")
 
     #inputs
     field(FTA, ULONG)
@@ -164,7 +164,7 @@ record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
     field(NOVA, "100")
 
     field(INPA, "$(P)$(R=)EngineCycle.VALC")
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-Timestamp-SP CP")
+    field(OUTA, "$(PEVG)SoftSeq0-Timestamp-SP CP")
 
     #field(FLNK, "$(P)$(R=)Evt-DMux-aSub_")
 }
@@ -180,7 +180,7 @@ record(aSub, "$(P)$(R=)Seq0-Evt-aSubBuf_") {
     field(NOVA, "100")
 
     field(INPA, "$(P)$(R=)EngineCycle.VALD")
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq0-EvtCode-SP CP")
+    field(OUTA, "$(PEVG)SoftSeq0-EvtCode-SP CP")
 
     field(FLNK, "$(P)$(R=)Seq0-Ctrl-FOut_")
 }
@@ -196,7 +196,7 @@ record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
     field(NOVA, "100")
 
     field(INPA, "$(P)$(R=)EngineCycle.VALC")
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq1-Timestamp-SP CP")
+    field(OUTA, "$(PEVG)SoftSeq1-Timestamp-SP CP")
 
     #field(FLNK, "$(P)$(R=)Seq1-Ctrl-FOut_")
 }
@@ -212,7 +212,7 @@ record(aSub, "$(P)$(R=)Seq1-Evt-aSubBuf_") {
     field(NOVA, "100")
 
     field(INPA, "$(P)$(R=)EngineCycle.VALD")
-    $(ENEVG=)field(OUTA, "$(PEVG)SoftSeq1-EvtCode-SP CP")
+    field(OUTA, "$(PEVG)SoftSeq1-EvtCode-SP CP")
 
     field(FLNK, "$(P)$(R=)Seq1-Ctrl-FOut_")
 }
@@ -221,17 +221,17 @@ record(fanout, "$(P)$(R=)Seq0-Ctrl-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SELM, "All")
     #field(PINI, "RUNNING")
-    $(ENEVG=)field(LNK1, "$(PEVG)SoftSeq1-Disable-Cmd CP")
-    $(ENEVG=)field(LNK2, "$(PEVG)SoftSeq0-Commit-Cmd CP")
-    $(ENEVG=)field(LNK3, "$(PEVG)SoftSeq0-Enable-Cmd CP")
+    field(LNK1, "$(PEVG)SoftSeq1-Disable-Cmd CP")
+    field(LNK2, "$(PEVG)SoftSeq0-Commit-Cmd CP")
+    field(LNK3, "$(PEVG)SoftSeq0-Enable-Cmd CP")
 }
 
 record(fanout, "$(P)$(R=)Seq1-Ctrl-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SELM, "All")
     #field(PINI, "RUNNING")
-    $(ENEVG=)field(LNK1, "$(PEVG)SoftSeq0-Disable-Cmd CP")
-    $(ENEVG=)field(LNK2, "$(PEVG)SoftSeq1-Commit-Cmd CP")
-    $(ENEVG=)field(LNK3, "$(PEVG)SoftSeq1-Enable-Cmd CP")
+    field(LNK1, "$(PEVG)SoftSeq0-Disable-Cmd CP")
+    field(LNK2, "$(PEVG)SoftSeq1-Commit-Cmd CP")
+    field(LNK3, "$(PEVG)SoftSeq1-Enable-Cmd CP")
 }
 
