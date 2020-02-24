@@ -16,15 +16,15 @@ namespace env
 
 enum EVT
 {
-    C14HZ = 0x0E,  // DOWNSTREAM START OF CYCLE
-    DATA = 0x10,   // DOWNSTREAM SEND DATA BUFFER
-    DATAS = 0x11,  // DOWNSTREAM Trigger the cycle within the supercycle APP
-    SEQ_END = 127, // DOWNSTREAM Trigger the cycle within the supercycle APP
+    C14HZ = 0x0E,   // DOWNSTREAM START OF CYCLE
+    COFFSET = 0x10, // DOWNSTREAM SEND COFFSET BUFFER
+    CSYNC = 0x11,   // DOWNSTREAM Trigger the cycle within the supercycle APP
+    SEQ_END = 127,  // DOWNSTREAM Trigger the cycle within the supercycle APP
 };
 
 //std::cout << " enum ProtoVer " << EVTS2Str.at(ProtoVer) << std::endl;
 const boost::unordered_map<EVT, std::string> EVT2Str =
-    boost::assign::map_list_of(C14HZ, "14HZ")(DATA, "DATA")(DATAS, "DATAS")(SEQ_END, "SEQ_END");
+    boost::assign::map_list_of(C14HZ, "14HZ")(COFFSET, "COFFSET")(CSYNC, "CSYNC")(SEQ_END, "SEQ_END");
 
 enum DBFIDX
 {

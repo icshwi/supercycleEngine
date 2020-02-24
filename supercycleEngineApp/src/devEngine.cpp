@@ -28,7 +28,7 @@ static long ioEngine(aSubRecord *prec)
 
     pvalaU64[0] = io_block.cId; // 0,1
     pvalaU32[2] = (epicsUInt32)io_block.cPeriod;
-    pvalaU32[3] = (epicsUInt32)env::DATAS;
+    pvalaU32[3] = (epicsUInt32)env::CSYNC;
 
     // Update the Dbuf
     // neva , novb (max)
