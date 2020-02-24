@@ -14,18 +14,18 @@ static long initEngine(aSubRecord *prec)
 {
     //aSubRecord *prec = (aSubRecord *)pRecord;
     //prec->valu = &enabled;
-    io_block.cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); // [us]
+    //io_block.cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); // [us]
     return 0;
 }
 
 static long ioEngine(aSubRecord *prec)
 {
-    epicsUInt64 IdCycle = engineCycle(io_block);
+    engineCycle(io_block);
     // Update the meta
     epicsUInt64 *pvalaU64 = (epicsUInt64 *)prec->vala;
     epicsUInt32 *pvalaU32 = (epicsUInt32 *)prec->vala;
 
-    pvalaU64[0] = IdCycle; // 0,1
+    pvalaU64[0] = io_block.cId; // 0,1
     pvalaU32[2] = (epicsUInt32)io_block.cPeriod;
     pvalaU32[3] = (epicsUInt32)env::DATAS;
 

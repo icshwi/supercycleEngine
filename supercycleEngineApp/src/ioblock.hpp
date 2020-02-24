@@ -27,8 +27,10 @@ private:
 
 public:
     std::string sctable_csv = "example02.csv";
-    epicsUInt32 cPeriod = 0; //sc engine period [us]
+    epicsUInt32 cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); //sc engine period [us]
     epicsUInt32 cOffset = 30000;
+    epicsUInt64 cId = (cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz;
+
     std::string get_PSCE() { return psce; };
     std::string get_PEVG() { return pevg; };
 

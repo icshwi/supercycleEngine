@@ -22,14 +22,14 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     field(SNAM, ioEngine)
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
-    field(FTVA, "ULONG")
-    field(NOVA, "100")
-    field(FTVB, "ULONG")
-    field(NOVB, "100")
-    field(FTVC, "ULONG")
-    field(NOVC, "100")
-    field(FTVD, "ULONG")
-    field(NOVD, "100")
+    field(FTVA, ULONG)
+    field(NOVA, 100)
+    field(FTVB, ULONG)
+    field(NOVB, 100)
+    field(FTVC, ULONG)
+    field(NOVC, 100)
+    field(FTVD, ULONG)
+    field(NOVD, 100)
 
     $(ENEVG=)field(OUTB, "$(PEVG)dbus-send-u32 CP")
 
@@ -38,8 +38,8 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     #$(ENEVG=)field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP")
 
     #inputs
-    field(FTA, "ULONG")
-    field(NOA, "10")
+    field(FTA, ULONG)
+    field(NOA, 10)
     field(INPA, "$(P)$(R=)Offset.VAL")
 
     field(FLNK, "$(P)$(R=)Trig-FOut_")
@@ -62,7 +62,7 @@ record(int64in, "$(P)$(R=)IdCycle") {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")
     field(EGU, "id")
-    field(INP, "$(P)$(R=)EngineCycle.VALA")
+    field(INP, "$(P)$(R=)EngineCycle.VALA[0]")
     alias("$(P)$(R=)HEARTBEAT")
 }
 
@@ -71,7 +71,7 @@ record(longin, "$(P)$(R=)Period") {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")
     field(EGU, "us")
-    field(INP, "$(P)$(R=)Period-subA_")
+    field(INP, "$(P)$(R=)EngineCycle.VALA[2]")
 
     #field(FLNK, "$(P)$(R=)Seq0-En-Cmd CP NMS")
     #field(HIHI, "2000000") #0.5Hz
@@ -82,15 +82,6 @@ record(longin, "$(P)$(R=)Period") {
 	#field(HSV,  "MINOR")
 	#field(LSV,  "MINOR")
 	#field(LLSV, "MAJOR")
-}
-
-record(subArray, "$(P)$(R=)Period-subA_") {
-  field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R=)EngineCycle.VALA[2] CP")
-  field(INDX, "2")
-  field(NELM, "1") # "2046")
-  field(MALM, "3") # "2046")
-  field(FTVL, "ULONG")
 }
 
 #record(longin, "$(P)$(R=)Sync-lIn_") {

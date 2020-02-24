@@ -7,6 +7,6 @@
 
 #include <epicsTypes.h>
 
-epicsUInt64 engineCycle(io::IOBlock &);
+int engineCycle(io::IOBlock &);
 
 #endif // ENGINE_HPP

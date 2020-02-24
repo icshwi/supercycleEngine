@@ -38,28 +38,8 @@ void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::st
     rowm.insert(argm.begin(), argm.end());
 }
 
-epicsUInt64 engineCycle(io::IOBlock &io)
+int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
 {
-    // Performance improvement of the engineCycle()
-    static epicsUInt64 cycle_id = (cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz;
-    static std::map<std::string, std::string> cycle_row;
-    static epicsUInt32 tst = 0; // The timestamp holder
-
-    io::LOG(io::DEBUG1) << "engineCycle()";
-    io.cPeriod = cmn::period_us(tst);
-    io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod;
-
-    // Engine Maintenance
-    if (io.get_sctable_csv_link().compare(io.sctable.getFileLink()) != 0)
-    {
-        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() " << io.sctable.getFileLink() << " NEW io.get_sctable_csv_link() " << io.get_sctable_csv_link();
-        io.sctable.init(io.get_sctable_csv_link());
-    }
-
-    // Get sctable row
-    cycle_id++;
-    cycle_row = io.sctable.getRowMap();
-    // Loop the supercycle table
     if (cycle_row.empty())
     {
         io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() " << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
@@ -82,10 +62,42 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     }
     catch (...)
     {
-        io::LOG(io::ERROR) << "engineCycle() Id checkup failed at cycle_id " << cycle_id;
+        io::LOG(io::ERROR) << "engineCycle() Id checkup failed at io.cId " << io.cId;
     }
+    return 0;
+}
+
+int sctable_switch(io::IOBlock &io)
+{
+    if (io.get_sctable_csv_link().compare(io.sctable.getFileLink()) != 0)
+    {
+        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() " << io.sctable.getFileLink() << " NEW io.get_sctable_csv_link() " << io.get_sctable_csv_link();
+        io.sctable.init(io.get_sctable_csv_link());
+    }
+    return 0;
+}
+
+int engineCycle(io::IOBlock &io)
+{
+    // Performance improvement of the engineCycle()
+    static std::map<std::string, std::string> cycle_row;
+    static epicsUInt32 tst = 0; // The timestamp holder
+
+    io::LOG(io::DEBUG1) << "engineCycle()";
+    io.cPeriod = cmn::period_us(tst);
+    io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod;
+
     // Start the cycle
     // ===============
+    io.cId++;
+    // Change the table if requested
+    sctable_switch(io);
+    // Get sctable row
+    cycle_row = io.sctable.getRowMap();
+    // Loop the supercycle table
+    if (sctable_loopback(io, cycle_row) > 0)
+        return 1;
+
     // Write other cycle variables
     std::map<std::string, std::string> cycle_row_adds = {};
     cycle_row_adds[env::EVT2Str.at(env::DATA)] = cmn::str(io.cOffset);
@@ -100,7 +112,7 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     // ProtVer
     io.dbuf.write(env::ProtVer, io.json_dbuf.ProtVer);
     // IdCycle
-    io.dbuf.write(env::IdCycle, (epicsUInt32)cycle_id);
+    io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);
 
     // SCTABLE operations
     // PBState
@@ -123,5 +135,5 @@ epicsUInt64 engineCycle(io::IOBlock &io)
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.SEQ.getSeq());
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 
-    return cycle_id;
+    return 0;
 }
