@@ -69,10 +69,10 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
 
 int sctable_switch(io::IOBlock &io)
 {
-    if (io.get_sctable_csv_link().compare(io.sctable.getFileLink()) != 0)
+    if (io.get_SCTable_link().compare(io.sctable.getFileLink()) != 0)
     {
-        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() " << io.sctable.getFileLink() << " NEW io.get_sctable_csv_link() " << io.get_sctable_csv_link();
-        io.sctable.init(io.get_sctable_csv_link());
+        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() " << io.sctable.getFileLink() << " NEW io.get_SCTable_link() " << io.get_SCTable_link();
+        io.sctable.init(io.get_SCTable_link());
     }
     return 0;
 }

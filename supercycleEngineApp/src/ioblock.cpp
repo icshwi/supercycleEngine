@@ -19,27 +19,31 @@ IOBlock::~IOBlock()
 IOBlock::IOBlock()
     : json_dbuf(get_init_dbuf_json_link()),
       json_evt(get_init_mevts_json_link()),
-      sctable(get_sctable_csv_link())
+      sctable(get_SCTable_link())
 {
     init();
 }
 
 int IOBlock::init()
 {
-    SEQ.init(pevg, json_evt.getEvtMap());
+    SEQ.init(json_evt.getEvtMap());
 
-    io::LOG(io::INFO) << "IOBlock::init() psce " << psce << " pevg " << pevg;
+    io::LOG(io::INFO) << "IOBlock::init()";
     io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() " << get_init_dbuf_json_link();
     io::LOG(io::INFO) << "IOBlock::init() get_init_mevts_json_link() " << get_init_mevts_json_link();
-    io::LOG(io::INFO) << "IOBlock::init() get_sctable_csv_link() " << get_sctable_csv_link();
+    io::LOG(io::INFO) << "IOBlock::init() get_sctable_csv_link() " << get_SCTable_link();
 
     return 0;
 }
 
-int IOBlock::init(char *args)
+int IOBlock::dbSync()
 {
-    std::string tmps(args);
-    reftabs_TOP = tmps;
+
+    for (auto const &it : dbCtrlArgs)
+    {
+        if (cmn::substring(it.first, GETVARNAME(SCTable)))
+            SCTable = it.second;
+    }
 
     return 0;
 }

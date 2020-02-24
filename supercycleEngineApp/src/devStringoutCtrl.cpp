@@ -10,21 +10,23 @@
 
 #include "devext.h"
 #include <iostream>
+#include "ioblock.hpp"
 
-static long initStrOutCtrl()
+extern io::IOBlock io_block;
+
+static long initStrOutCtrl(stringoutRecord *prec)
 {
+    std::string key(prec->name);
+    std::string val(prec->val);
+    io_block.dbCtrlArgs[key] = val;
     return 0;
 }
 
 static long ioStrOutCtrl(stringoutRecord *prec)
 {
-    //struct devPriv *priv = prec->dpvt;
-    //prec->val = (epicsInt32)sc_prd_us;
-    std::string tmp1(prec->val);
-    std::cout << tmp1 << std::endl;
-    std::string tmp2(prec->name);
-    std::cout << tmp2 << std::endl;
-    //prec->val = "";
+    std::string key(prec->name);
+    std::string val(prec->val);
+    io_block.dbCtrlArgs[key] = val;
     return 0;
 }
 

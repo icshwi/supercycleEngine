@@ -3,10 +3,10 @@
 #include "cmnbase.hpp"
 #include "scenv.hpp"
 
-SequenceHandler::SequenceHandler(std::string evgs, std::map<std::string, epicsUInt32> evtrm)
+SequenceHandler::SequenceHandler(std::map<std::string, epicsUInt32> evtrm)
 {
-    io::LOG(io::DEBUG2) << "SequenceHandler::SequenceHandler() evgs " << evgs;
-    init(evgs, evtrm);
+    io::LOG(io::DEBUG2) << "SequenceHandler::SequenceHandler()";
+    init(evtrm);
 }
 
 SequenceHandler::~SequenceHandler()
@@ -14,9 +14,9 @@ SequenceHandler::~SequenceHandler()
     io::LOG(io::DEBUG2) << "SequenceHandler::~SequenceHandler()";
 }
 
-void SequenceHandler::init(std::string evgs, std::map<std::string, epicsUInt32> evtrm)
+void SequenceHandler::init(std::map<std::string, epicsUInt32> evtrm)
 {
-    io::LOG(io::DEBUG2) << "SequenceHandler::init() evgs " << evgs;
+    io::LOG(io::DEBUG2) << "SequenceHandler::init()";
     evtcoderef = evtrm;
 }
 
@@ -36,8 +36,11 @@ void SequenceHandler::write(std::map<std::string, std::string> &rowm)
     // Sort the timestamps
     tst_evt_seq = cmn::flip_map<epicsUInt32, epicsUInt32>(evt_tst_seq);
 
-    // Terminate the sequence
-    tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SEQ_END;
+    if (evt_tst_seq.empty() == false)
+    {
+        // Terminate the sequence
+        tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SEQ_END;
+    }
 
     io::LOG(io::DEBUG1) << "SequenceHandler::write() rowm " << cmn::map2str<std::string, std::string>(rowm);
     io::LOG(io::DEBUG1) << "SequenceHandler::write() tst_evt_seq " << cmn::map2str<epicsUInt32, epicsUInt32>(tst_evt_seq);

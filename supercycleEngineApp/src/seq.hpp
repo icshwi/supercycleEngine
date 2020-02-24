@@ -15,10 +15,10 @@ private:
     std::map<epicsUInt32, epicsUInt32> tst_evt_seq;
 
 public:
-    SequenceHandler(std::string evgs, std::map<std::string, epicsUInt32> evtrm);
+    SequenceHandler(std::map<std::string, epicsUInt32> evtrm);
     SequenceHandler(){};
     ~SequenceHandler();
-    void init(std::string evgs, std::map<std::string, epicsUInt32> evtrm);
+    void init(std::map<std::string, epicsUInt32> evtrm);
     void write(std::map<std::string, std::string> &rowm);
     std::map<epicsUInt32, epicsUInt32> getSeq() { return tst_evt_seq; };
     std::vector<epicsUInt32> getSeqTst() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 0); };

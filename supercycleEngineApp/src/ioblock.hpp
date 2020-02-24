@@ -18,30 +18,24 @@ namespace io
 class IOBlock
 {
 private:
-    std::string psce = "TD-M:TS-SCE-01:";
-    std::string pevg = "MTCA5U-EVG:";
-
     std::string init_dbuf_json = "databuffer-ess.json";
     std::string init_mevts_json = "mevts-ess.json";
     std::string reftabs_TOP = "../../../reftabs/";
+    std::string SCTable = "null.csv";
 
 public:
     IOBlock();
     ~IOBlock();
     //int init(int argc, char **argv);
     int init();
-    int init(char *args);
 
-    std::string sctable_csv = "example02.csv";
-    epicsUInt32 cPeriod = (epicsUInt32)(1000000 / CYCLE_fHz); //sc engine period [us]
-    epicsUInt32 cOffset = 30000;
-    epicsUInt64 cId = (cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz;
+    epicsUInt32 cPeriod = (epicsUInt32)(1000000.0 / CYCLE_fHz); //cycle period [us]
+    epicsUInt32 cOffset = 30000;                                //[us]
+    epicsUInt64 cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz);
 
-    std::string get_PSCE() { return psce; };
-    std::string get_PEVG() { return pevg; };
     std::string get_init_dbuf_json_link() { return (reftabs_TOP + "init/" + init_dbuf_json); };
     std::string get_init_mevts_json_link() { return (reftabs_TOP + "init/" + init_mevts_json); };
-    std::string get_sctable_csv_link() { return (reftabs_TOP + "supercycles/" + sctable_csv); };
+    std::string get_SCTable_link() { return (reftabs_TOP + "supercycles/" + SCTable); };
 
     io::JsonDBUF json_dbuf;
     io::JsonEVT json_evt;
@@ -49,6 +43,9 @@ public:
     // Set the send buffer
     dbf::DBufPacket dbuf;
     SequenceHandler SEQ;
+
+    std::map<std::string, std::string> dbCtrlArgs;
+    int dbSync();
 };
 
 } // namespace io

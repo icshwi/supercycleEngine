@@ -19,6 +19,8 @@ static long initEngine(aSubRecord *prec)
 
 static long ioEngine(aSubRecord *prec)
 {
+    io_block.dbSync();
+
     engineCycle(io_block);
     // Update the meta
     epicsUInt64 *pvalaU64 = (epicsUInt64 *)prec->vala;

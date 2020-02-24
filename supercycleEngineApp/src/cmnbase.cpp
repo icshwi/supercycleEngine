@@ -10,11 +10,24 @@
 #include <assert.h>
 //#include <boost/algorithm/string.hpp>
 #include <chrono>
-
-//#include <ctime>
+//#include <regex>
 
 namespace cmn
 {
+
+//std::string getVarName()
+
+//    std::string string("hello $name");
+//    string = std::regex_replace(string, std::regex("\\$name"), "Somename");
+
+bool substring(std::string s, std::string subs)
+{
+    if (s.find(subs) != std::string::npos)
+    {
+        return true;
+    }
+    return false;
+}
 
 std::string str(epicsUInt32 arg)
 {
