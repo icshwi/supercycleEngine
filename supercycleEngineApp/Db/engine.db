@@ -14,22 +14,22 @@ record(longout, "$(P)$(R=)Offset") {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")
     field(EGU, "us")
-    field(VAL, 30000)
+    field(VAL, "30000")
 }
 
 record(aSub, "$(P)$(R=)EngineCycle") {
-    field(INAM, initEngine)
-    field(SNAM, ioEngine)
+    field(INAM, "initEngine")
+    field(SNAM, "ioEngine")
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
-    field(FTVA, ULONG)
-    field(NOVA, 100)
-    field(FTVB, ULONG)
-    field(NOVB, 100)
-    field(FTVC, ULONG)
-    field(NOVC, 100)
-    field(FTVD, ULONG)
-    field(NOVD, 100)
+    field(FTVA, "ULONG")
+    field(NOVA, "100")
+    field(FTVB, "ULONG")
+    field(NOVB, "100")
+    field(FTVC, "ULONG")
+    field(NOVC, "100")
+    field(FTVD, "ULONG")
+    field(NOVD, "100")
 
     field(OUTB, "$(PEVG)dbus-send-u32 CP")
 
@@ -38,8 +38,8 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     #field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP")
 
     #inputs
-    field(FTA, ULONG)
-    field(NOA, 10)
+    field(FTA, "ULONG")
+    field(NOA, "10")
     field(INPA, "$(P)$(R=)Offset.VAL")
 
     field(FLNK, "$(P)$(R=)Trig-FOut_")
@@ -155,7 +155,7 @@ record(fanout, "$(P)$(R=)Seq-Sel-FOut_") {
 
 record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
-    field(SNAM, ioASubBuf)
+    field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
     field(FTA, "ULONG")
@@ -171,7 +171,7 @@ record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
 
 record(aSub, "$(P)$(R=)Seq0-Evt-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
-    field(SNAM, ioASubBuf)
+    field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
     field(FTA, "ULONG")
@@ -187,7 +187,7 @@ record(aSub, "$(P)$(R=)Seq0-Evt-aSubBuf_") {
 
 record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
-    field(SNAM, ioASubBuf)
+    field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
     field(FTA, "ULONG")
@@ -203,7 +203,7 @@ record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
 
 record(aSub, "$(P)$(R=)Seq1-Evt-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
-    field(SNAM, ioASubBuf)
+    field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
     #alias("$(P)$(R=)IdCycle")
     field(FTA, "ULONG")
