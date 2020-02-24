@@ -36,7 +36,7 @@ void SequenceHandler::write(std::map<std::string, std::string> &rowm)
     // Sort the timestamps
     tst_evt_seq = cmn::flip_map<epicsUInt32, epicsUInt32>(evt_tst_seq);
 
-    if (evt_tst_seq.empty() == false)
+    if (tst_evt_seq.empty() == false)
     {
         // Terminate the sequence
         tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SEQ_END;
