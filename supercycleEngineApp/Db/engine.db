@@ -233,17 +233,16 @@ record(fanout, "$(P)$(R=)Seq0-Ctrl-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SELM, "All")
     #field(PINI, "RUNNING")
-    field(LNK1, "$(PEVG)SoftSeq1-Disable-Cmd CP")
-    field(LNK2, "$(PEVG)SoftSeq0-Commit-Cmd CP")
-    field(LNK3, "$(PEVG)SoftSeq0-Enable-Cmd CP")
+    field(LNK1, "$(PEVG)SoftSeq1-Disable-Cmd.PROC CP")
+    field(LNK2, "$(PEVG)SoftSeq0-Commit-Cmd.PROC CP")
+    field(LNK3, "$(PEVG)SoftSeq0-Enable-Cmd.PROC CP")
 }
 
 record(fanout, "$(P)$(R=)Seq1-Ctrl-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SELM, "All")
     #field(PINI, "RUNNING")
-    field(LNK1, "$(PEVG)SoftSeq0-Disable-Cmd CP")
-    field(LNK2, "$(PEVG)SoftSeq1-Commit-Cmd CP")
-    field(LNK3, "$(PEVG)SoftSeq1-Enable-Cmd CP")
+    field(LNK1, "$(PEVG)SoftSeq0-Disable-Cmd.PROC CP")
+    field(LNK2, "$(PEVG)SoftSeq1-Commit-Cmd.PROC CP")
+    field(LNK3, "$(PEVG)SoftSeq1-Enable-Cmd.PROC CP")
 }
-
