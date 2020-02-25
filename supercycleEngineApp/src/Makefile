@@ -47,6 +47,7 @@ supercycleEngine_SRCS += csv.cpp
 supercycleEngine_SRCS += ioblock.cpp
 supercycleEngine_SRCS += seq.cpp
 supercycleEngine_SRCS += engine.cpp
+supercycleEngine_SRCS += dlog.cpp
  # Devs
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp

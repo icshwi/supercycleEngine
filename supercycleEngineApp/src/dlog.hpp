@@ -20,20 +20,26 @@ enum typelog
     ERROR
 };
 
-struct structlog
+class LOGCONFIG
 {
-    bool headers;
-    typelog *level;
-
 public:
-    structlog(bool hdr, typelog *lvl)
+    bool headers = true;
+    typelog lv = INFO;
+    typelog *level = &lv;
+
+    LOGCONFIG() { ; };
+    LOGCONFIG(bool hdr, typelog *lvl)
+    {
+        init(hdr, lvl);
+    };
+    void init(bool hdr, typelog *lvl)
     {
         headers = hdr;
         level = lvl;
-    }
+    };
 };
 
-extern structlog LOGCFG;
+extern LOGCONFIG LOGCFG;
 
 class LOG
 {

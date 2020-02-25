@@ -9,11 +9,10 @@
 static int iodebug = 4;
 epicsExportAddress(int, iodebug);
 
-static io::typelog *const piodebug = (io::typelog *)&iodebug;
-io::structlog io::LOGCFG(true, piodebug);
-
 void init_io_block()
 {
+    static io::typelog *const piodebug = (io::typelog *)&iodebug;
+    io::LOGCFG.init(true, piodebug);
     //io_block.init(reftabs_TOP);
     //io_block.reftabs_TOP(reftabs_TOP);
 }
