@@ -12,7 +12,7 @@
 #include <iostream>
 #include "ioblock.hpp"
 
-extern io::IOBlock io_block;
+#include "engineInit.hpp"
 
 static long initStrOutCtrl(stringoutRecord *prec)
 {

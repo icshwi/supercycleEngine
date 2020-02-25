@@ -5,7 +5,7 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 #USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
-USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra -Wno-deprecated-declarations
+USR_CXXFLAGS += -std=c++11 -g3 -Wall -Wextra -Wno-deprecated-declarations
 
 # ============================
 # Build an IOC support library

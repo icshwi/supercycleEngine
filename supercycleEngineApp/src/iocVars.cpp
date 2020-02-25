@@ -12,8 +12,6 @@ epicsExportAddress(int, iodebug);
 static io::typelog *const piodebug = (io::typelog *)&iodebug;
 io::structlog io::LOGCFG(true, piodebug);
 
-extern io::IOBlock io_block;
-
 void init_io_block()
 {
     //io_block.init(reftabs_TOP);

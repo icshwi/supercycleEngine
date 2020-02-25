@@ -9,7 +9,7 @@
 #include "cmnbase.hpp"
 #include "iocVars.hpp"
 
-extern io::IOBlock io_block;
+#include "engineInit.hpp"
 
 static long initEngine(aSubRecord *prec)
 {

@@ -2,6 +2,6 @@
 #define ENGINEINIT_HPP_
 
 #include "ioblock.hpp"
-io::IOBlock io_block;
+extern io::IOBlock io_block;
 
 #endif // ENGINEINIT_HPP_
