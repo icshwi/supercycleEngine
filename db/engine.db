@@ -1,10 +1,22 @@
-record(longin, "$(P)$(R=)Trig-Cnt") {
+#record(longin, "$(P)$(R=)Trig-Cnt") {
+#    field(DESC, "Trigger Counter")
+#    field(DTYP, "Soft Channel")
+#    field(SCAN, "Passive")
+#    field(EGU, "-")
+#    field(INP, "$(PEVG)Trig CP")
+#    #field(TSEL, "$(PEVG)Trig.TSEL")
+#
+#    field(FLNK, "$(P)$(R=)EngineCycle")
+#}
+
+record(calcout, "$(P)$(R=)Trig-Cnt")
+{
     field(DESC, "Trigger Counter")
-    field(DTYP, "Soft Channel")
+    field(CALC, "A+B")
+    #field(SCAN, "1 second")
     field(SCAN, "Passive")
-    field(EGU, "-")
-    field(INP, "$(PEVG)Trig CP")
-    #field(TSEL, "$(PEVG)Trig.TSEL")
+    field(INPA, "$(PEVG)SoftSeq0-NumOfStarts-I CPP")
+    field(INPB, "$(PEVG)SoftSeq1-NumOfStarts-I CPP")
 
     field(FLNK, "$(P)$(R=)EngineCycle")
 }
