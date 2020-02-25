@@ -42,7 +42,7 @@ public:
     io::CSVReader sctable;
     // Set the send buffer
     dbf::DBufPacket dbuf;
-    SequenceHandler SEQ;
+    SequenceHandler Seq;
 
     std::map<std::string, std::string> dbCtrlArgs;
     int dbSync();

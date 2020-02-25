@@ -26,7 +26,7 @@ IOBlock::IOBlock()
 
 int IOBlock::init()
 {
-    SEQ.init(json_evt.getEvtMap());
+    Seq.init(json_evt.getEvtMap());
 
     io::LOG(io::INFO) << "IOBlock::init()";
     io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() " << get_init_dbuf_json_link();

@@ -129,10 +129,10 @@ int engineCycle(io::IOBlock &io)
     io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 
     // Update the event sequence container
-    io.SEQ.write(cycle_row);
+    io.Seq.write(cycle_row);
 
     //Check the buffer
-    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.SEQ.getSeq());
+    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeq());
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 
     return 0;

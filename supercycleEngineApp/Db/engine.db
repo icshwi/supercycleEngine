@@ -15,8 +15,8 @@ record(calcout, "$(P)$(R=)Trig-Cnt")
     field(CALC, "A+B")
     #field(SCAN, "1 second")
     field(SCAN, "Passive")
-    field(INPA, "$(PEVG)SoftSeq0-NumOfStarts-I CPP")
-    field(INPB, "$(PEVG)SoftSeq1-NumOfStarts-I CPP")
+    field(INPA, "$(PEVG)SoftSeq0-NumOfStarts-I CP")
+    field(INPB, "$(PEVG)SoftSeq1-NumOfStarts-I CP")
 
     field(FLNK, "$(P)$(R=)EngineCycle")
 }

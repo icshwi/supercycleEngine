@@ -33,8 +33,8 @@ static long ioEngine(aSubRecord *prec)
     // Update the Dbuf
     // neva , novb (max)
     prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io_block.dbuf.vallist());
-    prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io_block.SEQ.getSeqTst());
-    prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io_block.SEQ.getSeqEvt());
+    prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io_block.Seq.getSeqTst());
+    prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io_block.Seq.getSeqEvt());
 
     epicsUInt32 *paU32 = (epicsUInt32 *)prec->a;
     io_block.cOffset = paU32[0];
