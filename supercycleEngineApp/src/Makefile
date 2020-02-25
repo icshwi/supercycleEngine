@@ -50,7 +50,7 @@ supercycleEngine_SRCS += engine.cpp
  # Devs
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp
-supercycleEngine_SRCS += devStringoutCtrl.dbd
+supercycleEngine_SRCS += devStringoutCtrl.cpp
  # Env last
 supercycleEngine_SRCS += iocVars.cpp
 supercycleEngine_SRCS += engineInit.cpp
