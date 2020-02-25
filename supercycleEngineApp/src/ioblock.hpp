@@ -29,8 +29,8 @@ public:
     //int init(int argc, char **argv);
     int init();
 
-    epicsUInt32 cPeriod = (epicsUInt32)(1000000.0 / CYCLE_fHz); //cycle period [us]
-    epicsUInt32 cOffset = 30000;                                //[us]
+    epicsUInt32 cPeriod = 0;     //cycle period [us]
+    epicsUInt32 cOffset = 30000; //[us]
     epicsUInt64 cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz);
 
     std::string get_init_dbuf_json_link() { return (reftabs_TOP + "init/" + init_dbuf_json); };
