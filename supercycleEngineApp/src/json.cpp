@@ -8,7 +8,6 @@
 #include <jsoncpp/json/json.h>
 
 #include <algorithm>
-#include <boost/algorithm/string.hpp>
 #include "cmnbase.hpp"
 
 namespace io

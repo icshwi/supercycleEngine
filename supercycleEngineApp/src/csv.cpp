@@ -3,6 +3,8 @@
 #include "dlog.hpp"
 #include "cmnbase.hpp"
 
+#include <boost/algorithm/string.hpp>
+
 namespace io
 {
 

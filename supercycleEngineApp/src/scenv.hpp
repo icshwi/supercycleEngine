@@ -4,8 +4,6 @@
 
 #include <map>
 #include <string>
-#include <boost/assign/list_of.hpp>
-#include <boost/unordered_map.hpp>
 
 namespace env
 {
@@ -25,7 +23,7 @@ enum EVT
 //std::cout << " enum ProtoVer " << EVTS2Str.at(ProtoVer) << std::endl;
 //const boost::unordered_map<EVT, std::string> EVT2Str =
 //    boost::assign::map_list_of(C14HZ, "14HZ")(COFFSET, "COFFSET")(CSYNC, "CSYNC")(SEQ_END, "SEQ_END");
-extern const boost::unordered_map<EVT, std::string> EVT2Str;
+extern const std::map<EVT, std::string> EVT2Str;
 
 enum DBFIDX
 {
@@ -42,7 +40,7 @@ enum DBFIDX
     TgSeg = 29,   //Upstream EVT_TGFM | PV-RB
 };
 
-extern const boost::unordered_map<DBFIDX, std::string> DBFIDX2Str;
+extern const std::map<DBFIDX, std::string> DBFIDX2Str;
 //#define GetDbfIdx2Str(idx) (env::DBFIDX2Str.at(env::idx))
 
 //std::map<std::string, epicsUInt32> MEVTS = {{"EVT", 10}};

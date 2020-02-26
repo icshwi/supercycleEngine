@@ -7,7 +7,6 @@
 #include <iterator>
 #include <string>
 #include <algorithm>
-#include <boost/algorithm/string.hpp>
 #include <map>
 
 #include <epicsTypes.h>
