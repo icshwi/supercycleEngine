@@ -16,7 +16,7 @@
 
 static long initStrOutCtrl(stringoutRecord *prec)
 {
-    static io::IOBlock &io_block = RegistrarIOBlock();
+    static io::IOBlock &io_block = RegisteredIOBlock();
 
     std::string key(prec->name);
     std::string val(prec->val);
@@ -26,7 +26,7 @@ static long initStrOutCtrl(stringoutRecord *prec)
 
 static long ioStrOutCtrl(stringoutRecord *prec)
 {
-    static io::IOBlock &io_block = RegistrarIOBlock();
+    static io::IOBlock &io_block = RegisteredIOBlock();
 
     std::string key(prec->name);
     std::string val(prec->val);

@@ -39,7 +39,7 @@ public:
     };
 };
 
-LOGCONFIG &RegistrarLOGCFG();
+LOGCONFIG &RegisteredLOGCFG();
 
 class LOG
 {
@@ -73,7 +73,7 @@ public:
     };
 
 private:
-    LOGCONFIG &LOGCFG = RegistrarLOGCFG();
+    LOGCONFIG &LOGCFG = RegisteredLOGCFG();
     bool opened;
     typelog msglevel;
     inline std::string getLabel(typelog type)

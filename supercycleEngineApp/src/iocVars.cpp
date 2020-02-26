@@ -11,7 +11,7 @@ epicsExportAddress(int, iodebug);
 
 void init_io_block()
 {
-    static io::LOGCONFIG &LOGCFG = io::RegistrarLOGCFG();
+    static io::LOGCONFIG &LOGCFG = io::RegisteredLOGCFG();
 
     static io::typelog *const piodebug = (io::typelog *)&iodebug;
     LOGCFG.init(true, piodebug);

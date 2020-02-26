@@ -4,6 +4,6 @@
 #include "ioblock.hpp"
 //extern io::IOBlock io_block;
 
-io::IOBlock &RegistrarIOBlock();
+io::IOBlock &RegisteredIOBlock();
 
 #endif // ENGINEINIT_HPP_

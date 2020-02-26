@@ -19,7 +19,7 @@ static long initEngine(aSubRecord *prec)
 
 static long ioEngine(aSubRecord *prec)
 {
-    static io::IOBlock &io_block = RegistrarIOBlock();
+    static io::IOBlock &io_block = RegisteredIOBlock();
 
     engineCycle(io_block);
     // Update the meta
