@@ -39,12 +39,12 @@ public:
     };
 };
 
-extern LOGCONFIG LOGCFG;
+LOGCONFIG &RegistrarLOGCFG();
 
 class LOG
 {
 public:
-    LOG() {}
+    LOG() { ; };
     LOG(typelog type)
     {
         msglevel = type;
@@ -52,7 +52,7 @@ public:
         {
             operator<<(cmn::epicssTstSysNow() + " " + getLabel(type) + " ");
         }
-    }
+    };
     ~LOG()
     {
         if (opened && (msglevel >= *LOGCFG.level))
@@ -60,7 +60,7 @@ public:
             std::cout << std::endl;
         }
         opened = false;
-    }
+    };
     template <class T>
     LOG &operator<<(const T &msg)
     {
@@ -70,9 +70,10 @@ public:
             opened = true;
         }
         return *this;
-    }
+    };
 
 private:
+    LOGCONFIG &LOGCFG = RegistrarLOGCFG();
     bool opened;
     typelog msglevel;
     inline std::string getLabel(typelog type)
@@ -103,7 +104,7 @@ private:
             break;
         }
         return label;
-    }
+    };
 };
 
 } // namespace io

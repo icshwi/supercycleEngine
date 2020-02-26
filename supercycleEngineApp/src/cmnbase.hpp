@@ -10,8 +10,12 @@
 #include <epicsTypes.h>
 #include <epicsTime.h>
 //Common Libraries Namespace
+
+#define TSTFORMAT "%Y-%m-%dT%H:%M:%S.%06f"
+
 namespace cmn
 {
+
 bool isSubstring(std::string s, std::string subs);
 std::string str(epicsUInt32 arg);
 std::string str(std::string arg);

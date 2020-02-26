@@ -3,6 +3,10 @@
 namespace io
 {
 
-LOGCONFIG LOGCFG;
+LOGCONFIG &RegistrarLOGCFG()
+{
+    static LOGCONFIG LOGCFG;
+    return LOGCFG;
+}
 
 } // namespace io

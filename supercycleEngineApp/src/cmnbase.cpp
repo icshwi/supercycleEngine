@@ -14,11 +14,6 @@
 namespace cmn
 {
 
-//std::string getVarName()
-
-//    std::string string("hello $name");
-//    string = std::regex_replace(string, std::regex("\\$name"), "Somename");
-
 bool isSubstring(std::string s, std::string subs)
 {
     if (s.find(subs) != std::string::npos)
@@ -46,8 +41,7 @@ std::string epicssTstSysNow()
     char ts_buf[100];
 
     epicsTimeGetCurrent(&ts);
-    size_t r = epicsTimeToStrftime(ts_buf, sizeof(ts_buf),
-                                   "%Y-%m-%dT%H:%M:%S.%06f", &ts);
+    size_t r = epicsTimeToStrftime(ts_buf, sizeof(ts_buf), TSTFORMAT, &ts);
 
     if (r == 0)
         return {};
