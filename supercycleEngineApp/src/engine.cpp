@@ -7,16 +7,18 @@
 #include "json.hpp"
 #include "seq.hpp"
 
+#include "scenv.hpp"
+
 void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
     try
     {
-        dbuf.write(idx, std::stol(row[env::DBFIDX2Str.at(idx)]));
+        dbuf.write(idx, std::stol(row[env::DBFIDX2Str[idx]]));
     }
     catch (...)
     {
         dbuf.write(idx, 0); // Worse case selected so that the beam is on
-        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str[idx] " << env::DBFIDX2Str[idx];
     }
 }
 
@@ -24,12 +26,12 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
 {
     try
     {
-        dbuf.write(idx, jsonv[row[env::DBFIDX2Str.at(idx)]]["id"].asUInt());
+        dbuf.write(idx, jsonv[row[env::DBFIDX2Str[idx]]]["id"].asUInt());
     }
     catch (...)
     {
         dbuf.write(idx, 0); // Worse case selected so that the beam is on
-        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str[idx] " << env::DBFIDX2Str[idx];
     }
 }
 
@@ -100,7 +102,7 @@ int engineCycle(io::IOBlock &io)
 
     // Write other cycle variables
     std::map<std::string, std::string> cycle_row_adds = {};
-    cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
+    cycle_row_adds[env::EVT2Str[env::COFFSET]] = cmn::str(io.cOffset);
 
     // Insert other cycle variables
     cycle_row_insert(cycle_row, cycle_row_adds);

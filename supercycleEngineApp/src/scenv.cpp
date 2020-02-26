@@ -3,13 +3,13 @@
 namespace env
 {
 
-const std::map<EVT, std::string> EVT2Str = {
+std::map<EVT, std::string> EVT2Str = {
     {C14HZ, "14HZ"},
     {COFFSET, "COFFSET"},
     {CSYNC, "CSYNC"},
     {SEQ_END, "SEQ_END"}};
 
-const std::map<DBFIDX, std::string> DBFIDX2Str = {
+std::map<DBFIDX, std::string> DBFIDX2Str = {
     {ProtNum, "ProtNum"},
     {ProtVer, "ProtVer"},
     {IdCycle, "IdCycle"},

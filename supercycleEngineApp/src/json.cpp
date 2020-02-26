@@ -58,14 +58,14 @@ void JsonValue::init(std::string fname)
 
 JsonDBUF::JsonDBUF(std::string fname)
     : JsonValue(fname),
-      PBDest(value[env::DBFIDX2Str.at(env::PBDest)]),
-      PBMod(value[env::DBFIDX2Str.at(env::PBMod)]),
-      PBState(value[env::DBFIDX2Str.at(env::PBState)])
+      PBDest(value[env::DBFIDX2Str[env::PBDest]]),
+      PBMod(value[env::DBFIDX2Str[env::PBMod]]),
+      PBState(value[env::DBFIDX2Str[env::PBState]])
 {
     io::LOG(io::DEBUG2) << "JsonDBUF::JsonDBUF() fname " << fname;
     //init(fname);
-    ProtVer = value[env::DBFIDX2Str.at(env::ProtVer)].asUInt();
-    ProtNum = value[env::DBFIDX2Str.at(env::ProtNum)].asUInt();
+    ProtVer = value[env::DBFIDX2Str[env::ProtVer]].asUInt();
+    ProtNum = value[env::DBFIDX2Str[env::ProtNum]].asUInt();
 
     json2map(PBDest, PBDestId);
     json2map(PBMod, PBModId);
@@ -86,18 +86,5 @@ JsonEVT::JsonEVT(std::string fname)
 
     io::LOG(io::INFO) << "JsonDBUF::JsonDBUF() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
 }
-
-/*
-void
-JsonDBUF::init(std::string fname)
-{
-    io::LOG(io::DEBUG2) << "JsonDBUF::init() fname" << fname;
-    JsonValue::init(fname);
-    ProtVer = value[env::DBFIDX2Str.at(env::ProtVer)].asUInt();
-    ProtNum = value[env::DBFIDX2Str.at(env::ProtNum)].asUInt();
-    //PBDest = value[env::DBFIDX2Str.at(env::PBDest)];
-    //PBMod = value[env::DBFIDX2Str.at(env::PBMod)];
-}
-*/
 
 } // namespace io
