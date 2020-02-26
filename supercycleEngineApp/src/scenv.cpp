@@ -3,7 +3,7 @@
 namespace env
 {
 
-std::map<EVT, std::string> EVT2Str = {
+const std::map<EVT, std::string> EVT2Str = {
     {C14HZ, "14HZ"},
     {COFFSET, "COFFSET"},
     {CSYNC, "CSYNC"},

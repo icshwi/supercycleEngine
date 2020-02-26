@@ -20,7 +20,7 @@ enum EVT
     SEQ_END = 127,  // DOWNSTREAM Trigger the cycle within the supercycle APP
 };
 
-extern std::map<EVT, std::string> EVT2Str;
+extern const std::map<EVT, std::string> EVT2Str;
 
 enum DBFIDX
 {
