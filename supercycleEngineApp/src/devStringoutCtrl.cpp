@@ -16,6 +16,8 @@
 
 static long initStrOutCtrl(stringoutRecord *prec)
 {
+    static io::IOBlock &io_block = RegistrarIOBlock();
+
     std::string key(prec->name);
     std::string val(prec->val);
     io_block.dbCtrlArgs[key] = val;
@@ -24,6 +26,8 @@ static long initStrOutCtrl(stringoutRecord *prec)
 
 static long ioStrOutCtrl(stringoutRecord *prec)
 {
+    static io::IOBlock &io_block = RegistrarIOBlock();
+
     std::string key(prec->name);
     std::string val(prec->val);
     io_block.dbCtrlArgs[key] = val;

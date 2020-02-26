@@ -1,3 +1,7 @@
 #include "engineInit.hpp"
 
-io::IOBlock io_block;
+io::IOBlock &RegistrarIOBlock()
+{
+    static io::IOBlock io_block;
+    return io_block;
+}
