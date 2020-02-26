@@ -12,7 +12,7 @@
 //Common Libraries Namespace
 namespace cmn
 {
-bool substring(std::string s, std::string subs);
+bool isSubstring(std::string s, std::string subs);
 std::string str(epicsUInt32 arg);
 std::string str(std::string arg);
 epicsUInt32 epicssTstSysNowSec();

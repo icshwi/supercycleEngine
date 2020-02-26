@@ -41,7 +41,7 @@ int IOBlock::dbSync()
 
     for (auto const &it : dbCtrlArgs)
     {
-        if (cmn::substring(it.first, GETVARNAME(SCTable)))
+        if (cmn::isSubstring(it.first, GETVARNAME(SCTable)))
             SCTable = it.second;
     }
 

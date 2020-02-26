@@ -48,6 +48,7 @@ supercycleEngine_SRCS += ioblock.cpp
 supercycleEngine_SRCS += seq.cpp
 supercycleEngine_SRCS += engine.cpp
 supercycleEngine_SRCS += dlog.cpp
+supercycleEngine_SRCS += scenv.cpp
  # Devs
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp

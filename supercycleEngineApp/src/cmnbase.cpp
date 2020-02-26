@@ -20,7 +20,7 @@ namespace cmn
 //    std::string string("hello $name");
 //    string = std::regex_replace(string, std::regex("\\$name"), "Somename");
 
-bool substring(std::string s, std::string subs)
+bool isSubstring(std::string s, std::string subs)
 {
     if (s.find(subs) != std::string::npos)
     {
