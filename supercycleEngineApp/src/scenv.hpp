@@ -37,7 +37,7 @@ enum DBFIDX
     TgSeg = 29,   //Upstream EVT_TGFM | PV-RB
 };
 
-extern std::map<DBFIDX, std::string> DBFIDX2Str;
+extern const std::map<DBFIDX, std::string> DBFIDX2Str;
 
 } // namespace env
 

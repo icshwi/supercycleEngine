@@ -13,12 +13,12 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
 {
     try
     {
-        dbuf.write(idx, std::stol(row[env::DBFIDX2Str[idx]]));
+        dbuf.write(idx, std::stol(row[env::DBFIDX2Str.at(idx)]));
     }
     catch (...)
     {
         dbuf.write(idx, 0); // Worse case selected so that the beam is on
-        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str[idx] " << env::DBFIDX2Str[idx];
+        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
     }
 }
 
@@ -26,12 +26,12 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
 {
     try
     {
-        dbuf.write(idx, jsonv[row[env::DBFIDX2Str[idx]]]["id"].asUInt());
+        dbuf.write(idx, jsonv[row[env::DBFIDX2Str.at(idx)]]["id"].asUInt());
     }
     catch (...)
     {
         dbuf.write(idx, 0); // Worse case selected so that the beam is on
-        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str[idx] " << env::DBFIDX2Str[idx];
+        io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
     }
 }
 

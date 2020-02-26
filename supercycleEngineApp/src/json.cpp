@@ -58,14 +58,14 @@ void JsonValue::init(std::string fname)
 
 JsonDBUF::JsonDBUF(std::string fname)
     : JsonValue(fname),
-      PBDest(value[env::DBFIDX2Str[env::PBDest]]),
-      PBMod(value[env::DBFIDX2Str[env::PBMod]]),
-      PBState(value[env::DBFIDX2Str[env::PBState]])
+      PBDest(value[env::DBFIDX2Str.at(env::PBDest)]),
+      PBMod(value[env::DBFIDX2Str.at(env::PBMod)]),
+      PBState(value[env::DBFIDX2Str.at(env::PBState)])
 {
     io::LOG(io::DEBUG2) << "JsonDBUF::JsonDBUF() fname " << fname;
     //init(fname);
-    ProtVer = value[env::DBFIDX2Str[env::ProtVer]].asUInt();
-    ProtNum = value[env::DBFIDX2Str[env::ProtNum]].asUInt();
+    ProtVer = value[env::DBFIDX2Str.at(env::ProtVer)].asUInt();
+    ProtNum = value[env::DBFIDX2Str.at(env::ProtNum)].asUInt();
 
     json2map(PBDest, PBDestId);
     json2map(PBMod, PBModId);

@@ -9,7 +9,7 @@ const std::map<EVT, std::string> EVT2Str = {
     {CSYNC, "CSYNC"},
     {SEQ_END, "SEQ_END"}};
 
-std::map<DBFIDX, std::string> DBFIDX2Str = {
+const std::map<DBFIDX, std::string> DBFIDX2Str = {
     {ProtNum, "ProtNum"},
     {ProtVer, "ProtVer"},
     {IdCycle, "IdCycle"},
