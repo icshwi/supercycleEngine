@@ -26,9 +26,9 @@ IOBlock::IOBlock()
 
 int IOBlock::init(std::map<std::string, std::string> argm)
 {
+    json_dbuf.init(get_init_dbuf_json_link());
     Seq.init(json_evt.getEvtMap());
 
-    io::LOG(io::INFO) << "IOBlock::init()";
     io::LOG(io::INFO) << "IOBlock::init() get_init_dbuf_json_link() " << get_init_dbuf_json_link();
     io::LOG(io::INFO) << "IOBlock::init() get_init_mevts_json_link() " << get_init_mevts_json_link();
     io::LOG(io::INFO) << "IOBlock::init() get_sctable_csv_link() " << get_SCTable_link();

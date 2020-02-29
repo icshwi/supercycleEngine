@@ -30,7 +30,7 @@ supercycleEngine_DBD += base.dbd
 supercycleEngine_DBD += engine.dbd
 supercycleEngine_DBD += devASubBuf.dbd
 supercycleEngine_DBD += devStringoutCtrl.dbd
-supercycleEngine_DBD += cmdReadJson.dbd
+supercycleEngine_DBD += cmdStrMapOut.dbd
 
 # Include dbd files from all support applications:
 #supercycleEngine_DBD += xxx.dbd
@@ -54,7 +54,7 @@ supercycleEngine_SRCS += scenv.cpp
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp
 supercycleEngine_SRCS += devStringoutCtrl.cpp
-supercycleEngine_SRCS += cmdReadJson.cpp
+supercycleEngine_SRCS += cmdStrMapOut.cpp
  # Env last
 supercycleEngine_SRCS += iocVars.cpp
 supercycleEngine_SRCS += engineInit.cpp

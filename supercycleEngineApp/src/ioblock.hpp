@@ -18,8 +18,8 @@ namespace io
 class IOBlock
 {
 private:
-    std::string init_dbuf_json = "databuffer-ess.json";
-    std::string init_mevts_json = "mevts-ess.json";
+    std::string init_dbuf_json = "init/databuffer-ess.json";
+    std::string init_mevts_json = "init/mevts-ess.json";
     std::string reftabs_TOP = "../reftabs/";
     std::string SCTable = "example02.csv";
 
