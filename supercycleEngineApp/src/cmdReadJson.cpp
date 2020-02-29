@@ -43,21 +43,21 @@ static void readJsonCall(const iocshArgBuf *arg)
     jr.init(arg->sval);
 }
 
-static const iocshArg stringArg0 = {"string", iocshArgString};
-static const iocshArg *const stringArgs[1] = {&stringArg0};
-static const iocshFuncDef readStringFuncDef = {"readString", 1, stringArgs};
+static const iocshArg stringArg0 = {"key", iocshArgString};
+static const iocshArg stringArg1 = {"val", iocshArgString};
+static const iocshArg *const stringArgs[2] = {&stringArg0, &stringArg1};
+static const iocshFuncDef readStringFuncDef = {"readStringMap", 2, stringArgs};
 
-std::vector<std::string> RegisteredStringV;
+std::map<std::string, std::string> RegisteredStringM;
 
-static void readStringCall(const iocshArgBuf *arg)
+static void readStringMapCall(const iocshArgBuf *arg)
 {
-    RegisteredStringV.push_back(arg->sval);
-    std::cout << arg->sval << std::endl;
+    RegisteredStringM[arg[0].sval] = arg[1].sval;
 }
 
 static void iocmd(void)
 {
     iocshRegister(&readJsonFuncDef, readJsonCall);
-    iocshRegister(&readStringFuncDef, readStringCall);
+    iocshRegister(&readStringFuncDef, readStringMapCall);
 }
 epicsExportRegistrar(iocmd);

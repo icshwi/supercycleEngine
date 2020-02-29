@@ -21,10 +21,10 @@ IOBlock::IOBlock()
       json_evt(get_init_mevts_json_link()),
       sctable(get_SCTable_link())
 {
-    init();
+    //init();
 }
 
-int IOBlock::init()
+int IOBlock::init(std::map<std::string, std::string> argm)
 {
     Seq.init(json_evt.getEvtMap());
 

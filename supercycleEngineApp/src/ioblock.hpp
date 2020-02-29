@@ -27,7 +27,7 @@ public:
     IOBlock();
     ~IOBlock();
     //int init(int argc, char **argv);
-    int init();
+    int init(std::map<std::string, std::string>);
 
     epicsUInt32 cPeriod = 0;     //cycle period [us]
     epicsUInt32 cOffset = 30000; //[us]

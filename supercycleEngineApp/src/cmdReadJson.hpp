@@ -4,6 +4,7 @@
 #include <jsoncpp/json/json.h>
 #include <vector>
 #include <string>
+#include <map>
 
 class JsonRoot
 {
@@ -18,6 +19,6 @@ public:
 };
 
 JsonRoot &RegisteredJsonRoot();
-extern std::vector<std::string> RegisteredStringV;
+extern std::map<std::string, std::string> RegisteredStringM;
 
 #endif // CMDREADJSON_HPP_
