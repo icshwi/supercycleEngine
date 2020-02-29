@@ -6,7 +6,7 @@
 static const iocshArg strArg0 = {"key", iocshArgString};
 static const iocshArg strArg1 = {"val", iocshArgString};
 static const iocshArg *const strArgs[2] = {&strArg0, &strArg1};
-static const iocshFuncDef strMapOutFuncDef = {"StrMapOut", 2, strArgs};
+static const iocshFuncDef strMapOutFuncDef = {"strMapOut", 2, strArgs};
 
 std::map<std::string, std::string> RegisteredStringMap;
 

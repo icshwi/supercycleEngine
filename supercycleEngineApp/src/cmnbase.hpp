@@ -17,6 +17,7 @@ namespace cmn
 {
 
 bool isSubstring(std::string s, std::string subs);
+bool isFile(std::string fname);
 std::string str(epicsUInt32 arg);
 std::string str(std::string arg);
 epicsUInt32 epicssTstSysNowSec();

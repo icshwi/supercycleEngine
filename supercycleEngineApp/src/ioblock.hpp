@@ -18,24 +18,21 @@ namespace io
 class IOBlock
 {
 private:
-    std::string init_dbuf_json = "init/databuffer-ess.json";
-    std::string init_mevts_json = "init/mevts-ess.json";
-    std::string reftabs_TOP = "../reftabs/";
+    std::string databufferLink = "../reftabs/init/databuffer-ess.json";
+    std::string mevtsLink = "../reftabs/init/mevts-ess.json";
+    std::string sctableRoot = "../reftabs/supercycles/";
     std::string SCTable = "example02.csv";
 
 public:
-    IOBlock();
+    IOBlock(){};
     ~IOBlock();
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
+    std::string get_SCTableLink() { return sctableRoot + SCTable; };
 
     epicsUInt32 cPeriod = 0;     //cycle period [us]
     epicsUInt32 cOffset = 30000; //[us]
     epicsUInt64 cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz);
-
-    std::string get_init_dbuf_json_link() { return (reftabs_TOP + "init/" + init_dbuf_json); };
-    std::string get_init_mevts_json_link() { return (reftabs_TOP + "init/" + init_mevts_json); };
-    std::string get_SCTable_link() { return (reftabs_TOP + "supercycles/" + SCTable); };
 
     io::JsonDBUF json_dbuf;
     io::JsonEVT json_evt;

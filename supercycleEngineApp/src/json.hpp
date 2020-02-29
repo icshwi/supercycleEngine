@@ -25,35 +25,40 @@ protected:
 
 public:
     JsonValue(std::string fname);
-    //JSONValue(){};
-    virtual void init(std::string fname);
+    JsonValue(){};
+    virtual int init(std::string fname);
 };
 
 class JsonDBUF : public JsonValue
 {
 public:
     JsonDBUF(std::string fname);
-    // JSONESS(){};
-    //void init(std::string fname);
-    uint ProtVer;
-    uint ProtNum;
-    Json::Value &PBDest;
-    Json::Value &PBMod;
-    Json::Value &PBState;
-    uint getPBDestId(std::string key) { return PBDestId[key]; };
-    uint getPBModId(std::string key) { return PBModId[key]; };
-    uint getPBStateId(std::string key) { return PBStateId[key]; };
+    JsonDBUF(){};
+    int init(std::string fname);
+
+    Json::Value PBDest;
+    Json::Value PBMod;
+    Json::Value PBState;
+    //uint getPBDestId(std::string key) { return PBDestId[key]; };
+    //uint getPBModId(std::string key) { return PBModId[key]; };
+    //uint getPBStateId(std::string key) { return PBStateId[key]; };
+    uint getProtVer() { return ProtVer; };
+    uint getProtNum() { return ProtNum; };
 
 private:
     std::map<std::string, uint> PBDestId;
     std::map<std::string, uint> PBModId;
     std::map<std::string, uint> PBStateId;
+    uint ProtVer;
+    uint ProtNum;
 };
 
 class JsonEVT : public JsonValue
 {
 public:
     JsonEVT(std::string fname);
+    JsonEVT(){};
+    int init(std::string fname);
     uint getEvtCode(std::string key) { return evtm[key]; };
     std::map<std::string, uint> getEvtMap() { return evtm; };
 
@@ -62,12 +67,5 @@ private:
 };
 
 } // namespace io
-
-// Test Space
-/*
-void json_test(std::string file_path="../reftabs/init/databuffer-ess.json");
-void json_test1(std::string file_path="../reftabs/init/databuffer-ess.json");
-void json_test2(std::string file_path="../reftabs/init/databuffer-ess.json");
-*/
 
 #endif // JSON_HPP

@@ -40,30 +40,47 @@ JsonValue::JsonValue(std::string fname)
     init(fname);
 }
 
-void JsonValue::init(std::string fname)
+int JsonValue::init(std::string fname)
 {
     io::LOG(io::DEBUG2) << "JsonValue::init() fname" << fname;
 
-    filename = fname;
+    if (cmn::isFile(fname) == false)
+        return 1;
 
-    std::ifstream ifs;
-    Json::Reader reader;
+    std::ifstream ifs = {};
+    Json::Reader reader = {};
+    Json::Value valj = {};
+    bool status = false;
 
-    ifs.open(filename, std::ifstream::in);
-    reader.parse(ifs, value);
+    ifs.open(fname, std::ifstream::in);
+    status = reader.parse(ifs, valj);
     ifs.close();
 
-    keys = value.getMemberNames();
+    if (status == true)
+    {
+        filename = fname;
+        value = valj;
+        keys = value.getMemberNames();
+    }
+    return 0;
 }
 
 JsonDBUF::JsonDBUF(std::string fname)
-    : JsonValue(fname),
-      PBDest(value[env::DBFIDX2Str.at(env::PBDest)]),
-      PBMod(value[env::DBFIDX2Str.at(env::PBMod)]),
-      PBState(value[env::DBFIDX2Str.at(env::PBState)])
 {
-    io::LOG(io::DEBUG2) << "JsonDBUF::JsonDBUF() fname " << fname;
-    //init(fname);
+    init(fname);
+}
+
+int JsonDBUF::init(std::string fname)
+{
+    if (JsonValue::init(fname) != 0)
+        return 1;
+
+    PBDest = value[env::DBFIDX2Str.at(env::PBDest)];
+    PBMod = value[env::DBFIDX2Str.at(env::PBMod)];
+    PBState = value[env::DBFIDX2Str.at(env::PBState)];
+
+    io::LOG(io::DEBUG2) << "JsonDBUF::init() fname " << fname;
+
     ProtVer = value[env::DBFIDX2Str.at(env::ProtVer)].asUInt();
     ProtNum = value[env::DBFIDX2Str.at(env::ProtNum)].asUInt();
 
@@ -71,20 +88,28 @@ JsonDBUF::JsonDBUF(std::string fname)
     json2map(PBMod, PBModId);
     json2map(PBState, PBStateId);
 
-    io::LOG(io::INFO) << "JsonDBUF::JsonDBUF() cmn::map2str<std::string,uint>(PBDestId) " << cmn::map2str<std::string, uint>(PBDestId);
-    io::LOG(io::INFO) << "JsonDBUF::JsonDBUF() cmn::map2str<std::string,uint>(PBModId) " << cmn::map2str<std::string, uint>(PBModId);
-    io::LOG(io::INFO) << "JsonDBUF::JsonDBUF() cmn::map2str<std::string,uint>(PBStateId) " << cmn::map2str<std::string, uint>(PBStateId);
+    io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBDestId) " << cmn::map2str<std::string, uint>(PBDestId);
+    io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBModId) " << cmn::map2str<std::string, uint>(PBModId);
+    io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBStateId) " << cmn::map2str<std::string, uint>(PBStateId);
+
+    return 0;
 }
 
 JsonEVT::JsonEVT(std::string fname)
-    : JsonValue(fname)
 {
-    io::LOG(io::DEBUG2) << "JsonEVT::JsonEVT() fname " << fname;
-    //init(fname);
-    std::string line = "";
-    json2map(value, evtm);
+    init(fname);
+}
 
-    io::LOG(io::INFO) << "JsonDBUF::JsonDBUF() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
+int JsonEVT::init(std::string fname)
+{
+    if (JsonValue::init(fname) != 0)
+        return 1;
+
+    io::LOG(io::DEBUG2) << "JsonEVT::init() fname " << fname;
+    json2map(value, evtm);
+    io::LOG(io::INFO) << "JsonEVT::init() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
+
+    return 0;
 }
 
 } // namespace io

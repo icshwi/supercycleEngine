@@ -44,6 +44,12 @@ int DBufPacket::write(epicsUInt32 idx, epicsUInt32 val)
     epicsUInt32 idx_shift, idx_base;
     io::LOG(io::DEBUG2) << "DBufPacket::write()";
 
+    if (idx >= size_byte())
+    {
+        io::LOG(io::ERROR) << "DBufPacket::write idx oversized, size_byte() " << size_byte() << " idx " << idx;
+        return 1;
+    }
+
     idx_shift = idx % 4;
     idx_base = epicsUInt32(idx / 4) * 4;
 
@@ -67,6 +73,11 @@ int DBufPacket::read(epicsUInt32 idx)
 int DBufPacket::size()
 {
     return dbuf.size();
+}
+
+int DBufPacket::size_byte()
+{
+    return dbuf.size() * sizeof(epicsUInt32);
 }
 
 std::vector<epicsUInt32> DBufPacket::keylist()

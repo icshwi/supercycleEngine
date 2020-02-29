@@ -44,7 +44,8 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
 {
     if (cycle_row.empty())
     {
-        io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() " << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
+        io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() "
+                           << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
         io.sctable.init(io.sctable.getFileLink());
         cycle_row = io.sctable.getRowMap();
         if (cycle_row.empty())
@@ -60,7 +61,8 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
     {
         epicsUInt64 row_id = std::stoll(cycle_row["Id"]);
         if (row_id != io.sctable.getRowId())
-            io::LOG(io::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink() << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
+            io::LOG(io::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink()
+                               << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
     }
     catch (...)
     {
@@ -71,10 +73,11 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
 
 int sctable_switch(io::IOBlock &io)
 {
-    if (io.get_SCTable_link().compare(io.sctable.getFileLink()) != 0)
+    if (io.get_SCTableLink().compare(io.sctable.getFileLink()) != 0)
     {
-        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() " << io.sctable.getFileLink() << " NEW io.get_SCTable_link() " << io.get_SCTable_link();
-        io.sctable.init(io.get_SCTable_link());
+        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
+                           << io.sctable.getFileLink() << " NEW io.get_SCTableLink() " << io.get_SCTableLink();
+        io.sctable.init(io.get_SCTableLink());
     }
     return 0;
 }
@@ -110,9 +113,9 @@ int engineCycle(io::IOBlock &io)
 
     io.dbuf.clear();
     // ProtNum
-    io.dbuf.write(env::ProtNum, io.json_dbuf.ProtNum);
+    io.dbuf.write(env::ProtNum, io.json_dbuf.getProtNum());
     // ProtVer
-    io.dbuf.write(env::ProtVer, io.json_dbuf.ProtVer);
+    io.dbuf.write(env::ProtVer, io.json_dbuf.getProtVer());
     // IdCycle
     io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);
 
@@ -134,8 +137,10 @@ int engineCycle(io::IOBlock &io)
     io.Seq.write(cycle_row);
 
     //Check the buffer
-    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeq());
-    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) " << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
+    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) "
+                       << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeq());
+    io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) "
+                       << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 
     return 0;
 }

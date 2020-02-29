@@ -9,6 +9,7 @@
 #include <vector>
 #include <assert.h>
 #include <chrono>
+#include <fstream>
 //#include <regex>
 
 namespace cmn
@@ -21,6 +22,15 @@ bool isSubstring(std::string s, std::string subs)
         return true;
     }
     return false;
+}
+
+bool isFile(std::string fname)
+{
+    std::ifstream file(fname);
+    if (!file)
+        return false;
+
+    return true;
 }
 
 std::string str(epicsUInt32 arg)
