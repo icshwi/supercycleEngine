@@ -4,35 +4,19 @@
 #include <iostream>
 
 /* vmecsrprint */
-static const iocshArg vmecsrprintArg0 = {"slot (1-31)", iocshArgInt};
-static const iocshArg vmecsrprintArg1 = {"verbosity (>=0)", iocshArgInt};
-static const iocshArg *const vmecsrprintArgs[2] =
-    {&vmecsrprintArg0, &vmecsrprintArg1};
-static const iocshFuncDef vmecsrprintFuncDef =
-    {"vmecsrprint", 2, vmecsrprintArgs};
+static const iocshArg Arg0 = {"filename ", iocshArgString};
+static const iocshArg *const Args[1] = {&Arg0};
+static const iocshFuncDef printFuncDef = {"testprint", 1, Args};
 
-static void vmecsrprintCall(const iocshArgBuf *arg)
+static void printCall(const iocshArgBuf *arg)
 {
-    std::cout << "vmecsrprintCall" << std::endl;
+    std::cout << "printCall" << std::endl;
+    std::cout << arg->sval << std::endl;
     //vmecsrprint(arg[0].ival,arg[1].ival);
 }
 
-/* vmecsrdump */
-static const iocshArg vmecsrdumpArg0 = {"verbosity (>=0)", iocshArgInt};
-static const iocshArg *const vmecsrdumpArgs[1] =
-    {&vmecsrdumpArg0};
-static const iocshFuncDef vmecsrdumpFuncDef =
-    {"vmecsrdump", 1, vmecsrdumpArgs};
-
-static void vmecsrdumpCall(const iocshArgBuf *arg)
+static void csr(void)
 {
-    std::cout << "vmecsrdumpCall" << std::endl;
-    //vmecsrdump(arg[0].ival);
+    iocshRegister(&printFuncDef, printCall);
 }
-
-static void vmecsr(void)
-{
-    iocshRegister(&vmecsrprintFuncDef, vmecsrprintCall);
-    iocshRegister(&vmecsrdumpFuncDef, vmecsrdumpCall);
-}
-epicsExportRegistrar(vmecsr);
+epicsExportRegistrar(csr);
