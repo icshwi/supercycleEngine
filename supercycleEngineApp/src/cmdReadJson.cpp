@@ -6,15 +6,15 @@
 #include <iostream>
 #include <fstream>
 
-JsonRootV &RegisteredJsonRoot()
+JsonRoot &RegisteredJsonRoot()
 {
-    static JsonRootV jr;
+    static JsonRoot jr;
     return jr;
 }
 
-void JsonRootV::init(std::string fname)
+void JsonRoot::init(std::string fname)
 {
-    JsonRootV &jr = RegisteredJsonRoot();
+    JsonRoot &jr = RegisteredJsonRoot();
     std::ifstream ifs = {};
     Json::Reader reader;
     Json::Value jval;
@@ -34,17 +34,30 @@ void JsonRootV::init(std::string fname)
 
 static const iocshArg jsonArg0 = {"filename", iocshArgString};
 static const iocshArg *const jsonArgs[1] = {&jsonArg0};
-static const iocshFuncDef printFuncDef = {"readJson", 1, jsonArgs};
+static const iocshFuncDef readJsonFuncDef = {"readJson", 1, jsonArgs};
 
-static void readJson(const iocshArgBuf *arg)
+static void readJsonCall(const iocshArgBuf *arg)
 {
-    JsonRootV &jr = RegisteredJsonRoot();
+    JsonRoot &jr = RegisteredJsonRoot();
 
     jr.init(arg->sval);
 }
 
-static void jsoncmd(void)
+static const iocshArg stringArg0 = {"string", iocshArgString};
+static const iocshArg *const stringArgs[1] = {&stringArg0};
+static const iocshFuncDef readStringFuncDef = {"readString", 1, stringArgs};
+
+std::vector<std::string> RegisteredStringV;
+
+static void readStringCall(const iocshArgBuf *arg)
 {
-    iocshRegister(&printFuncDef, readJson);
+    RegisteredStringV.push_back(arg->sval);
+    std::cout << arg->sval << std::endl;
 }
-epicsExportRegistrar(jsoncmd);
+
+static void iocmd(void)
+{
+    iocshRegister(&readJsonFuncDef, readJsonCall);
+    iocshRegister(&readStringFuncDef, readStringCall);
+}
+epicsExportRegistrar(iocmd);

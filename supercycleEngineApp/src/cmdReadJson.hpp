@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-class JsonRootV
+class JsonRoot
 {
 protected:
     std::vector<std::string> fnamev;
@@ -13,10 +13,11 @@ protected:
     std::vector<std::vector<std::string>> keyv;
 
 public:
-    JsonRootV(){};
+    JsonRoot(){};
     virtual void init(std::string fname);
 };
 
-JsonRootV &RegisteredJsonRoot();
+JsonRoot &RegisteredJsonRoot();
+extern std::vector<std::string> RegisteredStringV;
 
 #endif // CMDREADJSON_HPP_
