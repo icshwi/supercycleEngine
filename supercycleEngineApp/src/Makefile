@@ -30,7 +30,7 @@ supercycleEngine_DBD += base.dbd
 supercycleEngine_DBD += engine.dbd
 supercycleEngine_DBD += devASubBuf.dbd
 supercycleEngine_DBD += devStringoutCtrl.dbd
-supercycleEngine_DBD += command.dbd
+supercycleEngine_DBD += cmdReadJson.dbd
 
 # Include dbd files from all support applications:
 #supercycleEngine_DBD += xxx.dbd
@@ -54,9 +54,9 @@ supercycleEngine_SRCS += scenv.cpp
 supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp
 supercycleEngine_SRCS += devStringoutCtrl.cpp
+supercycleEngine_SRCS += cmdReadJson.cpp
  # Env last
 supercycleEngine_SRCS += iocVars.cpp
-supercycleEngine_SRCS += command.cpp
 supercycleEngine_SRCS += engineInit.cpp
 # Build the main IOC entry point on workstation OSs.
 supercycleEngine_SRCS_DEFAULT += supercycleEngineMain.cpp

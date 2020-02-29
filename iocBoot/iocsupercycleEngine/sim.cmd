@@ -26,6 +26,9 @@ dbLoadRecords("db/engineCtrl.db",   "P=$(PSCE01)")
 var iodebug 4
 
 cd "${TOP}/iocBoot/${IOC}"
+
+readJson "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
 iocInit
 
 ## Start any sequence programs
