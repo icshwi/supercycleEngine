@@ -1,3 +1,5 @@
+#include "devStringoutCtrl.hpp"
+
 #include <stdlib.h>
 #include <dbAccess.h>
 #include <devSup.h>
@@ -10,27 +12,22 @@
 
 #include "devext.h"
 #include <iostream>
-#include "ioblock.hpp"
 
-#include "engineInit.hpp"
+std::map<std::string, std::string> RegisteredStrOutMap;
 
 static long initStrOutCtrl(stringoutRecord *prec)
 {
-    static io::IOBlock &io_block = RegisteredIOBlock();
-
     std::string key(prec->name);
     std::string val(prec->val);
-    io_block.dbCtrlArgs[key] = val;
+    RegisteredStrOutMap[key] = val;
     return 0;
 }
 
 static long ioStrOutCtrl(stringoutRecord *prec)
 {
-    static io::IOBlock &io_block = RegisteredIOBlock();
-
     std::string key(prec->name);
     std::string val(prec->val);
-    io_block.dbCtrlArgs[key] = val;
+    RegisteredStrOutMap[key] = val;
     return 0;
 }
 

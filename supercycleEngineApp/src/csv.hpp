@@ -24,16 +24,16 @@ private:
     std::string delimeter = ",";
     std::ifstream ifs;
     std::vector<std::string> key_row;
-    std::uint64_t row_id;
+    epicsUInt64 row_id;
     std::vector<std::vector<std::string>> getContent();
     std::vector<std::string> getRow();
 
 public:
-    CSVReader(std::string);
-    CSVReader() { ; };
+    //CSVReader(std::string);
+    CSVReader(){};
     // CSVReader(){};
     ~CSVReader();
-    void init(std::string);
+    int init(std::string);
     void close();
     std::vector<std::string> getKeys() { return key_row; };
     std::string getFileLink() { return filelink; };

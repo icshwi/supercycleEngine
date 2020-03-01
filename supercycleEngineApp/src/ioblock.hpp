@@ -41,9 +41,10 @@ public:
     dbf::DBufPacket dbuf;
     SequenceHandler Seq;
 
-    std::map<std::string, std::string> dbCtrlArgs;
-    int dbSync();
+    int dbSync(std::map<std::string, std::string> &);
 };
+
+IOBlock &RegisteredIOBlock();
 
 } // namespace io
 

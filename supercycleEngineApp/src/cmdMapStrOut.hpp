@@ -3,6 +3,6 @@
 
 #include <map>
 
-extern std::map<std::string, std::string> RegisteredStringMap;
+extern std::map<std::string, std::string> RegisteredCmdMapStrOut;
 
 #endif // CMDREADJSON_HPP_

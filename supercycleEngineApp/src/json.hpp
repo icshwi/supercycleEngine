@@ -24,7 +24,7 @@ protected:
     std::vector<std::string> keys;
 
 public:
-    JsonValue(std::string fname);
+    //JsonValue(std::string fname);
     JsonValue(){};
     virtual int init(std::string fname);
 };
@@ -32,16 +32,16 @@ public:
 class JsonDBUF : public JsonValue
 {
 public:
-    JsonDBUF(std::string fname);
+    //JsonDBUF(std::string fname);
     JsonDBUF(){};
     int init(std::string fname);
 
     Json::Value PBDest;
     Json::Value PBMod;
     Json::Value PBState;
-    //uint getPBDestId(std::string key) { return PBDestId[key]; };
-    //uint getPBModId(std::string key) { return PBModId[key]; };
-    //uint getPBStateId(std::string key) { return PBStateId[key]; };
+    uint getPBDestId(std::string key) { return PBDestId[key]; };
+    uint getPBModId(std::string key) { return PBModId[key]; };
+    uint getPBStateId(std::string key) { return PBStateId[key]; };
     uint getProtVer() { return ProtVer; };
     uint getProtNum() { return ProtNum; };
 
@@ -56,7 +56,7 @@ private:
 class JsonEVT : public JsonValue
 {
 public:
-    JsonEVT(std::string fname);
+    //JsonEVT(std::string fname);
     JsonEVT(){};
     int init(std::string fname);
     uint getEvtCode(std::string key) { return evtm[key]; };

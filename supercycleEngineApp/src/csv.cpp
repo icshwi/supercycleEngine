@@ -8,12 +8,12 @@
 namespace io
 {
 
-CSVReader::CSVReader(std::string argfl)
-{
-    init(argfl);
-    io::LOG(io::DEBUG2) << "CSVReader::CSVReader"
-                        << " filelink " << filelink << " delimeter " << delimeter;
-}
+//CSVReader::CSVReader(std::string argfl)
+//{
+//    init(argfl);
+//    io::LOG(io::DEBUG2) << "CSVReader::CSVReader"
+//                        << " filelink " << filelink << " delimeter " << delimeter;
+//}
 
 CSVReader::~CSVReader()
 {
@@ -28,17 +28,24 @@ void CSVReader::close()
         ifs.close();
 }
 
-void CSVReader::init(std::string argfl)
+int CSVReader::init(std::string argfl)
 {
     io::LOG(io::DEBUG2) << "CSVReader::init";
 
     close();
-    filelink = argfl;
+
+    if (cmn::isFile(argfl) == false)
+        return 1;
+    else
+        filelink = argfl;
+
     ifs.open(filelink, std::ifstream::in);
     // Read key row
     key_row = getRow();
     // Reset the row counter
     row_id = 0;
+
+    return 0;
 }
 
 /*

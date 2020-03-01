@@ -39,16 +39,22 @@ int IOBlock::init(std::map<std::string, std::string> argm)
     return 0;
 }
 
-int IOBlock::dbSync()
+int IOBlock::dbSync(std::map<std::string, std::string> &argms)
 {
 
-    for (auto const &it : dbCtrlArgs)
+    for (auto const &it : argms)
     {
         if (cmn::isSubstring(it.first, GETVARNAME(SCTable)))
             SCTable = it.second;
     }
 
     return 0;
+}
+
+IOBlock &RegisteredIOBlock()
+{
+    static IOBlock io_block;
+    return io_block;
 }
 
 } // namespace io

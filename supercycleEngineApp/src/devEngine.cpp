@@ -8,18 +8,20 @@
 #include "ioblock.hpp"
 #include "cmnbase.hpp"
 #include "iocVars.hpp"
-
-#include "engineInit.hpp"
+#include "ioblock.hpp"
+#include "devStringoutCtrl.hpp"
 
 static long initEngine(aSubRecord *prec)
 {
-    init_io_block();
+    iocVars2IO();
     return 0;
 }
 
 static long ioEngine(aSubRecord *prec)
 {
-    static io::IOBlock &io_block = RegisteredIOBlock();
+    static io::IOBlock &io_block = io::RegisteredIOBlock();
+
+    io_block.dbSync(RegisteredStrOutMap);
 
     engineCycle(io_block);
     // Update the meta

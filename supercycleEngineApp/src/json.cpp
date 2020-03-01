@@ -33,13 +33,6 @@ void json2map(Json::Value &argjval, std::map<std::string, epicsUInt32> &argm, st
     }
 }
 
-JsonValue::JsonValue(std::string fname)
-{
-    io::LOG(io::DEBUG2) << "JsonValue::JsonValue() fname " << fname;
-
-    init(fname);
-}
-
 int JsonValue::init(std::string fname)
 {
     io::LOG(io::DEBUG2) << "JsonValue::init() fname" << fname;
@@ -65,11 +58,6 @@ int JsonValue::init(std::string fname)
     return 0;
 }
 
-JsonDBUF::JsonDBUF(std::string fname)
-{
-    init(fname);
-}
-
 int JsonDBUF::init(std::string fname)
 {
     if (JsonValue::init(fname) != 0)
@@ -93,11 +81,6 @@ int JsonDBUF::init(std::string fname)
     io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBStateId) " << cmn::map2str<std::string, uint>(PBStateId);
 
     return 0;
-}
-
-JsonEVT::JsonEVT(std::string fname)
-{
-    init(fname);
 }
 
 int JsonEVT::init(std::string fname)

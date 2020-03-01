@@ -1,6 +1,6 @@
 #ifndef IOCVARS_HPP_
 #define IOCVARS_HPP_
 
-void init_io_block();
+void iocVars2IO();
 
 #endif // IOCVARS_HPP_
