@@ -8,5 +8,6 @@
 #include <epicsTypes.h>
 
 int engineCycle(io::IOBlock &);
+int sctableSwitch(io::IOBlock &io);
 
 #endif // ENGINE_HPP

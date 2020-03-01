@@ -42,6 +42,8 @@ record(aSub, "$(P)$(R=)EngineCycle") {
     field(NOVC, "100")
     field(FTVD, "ULONG")
     field(NOVD, "100")
+    field(FTVE, "ULONG")
+    field(NOVE, "200")
 
     field(OUTB, "$(PEVG)dbus-send-u32 CP")
 

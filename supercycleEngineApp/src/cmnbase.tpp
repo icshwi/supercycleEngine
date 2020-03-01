@@ -6,7 +6,7 @@ namespace cmn
 {
 
 template <class T>
-std::vector<T> map2vec(std::map<T, T> argm, int col)
+std::vector<T> map1d2vec(std::map<T, T> argm, int col)
 {
     std::vector<T> v_tmp;
 
@@ -56,9 +56,9 @@ std::string vec2str(std::vector<T> argv)
 }
 
 template <class T>
-std::string mapcol2str(std::map<T, T> argm, int col)
+std::string map1d2str(std::map<T, T> argm, int col)
 {
-    return vec2str<T>(map2vec<T>(argm, col));
+    return vec2str<T>(map1d2vec<T>(argm, col));
 }
 
 template <class T, class U>
@@ -86,6 +86,20 @@ std::string map2str(std::map<T, U> argm)
     }
 
     return tmps;
+}
+
+template <class T>
+std::vector<T> map2d2vec(std::map<T, T> argm)
+{
+    std::vector<T> tmpsv = {};
+
+    for (auto const &it : argm)
+    {
+        tmpsv.push_back(it.first);
+        tmpsv.push_back(it.second);
+    }
+
+    return tmpsv;
 }
 
 template <typename A, typename B>

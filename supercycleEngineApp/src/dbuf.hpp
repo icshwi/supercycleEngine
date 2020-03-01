@@ -18,8 +18,8 @@ public:
     int write(epicsUInt32 idx, epicsUInt32 val);
     int read(epicsUInt32 idx);
     int clear();
-    int size();
-    int size_byte();
+    size_t size();
+    size_t size_byte();
     std::vector<epicsUInt32> keylist();
     std::vector<epicsUInt32> vallist();
     std::map<epicsUInt32, epicsUInt32> getDbuf() { return dbuf; };

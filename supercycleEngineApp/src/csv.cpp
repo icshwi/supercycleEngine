@@ -36,10 +36,10 @@ int CSVReader::init(std::string argfl)
 
     if (cmn::isFile(argfl) == false)
         return 1;
-    else
-        filelink = argfl;
 
-    ifs.open(filelink, std::ifstream::in);
+    ifs.open(argfl, std::ifstream::in);
+
+    filelink = argfl;
     // Read key row
     key_row = getRow();
     // Reset the row counter

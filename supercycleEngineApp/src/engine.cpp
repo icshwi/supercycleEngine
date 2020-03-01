@@ -9,6 +9,17 @@
 
 #include "scenv.hpp"
 
+int sctableSwitch(io::IOBlock &io)
+{
+    if (io.get_SCTableLink().compare(io.sctable.getFileLink()) != 0)
+    {
+        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
+                           << io.sctable.getFileLink() << " NEW io.get_SCTableLink() " << io.get_SCTableLink();
+        io.sctable.init(io.get_SCTableLink());
+    }
+    return 0;
+}
+
 void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
     try
@@ -71,17 +82,6 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
     return 0;
 }
 
-int sctable_switch(io::IOBlock &io)
-{
-    if (io.get_SCTableLink().compare(io.sctable.getFileLink()) != 0)
-    {
-        io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
-                           << io.sctable.getFileLink() << " NEW io.get_SCTableLink() " << io.get_SCTableLink();
-        io.sctable.init(io.get_SCTableLink());
-    }
-    return 0;
-}
-
 int engineCycle(io::IOBlock &io)
 {
     // Performance improvement of the engineCycle()
@@ -95,8 +95,6 @@ int engineCycle(io::IOBlock &io)
     // Start the cycle
     // ===============
     io.cId++;
-    // Change the table if requested
-    sctable_switch(io);
     // Get sctable row
     cycle_row = io.sctable.getRowMap();
     // Loop the supercycle table
@@ -138,7 +136,7 @@ int engineCycle(io::IOBlock &io)
 
     //Check the buffer
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) "
-                       << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeq());
+                       << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeqMap());
     io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) "
                        << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 

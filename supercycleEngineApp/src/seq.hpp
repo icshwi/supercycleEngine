@@ -20,9 +20,10 @@ public:
     ~SequenceHandler();
     void init(std::map<std::string, epicsUInt32> evtrm);
     void write(std::map<std::string, std::string> &rowm);
-    std::map<epicsUInt32, epicsUInt32> getSeq() { return tst_evt_seq; };
-    std::vector<epicsUInt32> getSeqTst() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 0); };
-    std::vector<epicsUInt32> getSeqEvt() { return cmn::map2vec<epicsUInt32>(tst_evt_seq, 1); };
+    std::map<epicsUInt32, epicsUInt32> getSeqMap() { return tst_evt_seq; };
+    std::vector<epicsUInt32> getSeqTst() { return cmn::map1d2vec<epicsUInt32>(tst_evt_seq, 0); };
+    std::vector<epicsUInt32> getSeqEvt() { return cmn::map1d2vec<epicsUInt32>(tst_evt_seq, 1); };
+    std::vector<epicsUInt32> getSeqVec() { return cmn::map2d2vec<epicsUInt32>(tst_evt_seq); };
 };
 
 #endif // SEQUENCE_HPP

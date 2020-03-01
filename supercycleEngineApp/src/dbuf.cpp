@@ -70,24 +70,24 @@ int DBufPacket::read(epicsUInt32 idx)
     return dbuf[idx];
 }
 
-int DBufPacket::size()
+size_t DBufPacket::size()
 {
     return dbuf.size();
 }
 
-int DBufPacket::size_byte()
+size_t DBufPacket::size_byte()
 {
-    return dbuf.size() * sizeof(epicsUInt32);
+    return dbuf.size() * sizeof(dbuf[0]);
 }
 
 std::vector<epicsUInt32> DBufPacket::keylist()
 {
-    return cmn::map2vec<epicsUInt32>(dbuf, 0);
+    return cmn::map1d2vec<epicsUInt32>(dbuf, 0);
 }
 
 std::vector<epicsUInt32> DBufPacket::vallist()
 {
-    return cmn::map2vec<epicsUInt32>(dbuf, 1);
+    return cmn::map1d2vec<epicsUInt32>(dbuf, 1);
 }
 
 } // namespace dbf

@@ -11,7 +11,7 @@
 #include "ioblock.hpp"
 #include "devStringoutCtrl.hpp"
 
-static long initEngine(aSubRecord *prec)
+static long initEngine()
 {
     iocVars2IO();
     return 0;
@@ -20,9 +20,15 @@ static long initEngine(aSubRecord *prec)
 static long ioEngine(aSubRecord *prec)
 {
     static io::IOBlock &io_block = io::RegisteredIOBlock();
-
+    // Configure new cycle
     io_block.dbSync(RegisteredStrOutMap);
+    // Change cycle offset
+    epicsUInt32 *paU32 = (epicsUInt32 *)prec->a;
+    io_block.cOffset = paU32[0];
+    // Change the table if requested
+    sctableSwitch(io_block);
 
+    // Engine cycle
     engineCycle(io_block);
     // Update the meta
     epicsUInt64 *pvalaU64 = (epicsUInt64 *)prec->vala;
@@ -37,9 +43,7 @@ static long ioEngine(aSubRecord *prec)
     prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io_block.dbuf.vallist());
     prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io_block.Seq.getSeqTst());
     prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io_block.Seq.getSeqEvt());
-
-    epicsUInt32 *paU32 = (epicsUInt32 *)prec->a;
-    io_block.cOffset = paU32[0];
+    prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io_block.Seq.getSeqVec());
 
     return 0;
 }
