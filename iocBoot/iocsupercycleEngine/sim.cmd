@@ -24,9 +24,10 @@ dbLoadRecords("db/engine.db",   "P=$(PSCE01),   PEVG=$(PEVG01)")
 dbLoadRecords("db/engineCtrl.db",   "P=$(PSCE01)")
 
 #strMapOut "databufferLink" "../reftabs/init/databuffer-ess.json"
-strMapOut "databufferLink" "../reftabs/init/d-ess.json"
+mapStrOut "databufferLink" "../reftabs/init/d-ess.json"
 
-var iodebug 3
+var iodebug 4
+#var PscUs 888
 
 #cd "${TOP}/iocBoot/${IOC}"
 

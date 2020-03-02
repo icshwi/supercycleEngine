@@ -9,7 +9,7 @@
 #    field(FLNK, "$(P)$(R=)EngineCycle")
 #}
 
-record(calcout, "$(P)$(R=)Trig-Cnt")
+record(calcout, "$(P)$(R=)Trig-Cnt_")
 {
     field(DESC, "Trigger Counter")
     field(CALC, "A+B")
@@ -18,7 +18,7 @@ record(calcout, "$(P)$(R=)Trig-Cnt")
     field(INPA, "$(PEVG)SoftSeq0-NumOfStarts-I CP")
     field(INPB, "$(PEVG)SoftSeq1-NumOfStarts-I CP")
 
-    field(FLNK, "$(P)$(R=)EngineCycle")
+    field(FLNK, "$(P)$(R=)EngineCycle_")
 }
 
 record(longout, "$(P)$(R=)Offset") {
@@ -29,7 +29,7 @@ record(longout, "$(P)$(R=)Offset") {
     field(VAL, "30000")
 }
 
-record(aSub, "$(P)$(R=)EngineCycle") {
+record(aSub, "$(P)$(R=)EngineCycle_") {
     field(INAM, "initEngine")
     field(SNAM, "ioEngine")
     field(SCAN, "Passive")
@@ -69,6 +69,7 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK4, "$(P)$(R=)Databuffer")
     field(LNK5, "$(P)$(R=)Timestamps")
     field(LNK6, "$(P)$(R=)Events")
+    field(LNK7, "$(P)$(R=)Sequence")
 }
 
 record(int64in, "$(P)$(R=)IdCycle") {
@@ -88,14 +89,14 @@ record(longin, "$(P)$(R=)Period") {
     field(INP, "$(P)$(R=)Period-subA_")
 
     #field(FLNK, "$(P)$(R=)Seq0-En-Cmd CP NMS")
-    #field(HIHI, "2000000") #0.5Hz
-	#field(HIGH, "80000")
-	#field(LOW,  "70000")
-	#field(LOLO, "10000") #100Hz
-    #field(HHSV, "MAJOR")
-	#field(HSV,  "MINOR")
-	#field(LSV,  "MINOR")
-	#field(LLSV, "MAJOR")
+    field(HIHI, "91000")
+	field(HIGH, "81000")
+	field(LOW,  "61000")
+	field(LOLO, "51000")
+    field(HHSV, "MAJOR")
+	field(HSV,  "MINOR")
+	field(LSV,  "MINOR")
+	field(LLSV, "MAJOR")
 }
 
 record(subArray, "$(P)$(R=)Period-subA_") {
@@ -144,6 +145,17 @@ record(waveform, "$(P)$(R=)Events") {
     field(NELM, "2046") # "2046")
     #field(MALM, "2046") # "2046")
     #alias("$(P)$(R=)Evt")
+}
+
+record(waveform, "$(P)$(R=)Sequence") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(FTVL, "ULONG")
+    field(INP, "$(P)$(R=)EngineCycle.VALE")
+    #field(INDX, "0")
+    field(NELM, "2046") # "2046")
+    #field(MALM, "2046") # "2046")
+    #alias("$(P)$(R=)Dbuf")
 }
 
 record(calcout, "$(P)$(R=)Sel-Addr_") {

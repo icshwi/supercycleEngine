@@ -9,7 +9,6 @@ namespace env
 {
 
 #define EPICS2020s 946708560
-#define CYCLE_fHz 14
 #define GETVARNAME(var) (#var)
 
 enum EVT

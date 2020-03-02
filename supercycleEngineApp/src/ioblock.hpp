@@ -32,7 +32,7 @@ public:
 
     epicsUInt32 cPeriod = 0;     //cycle period [us]
     epicsUInt32 cOffset = 30000; //[us]
-    epicsUInt64 cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) * CYCLE_fHz);
+    epicsUInt64 cId = 0;
 
     io::JsonDBUF json_dbuf;
     io::JsonEVT json_evt;

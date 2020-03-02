@@ -10,6 +10,9 @@
 static int iodebug = 4;
 epicsExportAddress(int, iodebug);
 
+static int PscUs = 71428; //[us]
+epicsExportAddress(int, PscUs);
+
 void iocVars2IO()
 {
     static io::LOGCONFIG &LOGCFG = io::RegisteredLOGCFG();
@@ -18,7 +21,8 @@ void iocVars2IO()
     static io::typelog *const piodebug = (io::typelog *)&iodebug;
     LOGCFG.init(true, piodebug);
 
+    io_block.cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) * 1000000 / PscUs);
     io_block.init(RegisteredCmdMapStrOut);
-    //io_block.init(reftabs_TOP);
-    //io_block.reftabs_TOP(reftabs_TOP);
+
+    io::LOG(io::INFO) << "iocVars2IO() iodebug " << iodebug << " PscUs " << PscUs;
 }
