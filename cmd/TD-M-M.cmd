@@ -6,6 +6,7 @@ cd "${TOP}"
 # Maintenance
 epicsEnvSet("LOCATION", "MBL-070ROW:CNPW-U-017")
 epicsEnvSet("FBS",      "=ESS.INFR.K01.K01")
+
 epicsEnvSet("PSCE",     "TD-M:TS-SCE-01:")
 epicsEnvSet("PEVG",     "TD-M:TS-EVG-01:")
 
@@ -35,4 +36,4 @@ var iodebug 4
 
 iocInit
 
-iocshLoad("iocsh/evg.iocsh", "P=$(PEVG), INTREF=")
+#iocshLoad("iocsh/evgr.iocsh", "P=$(PEVG), INTREF=")
