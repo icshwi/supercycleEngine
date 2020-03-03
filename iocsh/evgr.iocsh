@@ -22,21 +22,21 @@ dbpf $(P)$(R=)SyncTimestamp-Cmd "1"
 
 # Basic sequencer0 setup
 dbpf $(P)$(R=)SoftSeq0-Disable-Cmd "1"
+dbpf $(P)$(R=)SoftSeq0-Load-Cmd "1"
 dbpf $(P)$(R=)SoftSeq0-RunMode-Sel "Normal"
 dbpf $(P)$(R=)SoftSeq0-TrigSrc-Sel "Mxc0"
 dbpf $(P)$(R=)SoftSeq0-TsResolution-Sel "uSec"
 
 # Basic sequencer1 setup
 dbpf $(P)$(R=)SoftSeq1-Disable-Cmd "1"
+dbpf $(P)$(R=)SoftSeq1-Load-Cmd "1"
 dbpf $(P)$(R=)SoftSeq1-RunMode-Sel "Normal"
 dbpf $(P)$(R=)SoftSeq1-TrigSrc-Sel "Mxc0"
 dbpf $(P)$(R=)SoftSeq1-TsResolution-Sel "uSec"
 
 # Basic sequencer2 setup
 dbpf $(P)$(R=)SoftSeq2-Disable-Cmd "1"
-dbpf $(P)$(R=)SoftSeq2-RunMode-Sel "Normal"
-dbpf $(P)$(R=)SoftSeq2-TrigSrc-Sel "Mxc0"
-dbpf $(P)$(R=)SoftSeq2-TsResolution-Sel "uSec"
+dbpf $(P)$(R=)SoftSeq2-Unload-Cmd "1"
 
 # Master Event Rate 14 Hz
 dbpf $(P)$(R=)Mxc0-Polarity-Sel "Orginal"
@@ -55,7 +55,7 @@ system("caput -a $(P)$(R=)SoftSeq0-EvtCode-SP 2 $(EVT_COFFSET) $(EVT_SEQ_END)")
 system("caput -a $(P)$(R=)SoftSeq0-Timestamp-SP 2 30000 40000")
 
 # Commit the sequence to HW
-dbpf $(P)$(R=)SoftSeq0-Load-Cmd "1"
+
 dbpf $(P)$(R=)SoftSeq0-Commit-Cmd "1"
 dbpf $(P)$(R=)SoftSeq0-Enable-Cmd "1"
 

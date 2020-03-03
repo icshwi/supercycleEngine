@@ -1,6 +1,8 @@
 # .cmd
 # ====
 epicsEnvSet("TOP", "$(E3_CMD_TOP)/..")
+
+iocshLoad("$(TOP)/iocsh/mtcai.iocsh")
 iocshLoad("$(TOP)/iocsh/tsi.iocsh")
 
 epicsEnvSet("IOC", "MTCA5U")
