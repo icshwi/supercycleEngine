@@ -45,8 +45,7 @@ record(aSub, "$(P)$(R=)EngineCycle_") {
     field(FTVE, "ULONG")
     field(NOVE, "200")
 
-    field(OUTB, "$(PEVG)dbus-send-u32 CP")
-
+    #field(OUTB, "$(PEVG)dbus-send-u32 CP")
     # Alternate
     #field(OUTC, "$(PEVG)SoftSeq0-Timestamp-SP")
     #field(OUTD, "$(PEVG)SoftSeq0-EvtCode-SP")
@@ -70,6 +69,46 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK4, "$(P)$(R=)Timestamps")
     field(LNK5, "$(P)$(R=)Events")
     field(LNK6, "$(P)$(R=)Sequence")
+    field(LNK7, "$(P)$(R=)Delay-seq_")
+    #field(LNK8, "$(P)$(R=)DBuf-Send-aSubBuf_")
+    #field(LNK8, "$(P)$(R=)T_")
+}
+
+record(seq, "$(P)$(R=)Delay-seq_") {
+    field(DESC, "Delay Fanout")
+    field(SELM, "All")
+    field(SCAN, "Passive")
+    #field(PINI, "RUNNING")
+    #field(DOL1, "$(P)$(R=)T_")
+    field(DO1, "0")
+    field(DLY1, "0.5")
+    field(LNK1, "$(P)$(R=)T_.INPA")
+}
+
+record(calcout, "$(P)$(R=)T_") {
+    field(DESC, "Select Address")
+    field(CALC, "(A<10)?A+1:0")
+    field(SCAN, "Event")
+    #field(INPA, "$(P)$(R=)Delay-seq_.LNK1")
+    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
+}
+
+record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
+    field(DESC, "Databuffer Delay Buf")
+    field(SNAM, "ioASubBuf")
+    field(SCAN, "Passive")
+
+    #field(FTU, "ULONG")
+    #field(NOU, "1")
+    #field(INPU, "$(P)$(R=)Delay-seq_.LNK1 CPP")
+
+    field(FTA, "ULONG")
+    field(NOA, "100")
+    field(FTVA, "ULONG")
+    field(NOVA, "100")
+
+    field(INPA, "$(P)$(R=)EngineCycle_.VALB")
+    field(OUTA, "$(PEVG)dbus-send-u32 CP")
 }
 
 record(int64in, "$(P)$(R=)IdCycle") {
@@ -194,7 +233,11 @@ record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
+
+    field(FTU, "ULONG")
+    field(NOU, "1")
+    field(INPU, "0") #delay
+
     field(FTA, "ULONG")
     field(NOA, "100")
     field(FTVA, "ULONG")
@@ -202,15 +245,17 @@ record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
 
     field(INPA, "$(P)$(R=)EngineCycle_.VALC")
     field(OUTA, "$(PEVG)SoftSeq0-Timestamp-SP CP")
-
-    #field(FLNK, "$(P)$(R=)Evt-DMux-aSub_")
 }
 
 record(aSub, "$(P)$(R=)Seq0-Evt-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
+
+    field(FTU, "ULONG")
+    field(NOU, "1")
+    field(INPU, "0") #delay
+
     field(FTA, "ULONG")
     field(NOA, "100")
     field(FTVA, "ULONG")
@@ -226,7 +271,11 @@ record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
+
+    field(FTU, "ULONG")
+    field(NOU, "1")
+    field(INPU, "0") #delay
+
     field(FTA, "ULONG")
     field(NOA, "100")
     field(FTVA, "ULONG")
@@ -234,15 +283,17 @@ record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
 
     field(INPA, "$(P)$(R=)EngineCycle_.VALC")
     field(OUTA, "$(PEVG)SoftSeq1-Timestamp-SP CP")
-
-    #field(FLNK, "$(P)$(R=)Seq1-Ctrl-FOut_")
 }
 
 record(aSub, "$(P)$(R=)Seq1-Evt-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
+
+    field(FTU, "ULONG")
+    field(NOU, "1")
+    field(INPU, "0") #delay
+
     field(FTA, "ULONG")
     field(NOA, "100")
     field(FTVA, "ULONG")
