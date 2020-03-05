@@ -51,15 +51,28 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK4, "$(P)$(R=)Timestamps")
     field(LNK5, "$(P)$(R=)Events")
     field(LNK6, "$(P)$(R=)Sequence")
-    field(LNK7, "$(P)$(R=)COffset")
+    field(LNK7, "$(P)$(R=)COffset-Seq_")
 }
 
-# Overrun protection and data cycle offset
-record(longout, "$(P)$(R=)COffset") {
-    field(DTYP, "Delay")
-    field(DESC, "Data Cycle Offset")
-    field(VAL,  "30000")
-    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
+## Overrun protection and data cycle offset
+#record(longout, "$(P)$(R=)COffset") {
+#    field(DTYP, "Delay")
+#    field(DESC, "Data Cycle Offset")
+#    field(VAL,  "30000")
+#    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
+#}
+
+record(seq, "$(P)$(R=)COffset-Seq_") {
+    field(DESC, "Cycle Offset")
+    field(SELM, "All")
+    field(PINI, "RUNNING")
+    field(SCAN, "Passive")
+    #field(DOL1, "")
+    field(DOL1, "$(PEVG)SoftSeq0-NumOfStarts-I")
+    field(DLY1, "0.1")
+    #field(LNK1, "$(P)$(R=)DBuf-Send-aSubBuf_.INPB CP")
+    #field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
+    #field(TPRO, "1")
 }
 
 record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
@@ -72,10 +85,15 @@ record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
     field(FTVA, "ULONG")
     field(NOVA, "100")
 
+    field(FTB, "ULONG")
+    field(NOB, "1")
+    field(INPB, "$(P)$(R=)COffset-Seq_.LNK1 CP")
+
     field(INPA, "$(P)$(R=)EngineCycle_.VALB")
     field(OUTA, "$(PEVG)dbus-send-u32 CP")
 
     field(FLNK, "$(P)$(R=)CEnd-lOut_")
+    #field(TPRO, "1")
 }
 
 record(longout, "$(P)$(R=)CEnd-lOut_") {
