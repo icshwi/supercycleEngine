@@ -5,13 +5,11 @@ epicsEnvSet("TOP", "$(E3_CMD_TOP)/..")
 iocshLoad("$(TOP)/iocsh/mtcai.iocsh")
 iocshLoad("$(TOP)/iocsh/tsi.iocsh")
 
-epicsEnvSet("IOC", "MTCA5U")
-epicsEnvSet("DEV", "EVG")
-epicsEnvSet("PEVG", "$(IOC)-$(DEV):")
+epicsEnvSet("PEVG", "MTCA5U-EVG:")
 
 require mrfioc2, 2.2.0-rc7
 
-iocshLoad("$(TOP)/iocsh/evmi.iocsh", "IOC=$(IOC), DEV=$(DEV), PCIID=$(MTCA_5U_PCIID7)")
+iocshLoad("$(TOP)/iocsh/evmi.iocsh", "P=MTCA5U, DEV=EVG, PCIID=$(MTCA_5U_PCIID7)")
 
 iocInit()
 

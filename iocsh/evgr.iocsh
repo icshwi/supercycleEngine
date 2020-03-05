@@ -8,7 +8,7 @@ $(INTREF="#")dbpf $(P)$(R=)EvtClk-Source-Sel "FracSyn (Int)"
 # Dute to a bug, RF (Ext) cannot be applied twice as it blocks EVG (reboot required)
 $(EXTREF="#")dbpf $(P)$(R=)EvtClk-Source-Sel "RF (Ext)"
 # PLL needs time in order to synchronize
-epicsThreadSleep "1"
+epicsThreadSleep("1")
 
 # Change to PPS once connected
 $(INTREF="#")dbpf $(P)$(R=)1ppsInp-Sel "Sys Clk"
@@ -16,7 +16,7 @@ $(EXTREF="#")dbpf $(P)$(R=)1ppsInp-Sel "Front0"
 $(EXTREF="#")dbpf $(P)$(R=)1ppsInp-MbbiDir_.TPRO "1"
 $(EXTREF="#")dbpf $(P)$(R=)TrigEvt4-TrigSrc-Sel "Front0"
 $(EXTREF="#")dbpf $(P)$(R=)TrigEvt4-EvtCode-SP "$(EVT_PPS)"
-epicsThreadSleep "0.1"
+epicsThreadSleep("0.1")
 
 dbpf $(P)$(R=)SyncTimestamp-Cmd "1"
 
