@@ -30,8 +30,7 @@ public:
     int init(std::map<std::string, std::string>);
     std::string get_SCTableLink() { return sctableRoot + SCTable; };
 
-    epicsUInt32 cPeriod = 0;     //cycle period [us]
-    epicsUInt32 cOffset = 30000; //[us]
+    epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;
 
     io::JsonDBUF json_dbuf;

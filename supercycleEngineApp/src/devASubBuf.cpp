@@ -14,4 +14,7 @@ static long ioASubBuf(aSubRecord *prec)
     return 0;
 }
 
-epicsRegisterFunction(ioASubBuf);
+extern "C"
+{
+    epicsRegisterFunction(ioASubBuf);
+}

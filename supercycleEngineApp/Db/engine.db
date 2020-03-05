@@ -1,13 +1,3 @@
-#record(longin, "$(P)$(R=)Trig-Cnt") {
-#    field(DESC, "Trigger Counter")
-#    field(DTYP, "Soft Channel")
-#    field(SCAN, "Passive")
-#    field(EGU, "-")
-#    field(INP, "$(PEVG)Trig CP")
-#    #field(TSEL, "$(PEVG)Trig.TSEL")
-#
-#    field(FLNK, "$(P)$(R=)EngineCycle_")
-#}
 
 record(calcout, "$(P)$(R=)Trig-Cnt_")
 {
@@ -19,14 +9,6 @@ record(calcout, "$(P)$(R=)Trig-Cnt_")
     field(INPB, "$(PEVG)SoftSeq1-NumOfStarts-I CP")
 
     field(FLNK, "$(P)$(R=)EngineCycle_")
-}
-
-record(longout, "$(P)$(R=)Offset") {
-    field(DESC, "Cycle offset")
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(EGU, "us")
-    field(VAL, "30000")
 }
 
 record(aSub, "$(P)$(R=)EngineCycle_") {
@@ -53,7 +35,7 @@ record(aSub, "$(P)$(R=)EngineCycle_") {
     #inputs
     field(FTA, "ULONG")
     field(NOA, "10")
-    field(INPA, "$(P)$(R=)Offset.VAL")
+    #field(INPA, "")
 
     field(FLNK, "$(P)$(R=)Trig-FOut_")
 }
@@ -69,38 +51,21 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK4, "$(P)$(R=)Timestamps")
     field(LNK5, "$(P)$(R=)Events")
     field(LNK6, "$(P)$(R=)Sequence")
-    #field(LNK7, "$(P)$(R=)Delay-seq_")
-    #field(LNK8, "$(P)$(R=)DBuf-Send-aSubBuf_")
-    field(LNK8, "$(P)$(R=)T_")
+    field(LNK7, "$(P)$(R=)COffset")
 }
 
-record(seq, "$(P)$(R=)Delay-seq_") {
-    field(DESC, "Delay Fanout")
-    field(SELM, "All")
-    field(SCAN, "Passive")
-    #field(PINI, "RUNNING")
-    field(DOL1, "$(P)$(R=)T_")
-    field(DO1, "0")
-    field(DLY1, "0.5")
-    field(LNK1, "$(P)$(R=)T_.INPA")
-}
-
-record(calcout, "$(P)$(R=)T_") {
-    field(DESC, "Select Address")
-    field(CALC, "(A<10)?A+1:0")
-    field(SCAN, "Event")
-    #field(INPA, "$(P)$(R=)Delay-seq_.LNK1")
+# Overrun protection and data cycle offset
+record(longout, "$(P)$(R=)COffset") {
+    field(DTYP, "Delay")
+    field(DESC, "Data Cycle Offset")
+    field(VAL,  "30000")
     field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
 }
 
 record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
-    field(DESC, "Databuffer Delay Buf")
+    field(DESC, "Databuffer Buf")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-
-    #field(FTU, "ULONG")
-    #field(NOU, "1")
-    #field(INPU, "$(P)$(R=)Delay-seq_.LNK1 CPP")
 
     field(FTA, "ULONG")
     field(NOA, "100")
@@ -109,6 +74,15 @@ record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
 
     field(INPA, "$(P)$(R=)EngineCycle_.VALB")
     field(OUTA, "$(PEVG)dbus-send-u32 CP")
+
+    field(FLNK, "$(P)$(R=)CEnd-lOut_")
+}
+
+record(longout, "$(P)$(R=)CEnd-lOut_") {
+    field(DESC, "Cycle End EVT")
+    field(SCAN, "Passive")
+    field(VAL,  "$(EVT_CEND)")
+    field(OUT,  "$(PEVG)SoftEvt-EvtCode-SP CP")
 }
 
 record(int64in, "$(P)$(R=)IdCycle") {
@@ -146,12 +120,6 @@ record(subArray, "$(P)$(R=)Period-subA_") {
   field(MALM, "3") # "2046")
   field(FTVL, "ULONG")
 }
-
-#record(longin, "$(P)$(R=)Sync-lIn_") {
-#    field(DESC, "SC End EVT")
-#    field(SCAN, "Passive")
-#    field(INP, "$(P)$(R=)EngineCycle_.VALA[3]")
-#}
 
 record(waveform, "$(P)$(R=)Databuffer") {
     field(DTYP, "Soft Channel")
@@ -234,10 +202,6 @@ record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
 
-    field(FTU, "ULONG")
-    field(NOU, "1")
-    field(INPU, "0") #delay
-
     field(FTA, "ULONG")
     field(NOA, "100")
     field(FTVA, "ULONG")
@@ -251,10 +215,6 @@ record(aSub, "$(P)$(R=)Seq0-Evt-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-
-    field(FTU, "ULONG")
-    field(NOU, "1")
-    field(INPU, "0") #delay
 
     field(FTA, "ULONG")
     field(NOA, "100")
@@ -272,10 +232,6 @@ record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
 
-    field(FTU, "ULONG")
-    field(NOU, "1")
-    field(INPU, "0") #delay
-
     field(FTA, "ULONG")
     field(NOA, "100")
     field(FTVA, "ULONG")
@@ -289,10 +245,6 @@ record(aSub, "$(P)$(R=)Seq1-Evt-aSubBuf_") {
     field(DESC, "Timestamp Array Buffer")
     field(SNAM, "ioASubBuf")
     field(SCAN, "Passive")
-
-    field(FTU, "ULONG")
-    field(NOU, "1")
-    field(INPU, "0") #delay
 
     field(FTA, "ULONG")
     field(NOA, "100")

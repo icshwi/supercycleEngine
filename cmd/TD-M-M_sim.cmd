@@ -24,7 +24,7 @@ supercycleEngine_registerRecordDeviceDriver pdbbase
 ## Load record instances
 
 dbLoadRecords("db/devg.db",         "P=$(PEVG)")
-dbLoadRecords("db/engine.db",       "P=$(PSCE),   PEVG=$(PEVG)")
+dbLoadRecords("db/engine.db",       "P=$(PSCE),   PEVG=$(PEVG), EVT_CEND=$(EVT_CEND)")
 dbLoadRecords("db/engineCtrl.db",   "P=$(PSCE)")
 
 #mapStrOut "databufferLink" "../reftabs/init/databuffer-ess.json"

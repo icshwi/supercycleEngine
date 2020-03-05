@@ -19,4 +19,8 @@ static void cmdMapStrOut(void)
 {
     iocshRegister(&mapStrOutFuncDef, mapStrOutCall);
 }
-epicsExportRegistrar(cmdMapStrOut);
+
+extern "C"
+{
+    epicsExportRegistrar(cmdMapStrOut);
+}
