@@ -68,10 +68,10 @@ record(seq, "$(P)$(R=)COffset-Seq_") {
     field(PINI, "RUNNING")
     field(SCAN, "Passive")
     #field(DOL1, "")
-    field(DOL1, "$(PEVG)SoftSeq0-NumOfStarts-I")
-    field(DLY1, "0.1")
-    #field(LNK1, "$(P)$(R=)DBuf-Send-aSubBuf_.INPB CP")
-    #field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
+    field(DO1, "1")
+    field(DLY1, "0.03")
+    field(LNK1, "$(P)$(R=)DBuf-Send-aSubBuf_.INPB CA")
+    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
     #field(TPRO, "1")
 }
 
@@ -87,7 +87,7 @@ record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
 
     field(FTB, "ULONG")
     field(NOB, "1")
-    field(INPB, "$(P)$(R=)COffset-Seq_.LNK1 CP")
+    #field(INPB, "$(P)$(R=)COffset-Seq_.LNK1 CA")
 
     field(INPA, "$(P)$(R=)EngineCycle_.VALB")
     field(OUTA, "$(PEVG)dbus-send-u32 CP")
