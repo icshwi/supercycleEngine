@@ -1,4 +1,3 @@
 device(stringout, CONSTANT, devStrOutCtrl, "Control")
 registrar(cmdMapStrOut)
 function(ioASubBuf)
-device(longout, CONSTANT, devLongOutDly, "Delay")

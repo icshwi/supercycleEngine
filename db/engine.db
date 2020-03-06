@@ -55,14 +55,6 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK7, "$(P)$(R=)COffset-Seq_")
 }
 
-## Overrun protection and data cycle offset
-#record(longout, "$(P)$(R=)COffset") {
-#    field(DTYP, "Delay")
-#    field(DESC, "Data Cycle Offset")
-#    field(VAL,  "30000")
-#    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
-#}
-
 record(seq, "$(P)$(R=)COffset-Seq_") {
     field(DESC, "Cycle Offset")
     field(SELM, "All")

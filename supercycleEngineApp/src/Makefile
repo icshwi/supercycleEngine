@@ -53,7 +53,6 @@ supercycleEngine_SRCS += devEngine.cpp
 supercycleEngine_SRCS += devASubBuf.cpp
 supercycleEngine_SRCS += devStringoutCtrl.cpp
 supercycleEngine_SRCS += cmdMapStrOut.cpp
-supercycleEngine_SRCS += devLongOutDly.cpp
  # Env last
 supercycleEngine_SRCS += iocVars.cpp
 # Build the main IOC entry point on workstation OSs.
