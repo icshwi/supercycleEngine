@@ -46,6 +46,10 @@ rtf
 *.list
 *.pvlist
 
+#e3
+*.Makefile
+.cvsignore
+
 # Other
 .DS_Store
 ._*
