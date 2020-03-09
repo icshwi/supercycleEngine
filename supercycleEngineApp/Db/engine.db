@@ -1,15 +1,15 @@
 
-record(calcout, "$(P)$(R=)Trig-Cnt_")
-{
-    field(DESC, "Trigger Counter")
-    field(CALC, "A+B")
-    #field(SCAN, "1 second")
-    field(SCAN, "Passive")
-    field(INPA, "$(PG)SoftSeq0-NumOfStarts-I CP")
-    field(INPB, "$(PG)SoftSeq1-NumOfStarts-I CP")
-
-    field(FLNK, "$(P)$(R=)EngineCycle_")
-}
+#record(calcout, "$(P)$(R=)Trig-Cnt_")
+#{
+#    field(DESC, "Trigger Counter")
+#    field(CALC, "A+B")
+#    #field(SCAN, "1 second")
+#    field(SCAN, "Passive")
+#    field(INPA, "$(PG)SoftSeq0-NumOfStarts-I CP")
+#    field(INPB, "$(PG)SoftSeq1-NumOfStarts-I CP")
+#
+#    field(FLNK, "$(P)$(R=)EngineCycle_")
+#}
 
 record(aSub, "$(P)$(R=)EngineCycle_") {
     field(INAM, "initEngine")
@@ -28,15 +28,19 @@ record(aSub, "$(P)$(R=)EngineCycle_") {
     field(FTVE, "ULONG")
     field(NOVE, "2046")
 
+    # Dbuf
     #field(OUTB, "$(PG)dbus-send-u32")
-    # Alternate
+    # Seq{0,1}
     #field(OUTC, "$(PG)SoftSeq0-Timestamp-SP")
     #field(OUTD, "$(PG)SoftSeq0-EvtCode-SP")
 
-    # Inputs
+    # Inputs - Seq{0,1} Triggers
     field(FTA, "ULONG")
-    field(NOA, "10")
-    #field(INPA, "")
+    field(NOA, "1")
+    field(FTB, "ULONG")
+    field(NOB, "1")
+    field(INPA, "$(PG)SoftSeq0-NumOfStarts-I CP")
+    field(INPB, "$(PG)SoftSeq1-NumOfStarts-I CP")
 
     field(FLNK, "$(P)$(R=)Trig-FOut_")
 }
@@ -53,6 +57,7 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(LNK5, "$(P)$(R=)Events")
     field(LNK6, "$(P)$(R=)Sequence")
     field(LNK7, "$(P)$(R=)COffset-Seq_")
+    field(LNK8, "$(P)$(R=)CSelMask-subA_")
 }
 
 record(seq, "$(P)$(R=)COffset-Seq_") {
@@ -130,6 +135,15 @@ record(subArray, "$(P)$(R=)Period-subA_") {
     field(INDX, "2")
     field(NELM, "1") # "2046")
     field(MALM, "3") # "2046")
+    field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)CSelMask-subA_") {
+    field(DTYP, "Soft Channel")
+    field(INP, "$(P)$(R=)EngineCycle_.VALA")
+    field(INDX, "3")
+    field(NELM, "1") # "2046")
+    field(MALM, "4") # "2046")
     field(FTVL, "ULONG")
 }
 
