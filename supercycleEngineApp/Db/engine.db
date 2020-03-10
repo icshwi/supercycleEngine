@@ -1,15 +1,48 @@
 
-#record(calcout, "$(P)$(R=)Trig-Cnt_")
-#{
-#    field(DESC, "Trigger Counter")
-#    field(CALC, "A+B")
-#    #field(SCAN, "1 second")
-#    field(SCAN, "Passive")
-#    field(INPA, "$(PG)SoftSeq0-NumOfStarts-I CP")
-#    field(INPB, "$(PG)SoftSeq1-NumOfStarts-I CP")
-#
-#    field(FLNK, "$(P)$(R=)EngineCycle_")
-#}
+record(longin, "$(P)$(R=)Tri0_") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(INP, "$(PG)SoftSeq0-NumOfStarts-I CP")
+
+    field(FLNK, "$(P)$(R=)Trig0-FOut_")
+}
+
+record(longin, "$(P)$(R=)Tri1_") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(INP, "$(PG)SoftSeq1-NumOfStarts-I CP")
+
+    field(FLNK, "$(P)$(R=)Trig1-FOut_")
+}
+
+record(fanout, "$(P)$(R=)Trig0-FOut_") {
+    field(DESC, "Seq Selector Fanout")
+    field(SCAN, "Passive")
+    field(SELM, "All")
+
+    field(LNK0, "$(P)$(R=)EngineCycle_")
+    field(LNK1, "$(P)$(R=)Trig-Cnt_")
+    field(LNK2, "$(P)$(R=)Seq1-Tst-aSubBuf_.PROC")
+}
+
+record(fanout, "$(P)$(R=)Trig1-FOut_") {
+    field(DESC, "Seq Selector Fanout")
+    field(SCAN, "Passive")
+    field(SELM, "All")
+
+    field(LNK0, "$(P)$(R=)EngineCycle_")
+    field(LNK1, "$(P)$(R=)Trig-Cnt_")
+    field(LNK2, "$(P)$(R=)Seq0-Tst-aSubBuf_.PROC")
+}
+
+record(calcout, "$(P)$(R=)Trig-Cnt_")
+{
+    field(DESC, "Trigger Counter")
+    field(CALC, "A+B")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R=)Tri0_")
+    field(INPB, "$(P)$(R=)Tri1_")
+}
 
 record(aSub, "$(P)$(R=)EngineCycle_") {
     field(INAM, "initEngine")
@@ -34,14 +67,6 @@ record(aSub, "$(P)$(R=)EngineCycle_") {
     #field(OUTC, "$(PG)SoftSeq0-Timestamp-SP")
     #field(OUTD, "$(PG)SoftSeq0-EvtCode-SP")
 
-    # Inputs - Seq{0,1} Triggers
-    field(FTA, "ULONG")
-    field(NOA, "1")
-    field(FTB, "ULONG")
-    field(NOB, "1")
-    field(INPA, "$(PG)SoftSeq0-NumOfStarts-I CP")
-    field(INPB, "$(PG)SoftSeq1-NumOfStarts-I CP")
-
     field(FLNK, "$(P)$(R=)Trig-FOut_")
 }
 
@@ -49,8 +74,7 @@ record(fanout, "$(P)$(R=)Trig-FOut_") {
     field(DESC, "Trigger Fanout")
     field(SELM, "All")
     field(LNK0, "$(P)$(R=)Trig-IO-FOut_.PROC")
-    field(LNK2, "$(P)$(R=)COffset-Seq_")
-    field(LNK3, "$(P)$(R=)CSelMask-subA_")
+    field(LNK1, "$(P)$(R=)COffset-Seq_")
 }
 
 record(seq, "$(P)$(R=)COffset-Seq_") {
@@ -102,25 +126,4 @@ record(subArray, "$(P)$(R=)Period-subA_") {
     field(NELM, "1") # "2046")
     field(MALM, "3") # "2046")
     field(FTVL, "ULONG")
-}
-
-record(subArray, "$(P)$(R=)CSelMask-subA_") {
-    field(DTYP, "Soft Channel")
-    field(INP, "$(P)$(R=)EngineCycle_.VALA")
-    field(INDX, "3")
-    field(NELM, "1") # "2046")
-    field(MALM, "4") # "2046")
-    field(FTVL, "ULONG")
-    field(FLNK, "$(P)$(R=)Seq-Sel-FOut_")
-}
-
-record(fanout, "$(P)$(R=)Seq-Sel-FOut_") {
-    field(DESC, "Seq Selector Fanout")
-    field(SELM, "Mask")
-    field(SHFT, "0")
-    field(OFFS, "0")
-    field(SELL, "$(P)$(R=)CSelMask-subA_")
-    #field(PINI, "FALSE")
-    field(LNK0, "$(P)$(R=)Seq0-Tst-aSubBuf_.PROC")
-    field(LNKF, "$(P)$(R=)Seq1-Tst-aSubBuf_.PROC")
 }
