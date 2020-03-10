@@ -7,8 +7,10 @@ include $(TOP)/configure/CONFIG
 # Create and install (or just install) into <top>/db
 # databases, templates, substitutions like this
 #DB += xxx.db
+DB += ctrl.db
 DB += engine.db
-DB += engineCtrl.db
+DB += io.db
+DB += seq.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

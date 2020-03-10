@@ -23,8 +23,10 @@ int trig2mask(epicsUInt32 arg0, epicsUInt32 arg1, epicsUInt32 &mask)
 
     if (trigNumSeq0 == arg0)
         mask = 0x00FF; // do seq0
-    if (trigNumSeq1 == arg1)
+    else if (trigNumSeq1 == arg1)
         mask = 0xFF00; // do seq1
+    else
+        mask = 0xFF00;
 
     trigNumSeq0 = arg0;
     trigNumSeq1 = arg1;

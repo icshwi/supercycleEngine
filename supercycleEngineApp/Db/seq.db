@@ -1,0 +1,81 @@
+record(aSub, "$(P)$(R=)Seq0-Tst-aSubBuf_") {
+    field(DESC, "Timestamp Array Buffer")
+    field(SNAM, "ioASubBuf")
+    field(SCAN, "Passive")
+
+    field(FTA, "ULONG")
+    field(NOA, "2046")
+    field(FTVA, "ULONG")
+    field(NOVA, "2046")
+
+    field(INPA, "$(P)$(R=)EngineCycle_.VALC")
+    field(OUTA, "$(PG)SoftSeq0-Timestamp-SP CP")
+
+    field(FLNK, "$(P)$(R=)Seq0-Evt-aSubBuf_")
+}
+
+record(aSub, "$(P)$(R=)Seq0-Evt-aSubBuf_") {
+    field(DESC, "Timestamp Array Buffer")
+    field(SNAM, "ioASubBuf")
+    field(SCAN, "Passive")
+
+    field(FTA, "ULONG")
+    field(NOA, "2046")
+    field(FTVA, "ULONG")
+    field(NOVA, "2046")
+
+    field(INPA, "$(P)$(R=)EngineCycle_.VALD")
+    field(OUTA, "$(PG)SoftSeq0-EvtCode-SP CP")
+
+    field(FLNK, "$(P)$(R=)Seq0-Ctrl-FOut_")
+}
+
+record(fanout, "$(P)$(R=)Seq0-Ctrl-FOut_") {
+    field(DESC, "Seq Selector Fanout")
+    field(SELM, "All")
+    #field(PINI, "RUNNING")
+    field(LNK1, "$(PG)SoftSeq1-Disable-Cmd.PROC CP")
+    field(LNK2, "$(PG)SoftSeq0-Commit-Cmd.PROC CP")
+    field(LNK3, "$(PG)SoftSeq0-Enable-Cmd.PROC CP")
+}
+
+record(aSub, "$(P)$(R=)Seq1-Tst-aSubBuf_") {
+    field(DESC, "Timestamp Array Buffer")
+    field(SNAM, "ioASubBuf")
+    field(SCAN, "Passive")
+
+    field(FTA, "ULONG")
+    field(NOA, "2046")
+    field(FTVA, "ULONG")
+    field(NOVA, "2046")
+
+    field(INPA, "$(P)$(R=)EngineCycle_.VALC")
+    field(OUTA, "$(PG)SoftSeq1-Timestamp-SP CP")
+
+    field(FLNK, "$(P)$(R=)Seq1-Evt-aSubBuf_")
+}
+
+record(aSub, "$(P)$(R=)Seq1-Evt-aSubBuf_") {
+    field(DESC, "Timestamp Array Buffer")
+    field(SNAM, "ioASubBuf")
+    field(SCAN, "Passive")
+
+    field(FTA, "ULONG")
+    field(NOA, "2046")
+    field(FTVA, "ULONG")
+    field(NOVA, "2046")
+
+    field(INPA, "$(P)$(R=)EngineCycle_.VALD")
+    field(OUTA, "$(PG)SoftSeq1-EvtCode-SP CP")
+
+    field(FLNK, "$(P)$(R=)Seq1-Ctrl-FOut_")
+}
+
+record(fanout, "$(P)$(R=)Seq1-Ctrl-FOut_") {
+    field(DESC, "Seq Selector Fanout")
+    field(SELM, "All")
+    #field(PINI, "RUNNING")
+    field(LNK1, "$(PG)SoftSeq0-Disable-Cmd.PROC CP")
+    field(LNK2, "$(PG)SoftSeq1-Commit-Cmd.PROC CP")
+    field(LNK3, "$(PG)SoftSeq1-Enable-Cmd.PROC CP")
+}
