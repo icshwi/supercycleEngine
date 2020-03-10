@@ -1,5 +1,0 @@
-record(stringout, "$(P)$(R=)SCTable-SP") {
-    field(DTYP, "Control")
-    field(DESC, "Supercyle Table")
-    field(VAL,  "example02.csv")
-}

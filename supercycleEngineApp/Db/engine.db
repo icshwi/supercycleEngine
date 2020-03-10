@@ -1,4 +1,16 @@
 
+#record(calcout, "$(P)$(R=)Trig-Cnt_")
+#{
+#    field(DESC, "Trigger Counter")
+#    field(CALC, "A+B")
+#    #field(SCAN, "1 second")
+#    field(SCAN, "Passive")
+#    field(INPA, "$(PG)SoftSeq0-NumOfStarts-I CP")
+#    field(INPB, "$(PG)SoftSeq1-NumOfStarts-I CP")
+#
+#    field(FLNK, "$(P)$(R=)EngineCycle_")
+#}
+
 record(aSub, "$(P)$(R=)EngineCycle_") {
     field(INAM, "initEngine")
     field(SNAM, "ioEngine")
@@ -101,25 +113,6 @@ record(subArray, "$(P)$(R=)CSelMask-subA_") {
     field(FTVL, "ULONG")
     field(FLNK, "$(P)$(R=)Seq-Sel-FOut_")
 }
-
-#record(calcout, "$(P)$(R=)Sel-Addr_") {
-#    field(DESC, "Select Address")
-#    field(CALC, "(A<1)?A+1:0")
-#    field(SCAN, "Passive")
-#    field(INPA, "$(P)$(R=)Sel-Addr_")
-#    field(FLNK, "$(P)$(R=)Sel-Mask_")
-#}
-#
-#record(calcout, "$(P)$(R=)Sel-Mask_") {
-#    field(DESC, "Select Address")
-#    field(CALC, "(A>0)?0xFF00:0x00FF")
-#    field(SCAN, "Passive")
-#    field(INPA, "$(P)$(R=)Sel-Addr_")
-#
-#    field(FLNK, "$(P)$(R=)Seq-Sel-FOut_")
-#}
-
-#==========
 
 record(fanout, "$(P)$(R=)Seq-Sel-FOut_") {
     field(DESC, "Seq Selector Fanout")

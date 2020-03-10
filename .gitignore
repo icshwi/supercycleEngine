@@ -34,7 +34,7 @@
 # Epics related
 *~
 /bin/
-#/db/
+/db/
 /dbd/
 /include/
 /lib/
