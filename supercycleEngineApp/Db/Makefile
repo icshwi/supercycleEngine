@@ -10,7 +10,7 @@ include $(TOP)/configure/CONFIG
 DB += ctrl.db
 DB += engine.db
 DB += io.db
-DB += seq.db
+DB += gplug.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

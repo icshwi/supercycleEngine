@@ -21,7 +21,7 @@ void iocVars2IO()
     static io::typelog *const piodebug = (io::typelog *)&iodebug;
     LOGCFG.init(true, piodebug);
 
-    io_block.cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) * 1000000 / PscUs);
+    io_block.cId = (epicsUInt64)round((cmn::epicssTstSysNowSec() - EPICS2020s) / PscUs * 1000000);
     io_block.init(RegisteredCmdMapStrOut);
 
     io::LOG(io::INFO) << "iocVars2IO() iodebug " << iodebug << " PscUs " << PscUs;

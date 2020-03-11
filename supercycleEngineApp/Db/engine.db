@@ -1,20 +1,3 @@
-
-record(longin, "$(P)$(R=)Tri0_") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(INP, "$(PG)SoftSeq0-NumOfStarts-I CP")
-
-    field(FLNK, "$(P)$(R=)Trig0-FOut_")
-}
-
-record(longin, "$(P)$(R=)Tri1_") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(INP, "$(PG)SoftSeq1-NumOfStarts-I CP")
-
-    field(FLNK, "$(P)$(R=)Trig1-FOut_")
-}
-
 record(fanout, "$(P)$(R=)Trig0-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SCAN, "Passive")
@@ -23,6 +6,10 @@ record(fanout, "$(P)$(R=)Trig0-FOut_") {
     field(LNK0, "$(P)$(R=)EngineCycle_")
     field(LNK1, "$(P)$(R=)Trig-Cnt_")
     field(LNK2, "$(P)$(R=)Seq1-Tst-aSubBuf_.PROC")
+    field(LNK3, "$(P)$(R=)Seq1-Evt-aSubBuf_.PROC")
+    field(LNK4, "$(P)$(R=)Seq1-Ctrl-FOut_.PROC")
+    field(LNK5, "$(P)$(R=)Trig-IO-FOut_.PROC")
+    field(LNK6, "$(P)$(R=)COffset-Seq_")
 }
 
 record(fanout, "$(P)$(R=)Trig1-FOut_") {
@@ -33,6 +20,10 @@ record(fanout, "$(P)$(R=)Trig1-FOut_") {
     field(LNK0, "$(P)$(R=)EngineCycle_")
     field(LNK1, "$(P)$(R=)Trig-Cnt_")
     field(LNK2, "$(P)$(R=)Seq0-Tst-aSubBuf_.PROC")
+    field(LNK3, "$(P)$(R=)Seq0-Evt-aSubBuf_.PROC")
+    field(LNK4, "$(P)$(R=)Seq0-Ctrl-FOut_.PROC")
+    field(LNK5, "$(P)$(R=)Trig-IO-FOut_.PROC")
+    field(LNK6, "$(P)$(R=)COffset-Seq_")
 }
 
 record(calcout, "$(P)$(R=)Trig-Cnt_")
@@ -62,19 +53,12 @@ record(aSub, "$(P)$(R=)EngineCycle_") {
     field(NOVE, "2046")
 
     # Dbuf
-    #field(OUTB, "$(PG)dbus-send-u32")
+    #field(OUTB, "$ (PG)dbus-send-u32")
     # Seq{0,1}
-    #field(OUTC, "$(PG)SoftSeq0-Timestamp-SP")
-    #field(OUTD, "$(PG)SoftSeq0-EvtCode-SP")
+    #field(OUTC, "$ (PG)SoftSeq0-Timestamp-SP")
+    #field(OUTD, "$ (PG)SoftSeq0-EvtCode-SP")
 
-    field(FLNK, "$(P)$(R=)Trig-FOut_")
-}
-
-record(fanout, "$(P)$(R=)Trig-FOut_") {
-    field(DESC, "Trigger Fanout")
-    field(SELM, "All")
-    field(LNK0, "$(P)$(R=)Trig-IO-FOut_.PROC")
-    field(LNK1, "$(P)$(R=)COffset-Seq_")
+    #field(FLNK, "$(P)$(R=)Trig-FOut_")
 }
 
 record(seq, "$(P)$(R=)COffset-Seq_") {
@@ -86,37 +70,8 @@ record(seq, "$(P)$(R=)COffset-Seq_") {
     field(DO1, "1")
     field(DLY1, "0.03")
     field(LNK1, "$(P)$(R=)DBuf-Send-aSubBuf_.INPU CA")
-    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_")
+    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_.PROC")
     #field(TPRO, "1")
-}
-
-record(aSub, "$(P)$(R=)DBuf-Send-aSubBuf_") {
-    field(DESC, "Databuffer Buf")
-    field(SNAM, "ioASubBuf")
-    field(SCAN, "Passive")
-
-    field(FTA, "ULONG")
-    field(NOA, "2046")
-    field(FTVA, "ULONG")
-    field(NOVA, "2046")
-
-    # Processing trigger
-    field(FTU, "ULONG")
-    field(NOU, "1")
-    #field(INPU, "$(P)$(R=)COffset-Seq_.LNK1 CA")
-
-    field(INPA, "$(P)$(R=)EngineCycle_.VALB")
-    field(OUTA, "$(PG)dbus-send-u32 CP")
-
-    field(FLNK, "$(P)$(R=)CEnd-lOut_")
-    #field(TPRO, "1")
-}
-
-record(longout, "$(P)$(R=)CEnd-lOut_") {
-    field(DESC, "Cycle End EVT")
-    field(SCAN, "Passive")
-    field(VAL,  "$(EVCEND)")
-    field(OUT,  "$(PG)SoftEvt-EvtCode-SP CP")
 }
 
 record(subArray, "$(P)$(R=)Period-subA_") {
