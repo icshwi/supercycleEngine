@@ -1,45 +1,45 @@
-record(fanout, "$(P)$(R=)Trig0-FOut_") {
+record(fanout, "$(P)$(R=)$(S=:)Trig0-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SCAN, "Passive")
     field(SELM, "All")
 
-    field(LNK0, "$(P)$(R=)EngineCycle_")
-    field(LNK1, "$(P)$(R=)Trig-Cnt_")
-    field(LNK2, "$(P)$(R=)Seq1-Tst-aSubBuf_.PROC")
-    field(LNK3, "$(P)$(R=)Seq1-Evt-aSubBuf_.PROC")
-    field(LNK4, "$(P)$(R=)Seq1-Ctrl-FOut_.PROC")
-    field(LNK5, "$(P)$(R=)Trig-IO-FOut_.PROC")
-    field(LNK6, "$(P)$(R=)COffset-Seq_")
+    field(LNK0, "$(P)$(R=)$(S=:)EngineCycle_")
+    field(LNK1, "$(P)$(R=)$(S=:)Trig-Cnt_")
+    field(LNK2, "$(P)$(R=)$(S=:)Seq1-Tst-aSubBuf_.PROC")
+    field(LNK3, "$(P)$(R=)$(S=:)Seq1-Evt-aSubBuf_.PROC")
+    field(LNK4, "$(P)$(R=)$(S=:)Seq1-Ctrl-FOut_.PROC")
+    field(LNK5, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
+    field(LNK6, "$(P)$(R=)$(S=:)COffset-Seq_")
 }
 
-record(fanout, "$(P)$(R=)Trig1-FOut_") {
+record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
     field(DESC, "Seq Selector Fanout")
     field(SCAN, "Passive")
     field(SELM, "All")
 
-    field(LNK0, "$(P)$(R=)EngineCycle_")
-    field(LNK1, "$(P)$(R=)Trig-Cnt_")
-    field(LNK2, "$(P)$(R=)Seq0-Tst-aSubBuf_.PROC")
-    field(LNK3, "$(P)$(R=)Seq0-Evt-aSubBuf_.PROC")
-    field(LNK4, "$(P)$(R=)Seq0-Ctrl-FOut_.PROC")
-    field(LNK5, "$(P)$(R=)Trig-IO-FOut_.PROC")
-    field(LNK6, "$(P)$(R=)COffset-Seq_")
+    field(LNK0, "$(P)$(R=)$(S=:)EngineCycle_")
+    field(LNK1, "$(P)$(R=)$(S=:)Trig-Cnt_")
+    field(LNK2, "$(P)$(R=)$(S=:)Seq0-Tst-aSubBuf_.PROC")
+    field(LNK3, "$(P)$(R=)$(S=:)Seq0-Evt-aSubBuf_.PROC")
+    field(LNK4, "$(P)$(R=)$(S=:)Seq0-Ctrl-FOut_.PROC")
+    field(LNK5, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
+    field(LNK6, "$(P)$(R=)$(S=:)COffset-Seq_")
 }
 
-record(calcout, "$(P)$(R=)Trig-Cnt_")
+record(calcout, "$(P)$(R=)$(S=:)Trig-Cnt_")
 {
     field(DESC, "Trigger Counter")
     field(CALC, "A+B")
     field(SCAN, "Passive")
-    field(INPA, "$(P)$(R=)Tri0_")
-    field(INPB, "$(P)$(R=)Tri1_")
+    field(INPA, "$(P)$(R=)$(S=:)Tri0_")
+    field(INPB, "$(P)$(R=)$(S=:)Tri1_")
 }
 
-record(aSub, "$(P)$(R=)EngineCycle_") {
+record(aSub, "$(P)$(R=)$(S=:)EngineCycle_") {
     field(INAM, "initEngine")
     field(SNAM, "ioEngine")
     field(SCAN, "Passive")
-    #alias("$(P)$(R=)IdCycle")
+    #alias("$(P)$(R=)$(S=:)IdCycle")
     # Outputs
     field(FTVA, "ULONG")
     field(NOVA, "2046")
@@ -58,10 +58,10 @@ record(aSub, "$(P)$(R=)EngineCycle_") {
     #field(OUTC, "$ (PG)SoftSeq0-Timestamp-SP")
     #field(OUTD, "$ (PG)SoftSeq0-EvtCode-SP")
 
-    #field(FLNK, "$(P)$(R=)Trig-FOut_")
+    #field(FLNK, "$(P)$(R=)$(S=:)Trig-FOut_")
 }
 
-record(seq, "$(P)$(R=)COffset-Seq_") {
+record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
     field(DESC, "Cycle Offset")
     field(SELM, "All")
     field(PINI, "RUNNING")
@@ -69,14 +69,14 @@ record(seq, "$(P)$(R=)COffset-Seq_") {
     #field(DOL1, "")
     field(DO1, "1")
     field(DLY1, "0.03")
-    field(LNK1, "$(P)$(R=)DBuf-Send-aSubBuf_.INPU CA")
-    field(FLNK, "$(P)$(R=)DBuf-Send-aSubBuf_.PROC")
+    field(LNK1, "$(P)$(R=)$(S=:)DBuf-Send-aSubBuf_.INPU CA")
+    field(FLNK, "$(P)$(R=)$(S=:)DBuf-Send-aSubBuf_.PROC")
     #field(TPRO, "1")
 }
 
-record(subArray, "$(P)$(R=)Period-subA_") {
+record(subArray, "$(P)$(R=)$(S=:)Period-subA_") {
     field(DTYP, "Soft Channel")
-    field(INP, "$(P)$(R=)EngineCycle_.VALA")
+    field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
     field(INDX, "2")
     field(NELM, "1") # "2046")
     field(MALM, "3") # "2046")
