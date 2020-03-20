@@ -1,3 +1,3 @@
 epicsEnvSet("IOC","iocsupercycleEngine")
-epicsEnvSet("TOP","/home/jerzy/git/supercycleEngine")
+epicsEnvSet("TOP","/home/jerzy/git/e3-supercycleEngine/supercycleEngine-dev")
 epicsEnvSet("EPICS_BASE","/home/jerzy/epics/base-7.0.3.1")
