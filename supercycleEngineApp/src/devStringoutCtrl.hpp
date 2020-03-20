@@ -1,3 +1,9 @@
+/**
+ * @SPDX-License-Identifier LGPL-2.1-only
+ * @author Jerzy Jamroz (jerzy.jamroz@ess.eu)
+ * @date 2020-03-20
+ */
+
 #ifndef DEVSTRINGOUTCTRL_HPP_
 #define DEVSTRINGOUTCTRL_HPP_
 
