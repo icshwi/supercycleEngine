@@ -8,8 +8,9 @@ record(fanout, "$(P)$(R=)$(S=:)Trig0-FOut_") {
     field(LNK2, "$(P)$(R=)$(S=:)Seq1-Tst-aSubBuf_.PROC")
     field(LNK3, "$(P)$(R=)$(S=:)Seq1-Evt-aSubBuf_.PROC")
     field(LNK4, "$(P)$(R=)$(S=:)Seq1-Ctrl-FOut_.PROC")
-    field(LNK5, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
-    field(LNK6, "$(P)$(R=)$(S=:)COffset-Seq_")
+    field(LNK5, "$(P)$(R=)$(S=:)Period-subA_.PROC")
+    field(LNK6, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
+    field(LNK7, "$(P)$(R=)$(S=:)COffset-Seq_")
 }
 
 record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
@@ -22,8 +23,9 @@ record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
     field(LNK2, "$(P)$(R=)$(S=:)Seq0-Tst-aSubBuf_.PROC")
     field(LNK3, "$(P)$(R=)$(S=:)Seq0-Evt-aSubBuf_.PROC")
     field(LNK4, "$(P)$(R=)$(S=:)Seq0-Ctrl-FOut_.PROC")
-    field(LNK5, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
-    field(LNK6, "$(P)$(R=)$(S=:)COffset-Seq_")
+    field(LNK5, "$(P)$(R=)$(S=:)Period-subA_.PROC")
+    field(LNK6, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
+    field(LNK7, "$(P)$(R=)$(S=:)COffset-Seq_")
 }
 
 record(calcout, "$(P)$(R=)$(S=:)Trig-Cnt_")
