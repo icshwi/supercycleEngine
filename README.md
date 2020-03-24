@@ -36,7 +36,7 @@ Each cycle distributes:
 # Deployment
 
 -   Designed to be built and deployed as e3 sideMods.
--   Use [e3-supercycleEngine]() project.
+-   Use [e3-supercycleEngine](https://github.com/icshwi/e3-supercycleEngine.git) project.
 
 # Detailed documentation
 
