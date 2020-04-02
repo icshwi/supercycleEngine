@@ -6,6 +6,7 @@
 
 #include "iocVars.hpp"
 
+#include <cmath>
 #include "dlog.hpp"
 #include <epicsExport.h>
 #include "ioblock.hpp"
