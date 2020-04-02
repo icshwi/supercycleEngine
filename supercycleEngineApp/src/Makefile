@@ -6,6 +6,7 @@ include $(TOP)/configure/CONFIG
 #=============================
 #USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
 USR_CXXFLAGS += -std=c++11 -g3 -Wall -Wextra -Wno-deprecated-declarations
+USR_INCLUDES_Linux += -I/usr/include/jsoncpp
 
 # ============================
 # Build an IOC support library
