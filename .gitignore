@@ -45,6 +45,7 @@ rtf
 *.local
 *.list
 *.pvlist
+envPaths
 
 #e3
 *.Makefile
