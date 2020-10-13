@@ -10,6 +10,7 @@ include $(TOP)/configure/CONFIG
 DB += ctrl.db
 DB += engine.db
 DB += io.db
+DB += iosingle.db
 DB += gplug.db
 
 #----------------------------------------------------
