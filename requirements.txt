@@ -1,3 +1,5 @@
 jsoncpp-devel
 jsoncpp
 
+yaml-cpp
+yaml-cpp-devel
