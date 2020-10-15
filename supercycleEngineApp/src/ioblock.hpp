@@ -15,21 +15,22 @@
 #include "json.hpp"
 #include "csv.hpp"
 #include "seq.hpp"
+#include "yml.hpp"
 
 #include "epicsTypes.h"
 
 namespace io
 {
 
-class IOBlock
-{
-private:
+  class IOBlock
+  {
+  private:
     std::string databufferLink = "../reftabs/init/databuffer-ess.json";
     std::string mevtsLink = "../reftabs/init/mevts-ess.json";
     std::string sctableRoot = "../reftabs/supercycles/";
     std::string SCTable = "example02.csv";
 
-public:
+  public:
     IOBlock(){};
     ~IOBlock();
     //int init(int argc, char **argv);
@@ -47,9 +48,9 @@ public:
     SequenceHandler Seq;
 
     int dbSync(std::map<std::string, std::string> &);
-};
+  };
 
-IOBlock &RegisteredIOBlock();
+  IOBlock &RegisteredIOBlock();
 
 } // namespace io
 

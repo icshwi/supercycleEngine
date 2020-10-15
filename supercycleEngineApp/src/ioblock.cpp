@@ -8,29 +8,30 @@
 #include "dlog.hpp"
 
 #include <iostream>
+#include <yaml-cpp/yaml.h>
 
 #include "cmnbase.hpp"
 
 namespace io
 {
 
-IOBlock::~IOBlock()
-{
+  IOBlock::~IOBlock()
+  {
     io::LOG(io::DEBUG) << "IOBlock::~IOBlock()";
     // Kill all not used processes
     // SEVCHK(ca_task_exit(), "ERROR ca_task_exit failure");
-}
+  }
 
-int IOBlock::init(std::map<std::string, std::string> argm)
-{
+  int IOBlock::init(std::map<std::string, std::string> argm)
+  {
     if (cmn::isFile(argm[GETVARNAME(databufferLink)]))
-        databufferLink = argm[GETVARNAME(databufferLink)];
+      databufferLink = argm[GETVARNAME(databufferLink)];
 
     if (cmn::isFile(argm[GETVARNAME(mevtsLink)]))
-        mevtsLink = argm[GETVARNAME(mevtsLink)];
+      mevtsLink = argm[GETVARNAME(mevtsLink)];
 
     if (cmn::isFile(argm[GETVARNAME(sctableRoot)]))
-        sctableRoot = argm[GETVARNAME(sctableRoot)];
+      sctableRoot = argm[GETVARNAME(sctableRoot)];
 
     json_dbuf.init(databufferLink);
     json_evt.init(mevtsLink);
@@ -41,25 +42,29 @@ int IOBlock::init(std::map<std::string, std::string> argm)
     io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
     io::LOG(io::INFO) << "IOBlock::init() get_SCTableLink() " << get_SCTableLink();
 
-    return 0;
-}
+    YAML::Node node = YAML::Load("[1, 2, 3]");
+    //YAML::Node inhibit_evts = YAML::LoadFile("/opt/reftabs/init/inhibit-evts-ess.yml");
+    //std::cout << inhibit_evts << std::endl;
 
-int IOBlock::dbSync(std::map<std::string, std::string> &argms)
-{
+    return 0;
+  }
+
+  int IOBlock::dbSync(std::map<std::string, std::string> &argms)
+  {
 
     for (auto const &it : argms)
     {
-        if (cmn::isSubstring(it.first, GETVARNAME(SCTable)))
-            SCTable = it.second;
+      if (cmn::isSubstring(it.first, GETVARNAME(SCTable)))
+        SCTable = it.second;
     }
 
     return 0;
-}
+  }
 
-IOBlock &RegisteredIOBlock()
-{
+  IOBlock &RegisteredIOBlock()
+  {
     static IOBlock io_block;
     return io_block;
-}
+  }
 
 } // namespace io
