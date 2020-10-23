@@ -6,11 +6,9 @@
 
 #include "ioblock.hpp"
 #include "dlog.hpp"
+#include "cmnbase.hpp"
 
 #include <iostream>
-#include <yaml-cpp/yaml.h>
-
-#include "cmnbase.hpp"
 
 namespace io
 {
@@ -35,16 +33,15 @@ namespace io
 
     json_dbuf.init(databufferLink);
     json_evt.init(mevtsLink);
+    inhibitEvts_yml.init(inhibitEvtsLink);
+
     sctable.init(get_SCTableLink());
     Seq.init(json_evt.getEvtMap());
 
     io::LOG(io::INFO) << "IOBlock::init() databufferLink " << databufferLink;
     io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
+    io::LOG(io::INFO) << "IOBlock::init() inhibitEvtsLink " << inhibitEvtsLink;
     io::LOG(io::INFO) << "IOBlock::init() get_SCTableLink() " << get_SCTableLink();
-
-    YAML::Node node = YAML::Load("[1, 2, 3]");
-    //YAML::Node inhibit_evts = YAML::LoadFile("/opt/reftabs/init/inhibit-evts-ess.yml");
-    //std::cout << inhibit_evts << std::endl;
 
     return 0;
   }

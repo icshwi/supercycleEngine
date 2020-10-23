@@ -25,10 +25,11 @@ namespace io
   class IOBlock
   {
   private:
-    std::string databufferLink = "../reftabs/init/databuffer-ess.json";
-    std::string mevtsLink = "../reftabs/init/mevts-ess.json";
-    std::string sctableRoot = "../reftabs/supercycles/";
+    std::string databufferLink = "/opt/reftabs/init/databuffer-ess.json";
+    std::string mevtsLink = "/opt/reftabs/init/mevts-ess.json";
+    std::string sctableRoot = "/opt/reftabs/supercycles/";
     std::string SCTable = "example02.csv";
+    std::string inhibitEvtsLink = "/opt/reftabs/init/inhibit-evts-ess.yml";
 
   public:
     IOBlock(){};
@@ -43,6 +44,7 @@ namespace io
     io::JsonDBUF json_dbuf;
     io::JsonEVT json_evt;
     io::CSVReader sctable;
+    io::YmlInhibitEvt inhibitEvts_yml;
     // Set the send buffer
     dbf::DBufPacket dbuf;
     SequenceHandler Seq;

@@ -4,9 +4,10 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
-#USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra
+#USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra -g3
 USR_CXXFLAGS += -std=c++11 -g3 -Wall -Wextra -Wno-deprecated-declarations
-USR_INCLUDES_Linux += -I/usr/include/jsoncpp -I/usr/include/yaml-cpp
+USR_INCLUDES_Linux += -I/usr/include/jsoncpp
+USR_INCLUDES_Linux += -I/usr/local/include/yaml-cpp
 
 # ============================
 # Build an IOC support library
@@ -36,6 +37,8 @@ supercycleEngine_DBD += devs.dbd
 
 # Add all the support libraries needed by this IOC
 #supercycleEngine_LIBS += xxx
+#supercycleEngine_LIBS += yaml-cpp
+#yaml-cpp_DIR += /usr/local/lib
 
 # supercycleEngine_registerRecordDeviceDriver.cpp derives from supercycleEngine.dbd
 supercycleEngine_SRCS += supercycleEngine_registerRecordDeviceDriver.cpp
@@ -68,7 +71,8 @@ supercycleEngine_SRCS_vxWorks += -nil-
 supercycleEngine_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #===========================
-USR_SYS_LIBS += jsoncpp yaml-cpp
+USR_SYS_LIBS += jsoncpp
+USR_SYS_LIBS += yaml-cpp
 
 include $(TOP)/configure/RULES
 #----------------------------------------
