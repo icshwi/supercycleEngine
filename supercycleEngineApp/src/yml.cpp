@@ -40,4 +40,11 @@ namespace io
     return 0;
   }
 
+  std::vector<std::string> YmlInhibitEvt::getInhEvt()
+  {
+    io::LOG(io::DEBUG2) << "YmlInhibitEvt::getInhEvt()";
+
+    return inhevtv;
+  }
+
 } // namespace io

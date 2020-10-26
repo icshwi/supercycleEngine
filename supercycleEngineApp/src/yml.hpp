@@ -39,9 +39,10 @@ namespace io
   class YmlInhibitEvt : public YmlNode
   {
   public:
-    //JsonEVT(std::string fname);
+    YmlInhibitEvt(std::string fname);
     YmlInhibitEvt(){};
     int init(std::string fname);
+    std::vector<std::string> getInhEvt();
     //uint getEvtCode(std::string key) { return evtm[key]; };
     //std::map<std::string, uint> getEvtMap() { return evtm; };
 

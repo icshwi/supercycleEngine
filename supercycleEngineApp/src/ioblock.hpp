@@ -36,7 +36,7 @@ namespace io
     ~IOBlock();
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
-    std::string get_SCTableLink() { return sctableRoot + SCTable; };
+    std::string getSCTableLink() { return sctableRoot + SCTable; };
 
     epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;

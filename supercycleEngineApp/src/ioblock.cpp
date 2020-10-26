@@ -35,13 +35,13 @@ namespace io
     json_evt.init(mevtsLink);
     inhibitEvts_yml.init(inhibitEvtsLink);
 
-    sctable.init(get_SCTableLink());
+    sctable.init(getSCTableLink());
     Seq.init(json_evt.getEvtMap());
 
     io::LOG(io::INFO) << "IOBlock::init() databufferLink " << databufferLink;
     io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
     io::LOG(io::INFO) << "IOBlock::init() inhibitEvtsLink " << inhibitEvtsLink;
-    io::LOG(io::INFO) << "IOBlock::init() get_SCTableLink() " << get_SCTableLink();
+    io::LOG(io::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
 
     return 0;
   }
