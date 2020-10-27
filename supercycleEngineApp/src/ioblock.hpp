@@ -34,6 +34,8 @@ namespace io
     // PVs
     std::string SCTable = "null.csv";
     std::string PBState = "Off";
+    std::string PBMod = "None";
+    std::string PBDest = "None";
 
   public:
     IOBlock(){};
@@ -42,6 +44,8 @@ namespace io
     int init(std::map<std::string, std::string>);
     std::string getSCTableLink() { return sctableRoot + SCTable; };
     std::string getPBState() { return PBState; };
+    std::string getPBMod() { return PBMod; };
+    std::string getPBDest() { return PBDest; };
 
     epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;

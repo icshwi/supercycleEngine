@@ -121,7 +121,7 @@ int engineCycle(io::IOBlock &io)
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
   //cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
-  // Insert generated cycle variables into the cycle config
+  // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
 
   // Update the databuffer container
@@ -139,8 +139,10 @@ int engineCycle(io::IOBlock &io)
   cycle_row["PBState"] = io.getPBState();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.json_dbuf.PBState);
   // PBDest
+  cycle_row["PBDest"] = io.getPBDest();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.json_dbuf.PBDest);
   // PBMod
+  cycle_row["PBMod"] = io.getPBMod();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.json_dbuf.PBMod);
   // PBLen
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);

@@ -55,6 +55,10 @@ namespace io
         SCTable = it.second;
       if (cmn::isSubstring(it.first, GETVARNAME(PBState)))
         PBState = it.second;
+      if (cmn::isSubstring(it.first, GETVARNAME(PBMod)))
+        PBMod = it.second;
+      if (cmn::isSubstring(it.first, GETVARNAME(PBDest)))
+        PBDest = it.second;
     }
 
     return 0;
