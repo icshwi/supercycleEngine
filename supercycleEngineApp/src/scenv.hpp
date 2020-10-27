@@ -16,18 +16,18 @@ namespace env
 #define EPICS2020s 946708560
 #define GETVARNAME(var) (#var)
 
-enum EVT
-{
-    C14HZ = 0x0E,   // DOWNSTREAM START OF CYCLE
+  enum EVT
+  {
+    C14Hz = 0x0E,   // DOWNSTREAM START OF CYCLE
     COFFSET = 0x10, // DOWNSTREAM SEND COFFSET BUFFER
-    CSYNC = 0x11,   // DOWNSTREAM Trigger the cycle within the supercycle APP
-    SEQ_END = 127,  // DOWNSTREAM Trigger the cycle within the supercycle APP
-};
+    CSync = 0x11,   // DOWNSTREAM Trigger the cycle within the supercycle APP
+    SeqEnd = 127,   // DOWNSTREAM Trigger the cycle within the supercycle APP
+  };
 
-extern const std::map<EVT, std::string> EVT2Str;
+  extern const std::map<EVT, std::string> EVT2Str;
 
-enum DBFIDX
-{
+  enum DBFIDX
+  {
     ProtNum = 0,  //InitTable | PV-RB
     ProtVer = 2,  //InitTable | PV-RB
     IdCycle = 4,  //Cycle Callback Increment | PV-RB
@@ -39,9 +39,9 @@ enum DBFIDX
     PBCurr = 24,  //SCTable | PV-RB | PV-SP
     TgRast = 28,  //SCTable | PV-RB | PV-SP
     TgSeg = 29,   //Upstream EVT_TGFM | PV-RB
-};
+  };
 
-extern const std::map<DBFIDX, std::string> DBFIDX2Str;
+  extern const std::map<DBFIDX, std::string> DBFIDX2Str;
 
 } // namespace env
 

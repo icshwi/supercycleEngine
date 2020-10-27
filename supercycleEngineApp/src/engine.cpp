@@ -11,6 +11,7 @@
 #include "dbuf.hpp"
 #include "csv.hpp"
 #include "json.hpp"
+#include "yml.hpp"
 #include "seq.hpp"
 
 #include "scenv.hpp"
@@ -136,6 +137,10 @@ int engineCycle(io::IOBlock &io)
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBEn);
   // PBCurr
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
+
+  // Erease inhibit events from the cycle [TODO] dependence on the state
+  for (auto &it : io.inhibitEvts_yml.getInhEvt())
+    cycle_row.erase(it);
 
   // Update the event sequence container
   io.Seq.write(cycle_row);

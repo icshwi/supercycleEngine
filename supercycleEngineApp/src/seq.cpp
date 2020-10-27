@@ -45,7 +45,7 @@ void SequenceHandler::write(std::map<std::string, std::string> &rowm)
     if (tst_evt_seq.empty() == false)
     {
         // Terminate the sequence
-        tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SEQ_END;
+        tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SeqEnd;
     }
 
     io::LOG(io::DEBUG1) << "SequenceHandler::write() rowm " << cmn::map2str<std::string, std::string>(rowm);

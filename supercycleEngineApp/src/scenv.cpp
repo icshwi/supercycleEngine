@@ -9,23 +9,23 @@
 namespace env
 {
 
-const std::map<EVT, std::string> EVT2Str = {
-    {C14HZ, "14HZ"},
-    {COFFSET, "COFFSET"},
-    {CSYNC, "CSYNC"},
-    {SEQ_END, "SEQ_END"}};
+  const std::map<EVT, std::string> EVT2Str = {
+      {C14Hz, "14Hz"},
+      {COFFSET, "COFFSET"},
+      {CSync, "CSync"},
+      {SeqEnd, "SeqEnd"}};
 
-const std::map<DBFIDX, std::string> DBFIDX2Str = {
-    {ProtNum, "ProtNum"},
-    {ProtVer, "ProtVer"},
-    {IdCycle, "IdCycle"},
-    {PBState, "PBState"},
-    {PBDest, "PBDest"},
-    {PBMod, "PBMod"},
-    {PBLen, "PBLen"},
-    {PBEn, "PBEn"},
-    {PBCurr, "PBCurr"},
-    {TgRast, "TgRast"},
-    {TgSeg, "TgSeg"}};
+  const std::map<DBFIDX, std::string> DBFIDX2Str = {
+      {ProtNum, "ProtNum"},
+      {ProtVer, "ProtVer"},
+      {IdCycle, "IdCycle"},
+      {PBState, "PBState"},
+      {PBDest, "PBDest"},
+      {PBMod, "PBMod"},
+      {PBLen, "PBLen"},
+      {PBEn, "PBEn"},
+      {PBCurr, "PBCurr"},
+      {TgRast, "TgRast"},
+      {TgSeg, "TgSeg"}};
 
 } // namespace env

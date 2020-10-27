@@ -19,25 +19,25 @@
 namespace io
 {
 
-void json2map(Json::Value &, std::map<std::string, std::string> &, std::string key = "id");
-void json2map(Json::Value &, std::map<std::string, epicsUInt32> &, std::string key = "id");
+  void json2map(Json::Value &, std::map<std::string, std::string> &, std::string key = "id");
+  void json2map(Json::Value &, std::map<std::string, epicsUInt32> &, std::string key = "id");
 
-class JsonValue
-{
-protected:
+  class JsonValue
+  {
+  protected:
     std::string filename;
     Json::Value value;
     std::vector<std::string> keys;
 
-public:
+  public:
     //JsonValue(std::string fname);
     JsonValue(){};
     virtual int init(std::string fname);
-};
+  };
 
-class JsonDBUF : public JsonValue
-{
-public:
+  class JsonDBUF : public JsonValue
+  {
+  public:
     //JsonDBUF(std::string fname);
     JsonDBUF(){};
     int init(std::string fname);
@@ -51,26 +51,26 @@ public:
     uint getProtVer() { return ProtVer; };
     uint getProtNum() { return ProtNum; };
 
-private:
+  private:
     std::map<std::string, uint> PBDestId;
     std::map<std::string, uint> PBModId;
     std::map<std::string, uint> PBStateId;
     uint ProtVer;
     uint ProtNum;
-};
+  };
 
-class JsonEVT : public JsonValue
-{
-public:
+  class JsonEVT : public JsonValue
+  {
+  public:
     //JsonEVT(std::string fname);
     JsonEVT(){};
     int init(std::string fname);
     uint getEvtCode(std::string key) { return evtm[key]; };
     std::map<std::string, uint> getEvtMap() { return evtm; };
 
-private:
+  private:
     std::map<std::string, uint> evtm;
-};
+  };
 
 } // namespace io
 

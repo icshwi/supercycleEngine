@@ -50,6 +50,19 @@ namespace io
     std::vector<std::string> inhevtv;
   };
 
+  // class YmlMEvt : public YmlNode
+  // {
+  // public:
+  //   //JsonEVT(std::string fname);
+  //   YmlMEvt(){};
+  //   int init(std::string fname);
+  //   uint getEvtCode(std::string key) { return evtm[key]; };
+  //   std::map<std::string, uint> getEvtMap() { return evtm; };
+
+  // private:
+  //   std::map<std::string, uint> evtm;
+  // };
+
 } // namespace io
 
 #endif // YML_HPP_

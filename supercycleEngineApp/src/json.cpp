@@ -18,32 +18,32 @@
 namespace io
 {
 
-void json2map(Json::Value &argjval, std::map<std::string, std::string> &argm, std::string key)
-{
+  void json2map(Json::Value &argjval, std::map<std::string, std::string> &argm, std::string key)
+  {
     std::vector<std::string> tmpv = argjval.getMemberNames();
 
     for (auto const &it : tmpv)
     {
-        argm[it] = argjval[it].get(key, "").asString();
+      argm[it] = argjval[it].get(key, "").asString();
     }
-}
+  }
 
-void json2map(Json::Value &argjval, std::map<std::string, epicsUInt32> &argm, std::string key)
-{
+  void json2map(Json::Value &argjval, std::map<std::string, epicsUInt32> &argm, std::string key)
+  {
     std::vector<std::string> tmpv = argjval.getMemberNames();
 
     for (auto const &it : tmpv)
     {
-        argm[it] = argjval[it].get(key, "").asUInt();
+      argm[it] = argjval[it].get(key, "").asUInt();
     }
-}
+  }
 
-int JsonValue::init(std::string fname)
-{
+  int JsonValue::init(std::string fname)
+  {
     io::LOG(io::DEBUG2) << "JsonValue::init() fname" << fname;
 
     if (cmn::isFile(fname) == false)
-        return 1;
+      return 1;
 
     std::ifstream ifs = {};
     Json::Reader reader = {};
@@ -56,17 +56,17 @@ int JsonValue::init(std::string fname)
 
     if (status == true)
     {
-        filename = fname;
-        value = valj;
-        keys = value.getMemberNames();
+      filename = fname;
+      value = valj;
+      keys = value.getMemberNames();
     }
     return 0;
-}
+  }
 
-int JsonDBUF::init(std::string fname)
-{
+  int JsonDBUF::init(std::string fname)
+  {
     if (JsonValue::init(fname) != 0)
-        return 1;
+      return 1;
 
     PBDest = value[env::DBFIDX2Str.at(env::PBDest)];
     PBMod = value[env::DBFIDX2Str.at(env::PBMod)];
@@ -86,18 +86,18 @@ int JsonDBUF::init(std::string fname)
     io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBStateId) " << cmn::map2str<std::string, uint>(PBStateId);
 
     return 0;
-}
+  }
 
-int JsonEVT::init(std::string fname)
-{
+  int JsonEVT::init(std::string fname)
+  {
     if (JsonValue::init(fname) != 0)
-        return 1;
+      return 1;
 
     io::LOG(io::DEBUG2) << "JsonEVT::init() fname " << fname;
     json2map(value, evtm);
     io::LOG(io::INFO) << "JsonEVT::init() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
 
     return 0;
-}
+  }
 
 } // namespace io

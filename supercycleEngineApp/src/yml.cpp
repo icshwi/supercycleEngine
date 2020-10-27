@@ -47,4 +47,17 @@ namespace io
     return inhevtv;
   }
 
+  // int YmlMEvt::init(std::string fname)
+  // {
+  //   if (YmlNode::init(fname) != 0)
+  //     return 1;
+
+  //   io::LOG(io::DEBUG2) << "YmlMEvt::init() fname " << fname;
+  //   //evtm = node["inhibitEvts"].as<std::vector<std::string>>();
+  //   //json2map(value, evtm);
+  //   //io::LOG(io::INFO) << "YmlMEvt::init() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
+
+  //   return 0;
+  // }
+
 } // namespace io
