@@ -1,7 +1,7 @@
 record(stringout, "$(P)$(R=)$(S=:)SCTable-SP") {
     field(DTYP, "Control")
     field(DESC, "Supercyle Table")
-    field(VAL,  "example02.csv")
+    field(VAL,  "probe-50us-MEBT-14Hz.csv")
 }
 
 record(stringout, "$(P)$(R=)$(S=:)PBState-SP") {

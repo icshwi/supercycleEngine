@@ -89,6 +89,16 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
   return 0;
 }
 
+int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+{
+  for (auto &state : io.inhibitEvts_yml.getInhStates())
+    if (io.getPBState() == state)
+      for (auto &it : io.inhibitEvts_yml.getInhEvts())
+        cycle_row.erase(it);
+
+  return 0;
+}
+
 int engineCycle(io::IOBlock &io)
 {
   // Performance improvement of the engineCycle()
@@ -111,9 +121,9 @@ int engineCycle(io::IOBlock &io)
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
   //cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
-
-  // Insert other cycle variables
+  // Insert generated cycle variables into the cycle config
   cycle_row_insert(cycle_row, cycle_row_adds);
+
   // Update the databuffer container
 
   io.dbuf.clear();
@@ -126,6 +136,7 @@ int engineCycle(io::IOBlock &io)
 
   // SCTABLE operations
   // PBState
+  cycle_row["PBState"] = io.getPBState();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.json_dbuf.PBState);
   // PBDest
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.json_dbuf.PBDest);
@@ -138,10 +149,8 @@ int engineCycle(io::IOBlock &io)
   // PBCurr
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 
-  // Erease inhibit events from the cycle [TODO] dependence on the state
-  for (auto &it : io.inhibitEvts_yml.getInhEvt())
-    cycle_row.erase(it);
-
+  // Erease inhibit events from the cycle in regards to the state
+  InhEvts4State(io, cycle_row);
   // Update the event sequence container
   io.Seq.write(cycle_row);
 

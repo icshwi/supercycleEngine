@@ -42,12 +42,14 @@ namespace io
     YmlInhibitEvt(std::string fname);
     YmlInhibitEvt(){};
     int init(std::string fname);
-    std::vector<std::string> getInhEvt();
+    std::vector<std::string> getInhEvts() { return inhEvtv; };
+    std::vector<std::string> getInhStates() { return inhStatev; };
     //uint getEvtCode(std::string key) { return evtm[key]; };
     //std::map<std::string, uint> getEvtMap() { return evtm; };
 
   private:
-    std::vector<std::string> inhevtv;
+    std::vector<std::string> inhEvtv;
+    std::vector<std::string> inhStatev;
   };
 
   // class YmlMEvt : public YmlNode

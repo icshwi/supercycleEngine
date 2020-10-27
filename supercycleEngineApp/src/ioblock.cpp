@@ -33,14 +33,14 @@ namespace io
 
     json_dbuf.init(databufferLink);
     json_evt.init(mevtsLink);
-    inhibitEvts_yml.init(inhibitEvtsLink);
+    inhibitEvts_yml.init(sceconfigLink);
 
     sctable.init(getSCTableLink());
     Seq.init(json_evt.getEvtMap());
 
     io::LOG(io::INFO) << "IOBlock::init() databufferLink " << databufferLink;
     io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
-    io::LOG(io::INFO) << "IOBlock::init() inhibitEvtsLink " << inhibitEvtsLink;
+    io::LOG(io::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
     io::LOG(io::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
 
     return 0;
@@ -53,6 +53,8 @@ namespace io
     {
       if (cmn::isSubstring(it.first, GETVARNAME(SCTable)))
         SCTable = it.second;
+      if (cmn::isSubstring(it.first, GETVARNAME(PBState)))
+        PBState = it.second;
     }
 
     return 0;

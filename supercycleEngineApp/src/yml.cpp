@@ -34,17 +34,12 @@ namespace io
 
     io::LOG(io::DEBUG2) << "YmlInhibitEvt::init() fname " << fname;
 
-    inhevtv = node["inhibitEvts"].as<std::vector<std::string>>();
+    inhEvtv = node["inhEvts"].as<std::vector<std::string>>();
+    inhStatev = node["inhStates"].as<std::vector<std::string>>();
 
-    io::LOG(io::INFO) << "YmlInhibitEvt::init() cmn::map2str<std::string,uint>(evtm) " << cmn::vec2str<std::string>(inhevtv);
+    io::LOG(io::INFO) << "YmlInhibitEvt::init() inhEvtv " << cmn::vec2str<std::string>(inhEvtv);
+    io::LOG(io::INFO) << "YmlInhibitEvt::init() inhStatev " << cmn::vec2str<std::string>(inhStatev);
     return 0;
-  }
-
-  std::vector<std::string> YmlInhibitEvt::getInhEvt()
-  {
-    io::LOG(io::DEBUG2) << "YmlInhibitEvt::getInhEvt()";
-
-    return inhevtv;
   }
 
   // int YmlMEvt::init(std::string fname)

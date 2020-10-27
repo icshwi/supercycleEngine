@@ -25,11 +25,15 @@ namespace io
   class IOBlock
   {
   private:
+    // Links
     std::string databufferLink = "/opt/reftabs/init/databuffer-ess.json";
     std::string mevtsLink = "/opt/reftabs/init/mevts-ess.json";
+    std::string sceconfigLink = "/opt/reftabs/init/sceconfig-ess.yml";
+    // Directories
     std::string sctableRoot = "/opt/reftabs/supercycles/";
-    std::string SCTable = "example02.csv";
-    std::string inhibitEvtsLink = "/opt/reftabs/init/inhibit-evts-ess.yml";
+    // PVs
+    std::string SCTable = "null.csv";
+    std::string PBState = "Off";
 
   public:
     IOBlock(){};
@@ -37,6 +41,7 @@ namespace io
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
     std::string getSCTableLink() { return sctableRoot + SCTable; };
+    std::string getPBState() { return PBState; };
 
     epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;
