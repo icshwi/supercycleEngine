@@ -1,3 +1,4 @@
-device(stringout, CONSTANT, devStrOutCtrl, "Control")
+device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
+device(mbbo, CONSTANT, devMbboCtrl, "ControlMbbo")
 registrar(cmdMapStrOut)
 function(ioASubBuf)
