@@ -10,7 +10,7 @@ record(stringout, "$(P)$(R=)$(S=:)PBState-SP") {
     field(DTYP, "ControlStrOut")
     field(DESC, "Proton Beam State")
     field(PINI, "YES")
-    field(VAL,  "Off")
+    field(VAL,  "None")
     info(autosaveFields_pass0, "VAL")
 }
 
@@ -18,7 +18,7 @@ record(stringout, "$(P)$(R=)$(S=:)PBMod-SP") {
     field(DTYP, "ControlStrOut")
     field(DESC, "Proton Beam Mode")
     field(PINI, "YES")
-    field(VAL,  "NoBeam")
+    field(VAL,  "None")
     info(autosaveFields_pass0, "VAL")
 }
 

@@ -23,8 +23,28 @@ namespace io
     filename = fname;
     node = YAML::LoadFile(filename);
 
-    io::LOG(io::INFO) << "YmlNode::init() node " << node;
+    for (auto const &it : node)
+      memberNames.push_back(it.first.as<std::string>());
+
+    io::LOG(io::DEBUG) << "YmlNode::init() node " << node;
+    io::LOG(io::DEBUG) << "YmlNode::init() memberNames " << cmn::vec2str<std::string>(memberNames);
     return 0;
+  }
+
+  void YmlNode::Yml2Map(std::map<std::string, std::string> &argm, std::string key)
+  {
+    for (auto const &it : memberNames)
+    {
+      argm[it] = node[it][key].as<std::string>();
+    }
+  }
+
+  void YmlNode::Yml2Map(std::map<std::string, epicsUInt32> &argm, std::string key)
+  {
+    for (auto const &it : memberNames)
+    {
+      argm[it] = node[it][key].as<epicsUInt32>();
+    }
   }
 
   int YmlInhibitEvt::init(std::string fname)
@@ -42,17 +62,17 @@ namespace io
     return 0;
   }
 
-  // int YmlMEvt::init(std::string fname)
-  // {
-  //   if (YmlNode::init(fname) != 0)
-  //     return 1;
+  int YmlMEvt::init(std::string fname)
+  {
+    if (YmlNode::init(fname) != 0)
+      return 1;
 
-  //   io::LOG(io::DEBUG2) << "YmlMEvt::init() fname " << fname;
-  //   //evtm = node["inhibitEvts"].as<std::vector<std::string>>();
-  //   //json2map(value, evtm);
-  //   //io::LOG(io::INFO) << "YmlMEvt::init() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
+    io::LOG(io::DEBUG2) << "YmlMEvt::init() fname " << fname;
 
-  //   return 0;
-  // }
+    Yml2Map(evtm, "id");
+    io::LOG(io::INFO) << "YmlMEvt::init() evtm " << cmn::map2str<std::string, epicsUInt32>(evtm);
+
+    return 0;
+  }
 
 } // namespace io

@@ -88,16 +88,4 @@ namespace io
     return 0;
   }
 
-  int JsonEVT::init(std::string fname)
-  {
-    if (JsonValue::init(fname) != 0)
-      return 1;
-
-    io::LOG(io::DEBUG2) << "JsonEVT::init() fname " << fname;
-    json2map(value, evtm);
-    io::LOG(io::INFO) << "JsonEVT::init() cmn::map2str<std::string,uint>(evtm) " << cmn::map2str<std::string, uint>(evtm);
-
-    return 0;
-  }
-
 } // namespace io

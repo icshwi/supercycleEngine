@@ -27,7 +27,7 @@ namespace io
   private:
     // Links
     std::string databufferLink = "/opt/reftabs/init/databuffer-ess.json";
-    std::string mevtsLink = "/opt/reftabs/init/mevts-ess.json";
+    std::string mevtsLink = "/opt/reftabs/init/mevts-ess.yml";
     std::string sceconfigLink = "/opt/reftabs/init/sceconfig-ess.yml";
     // Directories
     std::string sctableRoot = "/opt/reftabs/supercycles/";
@@ -51,9 +51,9 @@ namespace io
     epicsUInt64 cId = 0;
 
     io::JsonDBUF json_dbuf;
-    io::JsonEVT json_evt;
     io::CSVReader sctable;
-    io::YmlInhibitEvt inhibitEvts_yml;
+    io::YmlInhibitEvt inhibitEvt_yml;
+    io::YmlMEvt mEvt_yml;
     // Set the send buffer
     dbf::DBufPacket dbuf;
     SequenceHandler Seq;

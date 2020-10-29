@@ -28,12 +28,14 @@ namespace io
   protected:
     std::string filename;
     YAML::Node node;
-    //std::vector<std::string> keys;
+    std::vector<std::string> memberNames;
 
   public:
-    //YmlNode(std::string fname);
+    YmlNode(std::string fname);
     YmlNode(){};
     virtual int init(std::string fname);
+    void Yml2Map(std::map<std::string, std::string> &argm, std::string key);
+    void Yml2Map(std::map<std::string, epicsUInt32> &argm, std::string key);
   };
 
   class YmlInhibitEvt : public YmlNode
@@ -52,18 +54,18 @@ namespace io
     std::vector<std::string> inhStatev;
   };
 
-  // class YmlMEvt : public YmlNode
-  // {
-  // public:
-  //   //JsonEVT(std::string fname);
-  //   YmlMEvt(){};
-  //   int init(std::string fname);
-  //   uint getEvtCode(std::string key) { return evtm[key]; };
-  //   std::map<std::string, uint> getEvtMap() { return evtm; };
+  class YmlMEvt : public YmlNode
+  {
+  public:
+    //JsonEVT(std::string fname);
+    YmlMEvt(){};
+    int init(std::string fname);
+    uint getEvtCode(std::string key) { return evtm[key]; };
+    std::map<std::string, uint> getEvtMap() { return evtm; };
 
-  // private:
-  //   std::map<std::string, uint> evtm;
-  // };
+  private:
+    std::map<std::string, uint> evtm;
+  };
 
 } // namespace io
 

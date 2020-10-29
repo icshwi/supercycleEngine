@@ -59,19 +59,6 @@ namespace io
     uint ProtNum;
   };
 
-  class JsonEVT : public JsonValue
-  {
-  public:
-    //JsonEVT(std::string fname);
-    JsonEVT(){};
-    int init(std::string fname);
-    uint getEvtCode(std::string key) { return evtm[key]; };
-    std::map<std::string, uint> getEvtMap() { return evtm; };
-
-  private:
-    std::map<std::string, uint> evtm;
-  };
-
 } // namespace io
 
 #endif // JSON_HPP
