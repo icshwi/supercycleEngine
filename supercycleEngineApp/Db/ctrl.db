@@ -6,31 +6,13 @@ record(stringout, "$(P)$(R=)$(S=:)SCTable-SP") {
     info(autosaveFields_pass0, "VAL")
 }
 
-# record(stringout, "$(P)$(R=)$(S=:)PBState-SP") {
-#     field(DTYP, "ControlStrOut")
-#     field(DESC, "Proton Beam State")
-#     field(PINI, "YES")
-#     field(VAL,  "Off")
-#     info(autosaveFields_pass0, "VAL")
-# }
-
-record(mbbo, "$(P)$(R=)$(S=:)PBState-SP") {
-    field(DTYP, "ControlMbbo")
+record(stringout, "$(P)$(R=)$(S=:)PBState-SP") {
+    field(DTYP, "ControlStrOut")
     field(DESC, "Proton Beam State")
     field(PINI, "YES")
-    field(ZRST, "None")
-    field(ONST, "Off")
-    field(TWST, "On")
-    field(THST, "Fault")
-    field(FRST, "Recovery")
-    field(ZRVL, "0")
-    field(ONVL, "10")
-    field(TWVL, "20")
-    field(THVL, "30")
-    field(FRVL, "40")
+    field(VAL,  "Off")
     info(autosaveFields_pass0, "VAL")
 }
-
 
 record(stringout, "$(P)$(R=)$(S=:)PBMod-SP") {
     field(DTYP, "ControlStrOut")
