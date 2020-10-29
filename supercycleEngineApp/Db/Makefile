@@ -12,6 +12,7 @@ DB += engine.db
 DB += io.db
 DB += iosingle.db
 DB += gplug.db
+DB += states.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
