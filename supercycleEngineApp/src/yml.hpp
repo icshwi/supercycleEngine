@@ -39,20 +39,6 @@ namespace io
     void Yml2Map(std::map<std::string, epicsUInt32> &argm, std::string key);
   };
 
-  class YmlInhibitEvt : public YmlNode
-  {
-  public:
-    //YmlInhibitEvt(std::string fname);
-    YmlInhibitEvt(){};
-    int init(std::string fname);
-    std::vector<std::string> getInhEvts() { return inhEvtv; };
-    std::vector<std::string> getInhStates() { return inhStatev; };
-
-  private:
-    std::vector<std::string> inhEvtv;
-    std::vector<std::string> inhStatev;
-  };
-
   class YmlKeyValMap : public YmlNode
   {
   public:
@@ -67,11 +53,11 @@ namespace io
     std::map<std::string, epicsUInt32> mapsi;
   };
 
-  class YmlMEvt : public YmlKeyValMap
+  class YmlMEvts : public YmlKeyValMap
   {
   public:
     //JsonEVT(std::string fname);
-    YmlMEvt(){};
+    YmlMEvts(){};
     int init(std::string fname, std::string valName = "id")
     {
       YmlKeyValMap::init(fname, valName);
@@ -126,6 +112,20 @@ namespace io
   private:
     uint ProtVer = 0;
     uint ProtNum = 0;
+  };
+
+  class YmlInhibitEvts : public YmlNode
+  {
+  public:
+    //YmlInhibitEvt(std::string fname);
+    YmlInhibitEvts(){};
+    int init(std::string fname);
+    std::vector<std::string> getInhEvts() { return inhEvtv; };
+    std::vector<std::string> getInhStates() { return inhStatev; };
+
+  private:
+    std::vector<std::string> inhEvtv;
+    std::vector<std::string> inhStatev;
   };
 
 } // namespace io

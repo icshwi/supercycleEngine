@@ -32,11 +32,11 @@ namespace io
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
     DBuf_yml.init(databufferLink);
-    inhibitEvt_yml.init(sceconfigLink);
-    mEvt_yml.init(mevtsLink);
+    inhibitEvts_yml.init(sceconfigLink);
+    mEvts_yml.init(mevtsLink);
 
     sctable.init(getSCTableLink());
-    Seq.init(mEvt_yml.getMap());
+    Seq.init(mEvts_yml.getMap());
 
     io::LOG(io::INFO) << "IOBlock::init() databufferLink " << databufferLink;
     io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;

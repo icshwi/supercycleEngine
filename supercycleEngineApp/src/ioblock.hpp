@@ -50,9 +50,10 @@ namespace io
     epicsUInt64 cId = 0;
 
     io::YmlDatabuffer DBuf_yml;
+    io::YmlInhibitEvts inhibitEvts_yml;
+    io::YmlMEvts mEvts_yml;
+
     io::CSVReader sctable;
-    io::YmlInhibitEvt inhibitEvt_yml;
-    io::YmlMEvt mEvt_yml;
     // Set the send buffer
     dbf::DBufPacket dbuf;
     SequenceHandler Seq;
