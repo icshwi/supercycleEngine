@@ -53,6 +53,19 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
   }
 }
 
+void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
+{
+  try
+  {
+    dbuf.write(idx, mapValKey[row[env::DBFIDX2Str.at(idx)]]);
+  }
+  catch (...)
+  {
+    dbuf.write(idx, 0); // Worse case selected so that the beam is on
+    io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+  }
+}
+
 void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
 {
   rowm.insert(argm.begin(), argm.end());
@@ -137,7 +150,7 @@ int engineCycle(io::IOBlock &io)
   // SCTABLE operations
   // PBState
   cycle_row["PBState"] = io.getPBState();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.json_dbuf.PBState);
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.PBStateId_yml.getMap());
   // PBDest
   cycle_row["PBDest"] = io.getPBDest();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.json_dbuf.PBDest);

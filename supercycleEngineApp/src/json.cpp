@@ -70,7 +70,7 @@ namespace io
 
     PBDest = value[env::DBFIDX2Str.at(env::PBDest)];
     PBMod = value[env::DBFIDX2Str.at(env::PBMod)];
-    PBState = value[env::DBFIDX2Str.at(env::PBState)];
+    //PBState = value[env::DBFIDX2Str.at(env::PBState)];
 
     io::LOG(io::DEBUG2) << "JsonDBUF::init() fname " << fname;
 
@@ -79,11 +79,11 @@ namespace io
 
     json2map(PBDest, PBDestId);
     json2map(PBMod, PBModId);
-    json2map(PBState, PBStateId);
+    //json2map(PBState, PBStateId);
 
     io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBDestId) " << cmn::map2str<std::string, uint>(PBDestId);
     io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBModId) " << cmn::map2str<std::string, uint>(PBModId);
-    io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBStateId) " << cmn::map2str<std::string, uint>(PBStateId);
+    //io::LOG(io::INFO) << "JsonDBUF::init() cmn::map2str<std::string,uint>(PBStateId) " << cmn::map2str<std::string, uint>(PBStateId);
 
     return 0;
   }

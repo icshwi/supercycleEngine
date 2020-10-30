@@ -44,17 +44,17 @@ namespace io
 
     Json::Value PBDest;
     Json::Value PBMod;
-    Json::Value PBState;
+    //Json::Value PBState;
     uint getPBDestId(std::string key) { return PBDestId[key]; };
     uint getPBModId(std::string key) { return PBModId[key]; };
-    uint getPBStateId(std::string key) { return PBStateId[key]; };
+    //uint getPBStateId(std::string key) { return PBStateId[key]; };
     uint getProtVer() { return ProtVer; };
     uint getProtNum() { return ProtNum; };
 
   private:
     std::map<std::string, uint> PBDestId;
     std::map<std::string, uint> PBModId;
-    std::map<std::string, uint> PBStateId;
+    //std::map<std::string, uint> PBStateId;
     uint ProtVer;
     uint ProtNum;
   };

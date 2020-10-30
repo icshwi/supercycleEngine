@@ -51,6 +51,7 @@ namespace io
     epicsUInt64 cId = 0;
 
     io::JsonDBUF json_dbuf;
+    io::YmlPBStateIds PBStateId_yml;
     io::CSVReader sctable;
     io::YmlInhibitEvt inhibitEvt_yml;
     io::YmlMEvt mEvt_yml;

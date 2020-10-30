@@ -34,6 +34,7 @@ namespace io
     YmlNode(std::string fname);
     YmlNode(){};
     virtual int init(std::string fname);
+    virtual int init(std::string fname, std::string nodeName);
     void Yml2Map(std::map<std::string, std::string> &argm, std::string key);
     void Yml2Map(std::map<std::string, epicsUInt32> &argm, std::string key);
   };
@@ -41,30 +42,52 @@ namespace io
   class YmlInhibitEvt : public YmlNode
   {
   public:
-    YmlInhibitEvt(std::string fname);
+    //YmlInhibitEvt(std::string fname);
     YmlInhibitEvt(){};
     int init(std::string fname);
     std::vector<std::string> getInhEvts() { return inhEvtv; };
     std::vector<std::string> getInhStates() { return inhStatev; };
-    //uint getEvtCode(std::string key) { return evtm[key]; };
-    //std::map<std::string, uint> getEvtMap() { return evtm; };
 
   private:
     std::vector<std::string> inhEvtv;
     std::vector<std::string> inhStatev;
   };
 
-  class YmlMEvt : public YmlNode
+  class YmlKeyValMap : public YmlNode
+  {
+  public:
+    //YmlIdMap(std::string fname);
+    YmlKeyValMap(){};
+    virtual int init(std::string fname, std::string valName);
+    virtual int init(std::string fname, std::string nodeName, std::string valName);
+    epicsUInt32 getVal(std::string key) { return mapsi[key]; };
+    std::map<std::string, epicsUInt32> getMap() { return mapsi; };
+
+  private:
+    std::map<std::string, epicsUInt32> mapsi;
+  };
+
+  class YmlMEvt : public YmlKeyValMap
   {
   public:
     //JsonEVT(std::string fname);
     YmlMEvt(){};
-    int init(std::string fname);
-    uint getEvtCode(std::string key) { return evtm[key]; };
-    std::map<std::string, uint> getEvtMap() { return evtm; };
+    int init(std::string fname, std::string valName = "id")
+    {
+      YmlKeyValMap::init(fname, valName);
+      return 0;
+    };
+  };
 
-  private:
-    std::map<std::string, uint> evtm;
+  class YmlPBStateIds : public YmlKeyValMap
+  {
+  public:
+    YmlPBStateIds(){};
+    int init(std::string fname, std::string nodeName = "PBState", std::string valName = "id")
+    {
+      YmlKeyValMap::init(fname, nodeName, valName);
+      return 0;
+    };
   };
 
 } // namespace io

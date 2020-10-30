@@ -31,6 +31,23 @@ namespace io
     return 0;
   }
 
+  int YmlNode::init(std::string fname, std::string nodeName)
+  {
+    io::LOG(io::DEBUG2) << "YmlNode::init() fname" << fname;
+    io::LOG(io::DEBUG2) << "YmlNode::init() nodeName" << nodeName;
+    filename = fname;
+
+    YAML::Node node_tmp = YAML::LoadFile(filename);
+    node = node_tmp[nodeName];
+
+    for (auto const &it : node)
+      memberNames.push_back(it.first.as<std::string>());
+
+    io::LOG(io::DEBUG) << "YmlNode::init() node " << node;
+    io::LOG(io::DEBUG) << "YmlNode::init() memberNames " << cmn::vec2str<std::string>(memberNames);
+    return 0;
+  }
+
   void YmlNode::Yml2Map(std::map<std::string, std::string> &argm, std::string key)
   {
     for (auto const &it : memberNames)
@@ -62,17 +79,32 @@ namespace io
     return 0;
   }
 
-  int YmlMEvt::init(std::string fname)
+  int YmlKeyValMap::init(std::string fname, std::string valName)
   {
     if (YmlNode::init(fname) != 0)
       return 1;
 
-    io::LOG(io::DEBUG2) << "YmlMEvt::init() fname " << fname;
+    Yml2Map(mapsi, valName);
+    io::LOG(io::INFO) << "YmlKeyValMap::init()"
+                      << " fname " << fname << " valName " << valName << " mapsi " << cmn::map2str<std::string, epicsUInt32>(mapsi);
 
-    Yml2Map(evtm, "id");
-    io::LOG(io::INFO) << "YmlMEvt::init() evtm " << cmn::map2str<std::string, epicsUInt32>(evtm);
+    return 0;
+  }
+
+  int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)
+  {
+    if (YmlNode::init(fname, nodeName) != 0)
+      return 1;
+
+    Yml2Map(mapsi, valName);
+    io::LOG(io::INFO) << "YmlKeyValMap::init()"
+                      << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << cmn::map2str<std::string, epicsUInt32>(mapsi);
 
     return 0;
   }
 
 } // namespace io
+
+// YAML::Node node1 = YAML::LoadFile("/opt/reftabs/init/databuffer-ess.yml");
+// YAML::Node node2 = node1["PBState"];
+// std::cout << node2 << std::endl;
