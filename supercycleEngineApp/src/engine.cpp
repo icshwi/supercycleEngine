@@ -10,7 +10,6 @@
 
 #include "dbuf.hpp"
 #include "csv.hpp"
-#include "json.hpp"
 #include "yml.hpp"
 #include "seq.hpp"
 
@@ -32,19 +31,6 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
   try
   {
     dbuf.write(idx, std::stol(row[env::DBFIDX2Str.at(idx)]));
-  }
-  catch (...)
-  {
-    dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
-  }
-}
-
-void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, const Json::Value &jsonv)
-{
-  try
-  {
-    dbuf.write(idx, jsonv[row[env::DBFIDX2Str.at(idx)]]["id"].asUInt());
   }
   catch (...)
   {
@@ -141,22 +127,22 @@ int engineCycle(io::IOBlock &io)
 
   io.dbuf.clear();
   // ProtNum
-  io.dbuf.write(env::ProtNum, io.json_dbuf.getProtNum());
+  io.dbuf.write(env::ProtNum, io.DBuf_yml.getProtNum());
   // ProtVer
-  io.dbuf.write(env::ProtVer, io.json_dbuf.getProtVer());
+  io.dbuf.write(env::ProtVer, io.DBuf_yml.getProtVer());
   // IdCycle
   io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);
 
   // SCTABLE operations
   // PBState
   cycle_row["PBState"] = io.getPBState();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.PBStateId_yml.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.PBStateIds_yml.getMap());
   // PBDest
   cycle_row["PBDest"] = io.getPBDest();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.json_dbuf.PBDest);
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.PBDestIds_yml.getMap());
   // PBMod
   cycle_row["PBMod"] = io.getPBMod();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.json_dbuf.PBMod);
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.PBModIds_yml.getMap());
   // PBLen
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
   // PBEn

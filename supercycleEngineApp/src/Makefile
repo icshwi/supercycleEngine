@@ -6,7 +6,6 @@ include $(TOP)/configure/CONFIG
 #=============================
 #USR_CXXFLAGS += -std=c++11 -g -Wall -Wextra -g3
 USR_CXXFLAGS += -std=c++11 -g3 -Wall -Wextra -Wno-deprecated-declarations
-USR_INCLUDES_Linux += -I/usr/include/jsoncpp
 USR_INCLUDES_Linux += -I/usr/local/include/yaml-cpp
 
 # ============================
@@ -45,7 +44,6 @@ supercycleEngine_SRCS += supercycleEngine_registerRecordDeviceDriver.cpp
  # SRC libraries
 supercycleEngine_SRCS += cmnbase.cpp
 supercycleEngine_SRCS += dbuf.cpp
-supercycleEngine_SRCS += json.cpp
 supercycleEngine_SRCS += yml.cpp
 supercycleEngine_SRCS += csv.cpp
 supercycleEngine_SRCS += ioblock.cpp
@@ -71,7 +69,6 @@ supercycleEngine_SRCS_vxWorks += -nil-
 supercycleEngine_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #===========================
-USR_SYS_LIBS += jsoncpp
 USR_SYS_LIBS += yaml-cpp
 
 include $(TOP)/configure/RULES

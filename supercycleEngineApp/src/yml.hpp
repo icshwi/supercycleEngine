@@ -90,6 +90,44 @@ namespace io
     };
   };
 
+  class YmlPBModIds : public YmlKeyValMap
+  {
+  public:
+    YmlPBModIds(){};
+    int init(std::string fname, std::string nodeName = "PBMod", std::string valName = "id")
+    {
+      YmlKeyValMap::init(fname, nodeName, valName);
+      return 0;
+    };
+  };
+
+  class YmlPBDestIds : public YmlKeyValMap
+  {
+  public:
+    YmlPBDestIds(){};
+    int init(std::string fname, std::string nodeName = "PBDest", std::string valName = "id")
+    {
+      YmlKeyValMap::init(fname, nodeName, valName);
+      return 0;
+    };
+  };
+
+  class YmlDatabuffer
+  {
+  public:
+    YmlDatabuffer(){};
+    int init(std::string fname);
+    YmlPBStateIds PBStateIds_yml;
+    YmlPBModIds PBModIds_yml;
+    YmlPBDestIds PBDestIds_yml;
+    uint getProtVer() { return ProtVer; };
+    uint getProtNum() { return ProtNum; };
+
+  private:
+    uint ProtVer = 0;
+    uint ProtNum = 0;
+  };
+
 } // namespace io
 
 #endif // YML_HPP_

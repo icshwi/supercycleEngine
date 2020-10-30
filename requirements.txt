@@ -1,5 +1,2 @@
-jsoncpp-devel
-jsoncpp
-
-yaml-cpp
-yaml-cpp-devel
+yaml-cpp >= 0.6.3
+yaml-cpp-devel >= 0.6.3

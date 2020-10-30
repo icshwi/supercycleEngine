@@ -31,9 +31,7 @@ namespace io
     if (cmn::isFile(argm[GETVARNAME(sctableRoot)]))
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
-    json_dbuf.init(databufferLink);
-    PBStateId_yml.init(databufferLink);
-
+    DBuf_yml.init(databufferLink);
     inhibitEvt_yml.init(sceconfigLink);
     mEvt_yml.init(mevtsLink);
 

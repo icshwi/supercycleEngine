@@ -103,6 +103,19 @@ namespace io
     return 0;
   }
 
+  int YmlDatabuffer::init(std::string fname)
+  {
+    io::LOG(io::INFO) << "YmlDatabuffer::init fname " << fname;
+    YAML::Node node_tmp = YAML::LoadFile(fname);
+    ProtVer = node_tmp["ProtVer"].as<uint>();
+    ProtNum = node_tmp["ProtNum"].as<uint>();
+
+    PBStateIds_yml.init(fname);
+    PBModIds_yml.init(fname);
+    PBDestIds_yml.init(fname);
+    return 0;
+  }
+
 } // namespace io
 
 // YAML::Node node1 = YAML::LoadFile("/opt/reftabs/init/databuffer-ess.yml");

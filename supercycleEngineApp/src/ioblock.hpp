@@ -12,7 +12,6 @@
 
 #include "scenv.hpp"
 #include "dbuf.hpp"
-#include "json.hpp"
 #include "csv.hpp"
 #include "seq.hpp"
 #include "yml.hpp"
@@ -26,7 +25,7 @@ namespace io
   {
   private:
     // Links
-    std::string databufferLink = "/opt/reftabs/init/databuffer-ess.json";
+    std::string databufferLink = "/opt/reftabs/init/databuffer-ess.yml";
     std::string mevtsLink = "/opt/reftabs/init/mevts-ess.yml";
     std::string sceconfigLink = "/opt/reftabs/init/sceconfig-ess.yml";
     // Directories
@@ -50,8 +49,7 @@ namespace io
     epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;
 
-    io::JsonDBUF json_dbuf;
-    io::YmlPBStateIds PBStateId_yml;
+    io::YmlDatabuffer DBuf_yml;
     io::CSVReader sctable;
     io::YmlInhibitEvt inhibitEvt_yml;
     io::YmlMEvt mEvt_yml;
