@@ -90,9 +90,9 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
 
 int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
 {
-  for (auto &state : io.inhibitEvts_yml.getInhStates())
+  for (auto &state : io.SCEConfig_yml.getInhStates())
     if (io.getPBState() == state)
-      for (auto &it : io.inhibitEvts_yml.getInhEvts())
+      for (auto &it : io.SCEConfig_yml.getInhEvts())
         cycle_row.erase(it);
 
   return 0;

@@ -50,7 +50,7 @@ namespace io
     epicsUInt64 cId = 0;
 
     io::YmlDatabuffer DBuf_yml;
-    io::YmlInhibitEvts inhibitEvts_yml;
+    io::YmlSCEConfig SCEConfig_yml;
     io::YmlMEvts mEvts_yml;
 
     io::CSVReader sctable;

@@ -32,7 +32,7 @@ namespace io
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
     DBuf_yml.init(databufferLink);
-    inhibitEvts_yml.init(sceconfigLink);
+    SCEConfig_yml.init(sceconfigLink);
     mEvts_yml.init(mevtsLink);
 
     sctable.init(getSCTableLink());

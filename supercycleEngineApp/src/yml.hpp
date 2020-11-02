@@ -114,11 +114,11 @@ namespace io
     uint ProtNum = 0;
   };
 
-  class YmlInhibitEvts : public YmlNode
+  class YmlSCEConfig : public YmlNode
   {
   public:
     //YmlInhibitEvt(std::string fname);
-    YmlInhibitEvts(){};
+    YmlSCEConfig(){};
     int init(std::string fname);
     std::vector<std::string> getInhEvts() { return inhEvtv; };
     std::vector<std::string> getInhStates() { return inhStatev; };

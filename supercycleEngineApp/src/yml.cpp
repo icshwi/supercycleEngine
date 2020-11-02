@@ -64,18 +64,18 @@ namespace io
     }
   }
 
-  int YmlInhibitEvts::init(std::string fname)
+  int YmlSCEConfig::init(std::string fname)
   {
     if (YmlNode::init(fname) != 0)
       return 1;
 
-    io::LOG(io::DEBUG2) << "YmlInhibitEvts::init() fname " << fname;
+    io::LOG(io::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
 
     inhEvtv = node["Inhibit"]["Evts"].as<std::vector<std::string>>();
     inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
 
-    io::LOG(io::INFO) << "YmlInhibitEvts::init() inhEvtv " << cmn::vec2str<std::string>(inhEvtv);
-    io::LOG(io::INFO) << "YmlInhibitEvts::init() inhStatev " << cmn::vec2str<std::string>(inhStatev);
+    io::LOG(io::INFO) << "YmlSCEConfig::init() inhEvtv " << cmn::vec2str<std::string>(inhEvtv);
+    io::LOG(io::INFO) << "YmlSCEConfig::init() inhStatev " << cmn::vec2str<std::string>(inhStatev);
     return 0;
   }
 
