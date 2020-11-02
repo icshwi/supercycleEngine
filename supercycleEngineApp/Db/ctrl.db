@@ -1,31 +1,31 @@
 record(stringout, "$(P)$(R=)$(S=:)SCTable-SP") {
-    field(DTYP, "ControlStrOut")
-    field(DESC, "Supercyle Table")
-    field(PINI, "YES")
-    field(VAL,  "probe-50us-MEBT-14Hz.csv")
-    info(autosaveFields_pass0, "VAL")
+  field(DTYP, "ControlStrOut")
+  field(DESC, "Supercyle Table")
+  field(PINI, "YES")
+  field(VAL,  "probe-50us-MEBT-14Hz.csv")
+  info(autosaveFields_pass0, "VAL")
 }
 
 record(stringout, "$(P)$(R=)$(S=:)PBState-SP") {
-    field(DTYP, "ControlStrOut")
-    field(DESC, "Proton Beam State")
-    field(PINI, "YES")
-    field(VAL,  "None")
-    info(autosaveFields_pass0, "VAL")
+  field(DTYP, "ControlStrOut")
+  field(DESC, "Proton Beam State")
+  field(PINI, "YES")
+  field(VAL,  "None")
+  info(autosaveFields_pass0, "VAL")
 }
 
 record(stringout, "$(P)$(R=)$(S=:)PBMod-SP") {
-    field(DTYP, "ControlStrOut")
-    field(DESC, "Proton Beam Mode")
-    field(PINI, "YES")
-    field(VAL,  "None")
-    info(autosaveFields_pass0, "VAL")
+  field(DTYP, "ControlStrOut")
+  field(DESC, "Proton Beam Mode")
+  field(PINI, "YES")
+  field(VAL,  "None")
+  info(autosaveFields_pass0, "VAL")
 }
 
 record(stringout, "$(P)$(R=)$(S=:)PBDest-SP") {
-    field(DTYP, "ControlStrOut")
-    field(DESC, "Proton Beam Destination")
-    field(PINI, "YES")
-    field(VAL,  "None")
-    info(autosaveFields_pass0, "VAL")
+  field(DTYP, "ControlStrOut")
+  field(DESC, "Proton Beam Destination")
+  field(PINI, "YES")
+  field(VAL,  "None")
+  info(autosaveFields_pass0, "VAL")
 }
