@@ -22,6 +22,9 @@ int sctableSwitch(io::IOBlock &io)
     io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
                        << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
     io.sctable.init(io.getSCTableLink());
+
+    // Trigger sctable switch behaviour
+    io.SCEConfig_yml.SCESwitchBehaviour(true);
   }
   return 0;
 }
@@ -63,6 +66,7 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
   {
     io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() "
                        << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
+
     io.sctable.init(io.sctable.getFileLink());
     cycle_row = io.sctable.getRowMap();
     if (cycle_row.empty())
@@ -119,7 +123,7 @@ int engineCycle(io::IOBlock &io)
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
-  //cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
+  // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
   // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
 
@@ -135,7 +139,9 @@ int engineCycle(io::IOBlock &io)
 
   // SCTABLE operations
   // PBState
-  cycle_row["PBState"] = io.getPBState();
+  cycle_row["PBState"] = io.SCEConfig_yml.SCESwitchBehaviour();
+  if (cycle_row["PBState"].empty())
+    cycle_row["PBState"] = io.getPBState();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.PBStateIds_yml.getMap());
   // PBDest
   cycle_row["PBDest"] = io.getPBDest();

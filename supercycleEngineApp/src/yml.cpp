@@ -26,15 +26,13 @@ namespace io
     for (auto const &it : node)
       memberNames.push_back(it.first.as<std::string>());
 
-    io::LOG(io::DEBUG) << "YmlNode::init() node " << node;
-    io::LOG(io::DEBUG) << "YmlNode::init() memberNames " << cmn::vec2str<std::string>(memberNames);
+    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << cmn::vec2str<std::string>(memberNames);
     return 0;
   }
 
   int YmlNode::init(std::string fname, std::string nodeName)
   {
-    io::LOG(io::DEBUG2) << "YmlNode::init() fname" << fname;
-    io::LOG(io::DEBUG2) << "YmlNode::init() nodeName" << nodeName;
+    io::LOG(io::DEBUG2) << "YmlNode::init() fname " << fname << " nodeName " << nodeName;
     filename = fname;
 
     YAML::Node node_tmp = YAML::LoadFile(filename);
@@ -43,8 +41,7 @@ namespace io
     for (auto const &it : node)
       memberNames.push_back(it.first.as<std::string>());
 
-    io::LOG(io::DEBUG) << "YmlNode::init() node " << node;
-    io::LOG(io::DEBUG) << "YmlNode::init() memberNames " << cmn::vec2str<std::string>(memberNames);
+    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << cmn::vec2str<std::string>(memberNames);
     return 0;
   }
 
@@ -73,9 +70,9 @@ namespace io
 
     inhEvtv = node["Inhibit"]["Evts"].as<std::vector<std::string>>();
     inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
+    SCESwitchOffCycles = node["SCSwitch"]["Off"].as<int>();
 
-    io::LOG(io::INFO) << "YmlSCEConfig::init() inhEvtv " << cmn::vec2str<std::string>(inhEvtv);
-    io::LOG(io::INFO) << "YmlSCEConfig::init() inhStatev " << cmn::vec2str<std::string>(inhStatev);
+    io::LOG(io::INFO) << "YmlSCEConfig::init() inhEvtv " << cmn::vec2str<std::string>(inhEvtv) << " inhStatev " << cmn::vec2str<std::string>(inhStatev);
     return 0;
   }
 
@@ -89,6 +86,32 @@ namespace io
                       << " fname " << fname << " valName " << valName << " mapsi " << cmn::map2str<std::string, epicsUInt32>(mapsi);
 
     return 0;
+  }
+
+  std::string YmlSCEConfig::SCESwitchBehaviour(bool trig)
+  {
+    static int counterdown = getSCESwitchOffCycles();
+    static bool trig_level = false;
+
+    if (trig_level == true)
+      counterdown--;
+
+    if (counterdown < 0)
+    {
+      counterdown = getSCESwitchOffCycles();
+      trig_level = false;
+    }
+
+    if (trig == true)
+    {
+      counterdown = getSCESwitchOffCycles();
+      trig_level = true;
+    }
+
+    if (trig_level == true)
+      return "Off";
+
+    return {};
   }
 
   int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)

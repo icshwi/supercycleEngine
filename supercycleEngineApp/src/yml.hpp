@@ -122,10 +122,15 @@ namespace io
     int init(std::string fname);
     std::vector<std::string> getInhEvts() { return inhEvtv; };
     std::vector<std::string> getInhStates() { return inhStatev; };
+    std::string SCESwitchBehaviour(bool trig = false);
+
+  protected:
+    int getSCESwitchOffCycles() { return SCESwitchOffCycles; };
 
   private:
     std::vector<std::string> inhEvtv;
     std::vector<std::string> inhStatev;
+    int SCESwitchOffCycles = 0;
   };
 
 } // namespace io
