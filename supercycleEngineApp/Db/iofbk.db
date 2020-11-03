@@ -1,0 +1,145 @@
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx0-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "0")
+  field(NELM, "1") # "2046")
+  field(MALM, "1") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx1-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "1")
+  field(NELM, "1") # "2046")
+  field(MALM, "2") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx2-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "2")
+  field(NELM, "1") # "2046")
+  field(MALM, "3") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "3")
+  field(NELM, "1") # "2046")
+  field(MALM, "4") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx4-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "4")
+  field(NELM, "1") # "2046")
+  field(MALM, "5") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx5-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "5")
+  field(NELM, "1") # "2046")
+  field(MALM, "6") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx6-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "6")
+  field(NELM, "1") # "2046")
+  field(MALM, "7") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx7-subA_") {
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INDX, "7")
+  field(NELM, "1") # "2046")
+  field(MALM, "8") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)ProtNum") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx0-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(0*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)ProtVer") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx0-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(2*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)PBState") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(0*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)PBDest") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(1*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)PBMod") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(2*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)TgRast") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx7-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(0*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)TgSeg") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx7-subA_ CPP")
+  field(SCAN, "Passive")
+  field(CALC, "(A>>(1*8))&255")
+}
+
+record(calcout, "$(P)$(R=)$(S=:)IdCycle_") {
+  field(CALC, "A+B<<32")
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx1-subA_ CPP")
+  field(INPB, "$(P)$(R=)$(S=:)Databuffer-u32idx2-subA_ CPP")
+  #field(PREC, "3") # only works if "caget -s SYS-D:Protocol-RB"
+  field(SCAN, "Passive")
+  alias("$(P)$(R=)$(S=:)Heartbeat_")
+}
+
+record(longin, "$(P)$(R=)$(S=:)PBLen") {
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R=)$(S=:)Databuffer-u32idx4-subA_ CPP")
+}
+
+record(longin, "$(P)$(R=)$(S=:)PBEn") {
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R=)$(S=:)Databuffer-u32idx5-subA_ CPP")
+}
+
+record(longin, "$(P)$(R=)$(S=:)PBCurr") {
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R=)$(S=:)Databuffer-u32idx6-subA_ CPP")
+}
