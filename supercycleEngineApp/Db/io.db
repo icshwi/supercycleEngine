@@ -2,7 +2,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(DESC, "Trigger Fanout")
   field(SELM, "All")
   #field(PINI, "RUNNING")
-  field(LNK1, "$(P)$(R=)$(S=:)IdCycle")
+  #field(LNK1, "$(P)$(R=)$(S=:)IdCycle")
   field(LNK2, "$(P)$(R=)$(S=:)Period")
   field(LNK3, "$(P)$(R=)$(S=:)Databuffer")
   field(LNK4, "$(P)$(R=)$(S=:)Timestamps")
@@ -10,14 +10,14 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(LNK6, "$(P)$(R=)$(S=:)Sequence")
 }
 
-record(int64in, "$(P)$(R=)$(S=:)IdCycle") {
-  field(DESC, "ID Cycle")
-  field(DTYP, "Soft Channel")
-  field(SCAN, "Passive")
-  field(EGU, "id")
-  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
-  alias("$(P)$(R=)$(S=:)HEARTBEAT")
-}
+# record(int64in, "$(P)$(R=)$(S=:)IdCycle") {
+#   field(DESC, "ID Cycle")
+#   field(DTYP, "Soft Channel")
+#   field(SCAN, "Passive")
+#   field(EGU, "id")
+#   field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
+#   alias("$(P)$(R=)$(S=:)Heartbeat")
+# }
 
 record(longin, "$(P)$(R=)$(S=:)Period") {
   field(DESC, "Actuall Cycle Frequency")

@@ -108,13 +108,11 @@ int engineCycle(io::IOBlock &io)
   static std::map<std::string, std::string> cycle_row;
   static epicsUInt32 tst = 0; // The timestamp holder
 
-  io::LOG(io::DEBUG1) << "engineCycle()";
-  io.cPeriod = cmn::period_us(tst);
-  io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod;
-
   // Start the cycle
   // ===============
+  io.cPeriod = cmn::period_us(tst);
   io.cId++;
+  io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
   // Get sctable row
   cycle_row = io.sctable.getRowMap();
   // Loop the supercycle table
@@ -135,7 +133,8 @@ int engineCycle(io::IOBlock &io)
   // ProtVer
   io.dbuf.write(env::ProtVer, io.DBuf_yml.getProtVer());
   // IdCycle
-  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);
+  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
+  io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
 
   // SCTABLE operations
   // PBState
@@ -162,9 +161,9 @@ int engineCycle(io::IOBlock &io)
   io.Seq.write(cycle_row);
 
   //Check the buffer
-  io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) "
-                     << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeqMap());
-  io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) "
+  io::LOG(io::DEBUG) << "engineCycle() io.SEQ.getSeq() "
+                     << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeqMap())
+                     << " io.dbuf.getDbuf() "
                      << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 
   return 0;
