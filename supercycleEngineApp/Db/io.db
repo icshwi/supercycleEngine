@@ -1,74 +1,75 @@
 record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
-    field(DESC, "Trigger Fanout")
-    field(SELM, "All")
-    #field(PINI, "RUNNING")
-    field(LNK1, "$(P)$(R=)$(S=:)IdCycle")
-    field(LNK2, "$(P)$(R=)$(S=:)Period")
-    field(LNK3, "$(P)$(R=)$(S=:)Databuffer")
-    field(LNK4, "$(P)$(R=)$(S=:)Timestamps")
-    field(LNK5, "$(P)$(R=)$(S=:)Events")
-    field(LNK6, "$(P)$(R=)$(S=:)Sequence")
+  field(DESC, "Trigger Fanout")
+  field(SELM, "All")
+  #field(PINI, "RUNNING")
+  #field(LNK1, "$(P)$(R=)$(S=:)IdCycle")
+  field(LNK2, "$(P)$(R=)$(S=:)Period")
+  field(LNK3, "$(P)$(R=)$(S=:)Databuffer")
+  field(LNK4, "$(P)$(R=)$(S=:)Timestamps")
+  field(LNK5, "$(P)$(R=)$(S=:)Events")
+  field(LNK6, "$(P)$(R=)$(S=:)Sequence")
 }
 
-record(int64in, "$(P)$(R=)$(S=:)IdCycle") {
-    field(DESC, "ID Cycle")
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(EGU, "id")
-    field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
-    alias("$(P)$(R=)$(S=:)HEARTBEAT")
-}
+#[TODO] To redesign
+# record(int64in, "$(P)$(R=)$(S=:)IdCycle") {
+#   field(DESC, "ID Cycle")
+#   field(DTYP, "Soft Channel")
+#   field(SCAN, "Passive")
+#   field(EGU, "id")
+#   field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
+#   alias("$(P)$(R=)$(S=:)Heartbeat")
+# }
 
 record(longin, "$(P)$(R=)$(S=:)Period") {
-    field(DESC, "Actuall Cycle Frequency")
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(EGU, "us")
-    field(INP, "$(P)$(R=)$(S=:)Period-subA_")
+  field(DESC, "Actuall Cycle Frequency")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "us")
+  field(INP, "$(P)$(R=)$(S=:)Period-subA_")
 
-    #field(FLNK, "$(P)$(R=)$(S=:)Seq0-En-Cmd")
-    field(HIHI, "91000")
+  #field(FLNK, "$(P)$(R=)$(S=:)Seq0-En-Cmd")
+  field(HIHI, "91000")
 	field(HIGH, "81000")
 	field(LOW,  "61000")
 	field(LOLO, "51000")
-    field(HHSV, "MAJOR")
+  field(HHSV, "MAJOR")
 	field(HSV,  "MINOR")
 	field(LSV,  "MINOR")
 	field(LLSV, "MAJOR")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Databuffer") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALB")
-    #field(INDX, "0")
-    field(NELM, "2046") # "2046")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(FTVL, "ULONG")
+  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALB")
+  #field(INDX, "0")
+  field(NELM, "2046") # "2046")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Timestamps") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALC")
-    #field(INDX, "0")
-    field(NELM, "2046") # "2046")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(FTVL, "ULONG")
+  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALC")
+  #field(INDX, "0")
+  field(NELM, "2046") # "2046")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Events") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALD")
-    #field(INDX, "0")
-    field(NELM, "2046") # "2046")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(FTVL, "ULONG")
+  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALD")
+  #field(INDX, "0")
+  field(NELM, "2046") # "2046")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Sequence") {
-    field(DTYP, "Soft Channel")
-    field(SCAN, "Passive")
-    field(FTVL, "ULONG")
-    field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALE")
-    #field(INDX, "0")
-    field(NELM, "2046") # "2046")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(FTVL, "ULONG")
+  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALE")
+  #field(INDX, "0")
+  field(NELM, "2046") # "2046")
 }

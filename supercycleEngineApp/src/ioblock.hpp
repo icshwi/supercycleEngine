@@ -12,10 +12,10 @@
 
 #include "scenv.hpp"
 #include "dbuf.hpp"
-#include "json.hpp"
 #include "csv.hpp"
 #include "seq.hpp"
 #include "yml.hpp"
+#include "version.h"
 
 #include "epicsTypes.h"
 
@@ -26,11 +26,11 @@ namespace io
   {
   private:
     // Links
-    std::string databufferLink = "/opt/reftabs/init/databuffer-ess.json";
-    std::string mevtsLink = "/opt/reftabs/init/mevts-ess.json";
+    std::string databufferLink = "/opt/reftabs/init/databuffer-ess.yml";
+    std::string mevtsLink = "/opt/reftabs/init/mevts-ess.yml";
     std::string sceconfigLink = "/opt/reftabs/init/sceconfig-ess.yml";
     // Directories
-    std::string sctableRoot = "/opt/reftabs/supercycles/";
+    std::string sctableRoot = "/opt/reftabs/supercycles";
     // PVs
     std::string SCTable = "null.csv";
     std::string PBState = "Off";
@@ -40,9 +40,10 @@ namespace io
   public:
     IOBlock(){};
     ~IOBlock();
+    std::string getSwVersion() const { return SCE_VERSION; }
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
-    std::string getSCTableLink() { return sctableRoot + SCTable; };
+    std::string getSCTableLink() { return sctableRoot + "/" + SCTable; };
     std::string getPBState() { return PBState; };
     std::string getPBMod() { return PBMod; };
     std::string getPBDest() { return PBDest; };
@@ -50,10 +51,11 @@ namespace io
     epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;
 
-    io::JsonDBUF json_dbuf;
-    io::JsonEVT json_evt;
+    io::YmlDatabuffer DBuf_yml;
+    io::YmlSCEConfig SCEConfig_yml;
+    io::YmlMEvts mEvts_yml;
+
     io::CSVReader sctable;
-    io::YmlInhibitEvt inhibitEvts_yml;
     // Set the send buffer
     dbf::DBufPacket dbuf;
     SequenceHandler Seq;

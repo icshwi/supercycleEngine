@@ -10,7 +10,6 @@
 #include <map>
 #include <vector>
 #include <string>
-#include <json/json.h>
 #include <algorithm>
 
 #include <epicsTypes.h>

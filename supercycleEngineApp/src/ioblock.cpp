@@ -31,12 +31,12 @@ namespace io
     if (cmn::isFile(argm[GETVARNAME(sctableRoot)]))
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
-    json_dbuf.init(databufferLink);
-    json_evt.init(mevtsLink);
-    inhibitEvts_yml.init(sceconfigLink);
+    DBuf_yml.init(databufferLink);
+    SCEConfig_yml.init(sceconfigLink);
+    mEvts_yml.init(mevtsLink);
 
     sctable.init(getSCTableLink());
-    Seq.init(json_evt.getEvtMap());
+    Seq.init(mEvts_yml.getMap());
 
     io::LOG(io::INFO) << "IOBlock::init() databufferLink " << databufferLink;
     io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;

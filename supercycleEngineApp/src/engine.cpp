@@ -10,7 +10,6 @@
 
 #include "dbuf.hpp"
 #include "csv.hpp"
-#include "json.hpp"
 #include "yml.hpp"
 #include "seq.hpp"
 
@@ -23,6 +22,9 @@ int sctableSwitch(io::IOBlock &io)
     io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
                        << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
     io.sctable.init(io.getSCTableLink());
+
+    // Trigger sctable switch behaviour
+    io.SCEConfig_yml.SCESwitchBehaviour(true);
   }
   return 0;
 }
@@ -40,11 +42,11 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
   }
 }
 
-void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, const Json::Value &jsonv)
+void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
 {
   try
   {
-    dbuf.write(idx, jsonv[row[env::DBFIDX2Str.at(idx)]]["id"].asUInt());
+    dbuf.write(idx, mapValKey[row[env::DBFIDX2Str.at(idx)]]);
   }
   catch (...)
   {
@@ -64,6 +66,7 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
   {
     io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() "
                        << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
+
     io.sctable.init(io.sctable.getFileLink());
     cycle_row = io.sctable.getRowMap();
     if (cycle_row.empty())
@@ -91,9 +94,9 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
 
 int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
 {
-  for (auto &state : io.inhibitEvts_yml.getInhStates())
+  for (auto &state : io.SCEConfig_yml.getInhStates())
     if (io.getPBState() == state)
-      for (auto &it : io.inhibitEvts_yml.getInhEvts())
+      for (auto &it : io.SCEConfig_yml.getInhEvts())
         cycle_row.erase(it);
 
   return 0;
@@ -105,13 +108,11 @@ int engineCycle(io::IOBlock &io)
   static std::map<std::string, std::string> cycle_row;
   static epicsUInt32 tst = 0; // The timestamp holder
 
-  io::LOG(io::DEBUG1) << "engineCycle()";
-  io.cPeriod = cmn::period_us(tst);
-  io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod;
-
   // Start the cycle
   // ===============
+  io.cPeriod = cmn::period_us(tst);
   io.cId++;
+  io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
   // Get sctable row
   cycle_row = io.sctable.getRowMap();
   // Loop the supercycle table
@@ -120,7 +121,7 @@ int engineCycle(io::IOBlock &io)
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
-  //cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
+  // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
   // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
 
@@ -128,22 +129,25 @@ int engineCycle(io::IOBlock &io)
 
   io.dbuf.clear();
   // ProtNum
-  io.dbuf.write(env::ProtNum, io.json_dbuf.getProtNum());
+  io.dbuf.write(env::ProtNum, io.DBuf_yml.getProtNum());
   // ProtVer
-  io.dbuf.write(env::ProtVer, io.json_dbuf.getProtVer());
+  io.dbuf.write(env::ProtVer, io.DBuf_yml.getProtVer());
   // IdCycle
-  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);
+  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
+  io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
 
   // SCTABLE operations
   // PBState
-  cycle_row["PBState"] = io.getPBState();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.json_dbuf.PBState);
+  cycle_row["PBState"] = io.SCEConfig_yml.SCESwitchBehaviour();
+  if (cycle_row["PBState"].empty())
+    cycle_row["PBState"] = io.getPBState();
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.PBStateIds_yml.getMap());
   // PBDest
   cycle_row["PBDest"] = io.getPBDest();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.json_dbuf.PBDest);
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.PBDestIds_yml.getMap());
   // PBMod
   cycle_row["PBMod"] = io.getPBMod();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.json_dbuf.PBMod);
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.PBModIds_yml.getMap());
   // PBLen
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
   // PBEn
@@ -157,9 +161,9 @@ int engineCycle(io::IOBlock &io)
   io.Seq.write(cycle_row);
 
   //Check the buffer
-  io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.SEQ.getSeq()) "
-                     << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeqMap());
-  io::LOG(io::DEBUG) << "engineCycle() cmn::map2str<epicsUInt32,epicsUInt32>(io.dbuf.getDbuf()) "
+  io::LOG(io::DEBUG) << "engineCycle() io.SEQ.getSeq() "
+                     << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeqMap())
+                     << " io.dbuf.getDbuf() "
                      << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
 
   return 0;
