@@ -10,6 +10,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(LNK6, "$(P)$(R=)$(S=:)Sequence")
 }
 
+#[TODO] To redesign
 # record(int64in, "$(P)$(R=)$(S=:)IdCycle") {
 #   field(DESC, "ID Cycle")
 #   field(DTYP, "Soft Channel")
