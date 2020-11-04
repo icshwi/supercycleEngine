@@ -97,7 +97,7 @@ record(calcout, "$(P)$(R=)$(S=:)Prot") {
   field(INPB, "$(P)$(R=)$(S=:)ProtVer CPP")
   field(SCAN, "Passive")
   field(EGU, "ver")
-  field(CALC, "A*100+B")
+  field(CALC, "A*1000+B")
 }
 
 record(int64in, "$(P)$(R=)$(S=:)IdCycle") {

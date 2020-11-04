@@ -15,6 +15,7 @@
 #include "csv.hpp"
 #include "seq.hpp"
 #include "yml.hpp"
+#include "version.h"
 
 #include "epicsTypes.h"
 
@@ -39,6 +40,7 @@ namespace io
   public:
     IOBlock(){};
     ~IOBlock();
+    std::string getSwVersion() const { return SCE_VERSION; }
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
     std::string getSCTableLink() { return sctableRoot + "/" + SCTable; };
