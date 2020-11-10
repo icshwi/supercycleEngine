@@ -9,9 +9,9 @@
 #include "iocsh.h"
 #include "cmdMapStrOut.hpp"
 #include "version.h"
+#include "dlog.hpp"
 
 #include <cmath>
-#include "dlog.hpp"
 #include <epicsExport.h>
 
 //int and double only
