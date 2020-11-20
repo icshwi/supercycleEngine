@@ -6,8 +6,10 @@
 
 #include "sce.hpp"
 #include "version.h"
+#include "object.hpp"
 
 std::string SCE::getSwVersion()
 {
   return SCE_VERSION;
 }
+

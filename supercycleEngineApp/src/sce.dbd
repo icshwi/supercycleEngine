@@ -1,3 +1,3 @@
 # from devObjString.cpp
-#device(stringin, INST_IO, devSIFromString, "Obj Prop string")
+device(stringin, INST_IO, devStrInFromStr, "ObjPropString")
 #device(stringout, INST_IO, devSOFromString, "Obj Prop string")
