@@ -26,7 +26,7 @@ namespace io
     for (auto const &it : node)
       memberNames.push_back(it.first.as<std::string>());
 
-    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << cmn::vec2str<std::string>(memberNames);
+    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
     return 0;
   }
 
@@ -41,7 +41,7 @@ namespace io
     for (auto const &it : node)
       memberNames.push_back(it.first.as<std::string>());
 
-    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << cmn::vec2str<std::string>(memberNames);
+    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
     return 0;
   }
 
@@ -72,7 +72,7 @@ namespace io
     inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
     SCESwitchOffCycles = node["SCSwitch"]["Off"].as<int>();
 
-    io::LOG(io::INFO) << "YmlSCEConfig::init() inhEvtv " << cmn::vec2str<std::string>(inhEvtv) << " inhStatev " << cmn::vec2str<std::string>(inhStatev);
+    io::LOG(io::INFO) << "YmlSCEConfig::init() inhEvtv " << inhEvtv << " inhStatev " << inhStatev;
     return 0;
   }
 
@@ -83,7 +83,7 @@ namespace io
 
     Yml2Map(mapsi, valName);
     io::LOG(io::INFO) << "YmlKeyValMap::init()"
-                      << " fname " << fname << " valName " << valName << " mapsi " << cmn::map2str<std::string, epicsUInt32>(mapsi);
+                      << " fname " << fname << " valName " << valName << " mapsi " << mapsi;
 
     return 0;
   }
@@ -121,7 +121,7 @@ namespace io
 
     Yml2Map(mapsi, valName);
     io::LOG(io::INFO) << "YmlKeyValMap::init()"
-                      << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << cmn::map2str<std::string, epicsUInt32>(mapsi);
+                      << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi;
 
     return 0;
   }
