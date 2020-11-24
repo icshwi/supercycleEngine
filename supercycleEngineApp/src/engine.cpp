@@ -155,16 +155,13 @@ int engineCycle(io::IOBlock &io)
   // PBCurr
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 
-  // Erease inhibit events from the cycle in regards to the state
+  // Erase inhibit events from the cycle in regards to the state
   InhEvts4State(io, cycle_row);
   // Update the event sequence container
   io.Seq.write(cycle_row);
 
   //Check the buffer
-  io::LOG(io::DEBUG) << "engineCycle() io.SEQ.getSeq() "
-                     << cmn::map2str<epicsUInt32, epicsUInt32>(io.Seq.getSeqMap())
-                     << " io.dbuf.getDbuf() "
-                     << cmn::map2str<epicsUInt32, epicsUInt32>(io.dbuf.getDbuf());
+  io::LOG(io::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
 
   return 0;
 }
