@@ -15,8 +15,8 @@
 namespace io
 {
 
-enum typelog
-{
+  enum typelog
+  {
     DEBUG3,
     DEBUG2,
     DEBUG1,
@@ -24,11 +24,11 @@ enum typelog
     INFO,
     WARNING,
     ERROR
-};
+  };
 
-class LOGCONFIG
-{
-public:
+  class LOGCONFIG
+  {
+  public:
     bool headers = true;
     typelog lv = INFO;
     typelog *level = &lv;
@@ -36,82 +36,82 @@ public:
     LOGCONFIG() { ; };
     LOGCONFIG(bool hdr, typelog *lvl)
     {
-        init(hdr, lvl);
+      init(hdr, lvl);
     };
     void init(bool hdr, typelog *lvl)
     {
-        headers = hdr;
-        level = lvl;
+      headers = hdr;
+      level = lvl;
     };
-};
+  };
 
-LOGCONFIG &RegisteredLOGCFG();
+  LOGCONFIG &RegisteredLOGCFG();
 
-class LOG
-{
-public:
+  class LOG
+  {
+  public:
     LOG() { ; };
     LOG(typelog type)
     {
-        msglevel = type;
-        if (LOGCFG.headers && (msglevel >= *LOGCFG.level))
-        {
-            operator<<(cmn::epicssTstSysNow() + " " + getLabel(type) + " ");
-        }
+      msglevel = type;
+      if (LOGCFG.headers && (msglevel >= *LOGCFG.level))
+      {
+        operator<<(cmn::tst::epics_now() + " " + getLabel(type) + " ");
+      }
     };
     ~LOG()
     {
-        if (opened && (msglevel >= *LOGCFG.level))
-        {
-            std::cout << std::endl;
-        }
-        opened = false;
+      if (opened && (msglevel >= *LOGCFG.level))
+      {
+        std::cout << std::endl;
+      }
+      opened = false;
     };
     template <class T>
     LOG &operator<<(const T &msg)
     {
-        if (msglevel >= *LOGCFG.level)
-        {
-            std::cout << msg;
-            opened = true;
-        }
-        return *this;
+      if (msglevel >= *LOGCFG.level)
+      {
+        std::cout << msg;
+        opened = true;
+      }
+      return *this;
     };
 
-private:
+  private:
     LOGCONFIG &LOGCFG = RegisteredLOGCFG();
     bool opened;
     typelog msglevel;
     inline std::string getLabel(typelog type)
     {
-        std::string label;
-        switch (type)
-        {
-        case DEBUG3:
-            label = "DEBUG2";
-            break;
-        case DEBUG2:
-            label = "DEBUG2";
-            break;
-        case DEBUG1:
-            label = "DEBUG1";
-            break;
-        case DEBUG:
-            label = "DEBUG";
-            break;
-        case INFO:
-            label = "INFO";
-            break;
-        case WARNING:
-            label = "WARNING";
-            break;
-        case ERROR:
-            label = "ERROR";
-            break;
-        }
-        return label;
+      std::string label;
+      switch (type)
+      {
+      case DEBUG3:
+        label = "DEBUG2";
+        break;
+      case DEBUG2:
+        label = "DEBUG2";
+        break;
+      case DEBUG1:
+        label = "DEBUG1";
+        break;
+      case DEBUG:
+        label = "DEBUG";
+        break;
+      case INFO:
+        label = "INFO";
+        break;
+      case WARNING:
+        label = "WARNING";
+        break;
+      case ERROR:
+        label = "ERROR";
+        break;
+      }
+      return label;
     };
-};
+  };
 
 } // namespace io
 

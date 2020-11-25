@@ -20,19 +20,22 @@
 
 namespace cmn
 {
+  void gcc_info();
+  void gcc_assert(long ver = 201103L);
 
   bool isSubstring(std::string s, std::string subs);
   bool isFile(std::string fname);
 
-  epicsUInt32 epicssTstSysNowSec();
-  //epicsUInt32 wclock_s();
-  epicsUInt32 tst_ms();
-  epicsUInt32 tst_us();
-  epicsUInt32 tst_ns();
-  std::string epicssTstSysNow();
-  epicsUInt32 period_us(epicsUInt32 &argtst);
-  void gcc_info();
-  void gcc_assert(long ver = 201103L);
+  namespace tst
+  {
+    epicsUInt32 sec_now();
+    std::string epics_now();
+    //epicsUInt32 wclock_s();
+    epicsUInt32 ms_now();
+    epicsUInt32 us_now();
+    //epicsUInt32 ns();
+    epicsUInt32 period_us(epicsUInt32 &argtst);
+  } // namespace tst
 
   namespace str
   {

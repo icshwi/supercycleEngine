@@ -110,7 +110,7 @@ int engineCycle(io::IOBlock &io)
 
   // Start the cycle
   // ===============
-  io.cPeriod = cmn::period_us(tst);
+  io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
   io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
   // Get sctable row

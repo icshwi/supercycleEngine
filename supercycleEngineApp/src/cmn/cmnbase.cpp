@@ -20,71 +20,6 @@
 
 namespace cmn
 {
-
-  bool isSubstring(std::string s, std::string subs)
-  {
-    if (s.find(subs) != std::string::npos)
-    {
-      return true;
-    }
-    return false;
-  }
-
-  bool isFile(std::string fname)
-  {
-    std::ifstream file(fname);
-    if (!file)
-      return false;
-
-    return true;
-  }
-
-  std::string epicssTstSysNow()
-  {
-    epicsTimeStamp ts;
-    char ts_buf[100];
-
-    epicsTimeGetCurrent(&ts);
-    size_t r = epicsTimeToStrftime(ts_buf, sizeof(ts_buf), TSTFORMAT, &ts);
-
-    if (r == 0)
-      return {};
-
-    std::string ts_str(ts_buf);
-
-    return ts_str;
-  }
-
-  epicsUInt32 epicssTstSysNowSec()
-  {
-    epicsTimeStamp ts;
-    epicsTimeGetCurrent(&ts);
-    return ts.secPastEpoch;
-  }
-
-  //epicsUInt32 wclock_s()
-  //{
-  //    return (epicsUInt32)std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-  //}
-
-  epicsUInt32 tst_ms()
-  {
-    return (epicsUInt32)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-  }
-
-  epicsUInt32 tst_us()
-  {
-    return (epicsUInt32)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-  }
-
-  epicsUInt32 period_us(epicsUInt32 &argtst)
-  {
-    epicsUInt32 tst_us = (epicsUInt32)cmn::tst_us();
-    epicsUInt32 p_us = tst_us - argtst;
-    argtst = tst_us;
-    return p_us;
-  }
-
   void gcc_info()
   {
     if (__cplusplus == 201703L)
@@ -109,6 +44,73 @@ namespace cmn
   {
     assert((ver >= __cplusplus) && "The gcc version is too old.");
   }
+
+  bool isSubstring(std::string s, std::string subs)
+  {
+    if (s.find(subs) != std::string::npos)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  bool isFile(std::string fname)
+  {
+    std::ifstream file(fname);
+    if (!file)
+      return false;
+
+    return true;
+  }
+
+  namespace tst
+  {
+    std::string epics_now()
+    {
+      epicsTimeStamp ts;
+      char ts_buf[100];
+
+      epicsTimeGetCurrent(&ts);
+      size_t r = epicsTimeToStrftime(ts_buf, sizeof(ts_buf), TSTFORMAT, &ts);
+
+      if (r == 0)
+        return {};
+
+      std::string ts_str(ts_buf);
+
+      return ts_str;
+    }
+
+    epicsUInt32 sec_now()
+    {
+      epicsTimeStamp ts;
+      epicsTimeGetCurrent(&ts);
+      return ts.secPastEpoch;
+    }
+
+    //epicsUInt32 wclock_s()
+    //{
+    //    return (epicsUInt32)std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    //}
+
+    epicsUInt32 ms_now()
+    {
+      return (epicsUInt32)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    }
+
+    epicsUInt32 us_now()
+    {
+      return (epicsUInt32)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    }
+
+    epicsUInt32 period_us(epicsUInt32 &argtst)
+    {
+      epicsUInt32 tst_us = (epicsUInt32)cmn::tst::us_now();
+      epicsUInt32 p_us = tst_us - argtst;
+      argtst = tst_us;
+      return p_us;
+    }
+  } // namespace tst
 
   namespace str
   {

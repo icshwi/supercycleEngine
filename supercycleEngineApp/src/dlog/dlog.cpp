@@ -9,10 +9,10 @@
 namespace io
 {
 
-LOGCONFIG &RegisteredLOGCFG()
-{
+  LOGCONFIG &RegisteredLOGCFG()
+  {
     static LOGCONFIG LOGCFG;
     return LOGCFG;
-}
+  }
 
 } // namespace io
