@@ -11,24 +11,24 @@
 
 SequenceHandler::SequenceHandler(std::map<std::string, epicsUInt32> evtrm)
 {
-  io::LOG(io::DEBUG2) << "SequenceHandler::SequenceHandler()";
+  dlog::Print(dlog::DEBUG2) << "SequenceHandler::SequenceHandler()";
   init(evtrm);
 }
 
 SequenceHandler::~SequenceHandler()
 {
-  io::LOG(io::DEBUG2) << "SequenceHandler::~SequenceHandler()";
+  dlog::Print(dlog::DEBUG2) << "SequenceHandler::~SequenceHandler()";
 }
 
 void SequenceHandler::init(std::map<std::string, epicsUInt32> evtrm)
 {
-  io::LOG(io::DEBUG2) << "SequenceHandler::init()";
+  dlog::Print(dlog::DEBUG2) << "SequenceHandler::init()";
   evtcoderef = evtrm;
 }
 
 void SequenceHandler::write(std::map<std::string, std::string> &rowm)
 {
-  io::LOG(io::DEBUG2) << "SequenceHandler::write()";
+  dlog::Print(dlog::DEBUG2) << "SequenceHandler::write()";
   evt_tst_seq = {};
 
   for (auto const &it : evtcoderef)
@@ -48,5 +48,5 @@ void SequenceHandler::write(std::map<std::string, std::string> &rowm)
     tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SeqEnd;
   }
 
-  io::LOG(io::DEBUG1) << "SequenceHandler::write() rowm " << rowm << " tst_evt_seq " << tst_evt_seq;
+  dlog::Print(dlog::DEBUG1) << "SequenceHandler::write() rowm " << rowm << " tst_evt_seq " << tst_evt_seq;
 }

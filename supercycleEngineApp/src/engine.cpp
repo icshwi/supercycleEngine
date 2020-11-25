@@ -19,8 +19,8 @@ int sctableSwitch(io::IOBlock &io)
 {
   if (io.getSCTableLink().compare(io.sctable.getFileLink()) != 0)
   {
-    io::LOG(io::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
-                       << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
+    dlog::Print(dlog::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
+                             << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
     io.sctable.init(io.getSCTableLink());
 
     // Trigger sctable switch behaviour
@@ -38,7 +38,7 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
   }
 }
 
@@ -51,7 +51,7 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    io::LOG(io::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
   }
 }
 
@@ -64,14 +64,14 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
 {
   if (cycle_row.empty())
   {
-    io::LOG(io::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() "
-                       << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
+    dlog::Print(dlog::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() "
+                             << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
 
     io.sctable.init(io.sctable.getFileLink());
     cycle_row = io.sctable.getRowMap();
     if (cycle_row.empty())
     {
-      io::LOG(io::ERROR) << "engineCycle() cycle_row.empty() corrupted file";
+      dlog::Print(dlog::ERROR) << "engineCycle() cycle_row.empty() corrupted file";
       return 1; // if wrong file, inhibit the engine
     }
   }
@@ -82,12 +82,12 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
   {
     epicsUInt64 row_id = std::stoll(cycle_row["Id"]);
     if (row_id != io.sctable.getRowId())
-      io::LOG(io::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink()
-                         << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
+      dlog::Print(dlog::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink()
+                               << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
   }
   catch (...)
   {
-    io::LOG(io::ERROR) << "engineCycle() Id checkup failed at io.cId " << io.cId;
+    dlog::Print(dlog::ERROR) << "engineCycle() Id checkup failed at io.cId " << io.cId;
   }
   return 0;
 }
@@ -112,7 +112,7 @@ int engineCycle(io::IOBlock &io)
   // ===============
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  io::LOG(io::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
+  dlog::Print(dlog::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
   // Get sctable row
   cycle_row = io.sctable.getRowMap();
   // Loop the supercycle table
@@ -161,7 +161,7 @@ int engineCycle(io::IOBlock &io)
   io.Seq.write(cycle_row);
 
   //Check the buffer
-  io::LOG(io::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
+  dlog::Print(dlog::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
 
   return 0;
 }

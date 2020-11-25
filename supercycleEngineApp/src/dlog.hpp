@@ -8,13 +8,13 @@
 #define DLOG_HPP_
 
 //Super Simple Log Plugin
-
-#include <iostream>
+#define TST_NOW cmn::tst::epics_now()
 #include "cmnbase.hpp"
 
-namespace io
-{
+#include <iostream>
 
+namespace dlog
+{
   enum typelog
   {
     DEBUG3,
@@ -26,18 +26,25 @@ namespace io
     ERROR
   };
 
-  class LOGCONFIG
+  class Config
   {
   public:
     bool headers = true;
     typelog lv = INFO;
     typelog *level = &lv;
 
-    LOGCONFIG() { ; };
-    LOGCONFIG(bool hdr, typelog *lvl)
+    Config() { ; };
+    Config(bool hdr, typelog *lvl)
     {
       init(hdr, lvl);
     };
+
+    static Config &instance()
+    {
+      static Config instance;
+      return instance;
+    }
+
     void init(bool hdr, typelog *lvl)
     {
       headers = hdr;
@@ -45,21 +52,19 @@ namespace io
     };
   };
 
-  LOGCONFIG &RegisteredLOGCFG();
-
-  class LOG
+  class Print
   {
   public:
-    LOG() { ; };
-    LOG(typelog type)
+    Print() { ; };
+    Print(typelog type)
     {
       msglevel = type;
       if (LOGCFG.headers && (msglevel >= *LOGCFG.level))
       {
-        operator<<(cmn::tst::epics_now() + " " + getLabel(type) + " ");
+        operator<<(TST_NOW + " " + getLabel(type) + " ");
       }
     };
-    ~LOG()
+    ~Print()
     {
       if (opened && (msglevel >= *LOGCFG.level))
       {
@@ -68,7 +73,7 @@ namespace io
       opened = false;
     };
     template <class T>
-    LOG &operator<<(const T &msg)
+    Print &operator<<(const T &msg)
     {
       if (msglevel >= *LOGCFG.level)
       {
@@ -79,7 +84,7 @@ namespace io
     };
 
   private:
-    LOGCONFIG &LOGCFG = RegisteredLOGCFG();
+    dlog::Config &LOGCFG = dlog::Config::instance();
     bool opened;
     typelog msglevel;
     inline std::string getLabel(typelog type)
@@ -113,6 +118,6 @@ namespace io
     };
   };
 
-} // namespace io
+} // namespace dlog
 
-#endif /* DLOG_HPP */
+#endif

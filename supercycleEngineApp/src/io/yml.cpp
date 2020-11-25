@@ -19,20 +19,20 @@ namespace io
 
   int YmlNode::init(std::string fname)
   {
-    io::LOG(io::DEBUG2) << "YmlNode::init() fname" << fname;
+    dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname" << fname;
     filename = fname;
     node = YAML::LoadFile(filename);
 
     for (auto const &it : node)
       memberNames.push_back(it.first.as<std::string>());
 
-    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
+    dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
     return 0;
   }
 
   int YmlNode::init(std::string fname, std::string nodeName)
   {
-    io::LOG(io::DEBUG2) << "YmlNode::init() fname " << fname << " nodeName " << nodeName;
+    dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname " << fname << " nodeName " << nodeName;
     filename = fname;
 
     YAML::Node node_tmp = YAML::LoadFile(filename);
@@ -41,7 +41,7 @@ namespace io
     for (auto const &it : node)
       memberNames.push_back(it.first.as<std::string>());
 
-    io::LOG(io::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
+    dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
     return 0;
   }
 
@@ -66,13 +66,13 @@ namespace io
     if (YmlNode::init(fname) != 0)
       return 1;
 
-    io::LOG(io::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
+    dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
 
     inhEvtv = node["Inhibit"]["Evts"].as<std::vector<std::string>>();
     inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
     SCESwitchOffCycles = node["SCSwitch"]["Off"].as<int>();
 
-    io::LOG(io::INFO) << "YmlSCEConfig::init() inhEvtv " << inhEvtv << " inhStatev " << inhStatev;
+    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() inhEvtv " << inhEvtv << " inhStatev " << inhStatev;
     return 0;
   }
 
@@ -82,8 +82,8 @@ namespace io
       return 1;
 
     Yml2Map(mapsi, valName);
-    io::LOG(io::INFO) << "YmlKeyValMap::init()"
-                      << " fname " << fname << " valName " << valName << " mapsi " << mapsi;
+    dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
+                            << " fname " << fname << " valName " << valName << " mapsi " << mapsi;
 
     return 0;
   }
@@ -120,15 +120,15 @@ namespace io
       return 1;
 
     Yml2Map(mapsi, valName);
-    io::LOG(io::INFO) << "YmlKeyValMap::init()"
-                      << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi;
+    dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
+                            << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi;
 
     return 0;
   }
 
   int YmlDatabuffer::init(std::string fname)
   {
-    io::LOG(io::INFO) << "YmlDatabuffer::init fname " << fname;
+    dlog::Print(dlog::INFO) << "YmlDatabuffer::init fname " << fname;
     YAML::Node node_tmp = YAML::LoadFile(fname);
     ProtVer = node_tmp["ProtVer"].as<uint>();
     ProtNum = node_tmp["ProtNum"].as<uint>();
