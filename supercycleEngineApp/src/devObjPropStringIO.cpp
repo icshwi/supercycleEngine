@@ -4,6 +4,8 @@
 //#include "devObj.h"
 
 #include "devext.h"
+#include "iobase.hpp"
+
 #include <iostream>
 #include <dbAccessDefs.h>
 
@@ -36,6 +38,10 @@ static long stringin_init_record(stringinRecord *pr)
   std::string tmp_str(parm);
 
   std::cout << " xxxxxxxxxxxxxxxxxxxxxxxxx " << tmp_str << std::endl;
+
+  std::cout << io::db_inp_val(tmp_str, "OBJ") << std::endl;
+  std::cout << io::db_inp_val(tmp_str, "PROP") << std::endl;
+  //std::cout << io::db_inp_val(tmp_str, "PROP") << std::endl;
 
   return 0; /* success */
 }

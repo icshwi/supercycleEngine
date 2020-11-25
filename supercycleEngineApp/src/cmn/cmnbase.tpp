@@ -36,9 +36,9 @@ namespace cmn
     for (auto const &it : argm)
     {
       if (col == 0)
-        tmpvs.push_back(cmn::str(it.first));
+        tmpvs.push_back(cmn::str::convert(it.first));
       else if (col == 1)
-        tmpvs.push_back(cmn::str(it.second));
+        tmpvs.push_back(cmn::str::convert(it.second));
       else
         return std::vector<std::string>();
     }
@@ -53,7 +53,7 @@ namespace cmn
 
     for (auto const &it : argv)
     {
-      tmp_str += cmn::str(it);
+      tmp_str += cmn::str::convert(it);
       tmp_str += " ";
     }
 
@@ -84,9 +84,9 @@ namespace cmn
 
     for (auto const &it : argm)
     {
-      tmps += cmn::str(it.first);
+      tmps += cmn::str::convert(it.first);
       tmps += " ";
-      tmps += cmn::str(it.second);
+      tmps += cmn::str::convert(it.second);
       tmps += " ";
     }
 

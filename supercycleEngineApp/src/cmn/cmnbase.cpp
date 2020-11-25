@@ -21,38 +21,26 @@
 namespace cmn
 {
 
-bool isSubstring(std::string s, std::string subs)
-{
+  bool isSubstring(std::string s, std::string subs)
+  {
     if (s.find(subs) != std::string::npos)
     {
-        return true;
+      return true;
     }
     return false;
-}
+  }
 
-bool isFile(std::string fname)
-{
+  bool isFile(std::string fname)
+  {
     std::ifstream file(fname);
     if (!file)
-        return false;
+      return false;
 
     return true;
-}
+  }
 
-std::string str(epicsUInt32 arg)
-{
-    std::stringstream ss;
-    ss << arg;
-    return ss.str();
-}
-
-std::string str(std::string arg)
-{
-    return arg;
-}
-
-std::string epicssTstSysNow()
-{
+  std::string epicssTstSysNow()
+  {
     epicsTimeStamp ts;
     char ts_buf[100];
 
@@ -60,66 +48,107 @@ std::string epicssTstSysNow()
     size_t r = epicsTimeToStrftime(ts_buf, sizeof(ts_buf), TSTFORMAT, &ts);
 
     if (r == 0)
-        return {};
+      return {};
 
     std::string ts_str(ts_buf);
 
     return ts_str;
-}
+  }
 
-epicsUInt32 epicssTstSysNowSec()
-{
+  epicsUInt32 epicssTstSysNowSec()
+  {
     epicsTimeStamp ts;
     epicsTimeGetCurrent(&ts);
     return ts.secPastEpoch;
-}
+  }
 
-//epicsUInt32 wclock_s()
-//{
-//    return (epicsUInt32)std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-//}
+  //epicsUInt32 wclock_s()
+  //{
+  //    return (epicsUInt32)std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+  //}
 
-epicsUInt32 tst_ms()
-{
+  epicsUInt32 tst_ms()
+  {
     return (epicsUInt32)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
+  }
 
-epicsUInt32 tst_us()
-{
+  epicsUInt32 tst_us()
+  {
     return (epicsUInt32)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
+  }
 
-epicsUInt32 period_us(epicsUInt32 &argtst)
-{
+  epicsUInt32 period_us(epicsUInt32 &argtst)
+  {
     epicsUInt32 tst_us = (epicsUInt32)cmn::tst_us();
     epicsUInt32 p_us = tst_us - argtst;
     argtst = tst_us;
     return p_us;
-}
+  }
 
-void gcc_info()
-{
+  void gcc_info()
+  {
     if (__cplusplus == 201703L)
-        std::cout << "C++17\n";
+      std::cout << "C++17\n";
     else if (__cplusplus == 201402L)
-        std::cout << "C++14\n";
+      std::cout << "C++14\n";
     else if (__cplusplus == 201103L)
-        std::cout << "C++11\n";
+      std::cout << "C++11\n";
     else if (__cplusplus == 199711L)
-        std::cout << "C++98\n";
+      std::cout << "C++98\n";
     else
-        std::cout << "pre-standard C++\n";
+      std::cout << "pre-standard C++\n";
 
     std::cout << "__cplusplus " << __cplusplus << std::endl;
     //std::cout << "__STDC_VERSION__ " << __STDC_VERSION__ << std::endl;
     std::cout << "__STDC__ " << __STDC__ << std::endl;
     std::cout << "__STDC_HOSTED__ " << __STDC_HOSTED__ << std::endl;
     std::cout << "__FILE__ " << __FILE__ << std::endl;
-}
+  }
 
-void gcc_assert(long ver)
-{
+  void gcc_assert(long ver)
+  {
     assert((ver >= __cplusplus) && "The gcc version is too old.");
-}
+  }
+
+  namespace str
+  {
+    std::string remove(std::string args, char c)
+    {
+      std::string rets = args;
+      std::string::iterator end_pos = std::remove(rets.begin(), rets.end(), c);
+      rets.erase(end_pos, rets.end());
+
+      return rets;
+    }
+
+    std::vector<std::string> split(std::string args, char c)
+    {
+      std::string ins = cmn::str::remove(args, ' ');
+
+      std::stringstream inss(ins);
+      std::vector<std::string> result;
+      std::string substr;
+
+      while (inss.good())
+      {
+        getline(inss, substr, c);
+        result.push_back(substr);
+      }
+      return result;
+    }
+
+    std::string convert(epicsUInt32 arg)
+    {
+      std::stringstream ss;
+      ss << arg;
+      return ss.str();
+    }
+
+    std::string convert(std::string arg)
+    {
+      return arg;
+    }
+
+  } // namespace str
 
 } // namespace cmn

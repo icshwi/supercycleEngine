@@ -21,19 +21,26 @@
 namespace cmn
 {
 
-bool isSubstring(std::string s, std::string subs);
-bool isFile(std::string fname);
-std::string str(epicsUInt32 arg);
-std::string str(std::string arg);
-epicsUInt32 epicssTstSysNowSec();
-//epicsUInt32 wclock_s();
-epicsUInt32 tst_ms();
-epicsUInt32 tst_us();
-epicsUInt32 tst_ns();
-std::string epicssTstSysNow();
-epicsUInt32 period_us(epicsUInt32 &argtst);
-void gcc_info();
-void gcc_assert(long ver = 201103L);
+  bool isSubstring(std::string s, std::string subs);
+  bool isFile(std::string fname);
+
+  epicsUInt32 epicssTstSysNowSec();
+  //epicsUInt32 wclock_s();
+  epicsUInt32 tst_ms();
+  epicsUInt32 tst_us();
+  epicsUInt32 tst_ns();
+  std::string epicssTstSysNow();
+  epicsUInt32 period_us(epicsUInt32 &argtst);
+  void gcc_info();
+  void gcc_assert(long ver = 201103L);
+
+  namespace str
+  {
+    std::vector<std::string> split(std::string args, char c = ',');
+    std::string remove(std::string args, char c = ' ');
+    std::string convert(epicsUInt32 arg);
+    std::string convert(std::string arg);
+  } // namespace str
 
 } // namespace cmn
 

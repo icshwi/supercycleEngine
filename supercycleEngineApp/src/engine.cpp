@@ -121,7 +121,7 @@ int engineCycle(io::IOBlock &io)
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
-  // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str(io.cOffset);
+  // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str::convert(io.cOffset);
   // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
 
