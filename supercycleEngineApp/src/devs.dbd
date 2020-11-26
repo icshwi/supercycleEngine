@@ -1,3 +1,11 @@
+
+# engine
+variable(iodebug)
+variable(PscUs)
+function(initEngine)
+function(ioEngine)
+
+# devs
 device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
 registrar(cmdMapStrOut)
 function(ioASubBuf)
