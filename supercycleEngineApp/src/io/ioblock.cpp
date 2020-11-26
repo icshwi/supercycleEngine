@@ -7,6 +7,7 @@
 #include "ioblock.hpp"
 #include "dlog.hpp"
 #include "cmnbase.hpp"
+//#include "object.hpp"
 
 #include <iostream>
 
@@ -42,6 +43,9 @@ namespace io
     dlog::Print(dlog::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
+
+    //std::function<std::string()> test11 = dev::ObjPropRegistry::instance().get("SoftwareVersion");
+    //std::cout << test11() << std::endl;
 
     return 0;
   }

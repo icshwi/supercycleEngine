@@ -9,30 +9,22 @@
 
 #include <iostream>
 #include <map>
+#include <functional>
 
 namespace dev
 {
-  template <typename FUNC>
-  struct Object
-  {
-    std::string obj;
-    std::string prop;
-    FUNC func;
-  };
 
-  template <typename OBJ>
-  class ObjPropClass
+  class ObjPropRegistry
   {
   public:
-    ObjPropClass(){};
-    void add(std::string name, OBJ func) { ObjPropMap[name] = func; };
-    std::string get(std::string name) { return ObjPropMap[name]; };
+    ObjPropRegistry();
+    void add(std::string name, std::function<std::string()> func) { prop_func[name] = func; };
+    std::function<std::string()> get(std::string name) { return prop_func[name]; };
+    static ObjPropRegistry &instance();
 
   private:
-    std::map<std::string, OBJ> ObjPropMap;
+    std::map<std::string, std::function<std::string()>> prop_func;
   };
-
-  std::string ObjectProperty();
 
 } // namespace dev
 
