@@ -24,7 +24,7 @@ epicsExportAddress(int, PscUs);
 void iocVars2IO()
 {
   static io::IOBlock &io_block = io::RegisteredIOBlock();
-  static dlog::typelog *const piodebug = (dlog::typelog *)&iodebug;
+  static dlog::Type *const piodebug = (dlog::Type *)&iodebug;
 
   dlog::Config::instance().init(true, piodebug);
 
