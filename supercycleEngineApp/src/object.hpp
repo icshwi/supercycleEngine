@@ -10,19 +10,31 @@
 #include <iostream>
 #include <map>
 
-template <class OBJ>
-class ObjPropClass
+namespace dev
 {
-public:
-  ObjPropClass(){};
-  void add(std::string name, OBJ func) { ObjPropMap[name] = func; };
-  std::string get(std::string name) { return ObjPropMap[name]; };
+  template <typename FUNC>
+  struct Object
+  {
+    std::string obj;
+    std::string prop;
+    FUNC func;
+  };
 
-private:
-  std::map<std::string, OBJ> ObjPropMap;
-};
+  template <typename OBJ>
+  class ObjPropClass
+  {
+  public:
+    ObjPropClass(){};
+    void add(std::string name, OBJ func) { ObjPropMap[name] = func; };
+    std::string get(std::string name) { return ObjPropMap[name]; };
 
-std::string ObjectProperty();
+  private:
+    std::map<std::string, OBJ> ObjPropMap;
+  };
+
+  std::string ObjectProperty();
+
+} // namespace dev
 
 #endif // OBJECT_HPP_
 

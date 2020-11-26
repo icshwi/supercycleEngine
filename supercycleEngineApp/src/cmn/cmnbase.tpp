@@ -7,6 +7,9 @@
 #ifndef CMNBASE_TPP_
 #define CMNBASE_TPP_
 
+#include <iostream>
+#include <vector>
+#include <map>
 namespace cmn
 {
 

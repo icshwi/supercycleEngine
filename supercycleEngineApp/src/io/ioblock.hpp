@@ -57,8 +57,8 @@ namespace io
 
     io::CSVReader sctable;
     // Set the send buffer
-    dbf::DBufPacket dbuf;
-    SequenceHandler Seq;
+    sce::DBufPacket dbuf;
+    sce::SequenceHandler Seq;
 
     int dbSync(std::map<std::string, std::string> &);
   };

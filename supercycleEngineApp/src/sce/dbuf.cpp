@@ -14,7 +14,7 @@
 #include <string>
 #include <assert.h>
 
-namespace dbf
+namespace sce
 {
 
     DBufPacket::DBufPacket(epicsUInt32 size)

@@ -44,8 +44,7 @@ namespace dlog
   class Print
   {
   public:
-    Print(){};
-    Print(dlog::Type type);
+    Print(dlog::Type type = dlog::INFO);
     ~Print();
     template <typename T>
     Print &operator<<(const T &msg)

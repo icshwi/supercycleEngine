@@ -29,7 +29,7 @@ int sctableSwitch(io::IOBlock &io)
   return 0;
 }
 
-void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
+void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
   try
   {
@@ -42,7 +42,7 @@ void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string
   }
 }
 
-void io_dbuf_safe_write(dbf::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
+void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
 {
   try
   {
