@@ -3,7 +3,7 @@
 
 //#include "devObj.h"
 
-#include "devext.h"
+#include "devExtension.h"
 #include "iobase.hpp"
 
 #include <iostream>
