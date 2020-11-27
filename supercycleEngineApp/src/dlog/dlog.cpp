@@ -9,6 +9,17 @@
 
 namespace dlog
 {
+  static std::string func_str_null()
+  {
+    return "";
+  }
+
+  Config::Config()
+  {
+    this->headers = true;
+    this->level = &lv;
+    this->tstf = dlog::func_str_null;
+  }
 
   const std::map<dlog::Type, std::string> TypeMap = {
       {DEBUG3, "DEBUG3"},
@@ -19,21 +30,20 @@ namespace dlog
       {WARNING, "WARNING"},
       {ERROR, "ERROR"}};
 
-  Config::Config(bool hdr, dlog::Type *lvl)
-  {
-    init(hdr, lvl);
-  }
-
   Config &Config::instance()
   {
     static Config instance;
     return instance;
   }
 
-  void Config::init(bool hdr, dlog::Type *lvl)
+  void Config::init(dlog::Type *level_switch, std::function<std::string()> timestamp, bool headers)
   {
-    headers = hdr;
-    level = lvl;
+    this->level = level_switch;
+    this->headers = headers;
+    if (timestamp != nullptr)
+      this->tstf = timestamp;
+    else
+      this->tstf = dlog::func_str_null;
   }
 
   Print::Print(dlog::Type type)
@@ -41,7 +51,7 @@ namespace dlog
     msglevel = type;
     if (config.headers && (msglevel >= *config.level))
     {
-      operator<<(DLOG_TST_NOW + " " + dlog::TypeMap.at(type) + " ");
+      operator<<(config.tstf() + " " + dlog::TypeMap.at(type) + " ");
     }
   }
 

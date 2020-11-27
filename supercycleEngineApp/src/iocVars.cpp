@@ -26,7 +26,7 @@ void iocVars2IO()
   static io::IOBlock &io_block = io::RegisteredIOBlock();
   static dlog::Type *const piodebug = (dlog::Type *)&iodebug;
 
-  dlog::Config::instance().init(true, piodebug);
+  dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
 
   io_block.cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
   //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / PscUs * 1000000);

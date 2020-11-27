@@ -7,11 +7,15 @@
 #ifndef DLOG_HPP_
 #define DLOG_HPP_
 
-//Super Simple Log Plugin
-#define DLOG_TST_NOW cmn::tst::epics_now()
-#include "cmnbase.hpp"
+/**
+ * Debug Log - Generic Plugin
+ *
+ * Changes the loglevels during runtime.
+ * Tested with cmn::tst::epics_now()
+ */
 
 #include <iostream>
+#include <functional>
 
 namespace dlog
 {
@@ -25,7 +29,6 @@ namespace dlog
     WARNING,
     ERROR
   };
-
   class Config
   {
   private:
@@ -34,10 +37,10 @@ namespace dlog
   public:
     bool headers = true;
     dlog::Type *level = &lv;
+    std::function<std::string()> tstf;
 
-    Config(){};
-    Config(bool hdr, dlog::Type *lvl);
-    void init(bool hdr, dlog::Type *lvl);
+    Config();
+    void init(dlog::Type *level_switch, std::function<std::string()> timestamp, bool headers = true);
     static Config &instance();
   };
 
