@@ -14,17 +14,20 @@ namespace dev
     return "SoftwareVersion 9999999";
   }
 
-  //ObjPropRegistry::instance().add("SoftwareVersion", test1);
-
-  ObjPropRegistry &ObjPropRegistry::instance()
+  ObjBase::ObjBase()
   {
-    static ObjPropRegistry instance;
-    return instance;
+    init();
   }
 
-  void ObjProbBase::init()
+  void ObjBase::init()
   {
-    prop_func["SoftwareVersion"] = dev::SoftwareVersion_test;
+    obj_prop_func["SCE"]["SoftwareVersion"] = dev::SoftwareVersion_test;
+  }
+
+  ObjReg &ObjReg::instance()
+  {
+    static ObjReg instance;
+    return instance;
   }
 
 } // namespace dev

@@ -44,7 +44,7 @@ namespace io
     dlog::Print(dlog::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
 
-    std::cout << dev::ObjPropRegistry::instance().get("SoftwareVersion")() << std::endl;
+    dlog::Print(dlog::INFO) << dev::ObjReg::instance().get("SCE", "SoftwareVersion")();
 
     return 0;
   }
