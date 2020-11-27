@@ -7,23 +7,30 @@
 #ifndef OBJECT_HPP_
 #define OBJECT_HPP_
 
-#include <iostream>
+#include <string>
 #include <map>
 #include <functional>
 
 namespace dev
 {
 
-  class ObjPropRegistry
+  class ObjProbBase
   {
   public:
-    ObjPropRegistry();
+    ObjProbBase() { init(); };
+    void init();
+
+  protected:
+    std::map<std::string, std::function<std::string()>> prop_func;
+  };
+
+  class ObjPropRegistry : ObjProbBase
+  {
+  public:
+    ObjPropRegistry(){};
     void add(std::string name, std::function<std::string()> func) { prop_func[name] = func; };
     std::function<std::string()> get(std::string name) { return prop_func[name]; };
     static ObjPropRegistry &instance();
-
-  private:
-    std::map<std::string, std::function<std::string()>> prop_func;
   };
 
 } // namespace dev

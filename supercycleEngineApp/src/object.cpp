@@ -5,6 +5,7 @@
  */
 
 #include "object.hpp"
+
 namespace dev
 {
 
@@ -15,15 +16,15 @@ namespace dev
 
   //ObjPropRegistry::instance().add("SoftwareVersion", test1);
 
-  ObjPropRegistry::ObjPropRegistry()
-  {
-    ObjPropRegistry::instance().add("SoftwareVersion", SoftwareVersion_test);
-  }
-
   ObjPropRegistry &ObjPropRegistry::instance()
   {
     static ObjPropRegistry instance;
     return instance;
+  }
+
+  void ObjProbBase::init()
+  {
+    prop_func["SoftwareVersion"] = dev::SoftwareVersion_test;
   }
 
 } // namespace dev
