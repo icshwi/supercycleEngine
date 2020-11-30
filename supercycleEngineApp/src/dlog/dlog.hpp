@@ -12,6 +12,9 @@
  *
  * Changes the loglevels during runtime.
  * Tested with cmn::tst::epics_now()
+ * Usage example:
+ *   dlog::Config::instance().init(level, timestamp_func);
+ *   dlog::Print(dlog::INFO) << " debugvar " << debugvar;
  */
 
 #include <iostream>
@@ -31,39 +34,36 @@ namespace dlog
   };
   class Config
   {
-  private:
-    dlog::Type lv = INFO;
-
   public:
-    bool headers = true;
-    dlog::Type *level = &lv;
-    std::function<std::string()> tstf;
-
     Config();
-    void init(dlog::Type *level_switch, std::function<std::string()> timestamp, bool headers = true);
+    void init(dlog::Type *level, std::function<std::string()> timestamp, bool headers = true);
     static Config &instance();
+
+  private:
+    friend class Print;
+    dlog::Type m_lv = INFO;
+    dlog::Type *m_level = &m_lv;
+    bool m_headers = true;
+    std::function<std::string()> m_tstf;
   };
 
   class Print
   {
   public:
-    Print(dlog::Type type = dlog::INFO);
+    Print(dlog::Type level = dlog::INFO);
     ~Print();
     template <typename T>
     Print &operator<<(const T &msg)
     {
-      if (msglevel >= *config.level)
-      {
+      if (m_msglevel >= *m_config.m_level)
         std::cout << msg;
-        opened = true;
-      }
+
       return *this;
     };
 
   private:
-    bool opened;
-    dlog::Config &config = dlog::Config::instance();
-    dlog::Type msglevel;
+    dlog::Config &m_config = dlog::Config::instance();
+    dlog::Type m_msglevel;
   };
 
 } // namespace dlog

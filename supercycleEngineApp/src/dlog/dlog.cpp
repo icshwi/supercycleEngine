@@ -9,16 +9,13 @@
 
 namespace dlog
 {
-  static std::string func_str_null()
+  static std::string func_str_dlog()
   {
-    return "";
+    return "DLOG";
   }
 
-  Config::Config()
+  Config::Config() : m_tstf(dlog::func_str_dlog)
   {
-    this->headers = true;
-    this->level = &lv;
-    this->tstf = dlog::func_str_null;
   }
 
   const std::map<dlog::Type, std::string> TypeMap = {
@@ -36,32 +33,24 @@ namespace dlog
     return instance;
   }
 
-  void Config::init(dlog::Type *level_switch, std::function<std::string()> timestamp, bool headers)
+  void Config::init(dlog::Type *level, std::function<std::string()> timestamp, bool headers)
   {
-    this->level = level_switch;
-    this->headers = headers;
-    if (timestamp != nullptr)
-      this->tstf = timestamp;
-    else
-      this->tstf = dlog::func_str_null;
+    m_level = level;
+    m_headers = headers;
+    m_tstf = timestamp != nullptr ? timestamp : dlog::func_str_dlog;
   }
 
-  Print::Print(dlog::Type type)
+  Print::Print(dlog::Type level)
   {
-    msglevel = type;
-    if (config.headers && (msglevel >= *config.level))
-    {
-      operator<<(config.tstf() + " " + dlog::TypeMap.at(type) + " ");
-    }
+    m_msglevel = level;
+    if (m_config.m_headers && (m_msglevel >= *m_config.m_level))
+      operator<<(m_config.m_tstf() + " " + dlog::TypeMap.at(m_msglevel) + " ");
   }
 
   Print::~Print()
   {
-    if (opened && (msglevel >= *config.level))
-    {
+    if (m_msglevel >= *m_config.m_level)
       std::cout << std::endl;
-    }
-    opened = false;
   }
 
 } // namespace dlog
