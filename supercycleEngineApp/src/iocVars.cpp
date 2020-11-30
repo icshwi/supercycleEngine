@@ -8,8 +8,8 @@
 #include "ioblock.hpp"
 #include "iocsh.h"
 #include "cmdMapStrOut.hpp"
-#include "version.h"
 #include "dlog.hpp"
+#include "object.hpp"
 
 #include <cmath>
 #include <epicsExport.h>
@@ -34,5 +34,6 @@ void iocVars2IO()
   //io_block.cId = 0;
   io_block.init(RegisteredCmdMapStrOut);
 
+  dlog::Print(dlog::INFO) << "iocVars2IO() SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")();
   dlog::Print(dlog::INFO) << "iocVars2IO() iodebug " << iodebug << " PscUs " << PscUs;
 }

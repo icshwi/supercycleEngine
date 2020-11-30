@@ -13,7 +13,7 @@ class SCE
 {
 public:
   //! Software Version
-  std::string getSwVersion();
+  static std::string getSwVersion();
 };
 
 #endif // SCE_HPP_

@@ -5,23 +5,14 @@
  */
 
 #include "object.hpp"
+#include "sce.hpp"
 
 namespace dev
 {
 
-  std::string SoftwareVersion_test()
-  {
-    return "SoftwareVersion 9999999";
-  }
-
   ObjBase::ObjBase()
   {
-    init();
-  }
-
-  void ObjBase::init()
-  {
-    obj_prop_func["SCE"]["SoftwareVersion"] = dev::SoftwareVersion_test;
+    m_ObjPropFunc["SCE"]["SwVer"] = SCE::getSwVersion;
   }
 
   ObjReg &ObjReg::instance()

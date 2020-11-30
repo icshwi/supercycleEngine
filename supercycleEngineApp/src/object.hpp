@@ -16,20 +16,21 @@ namespace dev
 
   class ObjBase
   {
-  public:
+  private:
+    friend class ObjReg;
     ObjBase();
-    void init();
-
-    std::map<std::string, std::map<std::string, std::function<std::string()>>> obj_prop_func;
+    std::map<std::string, std::map<std::string, std::function<std::string()>>> m_ObjPropFunc;
   };
 
-  class ObjReg : ObjBase
+  class ObjReg
   {
   public:
     ObjReg(){};
-    //void add(std::string name, std::function<std::string()> func) { obj_prop_func[name] = func; };
-    std::function<std::string()> get(std::string obj, std::string prop) { return obj_prop_func[obj][prop]; };
+    std::function<std::string()> get(std::string obj, std::string prop) { return m_ObjBase.m_ObjPropFunc[obj][prop]; };
     static ObjReg &instance();
+
+  private:
+    ObjBase m_ObjBase;
   };
 
 } // namespace dev

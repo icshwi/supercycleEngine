@@ -7,7 +7,6 @@
 #include "ioblock.hpp"
 #include "dlog.hpp"
 #include "cmnbase.hpp"
-#include "object.hpp"
 
 #include <iostream>
 
@@ -43,8 +42,6 @@ namespace io
     dlog::Print(dlog::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
-
-    dlog::Print(dlog::INFO) << dev::ObjReg::instance().get("SCE", "SoftwareVersion")();
 
     return 0;
   }

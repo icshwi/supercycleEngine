@@ -12,4 +12,3 @@ std::string SCE::getSwVersion()
 {
   return SCE_VERSION;
 }
-
