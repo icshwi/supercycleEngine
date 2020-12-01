@@ -1,30 +1,33 @@
-#include <stringoutRecord.h>
-#include <stringinRecord.h>
-
-//#include "devObj.h"
-
-#include "devExtension.h"
-#include "iobase.hpp"
+/**
+ * @SPDX-License-Identifier LGPL-2.1-only
+ * @author Jerzy Jamroz (jerzy.jamroz@ess.eu)
+ * @date 2020-12-01
+ */
 
 #include <iostream>
-#include <dbAccessDefs.h>
+#include <vector>
 
-#include <string.h>
-#include <stdlib.h>
-
-#include <epicsStdio.h>
-#include <epicsVersion.h>
-#include <epicsTime.h>
-#include <epicsFindSymbol.h>
-
-#include <dbAccess.h>
-#include <devSup.h>
 #include <stringinRecord.h>
-#include <recGbl.h>
-#include <envDefs.h>
+#include <stringoutRecord.h>
+
+#include "string.h"
+#include "devExtension.h"
+#include "iobase.hpp"
+#include "object.hpp"
+
+struct StrStruc
+{
+  char m_el[40];
+  StrStruc(std::string str)
+  {
+    strcpy(m_el, str.c_str());
+  }
+};
+static std::vector<StrStruc> l_StrV;
 
 static long stringin_init(int pass)
 {
+  //dlog::Print(dlog::INFO) << "--------------- stringin_init ---------------";
   if (pass)
     return 0;
 
@@ -35,21 +38,22 @@ static long stringin_init_record(stringinRecord *pr)
 {
   char *parm = pr->inp.value.instio.string;
 
-  std::string tmp_str(parm);
+  std::string inp_str(parm);
+  std::string name_str(pr->name);
+  StrStruc str_obj(dev::ObjReg::instance().get(io::db_inp_val(inp_str, "OBJ"), io::db_inp_val(inp_str, "PROP"))());
 
-  std::cout << " xxxxxxxxxxxxxxxxxxxxxxxxx " << tmp_str << std::endl;
-
-  std::cout << io::db_inp_val(tmp_str, "OBJ") << std::endl;
-  std::cout << io::db_inp_val(tmp_str, "PROP") << std::endl;
-  //std::cout << io::db_inp_val(tmp_str, "PROP") << std::endl;
-
+  l_StrV.push_back(str_obj);
+  std::vector<StrStruc>::iterator it = l_StrV.end() - 1;
+  pr->dpvt = (void *)&(*it);
+  //std::cout << "----------------= " << (char *)pr->dpvt << std::endl;
   return 0; /* success */
 }
 
 static long stringin_read(stringinRecord *pr)
 {
-
-  return (0); /* success */
+  (void)strcpy(pr->val, (char *)pr->dpvt);
+  pr->udf = 0;
+  return 0; /* success */
 }
 
 static DevSupReg devStrInFromStr = {
