@@ -16,5 +16,6 @@ trim_trailing_whitespace = false
 
 [*Makefile*]
 trim_trailing_whitespace = false
+tab_width = 4
 indent_style = tab
 

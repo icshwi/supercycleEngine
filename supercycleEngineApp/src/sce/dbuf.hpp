@@ -11,7 +11,7 @@
 #include <vector>
 #include <epicsTypes.h>
 
-namespace dbf
+namespace sce
 {
 
 class DBufPacket

@@ -1,3 +1,0 @@
-device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
-registrar(cmdMapStrOut)
-function(ioASubBuf)

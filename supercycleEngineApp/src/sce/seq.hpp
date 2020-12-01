@@ -13,14 +13,16 @@
 
 #include <epicsTypes.h>
 
-class SequenceHandler
+namespace sce
 {
-private:
+  class SequenceHandler
+  {
+  private:
     std::map<std::string, epicsUInt32> evtcoderef;
     std::map<epicsUInt32, epicsUInt32> evt_tst_seq;
     std::map<epicsUInt32, epicsUInt32> tst_evt_seq;
 
-public:
+  public:
     SequenceHandler(std::map<std::string, epicsUInt32> evtrm);
     SequenceHandler(){};
     ~SequenceHandler();
@@ -30,6 +32,8 @@ public:
     std::vector<epicsUInt32> getSeqTst() { return cmn::map1d2vec<epicsUInt32>(tst_evt_seq, 0); };
     std::vector<epicsUInt32> getSeqEvt() { return cmn::map1d2vec<epicsUInt32>(tst_evt_seq, 1); };
     std::vector<epicsUInt32> getSeqVec() { return cmn::map2d2vec<epicsUInt32>(tst_evt_seq); };
-};
+  };
+
+} // namespace sce
 
 #endif // SEQUENCE_HPP

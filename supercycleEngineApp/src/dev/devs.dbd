@@ -1,0 +1,15 @@
+
+# engine
+variable(iodebug)
+variable(PscUs)
+function(initEngine)
+function(ioEngine)
+
+# devs
+device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
+registrar(cmdMapStrOut)
+function(ioASubBuf)
+
+# from devObjString.cpp
+device(stringin, INST_IO, devStrInFromStr, "ObjPropString")
+#device(stringout, INST_IO, devSOFromString, "Obj Prop string")

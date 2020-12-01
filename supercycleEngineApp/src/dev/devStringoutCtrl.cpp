@@ -4,6 +4,7 @@
  * @date 2020-03-20
  */
 
+#include "devExtension.h"
 #include "devStringoutCtrl.hpp"
 
 #include <stdlib.h>
@@ -11,30 +12,26 @@
 #include <devSup.h>
 #include <recGbl.h>
 #include <alarm.h>
-
-//#include <aiRecord.h>
-//#include <longinRecord.h>
-#include <stringoutRecord.h>
-
-#include "devext.h"
 #include <iostream>
+
+#include <stringoutRecord.h>
 
 std::map<std::string, std::string> RegisteredStrOutMap;
 
 static long initStrOutCtrl(stringoutRecord *prec)
 {
-    std::string key(prec->name);
-    std::string val(prec->val);
-    RegisteredStrOutMap[key] = val;
-    return 0;
+  std::string key(prec->name);
+  std::string val(prec->val);
+  RegisteredStrOutMap[key] = val;
+  return 0;
 }
 
 static long ioStrOutCtrl(stringoutRecord *prec)
 {
-    std::string key(prec->name);
-    std::string val(prec->val);
-    RegisteredStrOutMap[key] = val;
-    return 0;
+  std::string key(prec->name);
+  std::string val(prec->val);
+  RegisteredStrOutMap[key] = val;
+  return 0;
 }
 
 //Naming: devXxYyyy
@@ -51,5 +48,5 @@ static DevSupReg devStrOutCtrl = {
 #include <epicsExport.h>
 extern "C"
 {
-    epicsExportAddress(dset, devStrOutCtrl);
+  epicsExportAddress(dset, devStrOutCtrl);
 }

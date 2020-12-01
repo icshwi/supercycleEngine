@@ -29,3 +29,10 @@ record(stringout, "$(P)$(R=)$(S=:)PBDest-SP") {
   field(VAL,  "None")
   info(autosaveFields_pass0, "VAL")
 }
+
+record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
+  field(DTYP, "ObjPropString")
+  field(INP , "@OBJ=$(OBJ=SCE), PROP=SwVer")
+  field(PINI, "YES")
+  field(DESC, "Software version")
+}

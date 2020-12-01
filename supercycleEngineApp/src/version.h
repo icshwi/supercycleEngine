@@ -1,3 +1,3 @@
 #ifndef SCE_VERSION
-# define SCE_VERSION "develop"
+# define SCE_VERSION "devel"
 #endif

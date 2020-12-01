@@ -15,7 +15,7 @@ namespace io
 
   IOBlock::~IOBlock()
   {
-    io::LOG(io::DEBUG) << "IOBlock::~IOBlock()";
+    dlog::Print(dlog::DEBUG) << "IOBlock::~IOBlock()";
     // Kill all not used processes
     // SEVCHK(ca_task_exit(), "ERROR ca_task_exit failure");
   }
@@ -38,10 +38,10 @@ namespace io
     sctable.init(getSCTableLink());
     Seq.init(mEvts_yml.getMap());
 
-    io::LOG(io::INFO) << "IOBlock::init() databufferLink " << databufferLink;
-    io::LOG(io::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
-    io::LOG(io::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
-    io::LOG(io::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
+    dlog::Print(dlog::INFO) << "IOBlock::init() databufferLink " << databufferLink;
+    dlog::Print(dlog::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
+    dlog::Print(dlog::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
+    dlog::Print(dlog::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
 
     return 0;
   }
