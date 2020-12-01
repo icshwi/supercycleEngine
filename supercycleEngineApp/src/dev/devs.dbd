@@ -1,15 +1,18 @@
-
-# engine
+# vars
 variable(iodebug)
 variable(PscUs)
+
+# commands
+registrar(cmdMapStrOut)
+
+# functions
 function(initEngine)
 function(ioEngine)
+function(ioASubBuf)
 
 # devs
 device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
-registrar(cmdMapStrOut)
-function(ioASubBuf)
 
-# from devObjString.cpp
-device(stringin, INST_IO, devStrInFromStr, "ObjPropString")
+## from devObjPropStringIO.cpp
+device(stringin, INST_IO, devObjPropStringIn, "ObjPropString")
 #device(stringout, INST_IO, devSOFromString, "Obj Prop string")
