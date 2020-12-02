@@ -14,9 +14,9 @@
 namespace sce
 {
 
-class DBufPacket
-{
-public:
+  class DBufPacket
+  {
+  public:
     //DataBuffer();
     DBufPacket(epicsUInt32 size = 8);
     ~DBufPacket();
@@ -29,12 +29,12 @@ public:
     std::vector<epicsUInt32> vallist();
     std::map<epicsUInt32, epicsUInt32> getDbuf() { return dbuf; };
 
-private:
+  private:
     std::map<epicsUInt32, epicsUInt32> dbuf;
-};
+  };
 
-//void demo1();
+  //void demo1();
 
-} // namespace dbf
+} // namespace sce
 
 #endif // DBUF_HPP
