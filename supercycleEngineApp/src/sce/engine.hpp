@@ -13,6 +13,6 @@
 #include <epicsTypes.h>
 
 int engineCycle(io::IOBlock &);
-int sctableSwitch(io::IOBlock &io);
+int sctableSwitch(io::IOBlock &);
 
 #endif // ENGINE_HPP

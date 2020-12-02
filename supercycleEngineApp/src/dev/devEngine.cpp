@@ -25,23 +25,22 @@ static long initEngine()
 
 static long ioEngine(aSubRecord *prec)
 {
-  static io::IOBlock &io_block = io::RegisteredIOBlock();
   // Configure new cycle
-  io_block.dbSync(RegisteredStrOutMap);
+  io::RegisteredIOBlock().dbSync(RegisteredStrOutMap);
   // Change the table if requested
-  sctableSwitch(io_block);
+  sctableSwitch(io::RegisteredIOBlock());
   // Engine cycle
-  engineCycle(io_block);
+  engineCycle(io::RegisteredIOBlock());
   // Update the meta
   epicsUInt64 *pvalaU64 = (epicsUInt64 *)prec->vala;
   epicsUInt32 *pvalaU32 = (epicsUInt32 *)prec->vala;
-  pvalaU64[0] = (epicsUInt64)io_block.cId; // 0,1
-  pvalaU32[2] = (epicsUInt32)io_block.cPeriod;
+  pvalaU64[0] = (epicsUInt64)io::RegisteredIOBlock().cId; // 0,1
+  pvalaU32[2] = (epicsUInt32)io::RegisteredIOBlock().cPeriod;
   // Update the Dbuf - neva , novb (max)
-  prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io_block.dbuf.vallist());
-  prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io_block.Seq.getSeqTst());
-  prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io_block.Seq.getSeqEvt());
-  prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io_block.Seq.getSeqVec());
+  prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io::RegisteredIOBlock().dbuf.vallist());
+  prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io::RegisteredIOBlock().Seq.getSeqTst());
+  prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io::RegisteredIOBlock().Seq.getSeqEvt());
+  prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io::RegisteredIOBlock().Seq.getSeqVec());
 
   return 0;
 }
