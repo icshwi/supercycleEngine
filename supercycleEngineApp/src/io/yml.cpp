@@ -68,11 +68,11 @@ namespace io
 
     dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
 
-    inhEvtv = node["Inhibit"]["Evts"].as<std::vector<std::string>>();
-    inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
-    SCESwitchOffCycles = node["SCSwitch"]["Off"].as<int>();
+    m_inhEvtv = node["Inhibit"]["Evts"].as<std::vector<std::string>>();
+    m_inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
+    m_SCESwitchOffCycles = node["SCSwitch"]["Off"].as<int>();
 
-    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() inhEvtv " << inhEvtv << " inhStatev " << inhStatev;
+    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() inhEvtv " << m_inhEvtv << " inhStatev " << m_inhStatev;
     return 0;
   }
 
@@ -130,12 +130,13 @@ namespace io
   {
     dlog::Print(dlog::INFO) << "YmlDatabuffer::init fname " << fname;
     YAML::Node node_tmp = YAML::LoadFile(fname);
-    ProtVer = node_tmp["ProtVer"].as<uint>();
-    ProtNum = node_tmp["ProtNum"].as<uint>();
+    m_ProtVer = node_tmp["ProtVer"].as<uint>();
+    m_ProtNum = node_tmp["ProtNum"].as<uint>();
 
-    PBStateIds_yml.init(fname);
-    PBModIds_yml.init(fname);
-    PBDestIds_yml.init(fname);
+    m_PBStateIds.init(fname);
+    m_PBModIds.init(fname);
+    m_PBDestIds.init(fname);
+    m_PBPresentIds.init(fname);
     return 0;
   }
 

@@ -98,20 +98,32 @@ namespace io
     };
   };
 
+  class YmlPBPresentIds : public YmlKeyValMap
+  {
+  public:
+    YmlPBPresentIds(){};
+    int init(std::string fname, std::string nodeName = "PBPresent", std::string valName = "id")
+    {
+      YmlKeyValMap::init(fname, nodeName, valName);
+      return 0;
+    };
+  };
+
   class YmlDatabuffer
   {
   public:
     YmlDatabuffer(){};
     int init(std::string fname);
-    YmlPBStateIds PBStateIds_yml;
-    YmlPBModIds PBModIds_yml;
-    YmlPBDestIds PBDestIds_yml;
-    uint getProtVer() { return ProtVer; };
-    uint getProtNum() { return ProtNum; };
+    uint getProtVer() { return m_ProtVer; };
+    uint getProtNum() { return m_ProtNum; };
+    YmlPBStateIds m_PBStateIds;
+    YmlPBModIds m_PBModIds;
+    YmlPBDestIds m_PBDestIds;
+    YmlPBPresentIds m_PBPresentIds;
 
   private:
-    uint ProtVer = 0;
-    uint ProtNum = 0;
+    uint m_ProtVer = 0;
+    uint m_ProtNum = 0;
   };
 
   class YmlSCEConfig : public YmlNode
@@ -120,17 +132,17 @@ namespace io
     //YmlInhibitEvt(std::string fname);
     YmlSCEConfig(){};
     int init(std::string fname);
-    std::vector<std::string> getInhEvts() { return inhEvtv; };
-    std::vector<std::string> getInhStates() { return inhStatev; };
+    std::vector<std::string> getInhEvts() { return m_inhEvtv; };
+    std::vector<std::string> getInhStates() { return m_inhStatev; };
     std::string SCESwitchBehaviour(bool trig = false);
 
   protected:
-    int getSCESwitchOffCycles() { return SCESwitchOffCycles; };
+    int getSCESwitchOffCycles() { return m_SCESwitchOffCycles; };
 
   private:
-    std::vector<std::string> inhEvtv;
-    std::vector<std::string> inhStatev;
-    int SCESwitchOffCycles = 0;
+    std::vector<std::string> m_inhEvtv;
+    std::vector<std::string> m_inhStatev;
+    int m_SCESwitchOffCycles = 0;
   };
 
 } // namespace io

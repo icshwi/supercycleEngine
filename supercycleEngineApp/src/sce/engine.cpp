@@ -15,21 +15,7 @@
 
 #include "scenv.hpp"
 
-int sctableSwitch(io::IOBlock &io)
-{
-  if (io.getSCTableLink().compare(io.sctable.getFileLink()) != 0)
-  {
-    dlog::Print(dlog::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
-                             << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
-    io.sctable.init(io.getSCTableLink());
-
-    // Trigger sctable switch behaviour
-    io.SCEConfig_yml.SCESwitchBehaviour(true);
-  }
-  return 0;
-}
-
-void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
+static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
 {
   try
   {
@@ -42,7 +28,7 @@ void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string
   }
 }
 
-void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
+static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
 {
   try
   {
@@ -55,12 +41,12 @@ void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string
   }
 }
 
-void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
+static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
 {
   rowm.insert(argm.begin(), argm.end());
 }
 
-int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+static int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
 {
   if (cycle_row.empty())
   {
@@ -92,7 +78,7 @@ int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_
   return 0;
 }
 
-int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+static int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
 {
   for (auto &state : io.SCEConfig_yml.getInhStates())
     if (io.getPBState() == state)
@@ -100,6 +86,20 @@ int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row
         cycle_row.erase(it);
 
   return 0;
+}
+
+static std::string getPBPresent(const std::map<std::string, std::string> &cycle_row, const std::vector<std::string> inh_evts)
+{
+  std::size_t cnt = 0;
+
+  for (auto const &it : inh_evts)
+    if (cycle_row.count(it) == 0)
+      cnt++;
+
+  if (cnt == inh_evts.size())
+    return "Off";
+
+  return "On";
 }
 
 int engineCycle(io::IOBlock &io)
@@ -125,6 +125,10 @@ int engineCycle(io::IOBlock &io)
   // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
 
+  // Remove beam generation depending on the selected behaviour
+  if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
+    InhEvts4State(io, cycle_row);
+
   // Update the databuffer container
 
   io.dbuf.clear();
@@ -137,17 +141,23 @@ int engineCycle(io::IOBlock &io)
   io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
 
   // SCTABLE operations
+
   // PBState
-  cycle_row["PBState"] = io.SCEConfig_yml.SCESwitchBehaviour();
-  if (cycle_row["PBState"].empty())
-    cycle_row["PBState"] = io.getPBState();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.PBStateIds_yml.getMap());
+  cycle_row["PBState"] = io.getPBState();
+  if ("Off" == cycle_row["PBState"])
+    InhEvts4State(io, cycle_row);
+  // Erase inhibit events from the cycle in regards to the state
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.m_PBStateIds.getMap());
+
   // PBDest
   cycle_row["PBDest"] = io.getPBDest();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.PBDestIds_yml.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.m_PBDestIds.getMap());
   // PBMod
   cycle_row["PBMod"] = io.getPBMod();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.PBModIds_yml.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.m_PBModIds.getMap());
+  // PBPresent
+  cycle_row["PBPresent"] = getPBPresent(cycle_row, io.SCEConfig_yml.getInhEvts());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml.m_PBPresentIds.getMap());
   // PBLen
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
   // PBEn
@@ -155,13 +165,25 @@ int engineCycle(io::IOBlock &io)
   // PBCurr
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 
-  // Erase inhibit events from the cycle in regards to the state
-  InhEvts4State(io, cycle_row);
   // Update the event sequence container
   io.Seq.write(cycle_row);
 
   //Check the buffer
   dlog::Print(dlog::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
 
+  return 0;
+}
+
+int sctableSwitch(io::IOBlock &io)
+{
+  if (io.getSCTableLink().compare(io.sctable.getFileLink()) != 0)
+  {
+    dlog::Print(dlog::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
+                             << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
+    io.sctable.init(io.getSCTableLink());
+
+    // Trigger sctable switch behaviour
+    io.SCEConfig_yml.SCESwitchBehaviour(true);
+  }
   return 0;
 }

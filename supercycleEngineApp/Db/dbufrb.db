@@ -130,6 +130,13 @@ record(calcout, "$(P)$(R=)$(S=:)PBMod") {
   field(CALC, "(A>>(2*8))&255")
 }
 
+record(calcout, "$(P)$(R=)$(S=:)PBPresent") {
+  field(INPA, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_ CPP")
+  field(SCAN, "Passive")
+  field(EGU, "present")
+  field(CALC, "(A>>(3*8))&255")
+}
+
 record(longin, "$(P)$(R=)$(S=:)PBLen") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
