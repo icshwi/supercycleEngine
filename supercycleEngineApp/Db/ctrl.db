@@ -31,7 +31,7 @@ record(stringout, "$(P)$(R=)$(S=:)PBDest-SP") {
 }
 
 record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
-  field(DTYP, "ObjPropString")
+  field(DTYP, "StringIOObjProp")
   field(INP , "@OBJ=$(OBJ=SCE), PROP=SwVer")
   field(PINI, "YES")
   field(DESC, "Software version")
