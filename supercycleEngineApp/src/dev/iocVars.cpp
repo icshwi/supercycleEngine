@@ -24,7 +24,6 @@ epicsExportAddress(int, PscUs);
 void iocVars2IO()
 {
   static dlog::Type *const piodebug = (dlog::Type *)&iodebug;
-
   dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
 
   io::RegisteredIOBlock().cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);

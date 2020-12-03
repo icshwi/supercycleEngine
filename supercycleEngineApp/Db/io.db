@@ -8,6 +8,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(LNK4, "$(P)$(R=)$(S=:)Timestamps")
   field(LNK5, "$(P)$(R=)$(S=:)Events")
   field(LNK6, "$(P)$(R=)$(S=:)Sequence")
+  field(LNK7, "$(P)$(R=)$(S=:)ScRowId")
 }
 
 #[TODO] To redesign
@@ -36,6 +37,14 @@ record(longin, "$(P)$(R=)$(S=:)Period") {
 	field(HSV,  "MINOR")
 	field(LSV,  "MINOR")
 	field(LLSV, "MAJOR")
+}
+
+record(longin, "$(P)$(R=)$(S=:)ScRowId") {
+  field(DESC, "Actuall Supercycle Row Id")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "id")
+  field(INP, "$(P)$(R=)$(S=:)ScRowId-subA_")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Databuffer") {

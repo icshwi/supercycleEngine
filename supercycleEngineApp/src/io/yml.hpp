@@ -47,7 +47,7 @@ namespace io
     virtual int init(std::string fname, std::string valName);
     virtual int init(std::string fname, std::string nodeName, std::string valName);
     epicsUInt32 getVal(std::string key) { return mapsi[key]; };
-    std::map<std::string, epicsUInt32> getMap() { return mapsi; };
+    std::map<std::string, epicsUInt32> getMap() const { return mapsi; };
 
   private:
     std::map<std::string, epicsUInt32> mapsi;
@@ -132,8 +132,8 @@ namespace io
     //YmlInhibitEvt(std::string fname);
     YmlSCEConfig(){};
     int init(std::string fname);
-    std::vector<std::string> getInhEvts() { return m_inhEvtv; };
-    std::vector<std::string> getInhStates() { return m_inhStatev; };
+    std::vector<std::string> getInhEvts() const { return m_inhEvtv; };
+    std::vector<std::string> getInhStates() const { return m_inhStatev; };
     std::string SCESwitchBehaviour(bool trig = false);
 
   protected:

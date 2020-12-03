@@ -9,7 +9,6 @@
 #include "cmnbase.hpp"
 
 #include "dbuf.hpp"
-#include "csvvec.hpp"
 #include "yml.hpp"
 #include "seq.hpp"
 
@@ -28,7 +27,7 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   }
 }
 
-static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
+static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, const env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
 {
   try
   {
@@ -46,12 +45,20 @@ static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<
   rowm.insert(argm.begin(), argm.end());
 }
 
-static int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+static int doInhEvts4State(const io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
 {
   for (auto &state : io.SCEConfig_yml.getInhStates())
     if (io.getPBState() == state)
       for (auto &it : io.SCEConfig_yml.getInhEvts())
         cycle_row.erase(it);
+
+  return 0;
+}
+
+static int doInhEvts(const io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+{
+  for (auto &it : io.SCEConfig_yml.getInhEvts())
+    cycle_row.erase(it);
 
   return 0;
 }
@@ -72,18 +79,15 @@ static std::string getPBPresent(const std::map<std::string, std::string> &cycle_
 
 int engineCycle(io::IOBlock &io)
 {
-  // Performance improvement of the engineCycle()
-  static std::map<std::string, std::string> cycle_row;
   static epicsUInt32 tst = 0; // The timestamp holder
-
   // Start the cycle
   // ===============
+  std::map<std::string, std::string> cycle_row = io.m_CSVStrMap.getRowMap();
+
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
   dlog::Print(dlog::DEBUG) << "engineCycle()"
-                           << " row_it " << io::CSVStrMap::instance().getIt() << " io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
-  // Get sctable row
-  cycle_row = io::CSVStrMap::instance().getRowMap();
+                           << " row it " << io.m_CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
@@ -93,7 +97,7 @@ int engineCycle(io::IOBlock &io)
 
   // Remove beam generation depending on the selected behaviour
   if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
-    InhEvts4State(io, cycle_row);
+    doInhEvts(io, cycle_row);
 
   // Update the databuffer container
 
@@ -110,8 +114,7 @@ int engineCycle(io::IOBlock &io)
 
   // PBState
   cycle_row["PBState"] = io.getPBState();
-  if ("Off" == cycle_row["PBState"])
-    InhEvts4State(io, cycle_row);
+  doInhEvts4State(io, cycle_row);
   // Erase inhibit events from the cycle in regards to the state
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.m_PBStateIds.getMap());
 
@@ -137,19 +140,5 @@ int engineCycle(io::IOBlock &io)
   //Check the buffer
   dlog::Print(dlog::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
 
-  return 0;
-}
-
-int sctableSwitch(io::IOBlock &io)
-{
-  if (io.getSCTableLink().compare(io::CSVStrMap::instance().getFile()) != 0)
-  {
-    dlog::Print(dlog::DEBUG) << "engineCycle() different sctable selected OLD io::CSVStrMap::instance().getFile() "
-                             << io::CSVStrMap::instance().getFile() << " NEW io::CSVStrMap::instance().getFile() " << io::CSVStrMap::instance().getFile();
-    io::CSVStrMap::instance().init(io.getSCTableLink());
-
-    // Trigger sctable switch behaviour
-    io.SCEConfig_yml.SCESwitchBehaviour(true);
-  }
   return 0;
 }

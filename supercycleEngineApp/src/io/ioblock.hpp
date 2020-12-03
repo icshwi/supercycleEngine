@@ -14,6 +14,7 @@
 #include "dbuf.hpp"
 #include "seq.hpp"
 #include "yml.hpp"
+#include "csv.hpp"
 #include "version.h"
 
 #include "epicsTypes.h"
@@ -31,7 +32,7 @@ namespace io
     // Directories
     std::string sctableRoot = "/opt/reftabs/supercycles";
     // PVs
-    std::string SCTable = "probe-5us-MEBT-1Hz.csv";
+    std::string SCTable = "null.csv";
     std::string PBState = "Off";
     std::string PBMod = "None";
     std::string PBDest = "None";
@@ -41,10 +42,10 @@ namespace io
     ~IOBlock();
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
-    std::string getSCTableLink() { return sctableRoot + "/" + SCTable; };
-    std::string getPBState() { return PBState; };
-    std::string getPBMod() { return PBMod; };
-    std::string getPBDest() { return PBDest; };
+    std::string getSCTableLink() const { return sctableRoot + "/" + SCTable; };
+    std::string getPBState() const { return PBState; };
+    std::string getPBMod() const { return PBMod; };
+    std::string getPBDest() const { return PBDest; };
 
     epicsUInt32 cPeriod = 0; //cycle period [us]
     epicsUInt64 cId = 0;
@@ -52,6 +53,7 @@ namespace io
     io::YmlDatabuffer DBuf_yml;
     io::YmlSCEConfig SCEConfig_yml;
     io::YmlMEvts mEvts_yml;
+    io::CSVStrMap m_CSVStrMap;
     // Set the send buffer
     sce::DBufPacket dbuf;
     sce::SequenceHandler Seq;

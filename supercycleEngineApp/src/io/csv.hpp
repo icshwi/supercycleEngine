@@ -33,13 +33,12 @@ namespace io
     int init(std::string file);
     std::map<std::string, std::string> getRowMap();
     std::map<std::string, std::string> checkRowMapNext();
-    size_t getIt() { return m_row_it; };
+    size_t getRowId() { return m_row_id; };
     std::string getFile() { return m_csvstr.m_file; };
-    static CSVStrMap &instance();
 
   private:
     CSVStrData m_csvstr;
-    size_t m_row_it;
+    size_t m_row_id;
     std::vector<std::vector<std::string>> m_rows;
     std::vector<std::string> m_header;
   };

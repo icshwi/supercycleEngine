@@ -7,7 +7,6 @@
 #include "ioblock.hpp"
 #include "dlog.hpp"
 #include "cmnbase.hpp"
-#include "csvvec.hpp"
 
 #include <iostream>
 
@@ -40,8 +39,7 @@ namespace io
     DBuf_yml.init(databufferLink);
     SCEConfig_yml.init(sceconfigLink);
     mEvts_yml.init(mevtsLink);
-
-    io::CSVStrMap::instance().init(getSCTableLink());
+    m_CSVStrMap.init(getSCTableLink());
 
     Seq.init(mEvts_yml.getMap());
 

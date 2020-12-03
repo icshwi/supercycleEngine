@@ -11,6 +11,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig0-FOut_") {
   field(LNK5, "$(P)$(R=)$(S=:)Period-subA_.PROC")
   field(LNK6, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
   field(LNK7, "$(P)$(R=)$(S=:)COffset-Seq_")
+  field(LNK8, "$(P)$(R=)$(S=:)ScRowId-subA_.PROC")
 }
 
 record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
@@ -26,6 +27,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
   field(LNK5, "$(P)$(R=)$(S=:)Period-subA_.PROC")
   field(LNK6, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
   field(LNK7, "$(P)$(R=)$(S=:)COffset-Seq_")
+  field(LNK8, "$(P)$(R=)$(S=:)ScRowId-subA_.PROC")
 }
 
 record(calcout, "$(P)$(R=)$(S=:)Trig-Cnt_")
@@ -82,5 +84,14 @@ record(subArray, "$(P)$(R=)$(S=:)Period-subA_") {
   field(INDX, "2")
   field(NELM, "1") # "2046")
   field(MALM, "3") # "2046")
+  field(FTVL, "ULONG")
+}
+
+record(subArray, "$(P)$(R=)$(S=:)ScRowId-subA_") {
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
+  field(INDX, "3")
+  field(NELM, "1") # "2046")
+  field(MALM, "4") # "2046")
   field(FTVL, "ULONG")
 }
