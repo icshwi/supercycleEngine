@@ -43,6 +43,7 @@ namespace cmn
     std::string remove(std::string args, char c = ' ');
     std::string convert(epicsUInt32 arg);
     std::string convert(std::string arg);
+    std::vector<std::string> vect(const std::string&, char delim = ',');
   } // namespace str
 
 } // namespace cmn

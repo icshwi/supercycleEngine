@@ -80,12 +80,10 @@ int engineCycle(io::IOBlock &io)
   // ===============
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  dlog::Print(dlog::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
+  dlog::Print(dlog::DEBUG) << "engineCycle()"
+                           << " row_it " << io::CSVStrMap::instance().getIt() << " io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
   // Get sctable row
-  cycle_row = io::CSV2Vec::instance().getRow();
-  // Loop the supercycle table
-  if (sctable_loopback(io, cycle_row) > 0)
-    return 1;
+  cycle_row = io::CSVStrMap::instance().getRowMap();
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
@@ -144,11 +142,11 @@ int engineCycle(io::IOBlock &io)
 
 int sctableSwitch(io::IOBlock &io)
 {
-  if (io.getSCTableLink().compare(io.sctable.getFileLink()) != 0)
+  if (io.getSCTableLink().compare(io::CSVStrMap::instance().getFile()) != 0)
   {
-    dlog::Print(dlog::DEBUG) << "engineCycle() different sctable selected OLD io.sctable.getFileLink() "
-                             << io.sctable.getFileLink() << " NEW io.getSCTableLink() " << io.getSCTableLink();
-    io.sctable.init(io.getSCTableLink());
+    dlog::Print(dlog::DEBUG) << "engineCycle() different sctable selected OLD io::CSVStrMap::instance().getFile() "
+                             << io::CSVStrMap::instance().getFile() << " NEW io::CSVStrMap::instance().getFile() " << io::CSVStrMap::instance().getFile();
+    io::CSVStrMap::instance().init(io.getSCTableLink());
 
     // Trigger sctable switch behaviour
     io.SCEConfig_yml.SCESwitchBehaviour(true);

@@ -32,17 +32,18 @@ namespace io
     if (cmn::isFile(argm[GETVARNAME(sctableRoot)]))
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
-    DBuf_yml.init(databufferLink);
-    SCEConfig_yml.init(sceconfigLink);
-    mEvts_yml.init(mevtsLink);
-
-    io::CSV2Vec::instance().init(getSCTableLink());
-    Seq.init(mEvts_yml.getMap());
-
     dlog::Print(dlog::INFO) << "IOBlock::init() databufferLink " << databufferLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
     dlog::Print(dlog::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
+
+    DBuf_yml.init(databufferLink);
+    SCEConfig_yml.init(sceconfigLink);
+    mEvts_yml.init(mevtsLink);
+
+    io::CSVStrMap::instance().init(getSCTableLink());
+
+    Seq.init(mEvts_yml.getMap());
 
     return 0;
   }

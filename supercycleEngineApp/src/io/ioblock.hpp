@@ -31,7 +31,7 @@ namespace io
     // Directories
     std::string sctableRoot = "/opt/reftabs/supercycles";
     // PVs
-    std::string SCTable = "null.csv";
+    std::string SCTable = "probe-5us-MEBT-1Hz.csv";
     std::string PBState = "Off";
     std::string PBMod = "None";
     std::string PBDest = "None";

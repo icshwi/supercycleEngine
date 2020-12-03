@@ -151,6 +151,18 @@ namespace cmn
       return arg;
     }
 
+    std::vector<std::string> vect(const std::string &line, char delim)
+    {
+      std::vector<std::string> outv;
+      std::string tmp;
+      std::stringstream ss(line);
+
+      while (std::getline(ss, tmp, delim))
+        outv.push_back(tmp);
+
+      return outv;
+    }
+
   } // namespace str
 
 } // namespace cmn
