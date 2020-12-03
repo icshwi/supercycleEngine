@@ -12,7 +12,6 @@
 
 #include "scenv.hpp"
 #include "dbuf.hpp"
-#include "csv.hpp"
 #include "seq.hpp"
 #include "yml.hpp"
 #include "version.h"
@@ -53,8 +52,6 @@ namespace io
     io::YmlDatabuffer DBuf_yml;
     io::YmlSCEConfig SCEConfig_yml;
     io::YmlMEvts mEvts_yml;
-
-    io::CSVReader sctable;
     // Set the send buffer
     sce::DBufPacket dbuf;
     sce::SequenceHandler Seq;

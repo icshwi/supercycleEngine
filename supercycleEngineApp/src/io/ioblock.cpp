@@ -7,6 +7,7 @@
 #include "ioblock.hpp"
 #include "dlog.hpp"
 #include "cmnbase.hpp"
+#include "csvvec.hpp"
 
 #include <iostream>
 
@@ -35,7 +36,7 @@ namespace io
     SCEConfig_yml.init(sceconfigLink);
     mEvts_yml.init(mevtsLink);
 
-    sctable.init(getSCTableLink());
+    io::CSV2Vec::instance().init(getSCTableLink());
     Seq.init(mEvts_yml.getMap());
 
     dlog::Print(dlog::INFO) << "IOBlock::init() databufferLink " << databufferLink;

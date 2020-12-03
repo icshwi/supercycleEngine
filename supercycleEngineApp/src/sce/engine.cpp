@@ -9,7 +9,7 @@
 #include "cmnbase.hpp"
 
 #include "dbuf.hpp"
-#include "csv.hpp"
+#include "csvvec.hpp"
 #include "yml.hpp"
 #include "seq.hpp"
 
@@ -44,38 +44,6 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
 static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
 {
   rowm.insert(argm.begin(), argm.end());
-}
-
-static int sctable_loopback(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
-{
-  if (cycle_row.empty())
-  {
-    dlog::Print(dlog::DEBUG) << "engineCycle() SCTABLE END io.sctable.getFileLink() "
-                             << io.sctable.getFileLink() << " io.sctable.getRowId() " << io.sctable.getRowId();
-
-    io.sctable.init(io.sctable.getFileLink());
-    cycle_row = io.sctable.getRowMap();
-    if (cycle_row.empty())
-    {
-      dlog::Print(dlog::ERROR) << "engineCycle() cycle_row.empty() corrupted file";
-      return 1; // if wrong file, inhibit the engine
-    }
-  }
-
-  //Check Eventual Errors
-  //Check row id
-  try
-  {
-    epicsUInt64 row_id = std::stoll(cycle_row["Id"]);
-    if (row_id != io.sctable.getRowId())
-      dlog::Print(dlog::ERROR) << "engineCycle() io.sctable.getFileLink() " << io.sctable.getFileLink()
-                               << " row_id!=io.sctable.getRowId() row_id " << row_id << " io.sctable.getRowId() " << io.sctable.getRowId();
-  }
-  catch (...)
-  {
-    dlog::Print(dlog::ERROR) << "engineCycle() Id checkup failed at io.cId " << io.cId;
-  }
-  return 0;
 }
 
 static int InhEvts4State(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
@@ -114,7 +82,7 @@ int engineCycle(io::IOBlock &io)
   io.cId++;
   dlog::Print(dlog::DEBUG) << "engineCycle() io.cPeriod " << io.cPeriod << " io.cId " << io.cId;
   // Get sctable row
-  cycle_row = io.sctable.getRowMap();
+  cycle_row = io::CSV2Vec::instance().getRow();
   // Loop the supercycle table
   if (sctable_loopback(io, cycle_row) > 0)
     return 1;
