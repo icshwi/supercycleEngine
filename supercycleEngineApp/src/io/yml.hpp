@@ -140,6 +140,8 @@ namespace io
     int do_PBSwOff_States(std::map<std::string, std::string> &cycle_row);
     int do_PBSwOff_Mods(std::map<std::string, std::string> &cycle_row);
 
+    std::string get_PBPresent(std::map<std::string, std::string> &cycle_row);
+
   protected:
     int get_ScTSwitch_Off() { return m_ScTSwitch_Off; };
 

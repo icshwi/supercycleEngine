@@ -53,32 +53,33 @@ namespace io
     return 0;
   }
 
-  std::map<std::string, std::string> CSVStrMap::getRowMap()
+  std::map<std::string, std::string> CSVStrMap::readRowMap(const size_t l_rowid)
   {
-    const size_t l_rowid = m_row_id;
     const std::vector<std::string> &l_row = m_rows[l_rowid];
     std::map<std::string, std::string> l_m;
 
     for (size_t i = 0; i < m_header.size(); i++)
-      l_m[m_header[i]] = l_row[i];
+      if (l_row[i].empty() == false)
+        l_m[m_header[i]] = l_row[i];
+
+    return l_m;
+  }
+
+  std::map<std::string, std::string> CSVStrMap::getRowMap()
+  {
+    const size_t l_rowid = m_row_id;
 
     if (m_row_id < m_rows.size() - 1)
       m_row_id++;
     else
       m_row_id = 0;
 
-    return l_m;
+    return readRowMap(l_rowid);
   }
 
   std::map<std::string, std::string> CSVStrMap::checkRowMapNext()
   {
-    const std::vector<std::string> &l_row = m_rows[m_row_id];
-    std::map<std::string, std::string> l_m;
-
-    for (size_t i = 0; i < m_header.size(); ++i)
-      l_m[m_header[i]] = l_row[i];
-
-    return l_m;
+    return readRowMap(m_row_id);
   }
 
 } // namespace io

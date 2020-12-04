@@ -37,6 +37,7 @@ namespace io
     std::string getFile() { return m_csvstr.m_file; };
 
   private:
+    std::map<std::string, std::string> readRowMap(const size_t l_rowid);
     CSVStrData m_csvstr;
     size_t m_row_id;
     std::vector<std::vector<std::string>> m_rows;

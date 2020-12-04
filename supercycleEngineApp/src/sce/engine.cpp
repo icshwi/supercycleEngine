@@ -14,7 +14,7 @@
 
 #include "scenv.hpp"
 
-static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, env::DBFIDX idx)
+static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, const env::DBFIDX idx)
 {
   try
   {
@@ -23,7 +23,7 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined! env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
   }
 }
 
@@ -36,8 +36,34 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined!, env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined! env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
   }
+}
+
+static void io_dbuf_safe_write_all(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+{
+  io.dbuf.clear();
+  // ProtNum
+  io.dbuf.write(env::ProtNum, io.DBuf_yml.getProtNum());
+  // ProtVer
+  io.dbuf.write(env::ProtVer, io.DBuf_yml.getProtVer());
+  // IdCycle
+  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
+  io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
+  // PBState
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.m_PBStateIds.getMap());
+  // PBDest
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.m_PBDestIds.getMap());
+  // PBMod
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.m_PBModIds.getMap());
+  // PBPresent
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml.m_PBPresentIds.getMap());
+  // PBLen
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
+  // PBEn
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBEn);
+  // PBCurr
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 }
 
 static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
@@ -45,19 +71,19 @@ static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<
   rowm.insert(argm.begin(), argm.end());
 }
 
-static std::string getPBPresent(const std::map<std::string, std::string> &cycle_row, const std::vector<std::string> inh_evts)
-{
-  std::size_t cnt = 0;
+// static std::string getPBPresent(const std::map<std::string, std::string> &cycle_row, const std::vector<std::string> inh_evts)
+// {
+//   std::size_t cnt = 0;
 
-  for (auto const &it : inh_evts)
-    if (cycle_row.count(it) == 0)
-      cnt++;
+//   for (auto const &it : inh_evts)
+//     if (cycle_row.count(it) == 0 && cycle_row.at(it).empty() == false)
+//       cnt++;
 
-  if (cnt == inh_evts.size())
-    return "Off";
+//   if (cnt == inh_evts.size())
+//     return "Off";
 
-  return "On";
-}
+//   return "On";
+// }
 
 int engineCycle(io::IOBlock &io)
 {
@@ -81,47 +107,29 @@ int engineCycle(io::IOBlock &io)
   if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
     io.SCEConfig_yml.do_PBSwOff_Evts(cycle_row);
 
-  // Update the databuffer container
-
-  io.dbuf.clear();
-  // ProtNum
-  io.dbuf.write(env::ProtNum, io.DBuf_yml.getProtNum());
-  // ProtVer
-  io.dbuf.write(env::ProtVer, io.DBuf_yml.getProtVer());
-  // IdCycle
-  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
-  io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
-
   // SCTABLE operations
-
   // PBState
   cycle_row["PBState"] = io.getPBState();
   io.SCEConfig_yml.do_PBSwOff_States(cycle_row);
-  // Erase inhibit events from the cycle in regards to the state
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.m_PBStateIds.getMap());
-
   // PBDest
   cycle_row["PBDest"] = io.getPBDest();
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.m_PBDestIds.getMap());
   // PBMod
   cycle_row["PBMod"] = io.getPBMod();
   io.SCEConfig_yml.do_PBSwOff_Mods(cycle_row);
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.m_PBModIds.getMap());
+  if (cycle_row["PBMod"] == "NoBeam")
+    cycle_row["PBState"] = "Off";
   // PBPresent
-  cycle_row["PBPresent"] = getPBPresent(cycle_row, io.SCEConfig_yml.get_PBSwOff_Evts());
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml.m_PBPresentIds.getMap());
-  // PBLen
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
-  // PBEn
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBEn);
-  // PBCurr
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
+  cycle_row["PBPresent"] = io.SCEConfig_yml.get_PBPresent(cycle_row);
+
+  //Print the log
+  dlog::Print(dlog::DEBUG) << "cycle_row  " << cycle_row;
 
   // Update the event sequence container
   io.Seq.write(cycle_row);
+  // Update the data buffer container
+  io_dbuf_safe_write_all(io, cycle_row);
 
-  //Check the buffer
+  //Print the log
   dlog::Print(dlog::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
-
   return 0;
 }

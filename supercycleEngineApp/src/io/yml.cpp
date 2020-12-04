@@ -145,6 +145,20 @@ namespace io
     return 0;
   }
 
+  std::string YmlSCEConfig::get_PBPresent(std::map<std::string, std::string> &cycle_row)
+  {
+    std::size_t cnt = 0;
+
+    for (auto const &it : get_PBSwOff_Evts())
+      if (cycle_row.count(it) == 0)
+        cnt++;
+
+    if (cnt == get_PBSwOff_Evts().size())
+      return "Off";
+
+    return "On";
+  }
+
   int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)
   {
     if (YmlNode::init(fname, nodeName) != 0)
