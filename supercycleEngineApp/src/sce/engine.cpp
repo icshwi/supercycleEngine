@@ -105,6 +105,7 @@ int engineCycle(io::IOBlock &io)
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.m_PBDestIds.getMap());
   // PBMod
   cycle_row["PBMod"] = io.getPBMod();
+  io.SCEConfig_yml.do_PBSwOff_Mods(cycle_row);
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.m_PBModIds.getMap());
   // PBPresent
   cycle_row["PBPresent"] = getPBPresent(cycle_row, io.SCEConfig_yml.get_PBSwOff_Evts());

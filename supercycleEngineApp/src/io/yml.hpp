@@ -131,22 +131,23 @@ namespace io
     //YmlInhibitEvt(std::string fname);
     YmlSCEConfig(){};
     int init(std::string fname);
+    std::string SCESwitchBehaviour(bool trig = false);
     std::vector<std::string> get_PBSwOff_Evts() const { return m_PBSwOff_Evts; };
     std::vector<std::string> get_PBSwOff_States() const { return m_PBSwOff_States; };
     std::vector<std::string> get_PBSwOff_Mods() const { return m_PBSwOff_Mods; };
-    std::string SCESwitchBehaviour(bool trig = false);
 
     int do_PBSwOff_Evts(std::map<std::string, std::string> &cycle_row);
     int do_PBSwOff_States(std::map<std::string, std::string> &cycle_row);
+    int do_PBSwOff_Mods(std::map<std::string, std::string> &cycle_row);
 
   protected:
     int get_ScTSwitch_Off() { return m_ScTSwitch_Off; };
 
   private:
+    int m_ScTSwitch_Off = 0;
     std::vector<std::string> m_PBSwOff_Evts;
     std::vector<std::string> m_PBSwOff_States;
     std::vector<std::string> m_PBSwOff_Mods;
-    int m_ScTSwitch_Off = 0;
   };
 
 } // namespace io

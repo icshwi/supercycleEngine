@@ -13,10 +13,18 @@
 #include "engine.hpp"
 #include "ioblock.hpp"
 #include "cmnbase.hpp"
-#include "iocVars.hpp"
-#include "ioblock.hpp"
 #include "devStringoutCtrl.hpp"
 #include "dlog.hpp"
+
+#include "cmdMapStrOut.hpp"
+#include "object.hpp"
+
+//int and double only
+static int iodebug = 4;
+epicsExportAddress(int, iodebug);
+
+static int PscUs = 71428; //[us]
+epicsExportAddress(int, PscUs);
 
 static int sctableSwitch(io::IOBlock &io)
 {
@@ -24,6 +32,7 @@ static int sctableSwitch(io::IOBlock &io)
   {
     dlog::Print(dlog::DEBUG) << "engineCycle() OLD io.m_CSVStrMap.getFile() " << io.m_CSVStrMap.getFile()
                              << " NEW io.getSCTableLink() " << io.getSCTableLink();
+
     io.m_CSVStrMap.init(io.getSCTableLink());
 
     // Trigger sctable switch behaviour
@@ -34,7 +43,18 @@ static int sctableSwitch(io::IOBlock &io)
 
 static long initEngine()
 {
-  iocVars2IO();
+  static dlog::Type *const piodebug = (dlog::Type *)&iodebug;
+  dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
+
+  io::RegisteredIOBlock().cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
+  //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / PscUs * 1000000);
+  //io_block.cId = (epicsUInt64)1099511627776;
+  //io_block.cId = 0;
+  io::RegisteredIOBlock().init(RegisteredCmdMapStrOut);
+
+  dlog::Print(dlog::INFO) << "initEngine SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")();
+  dlog::Print(dlog::INFO) << "initEngine iodebug " << iodebug << " PscUs " << PscUs;
+
   return 0;
 }
 

@@ -135,6 +135,16 @@ namespace io
     return 0;
   }
 
+  int YmlSCEConfig::do_PBSwOff_Mods(std::map<std::string, std::string> &cycle_row)
+  {
+    for (auto &state : get_PBSwOff_Mods())
+      if (cycle_row["PBMod"] == state)
+        for (auto &it : get_PBSwOff_Evts())
+          cycle_row.erase(it);
+
+    return 0;
+  }
+
   int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)
   {
     if (YmlNode::init(fname, nodeName) != 0)
