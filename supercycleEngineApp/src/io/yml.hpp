@@ -4,8 +4,7 @@
  * @date 2020-10-12
  */
 
-#ifndef YML_HPP_
-#define YML_HPP_
+#pragma once
 
 #include "scenv.hpp"
 
@@ -132,19 +131,22 @@ namespace io
     //YmlInhibitEvt(std::string fname);
     YmlSCEConfig(){};
     int init(std::string fname);
-    std::vector<std::string> getInhEvts() const { return m_inhEvtv; };
-    std::vector<std::string> getInhStates() const { return m_inhStatev; };
+    std::vector<std::string> get_PBSwOff_Evts() const { return m_PBSwOff_Evts; };
+    std::vector<std::string> get_PBSwOff_States() const { return m_PBSwOff_States; };
+    std::vector<std::string> get_PBSwOff_Mods() const { return m_PBSwOff_Mods; };
     std::string SCESwitchBehaviour(bool trig = false);
 
+    int do_PBSwOff_Evts(std::map<std::string, std::string> &cycle_row);
+    int do_PBSwOff_States(std::map<std::string, std::string> &cycle_row);
+
   protected:
-    int getSCESwitchOffCycles() { return m_SCESwitchOffCycles; };
+    int get_ScTSwitch_Off() { return m_ScTSwitch_Off; };
 
   private:
-    std::vector<std::string> m_inhEvtv;
-    std::vector<std::string> m_inhStatev;
-    int m_SCESwitchOffCycles = 0;
+    std::vector<std::string> m_PBSwOff_Evts;
+    std::vector<std::string> m_PBSwOff_States;
+    std::vector<std::string> m_PBSwOff_Mods;
+    int m_ScTSwitch_Off = 0;
   };
 
 } // namespace io
-
-#endif // YML_HPP_

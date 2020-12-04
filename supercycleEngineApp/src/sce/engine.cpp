@@ -45,24 +45,6 @@ static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<
   rowm.insert(argm.begin(), argm.end());
 }
 
-static int doInhEvts4State(const io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
-{
-  for (auto &state : io.SCEConfig_yml.getInhStates())
-    if (io.getPBState() == state)
-      for (auto &it : io.SCEConfig_yml.getInhEvts())
-        cycle_row.erase(it);
-
-  return 0;
-}
-
-static int doInhEvts(const io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
-{
-  for (auto &it : io.SCEConfig_yml.getInhEvts())
-    cycle_row.erase(it);
-
-  return 0;
-}
-
 static std::string getPBPresent(const std::map<std::string, std::string> &cycle_row, const std::vector<std::string> inh_evts)
 {
   std::size_t cnt = 0;
@@ -97,7 +79,7 @@ int engineCycle(io::IOBlock &io)
 
   // Remove beam generation depending on the selected behaviour
   if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
-    doInhEvts(io, cycle_row);
+    io.SCEConfig_yml.do_PBSwOff_Evts(cycle_row);
 
   // Update the databuffer container
 
@@ -114,7 +96,7 @@ int engineCycle(io::IOBlock &io)
 
   // PBState
   cycle_row["PBState"] = io.getPBState();
-  doInhEvts4State(io, cycle_row);
+  io.SCEConfig_yml.do_PBSwOff_States(cycle_row);
   // Erase inhibit events from the cycle in regards to the state
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.m_PBStateIds.getMap());
 
@@ -125,7 +107,7 @@ int engineCycle(io::IOBlock &io)
   cycle_row["PBMod"] = io.getPBMod();
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.m_PBModIds.getMap());
   // PBPresent
-  cycle_row["PBPresent"] = getPBPresent(cycle_row, io.SCEConfig_yml.getInhEvts());
+  cycle_row["PBPresent"] = getPBPresent(cycle_row, io.SCEConfig_yml.get_PBSwOff_Evts());
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml.m_PBPresentIds.getMap());
   // PBLen
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);

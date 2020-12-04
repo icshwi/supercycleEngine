@@ -68,11 +68,14 @@ namespace io
 
     dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
 
-    m_inhEvtv = node["Inhibit"]["Evts"].as<std::vector<std::string>>();
-    m_inhStatev = node["Inhibit"]["States"].as<std::vector<std::string>>();
-    m_SCESwitchOffCycles = node["SCSwitch"]["Off"].as<int>();
+    m_PBSwOff_Evts = node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
+    m_PBSwOff_States = node["PBSwOff"]["States"].as<std::vector<std::string>>();
+    m_PBSwOff_Mods = node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
 
-    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() inhEvtv " << m_inhEvtv << " inhStatev " << m_inhStatev;
+    m_ScTSwitch_Off = node["ScTSwitch"]["Off"].as<int>();
+
+    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() m_PBSwOff_Evts " << m_PBSwOff_Evts << " m_PBSwOff_States " << m_PBSwOff_States << " m_PBSwOff_Mods " << m_PBSwOff_Mods;
+
     return 0;
   }
 
@@ -90,7 +93,7 @@ namespace io
 
   std::string YmlSCEConfig::SCESwitchBehaviour(bool trig)
   {
-    static int counterdown = getSCESwitchOffCycles();
+    static int counterdown = get_ScTSwitch_Off();
     static bool trig_level = false;
 
     if (trig_level == true)
@@ -98,13 +101,13 @@ namespace io
 
     if (counterdown < 0)
     {
-      counterdown = getSCESwitchOffCycles();
+      counterdown = get_ScTSwitch_Off();
       trig_level = false;
     }
 
     if (trig == true)
     {
-      counterdown = getSCESwitchOffCycles();
+      counterdown = get_ScTSwitch_Off();
       trig_level = true;
     }
 
@@ -112,6 +115,24 @@ namespace io
       return "Off";
 
     return {};
+  }
+
+  int YmlSCEConfig::do_PBSwOff_Evts(std::map<std::string, std::string> &cycle_row)
+  {
+    for (auto &it : get_PBSwOff_Evts())
+      cycle_row.erase(it);
+
+    return 0;
+  }
+
+  int YmlSCEConfig::do_PBSwOff_States(std::map<std::string, std::string> &cycle_row)
+  {
+    for (auto &state : get_PBSwOff_States())
+      if (cycle_row["PBState"] == state)
+        for (auto &it : get_PBSwOff_Evts())
+          cycle_row.erase(it);
+
+    return 0;
   }
 
   int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)
