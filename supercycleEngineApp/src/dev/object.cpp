@@ -12,7 +12,7 @@ namespace dev
 
   ObjBase::ObjBase()
   {
-    m_ObjPropFunc["SCE"]["SwVer"] = SCE::getSwVersion;
+    _ObjPropFunc["SCE"]["SwVer"] = SCE::getSwVersion;
   }
 
   ObjReg &ObjReg::instance()

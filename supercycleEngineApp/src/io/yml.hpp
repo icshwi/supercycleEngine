@@ -113,16 +113,16 @@ namespace io
   public:
     YmlDatabuffer(){};
     int init(std::string fname);
-    uint getProtVer() { return m_ProtVer; };
-    uint getProtNum() { return m_ProtNum; };
-    YmlPBStateIds m_PBStateIds;
-    YmlPBModIds m_PBModIds;
-    YmlPBDestIds m_PBDestIds;
-    YmlPBPresentIds m_PBPresentIds;
+    uint getProtVer() { return _ProtVer; };
+    uint getProtNum() { return _ProtNum; };
+    YmlPBStateIds _PBStateIds;
+    YmlPBModIds _PBModIds;
+    YmlPBDestIds _PBDestIds;
+    YmlPBPresentIds _PBPresentIds;
 
   private:
-    uint m_ProtVer = 0;
-    uint m_ProtNum = 0;
+    uint _ProtVer = 0;
+    uint _ProtNum = 0;
   };
 
   class YmlSCEConfig : public YmlNode
@@ -132,9 +132,9 @@ namespace io
     YmlSCEConfig(){};
     int init(std::string fname);
     std::string SCESwitchBehaviour(bool trig = false);
-    std::vector<std::string> get_PBSwOff_Evts() const { return m_PBSwOff_Evts; };
-    std::vector<std::string> get_PBSwOff_States() const { return m_PBSwOff_States; };
-    std::vector<std::string> get_PBSwOff_Mods() const { return m_PBSwOff_Mods; };
+    std::vector<std::string> get_PBSwOff_Evts() const { return _PBSwOff_Evts; };
+    std::vector<std::string> get_PBSwOff_States() const { return _PBSwOff_States; };
+    std::vector<std::string> get_PBSwOff_Mods() const { return _PBSwOff_Mods; };
 
     int do_PBSwOff_Evts(std::map<std::string, std::string> &cycle_row);
     int do_PBSwOff_States(std::map<std::string, std::string> &cycle_row);
@@ -143,13 +143,13 @@ namespace io
     std::string get_PBPresent(std::map<std::string, std::string> &cycle_row);
 
   protected:
-    int get_ScTSwitch_Off() { return m_ScTSwitch_Off; };
+    int get_ScTSwitch_Off() { return _ScTSwitch_Off; };
 
   private:
-    int m_ScTSwitch_Off = 0;
-    std::vector<std::string> m_PBSwOff_Evts;
-    std::vector<std::string> m_PBSwOff_States;
-    std::vector<std::string> m_PBSwOff_Mods;
+    int _ScTSwitch_Off = 0;
+    std::vector<std::string> _PBSwOff_Evts;
+    std::vector<std::string> _PBSwOff_States;
+    std::vector<std::string> _PBSwOff_Mods;
   };
 
 } // namespace io

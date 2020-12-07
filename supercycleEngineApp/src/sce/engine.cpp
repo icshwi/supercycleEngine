@@ -51,13 +51,13 @@ static void io_dbuf_safe_write_all(io::IOBlock &io, std::map<std::string, std::s
   io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
   io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
   // PBState
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml.m_PBStateIds.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml._PBStateIds.getMap());
   // PBDest
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml.m_PBDestIds.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml._PBDestIds.getMap());
   // PBMod
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml.m_PBModIds.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml._PBModIds.getMap());
   // PBPresent
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml.m_PBPresentIds.getMap());
+  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml._PBPresentIds.getMap());
   // PBLen
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
   // PBEn
@@ -71,31 +71,17 @@ static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<
   rowm.insert(argm.begin(), argm.end());
 }
 
-// static std::string getPBPresent(const std::map<std::string, std::string> &cycle_row, const std::vector<std::string> inh_evts)
-// {
-//   std::size_t cnt = 0;
-
-//   for (auto const &it : inh_evts)
-//     if (cycle_row.count(it) == 0 && cycle_row.at(it).empty() == false)
-//       cnt++;
-
-//   if (cnt == inh_evts.size())
-//     return "Off";
-
-//   return "On";
-// }
-
 int engineCycle(io::IOBlock &io)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
   // Start the cycle
   // ===============
-  std::map<std::string, std::string> cycle_row = io.m_CSVStrMap.getRowMap();
+  std::map<std::string, std::string> cycle_row = io._CSVStrMap.getRowMap();
 
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
   dlog::Print(dlog::DEBUG) << "engineCycle()"
-                           << " row it " << io.m_CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
+                           << " row it " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};

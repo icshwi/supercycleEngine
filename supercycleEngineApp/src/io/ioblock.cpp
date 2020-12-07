@@ -39,7 +39,7 @@ namespace io
     DBuf_yml.init(databufferLink);
     SCEConfig_yml.init(sceconfigLink);
     mEvts_yml.init(mevtsLink);
-    m_CSVStrMap.init(getSCTableLink());
+    _CSVStrMap.init(getSCTableLink());
 
     Seq.init(mEvts_yml.getMap());
 

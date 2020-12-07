@@ -68,13 +68,13 @@ namespace io
 
     dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
 
-    m_PBSwOff_Evts = node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
-    m_PBSwOff_States = node["PBSwOff"]["States"].as<std::vector<std::string>>();
-    m_PBSwOff_Mods = node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
+    _PBSwOff_Evts = node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
+    _PBSwOff_States = node["PBSwOff"]["States"].as<std::vector<std::string>>();
+    _PBSwOff_Mods = node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
 
-    m_ScTSwitch_Off = node["ScTSwitch"]["Off"].as<int>();
+    _ScTSwitch_Off = node["ScTSwitch"]["Off"].as<int>();
 
-    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() m_PBSwOff_Evts " << m_PBSwOff_Evts << " m_PBSwOff_States " << m_PBSwOff_States << " m_PBSwOff_Mods " << m_PBSwOff_Mods;
+    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() _PBSwOff_Evts " << _PBSwOff_Evts << " _PBSwOff_States " << _PBSwOff_States << " _PBSwOff_Mods " << _PBSwOff_Mods;
 
     return 0;
   }
@@ -175,13 +175,13 @@ namespace io
   {
     dlog::Print(dlog::INFO) << "YmlDatabuffer::init fname " << fname;
     YAML::Node node_tmp = YAML::LoadFile(fname);
-    m_ProtVer = node_tmp["ProtVer"].as<uint>();
-    m_ProtNum = node_tmp["ProtNum"].as<uint>();
+    _ProtVer = node_tmp["ProtVer"].as<uint>();
+    _ProtNum = node_tmp["ProtNum"].as<uint>();
 
-    m_PBStateIds.init(fname);
-    m_PBModIds.init(fname);
-    m_PBDestIds.init(fname);
-    m_PBPresentIds.init(fname);
+    _PBStateIds.init(fname);
+    _PBModIds.init(fname);
+    _PBDestIds.init(fname);
+    _PBPresentIds.init(fname);
     return 0;
   }
 

@@ -32,12 +32,12 @@ epicsExportAddress(int, PscUs);
 
 static int sctableSwitch(io::IOBlock &io)
 {
-  if (io.getSCTableLink().compare(io.m_CSVStrMap.getFile()) != 0)
+  if (io.getSCTableLink().compare(io._CSVStrMap.getFile()) != 0)
   {
-    dlog::Print(dlog::DEBUG) << "engineCycle() OLD io.m_CSVStrMap.getFile() " << io.m_CSVStrMap.getFile()
+    dlog::Print(dlog::DEBUG) << "engineCycle() OLD io._CSVStrMap.getFile() " << io._CSVStrMap.getFile()
                              << " NEW io.getSCTableLink() " << io.getSCTableLink();
 
-    io.m_CSVStrMap.init(io.getSCTableLink());
+    io._CSVStrMap.init(io.getSCTableLink());
 
     // Trigger sctable switch behaviour
     io.SCEConfig_yml.SCESwitchBehaviour(true);
@@ -84,7 +84,7 @@ static long ioEngine(aSubRecord *prec)
   epicsUInt32 *pvalaU32 = (epicsUInt32 *)prec->vala;
   pvalaU64[0] = (epicsUInt64)io::RegisteredIOBlock().cId; // 0,1
   pvalaU32[2] = (epicsUInt32)io::RegisteredIOBlock().cPeriod;
-  pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock().m_CSVStrMap.getRowId();
+  pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock()._CSVStrMap.getRowId();
   // Update the Dbuf - neva , novb (max)
   prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io::RegisteredIOBlock().dbuf.vallist());
   prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io::RegisteredIOBlock().Seq.getSeqTst());

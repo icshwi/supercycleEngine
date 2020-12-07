@@ -21,8 +21,8 @@
 
 struct StrInFunc
 {
-  std::function<std::string()> m_func;
-  StrInFunc(std::function<std::string()> func) : m_func(func){};
+  std::function<std::string()> _func;
+  StrInFunc(std::function<std::string()> func) : _func(func){};
 };
 
 static long stringin_init(int pass)
@@ -46,7 +46,7 @@ static long stringin_init_record(stringinRecord *prec)
   }
 
   prec->dpvt = (void *)priv;
-  //std::cout << "----------------= " << priv->m_func() << std::endl;
+  //std::cout << "----------------= " << priv->_func() << std::endl;
   return 0; /* success */
 }
 
@@ -59,7 +59,7 @@ static long stringin_read(stringinRecord *prec)
     return 0;
   }
 
-  (void)strcpy(prec->val, priv->m_func().c_str());
+  (void)strcpy(prec->val, priv->_func().c_str());
 
   prec->udf = 0;
   return 0; /* success */

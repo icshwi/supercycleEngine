@@ -53,7 +53,7 @@ namespace io
     io::YmlDatabuffer DBuf_yml;
     io::YmlSCEConfig SCEConfig_yml;
     io::YmlMEvts mEvts_yml;
-    io::CSVStrMap m_CSVStrMap;
+    io::CSVStrMap _CSVStrMap;
     // Set the send buffer
     sce::DBufPacket dbuf;
     sce::SequenceHandler Seq;
