@@ -9,7 +9,7 @@
 #include <chrono>
 #include <string>
 
-#define DPERFTIMERSCOPE(level) dperf::Timer timer_(__FUNCTION__, level)
+#define DPERFTIMERSCOPE(level) dperf::Timer timer_(__PRETTY_FUNCTION__, level)
 namespace dperf
 {
   enum LevelTypes

@@ -4,18 +4,30 @@
  * @date 2020-12-03
  */
 
+#include <fstream>
+
 #include "csv.hpp"
 #include "cmnbase.hpp"
 #include "dlog.hpp"
-
-#include <fstream>
+#include "dperf.hpp"
 
 namespace io
 {
 
+  size_t CSVStrData::_getNumOfLines(std::ifstream &ifs)
+  {
+    auto _lnum_ = std::count(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>(), '\n');
+    ifs.clear();
+    ifs.seekg(0);
+
+    return _lnum_;
+  }
+
   int CSVStrData::init(std::string file)
   {
-    dlog::Print(dlog::INFO) << "CSVStrData::init "
+    DPERFTIMERSCOPE(dperf::INFO);
+
+    dlog::Print(dlog::INFO) << __PRETTY_FUNCTION__
                             << " _file " << _file << " file " << file;
 
     std::ifstream ifs;
@@ -25,11 +37,13 @@ namespace io
       _file = file;
 
     ifs.open(file, std::ifstream::in);
+    //size_t _lnum_ = _getNumOfLines(ifs);
 
     _header.clear();
     (void)std::getline(ifs, _header);
 
     _rows.clear();
+    //_rows.reserve(_lnum_);
     for (std::string row; std::getline(ifs, row); /**/)
       _rows.push_back(row);
 
@@ -40,6 +54,8 @@ namespace io
 
   int CSVStrMap::init(std::string file)
   {
+    DPERFTIMERSCOPE(dperf::DEBUG1);
+
     if (_csvstr.init(file) > 0)
       return 1;
 
@@ -47,8 +63,9 @@ namespace io
     _header = cmn::str::vect(_csvstr._header);
 
     _rows.clear();
+    _rows.reserve(_csvstr._rows.size());
     for (auto const &it : _csvstr._rows)
-      _rows.push_back(cmn::str::vect(it));
+      _rows.emplace_back(cmn::str::vect(it));
 
     return 0;
   }

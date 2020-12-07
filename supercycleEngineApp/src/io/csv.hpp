@@ -24,6 +24,7 @@ namespace io
     std::vector<std::string> _rows;
     std::string _header;
     std::string _file;
+    size_t _getNumOfLines(std::ifstream &ifs);
   };
 
   class CSVStrMap
