@@ -16,22 +16,22 @@ namespace io
   int CSVStrData::init(std::string file)
   {
     dlog::Print(dlog::INFO) << "CSVStrData::init "
-                            << " m_file " << m_file << " file " << file;
+                            << " _file " << _file << " file " << file;
 
     std::ifstream ifs;
-    if (file == m_file)
+    if (file == _file)
       return 1;
     else
-      m_file = file;
+      _file = file;
 
     ifs.open(file, std::ifstream::in);
 
-    m_header.clear();
-    (void)std::getline(ifs, m_header);
+    _header.clear();
+    (void)std::getline(ifs, _header);
 
-    m_rows.clear();
+    _rows.clear();
     for (std::string row; std::getline(ifs, row); /**/)
-      m_rows.push_back(row);
+      _rows.push_back(row);
 
     ifs.close();
 
@@ -40,46 +40,51 @@ namespace io
 
   int CSVStrMap::init(std::string file)
   {
-    if (m_csvstr.init(file) > 0)
+    if (_csvstr.init(file) > 0)
       return 1;
 
-    m_header.clear();
-    m_header = cmn::str::vect(m_csvstr.m_header);
+    _header.clear();
+    _header = cmn::str::vect(_csvstr._header);
 
-    m_rows.clear();
-    for (auto const &it : m_csvstr.m_rows)
-      m_rows.push_back(cmn::str::vect(it));
+    _rows.clear();
+    for (auto const &it : _csvstr._rows)
+      _rows.push_back(cmn::str::vect(it));
 
     return 0;
   }
 
-  std::map<std::string, std::string> CSVStrMap::readRowMap(const size_t l_rowid)
+  std::map<std::string, std::string> CSVStrMap::readRowMap(const size_t rowid)
   {
-    const std::vector<std::string> &l_row = m_rows[l_rowid];
-    std::map<std::string, std::string> l_m;
+    const std::vector<std::string> &_row_ = _rows[rowid];
+    std::map<std::string, std::string> _m_;
 
-    for (size_t i = 0; i < m_header.size(); i++)
-      if (l_row[i].empty() == false)
-        l_m[m_header[i]] = l_row[i];
+    for (size_t i = 0; i < _header.size(); i++)
+      if (_row_[i].empty() == false)
+        _m_[_header[i]] = _row_[i];
 
-    return l_m;
+    return _m_;
+  }
+
+  void CSVStrMap::_iterator()
+  {
+    if (_row_id < _rows.size() - 1)
+      _row_id++;
+    else
+      _row_id = 0;
   }
 
   std::map<std::string, std::string> CSVStrMap::getRowMap()
   {
-    const size_t l_rowid = m_row_id;
+    const size_t _row_id_ = _row_id;
 
-    if (m_row_id < m_rows.size() - 1)
-      m_row_id++;
-    else
-      m_row_id = 0;
+    _iterator();
 
-    return readRowMap(l_rowid);
+    return readRowMap(_row_id_);
   }
 
   std::map<std::string, std::string> CSVStrMap::checkRowMapNext()
   {
-    return readRowMap(m_row_id);
+    return readRowMap(_row_id);
   }
 
 } // namespace io

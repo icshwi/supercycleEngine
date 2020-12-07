@@ -21,7 +21,7 @@
 
 namespace dlog
 {
-  enum Type
+  enum LevelTypes
   {
     DEBUG3,
     DEBUG2,
@@ -35,13 +35,13 @@ namespace dlog
   {
   public:
     Config();
-    void init(dlog::Type *level, std::function<std::string()> timestamp, bool headers = true);
+    void init(dlog::LevelTypes *level, std::function<std::string()> timestamp, bool headers = true);
     static Config &instance();
 
   private:
     friend class Print;
-    dlog::Type _lv = INFO;
-    dlog::Type *_level = &_lv;
+    dlog::LevelTypes _lv = INFO;
+    dlog::LevelTypes *_level = &_lv;
     bool _headers = true;
     std::function<std::string()> _tstf;
   };
@@ -49,7 +49,7 @@ namespace dlog
   class Print
   {
   public:
-    Print(dlog::Type level = dlog::INFO);
+    Print(dlog::LevelTypes level = dlog::INFO);
     ~Print();
 
     template <typename T>
@@ -63,7 +63,7 @@ namespace dlog
 
   private:
     dlog::Config &_config = dlog::Config::instance();
-    dlog::Type _msglevel;
+    dlog::LevelTypes _msglevel;
   };
 
 } // namespace dlog

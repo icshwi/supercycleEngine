@@ -18,10 +18,14 @@
 
 #include "cmdMapStrOut.hpp"
 #include "object.hpp"
+#include "dperf.hpp"
 
 //int and double only
 static int iodebug = 4;
 epicsExportAddress(int, iodebug);
+
+static int dperflvl = 4;
+epicsExportAddress(int, dperflvl);
 
 static int PscUs = 71428; //[us]
 epicsExportAddress(int, PscUs);
@@ -41,10 +45,17 @@ static int sctableSwitch(io::IOBlock &io)
   return 0;
 }
 
+#include <unistd.h>
+
 static long initEngine()
 {
-  static dlog::Type *const piodebug = (dlog::Type *)&iodebug;
+  DPERFTIMERSCOPE(dperf::DEBUG1);
+
+  static dlog::LevelTypes *const piodebug = (dlog::LevelTypes *)&iodebug;
   dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
+
+  static dperf::LevelTypes *const dperflvlp = (dperf::LevelTypes *)&dperflvl;
+  dperf::Config::instance().init(dperflvlp);
 
   io::RegisteredIOBlock().cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
   //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / PscUs * 1000000);
@@ -61,6 +72,7 @@ static long initEngine()
 
 static long ioEngine(aSubRecord *prec)
 {
+  DPERFTIMERSCOPE(dperf::DEBUG);
   // Configure new cycle
   io::RegisteredIOBlock().dbSync(RegisteredStrOutMap);
   // Change the table if requested
