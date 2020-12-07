@@ -4,8 +4,7 @@
  * @date 2020-03-20
  */
 
-#ifndef DLOG_HPP_
-#define DLOG_HPP_
+#pragma once
 
 /**
  * Debug Log - Generic Plugin
@@ -41,10 +40,10 @@ namespace dlog
 
   private:
     friend class Print;
-    dlog::Type m_lv = INFO;
-    dlog::Type *m_level = &m_lv;
-    bool m_headers = true;
-    std::function<std::string()> m_tstf;
+    dlog::Type _lv = INFO;
+    dlog::Type *_level = &_lv;
+    bool _headers = true;
+    std::function<std::string()> _tstf;
   };
 
   class Print
@@ -52,20 +51,19 @@ namespace dlog
   public:
     Print(dlog::Type level = dlog::INFO);
     ~Print();
+
     template <typename T>
     Print &operator<<(const T &msg)
     {
-      if (m_msglevel >= *m_config.m_level)
+      if (_msglevel >= *_config._level)
         std::cout << msg;
 
       return *this;
     };
 
   private:
-    dlog::Config &m_config = dlog::Config::instance();
-    dlog::Type m_msglevel;
+    dlog::Config &_config = dlog::Config::instance();
+    dlog::Type _msglevel;
   };
 
 } // namespace dlog
-
-#endif

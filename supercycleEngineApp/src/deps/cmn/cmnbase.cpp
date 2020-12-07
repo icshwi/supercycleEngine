@@ -20,48 +20,53 @@
 
 namespace cmn
 {
-  void gcc_info()
+  namespace compiler
   {
-    if (__cplusplus == 201703L)
-      std::cout << "C++17\n";
-    else if (__cplusplus == 201402L)
-      std::cout << "C++14\n";
-    else if (__cplusplus == 201103L)
-      std::cout << "C++11\n";
-    else if (__cplusplus == 199711L)
-      std::cout << "C++98\n";
-    else
-      std::cout << "pre-standard C++\n";
-
-    std::cout << "__cplusplus " << __cplusplus << std::endl;
-    //std::cout << "__STDC_VERSION__ " << __STDC_VERSION__ << std::endl;
-    std::cout << "__STDC__ " << __STDC__ << std::endl;
-    std::cout << "__STDC_HOSTED__ " << __STDC_HOSTED__ << std::endl;
-    std::cout << "__FILE__ " << __FILE__ << std::endl;
-  }
-
-  void gcc_assert(long ver)
-  {
-    assert((ver >= __cplusplus) && "The gcc version is too old.");
-  }
-
-  bool isSubstring(std::string s, std::string subs)
-  {
-    if (s.find(subs) != std::string::npos)
+    std::string info()
     {
+      std::string info_;
+
+      if (__cplusplus == 201703L)
+        info_.append("C++17 ");
+      else if (__cplusplus == 201402L)
+        info_.append("C++14 ");
+      else if (__cplusplus == 201103L)
+        info_.append("C++11 ");
+      else if (__cplusplus == 199711L)
+        info_.append("C++98 ");
+      else
+        info_.append("pre-standard C++ ");
+
+      info_.append(" __cplusplus ");
+      info_.append(cmn::str::convert(__cplusplus));
+      //info_.append(" __STDC_VERSION__ ");
+      //info_.append(cmn::str::convert(__STDC_VERSION__));
+      info_.append(" __STDC__ ");
+      info_.append(cmn::str::convert(__STDC__));
+      info_.append(" __STDC_HOSTED__ ");
+      info_.append(cmn::str::convert(__STDC_HOSTED__));
+      //info_.append(" __FILE__ ");
+      //info_.append(cmn::str::convert(__FILE__));
+      return info_;
+    }
+
+    void assure(long ver)
+    {
+      assert((ver >= __cplusplus) && "The gcc version is too old.");
+    }
+  } // namespace compiler
+
+  namespace file
+  {
+    bool exists(std::string fname)
+    {
+      std::ifstream file(fname);
+      if (!file)
+        return false;
+
       return true;
     }
-    return false;
-  }
-
-  bool isFile(std::string fname)
-  {
-    std::ifstream file(fname);
-    if (!file)
-      return false;
-
-    return true;
-  }
+  } // namespace file
 
   namespace tst
   {

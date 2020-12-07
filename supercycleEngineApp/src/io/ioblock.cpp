@@ -22,13 +22,13 @@ namespace io
 
   int IOBlock::init(std::map<std::string, std::string> argm)
   {
-    if (cmn::isFile(argm[GETVARNAME(databufferLink)]))
+    if (cmn::file::exists(argm[GETVARNAME(databufferLink)]))
       databufferLink = argm[GETVARNAME(databufferLink)];
 
-    if (cmn::isFile(argm[GETVARNAME(mevtsLink)]))
+    if (cmn::file::exists(argm[GETVARNAME(mevtsLink)]))
       mevtsLink = argm[GETVARNAME(mevtsLink)];
 
-    if (cmn::isFile(argm[GETVARNAME(sctableRoot)]))
+    if (cmn::file::exists(argm[GETVARNAME(sctableRoot)]))
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
     dlog::Print(dlog::INFO) << "IOBlock::init() databufferLink " << databufferLink;
@@ -51,13 +51,13 @@ namespace io
 
     for (auto const &it : argms)
     {
-      if (cmn::isSubstring(it.first, GETVARNAME(SCTable)))
+      if (it.first.find(GETVARNAME(SCTable)))
         SCTable = it.second;
-      if (cmn::isSubstring(it.first, GETVARNAME(PBState)))
+      if (it.first.find(GETVARNAME(PBState)))
         PBState = it.second;
-      if (cmn::isSubstring(it.first, GETVARNAME(PBMod)))
+      if (it.first.find(GETVARNAME(PBMod)))
         PBMod = it.second;
-      if (cmn::isSubstring(it.first, GETVARNAME(PBDest)))
+      if (it.first.find(GETVARNAME(PBDest)))
         PBDest = it.second;
     }
 

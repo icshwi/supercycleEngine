@@ -4,8 +4,7 @@
  * @date 2020-03-20
  */
 
-#ifndef CMNBASE_TPP_
-#define CMNBASE_TPP_
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -157,5 +156,3 @@ std::ostream &operator<<(std::ostream &stream, const std::map<T, U> argm)
   stream << cmn::map2str<T, U>(argm);
   return stream;
 }
-
-#endif // CMNBASE_TPP

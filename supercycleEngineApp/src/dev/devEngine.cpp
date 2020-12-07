@@ -52,6 +52,7 @@ static long initEngine()
   //io_block.cId = 0;
   io::RegisteredIOBlock().init(RegisteredCmdMapStrOut);
 
+  dlog::Print(dlog::INFO) << "initEngine cmn::compiler::info " << cmn::compiler::info();
   dlog::Print(dlog::INFO) << "initEngine SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")();
   dlog::Print(dlog::INFO) << "initEngine iodebug " << iodebug << " PscUs " << PscUs;
 

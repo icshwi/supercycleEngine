@@ -9,12 +9,12 @@
 
 namespace dlog
 {
-  static std::string func_str_dlog()
+  static std::string _func_str_dlog()
   {
     return "DLOG";
   }
 
-  Config::Config() : m_tstf(dlog::func_str_dlog)
+  Config::Config() : _tstf(dlog::_func_str_dlog)
   {
   }
 
@@ -35,21 +35,21 @@ namespace dlog
 
   void Config::init(dlog::Type *level, std::function<std::string()> timestamp, bool headers)
   {
-    m_level = level;
-    m_headers = headers;
-    m_tstf = timestamp != nullptr ? timestamp : dlog::func_str_dlog;
+    _level = level;
+    _headers = headers;
+    _tstf = timestamp != nullptr ? timestamp : dlog::_func_str_dlog;
   }
 
   Print::Print(dlog::Type level)
   {
-    m_msglevel = level;
-    if (m_config.m_headers && (m_msglevel >= *m_config.m_level))
-      operator<<(m_config.m_tstf() + " " + dlog::TypeMap.at(m_msglevel) + " ");
+    _msglevel = level;
+    if (_config._headers && (_msglevel >= *_config._level))
+      operator<<(_config._tstf() + " " + dlog::TypeMap.at(_msglevel) + " ");
   }
 
   Print::~Print()
   {
-    if (m_msglevel >= *m_config.m_level)
+    if (_msglevel >= *_config._level)
       std::cout << std::endl;
   }
 

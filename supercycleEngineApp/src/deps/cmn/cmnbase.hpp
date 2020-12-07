@@ -4,8 +4,7 @@
  * @date 2020-03-20
  */
 
-#ifndef CMNBASE_HPP_
-#define CMNBASE_HPP_
+#pragma once
 
 #include <map>
 #include <vector>
@@ -20,11 +19,16 @@
 
 namespace cmn
 {
-  void gcc_info();
-  void gcc_assert(long ver = 201103L);
+  namespace compiler
+  {
+    std::string info();
+    void assure(long ver = 201103L);
+  } // namespace compiler
 
-  bool isSubstring(std::string s, std::string subs);
-  bool isFile(std::string fname);
+  namespace file
+  {
+    bool exists(std::string fname);
+  } // namespace file
 
   namespace tst
   {
@@ -43,11 +47,9 @@ namespace cmn
     std::string remove(std::string args, char c = ' ');
     std::string convert(epicsUInt32 arg);
     std::string convert(std::string arg);
-    std::vector<std::string> vect(const std::string&, char delim = ',');
+    std::vector<std::string> vect(const std::string &, char delim = ',');
   } // namespace str
 
 } // namespace cmn
 
 #include "cmnbase.tpp"
-
-#endif // CMNBASE_HPP
