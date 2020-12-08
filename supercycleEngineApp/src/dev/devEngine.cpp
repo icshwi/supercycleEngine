@@ -34,8 +34,7 @@ static int sctableSwitch(io::IOBlock &io)
 {
   if (io.getSCTableLink().compare(io._CSVStrMap.getFile()) != 0)
   {
-    dlog::Print(dlog::DEBUG) << "engineCycle() OLD io._CSVStrMap.getFile() " << io._CSVStrMap.getFile()
-                             << " NEW io.getSCTableLink() " << io.getSCTableLink();
+    DLOG(dlog::INFO) << " OLD io._CSVStrMap.getFile() " << io._CSVStrMap.getFile() << " NEW io.getSCTableLink() " << io.getSCTableLink();
 
     io._CSVStrMap.init(io.getSCTableLink());
 
@@ -63,9 +62,9 @@ static long initEngine()
   //io_block.cId = 0;
   io::RegisteredIOBlock().init(RegisteredCmdMapStrOut);
 
-  dlog::Print(dlog::INFO) << "initEngine cmn::compiler::info " << cmn::compiler::info();
-  dlog::Print(dlog::INFO) << "initEngine SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")();
-  dlog::Print(dlog::INFO) << "initEngine iodebug " << iodebug << " PscUs " << PscUs;
+  DLOG(dlog::INFO) << " cmn::compiler::info " << cmn::compiler::info();
+  DLOG(dlog::INFO) << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")();
+  DLOG(dlog::INFO) << " iodebug " << iodebug << " PscUs " << PscUs;
 
   return 0;
 }
@@ -75,8 +74,7 @@ static long ioEngine(aSubRecord *prec)
   DPERFTIMERSCOPE(dperf::DEBUG);
   // Configure new cycle
   io::RegisteredIOBlock().dbSync(RegisteredStrOutMap);
-  // Change the table if requested
-  sctableSwitch(io::RegisteredIOBlock());
+
   // Engine cycle
   engineCycle(io::RegisteredIOBlock());
   // Update the meta
@@ -90,6 +88,9 @@ static long ioEngine(aSubRecord *prec)
   prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io::RegisteredIOBlock().Seq.getSeqTst());
   prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io::RegisteredIOBlock().Seq.getSeqEvt());
   prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io::RegisteredIOBlock().Seq.getSeqVec());
+
+  // Change the table if requested and use the post processing free time
+  sctableSwitch(io::RegisteredIOBlock());
 
   return 0;
 }

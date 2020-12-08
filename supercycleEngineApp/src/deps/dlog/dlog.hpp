@@ -19,6 +19,8 @@
 #include <iostream>
 #include <functional>
 
+#define DLOG(lv) dlog::Print(lv) << __COMPACT_PRETTY_FUNCTION__
+
 namespace dlog
 {
   enum LevelTypes

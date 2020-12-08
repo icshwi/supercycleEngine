@@ -24,15 +24,16 @@ namespace io
     if (cmn::file::exists(argm[GETVARNAME(sctableRoot)]))
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
-    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " databufferLink " << databufferLink;
-    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " mevtsLink " << mevtsLink;
-    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " sceconfigLink " << sceconfigLink;
-    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " getSCTableLink() " << getSCTableLink();
+    DLOG(dlog::INFO) << " databufferLink " << databufferLink;
+    DLOG(dlog::INFO) << " mevtsLink " << mevtsLink;
+    DLOG(dlog::INFO) << " sceconfigLink " << sceconfigLink;
+    DLOG(dlog::INFO) << " getSCTableLink() " << getSCTableLink();
 
     DBuf_yml.init(databufferLink);
     SCEConfig_yml.init(sceconfigLink);
     mEvts_yml.init(mevtsLink);
-    _CSVStrMap.init(getSCTableLink());
+    //Managed by the ScTable switch
+    //_CSVStrMap.init(getSCTableLink());
 
     Seq.init(mEvts_yml.getMap());
 

@@ -78,8 +78,8 @@ namespace io
     std::map<std::string, std::string> rowmap_;
 
     for (size_t i = 0; i < _header.size(); i++)
-      if (row_[i].empty() == false)
-        rowmap_[_header[i]] = row_[i];
+      //if (row_[i].empty() == false)
+      rowmap_[_header[i]] = row_[i];
 
     return rowmap_;
   }
