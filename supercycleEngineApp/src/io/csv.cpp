@@ -70,16 +70,16 @@ namespace io
     return 0;
   }
 
-  std::map<std::string, std::string> CSVStrMap::readRowMap(const size_t rowid)
+  std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid)
   {
     const std::vector<std::string> &_row_ = _rows[rowid];
-    std::map<std::string, std::string> _m_;
+    std::map<std::string, std::string> _rowmap_;
 
     for (size_t i = 0; i < _header.size(); i++)
       if (_row_[i].empty() == false)
-        _m_[_header[i]] = _row_[i];
+        _rowmap_[_header[i]] = _row_[i];
 
-    return _m_;
+    return _rowmap_;
   }
 
   void CSVStrMap::_iterator()
@@ -96,12 +96,12 @@ namespace io
 
     _iterator();
 
-    return readRowMap(_row_id_);
+    return _readRowMap(_row_id_);
   }
 
   std::map<std::string, std::string> CSVStrMap::checkRowMapNext()
   {
-    return readRowMap(_row_id);
+    return _readRowMap(_row_id);
   }
 
 } // namespace io

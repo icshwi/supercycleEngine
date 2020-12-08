@@ -35,14 +35,13 @@ namespace dlog
   {
   public:
     Config();
-    void init(dlog::LevelTypes *level, std::function<std::string()> timestamp, bool headers = true);
+    void init(dlog::LevelTypes *level, std::function<std::string()> timestamp);
     static Config &instance();
 
   private:
     friend class Print;
     dlog::LevelTypes _level = INFO;
     dlog::LevelTypes *_plevel = &_level;
-    bool _headers = true;
     std::function<std::string()> _tstf;
   };
 
@@ -62,7 +61,6 @@ namespace dlog
     };
 
   private:
-    dlog::Config &_config = dlog::Config::instance();
     dlog::LevelTypes _msglevel;
     dlog::LevelTypes _cfg_level;
   };

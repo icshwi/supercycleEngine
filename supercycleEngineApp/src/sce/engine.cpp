@@ -23,7 +23,7 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined! env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    dlog::Print(dlog::WARNING) << __COMPACT_PRETTY_FUNCTION__ << " wrong_idx_value env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
   }
 }
 
@@ -36,7 +36,7 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    dlog::Print(dlog::WARNING) << "writeDbufSafe() idx not defined! env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    dlog::Print(dlog::WARNING) << __COMPACT_PRETTY_FUNCTION__ << " wrong_idx_value env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
   }
 }
 
@@ -80,8 +80,7 @@ int engineCycle(io::IOBlock &io)
 
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  dlog::Print(dlog::DEBUG) << "engineCycle()"
-                           << " row it " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
+  dlog::Print(dlog::DEBUG) << __COMPACT_PRETTY_FUNCTION__ << " rowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
@@ -108,7 +107,7 @@ int engineCycle(io::IOBlock &io)
   cycle_row["PBPresent"] = io.SCEConfig_yml.get_PBPresent(cycle_row);
 
   //Print the log
-  dlog::Print(dlog::DEBUG) << "cycle_row  " << cycle_row;
+  dlog::Print(dlog::DEBUG) << __COMPACT_PRETTY_FUNCTION__ << " cycle_row " << cycle_row;
 
   // Update the event sequence container
   io.Seq.write(cycle_row);
@@ -116,6 +115,8 @@ int engineCycle(io::IOBlock &io)
   io_dbuf_safe_write_all(io, cycle_row);
 
   //Print the log
-  dlog::Print(dlog::DEBUG) << "engineCycle() io.SEQ.getSeq() " << io.Seq.getSeqMap() << " io.dbuf.getDbuf() " << io.dbuf.getDbuf();
+  dlog::Print(dlog::DEBUG) << __COMPACT_PRETTY_FUNCTION__ << " io.SEQ.getSeq " << io.Seq.getSeqMap();
+  dlog::Print(dlog::DEBUG) << __COMPACT_PRETTY_FUNCTION__ << " io.dbuf.getDbuf " << io.dbuf.getDbuf();
+
   return 0;
 }
