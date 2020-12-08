@@ -80,7 +80,7 @@ int engineCycle(io::IOBlock &io)
 
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  dlog::Print(dlog::DEBUG) << __COMPACT_PRETTY_FUNCTION__ << " rowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
+  dlog::Print(dlog::DEBUG) << __COMPACT_PRETTY_FUNCTION__ << " ScTableCycleId " << io._CSVStrMap.getCycleId() << " ScTableRowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
 
   // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};

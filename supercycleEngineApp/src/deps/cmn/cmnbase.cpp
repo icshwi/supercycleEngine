@@ -5,6 +5,7 @@
  */
 
 #include "cmnbase.hpp"
+#include "dperf.hpp"
 
 #include <sys/time.h>
 #include <string>
@@ -167,16 +168,59 @@ namespace cmn
       return arg;
     }
 
-    std::vector<std::string> vect(const std::string &line, char delim)
+    void replace(std::string &str, char c_old, char c_new)
     {
-      std::vector<std::string> outv;
-      std::string tmp;
-      std::stringstream ss(line);
+      std::replace(str.begin(), str.end(), c_old, c_new); // replace all 'c_old' to 'c_new'
+    }
 
-      while (std::getline(ss, tmp, delim))
-        outv.push_back(tmp);
+    void erase(std::string &str, char c)
+    {
+      str.erase(std::remove(str.begin(), str.end(), c), str.end());
+    }
 
-      return outv;
+    size_t clean_and_count_csv(std::string &str)
+    {
+      size_t i = 0;
+      size_t csv_num_ = 0;
+
+      for (const auto &c : str)
+      {
+        switch (c)
+        {
+        case '\r':
+          csv_num_++;
+        case '"':
+        case '\'':
+        case ' ':
+          str.erase(i, 1);
+          break;
+        case ',':
+        case '\n':
+          csv_num_++;
+          break;
+        }
+
+        i++;
+      }
+      return csv_num_;
+    }
+
+    std::vector<std::string> csv2vect(std::string line)
+    {
+      //DPERFTIMERSCOPE(dperf::INFO);
+
+      std::vector<std::string> outv_;
+      std::string tmp_;
+
+      size_t wordnum_ = cmn::str::clean_and_count_csv(line);
+
+      std::stringstream ss_(line);
+
+      outv_.reserve(wordnum_);
+      while (std::getline(ss_, tmp_, ','))
+        outv_.emplace_back(tmp_);
+
+      return outv_;
     }
 
   } // namespace str

@@ -27,8 +27,7 @@ namespace io
   {
     DPERFTIMERSCOPE(dperf::INFO);
 
-    dlog::Print(dlog::INFO) << __PRETTY_FUNCTION__
-                            << " _file " << _file << " file " << file;
+    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " _file " << _file << " file " << file;
 
     std::ifstream ifs;
     if (file == _file)
@@ -54,32 +53,35 @@ namespace io
 
   int CSVStrMap::init(std::string file)
   {
-    DPERFTIMERSCOPE(dperf::DEBUG1);
+    DPERFTIMERSCOPE(dperf::INFO);
 
     if (_csvstr.init(file) > 0)
       return 1;
 
     _header.clear();
-    _header = cmn::str::vect(_csvstr._header);
+    _header = cmn::str::csv2vect(_csvstr._header);
 
     _rows.clear();
     _rows.reserve(_csvstr._rows.size());
     for (auto const &it : _csvstr._rows)
-      _rows.emplace_back(cmn::str::vect(it));
+      _rows.emplace_back(cmn::str::csv2vect(it));
+
+    _row_id = 0;
+    _cycle_id = 0;
 
     return 0;
   }
 
   std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid)
   {
-    const std::vector<std::string> &_row_ = _rows[rowid];
-    std::map<std::string, std::string> _rowmap_;
+    const std::vector<std::string> &row_ = _rows[rowid];
+    std::map<std::string, std::string> rowmap_;
 
     for (size_t i = 0; i < _header.size(); i++)
-      if (_row_[i].empty() == false)
-        _rowmap_[_header[i]] = _row_[i];
+      if (row_[i].empty() == false)
+        rowmap_[_header[i]] = row_[i];
 
-    return _rowmap_;
+    return rowmap_;
   }
 
   void CSVStrMap::_iterator()
@@ -87,7 +89,10 @@ namespace io
     if (_row_id < _rows.size() - 1)
       _row_id++;
     else
+    {
       _row_id = 0;
+      _cycle_id++;
+    }
   }
 
   std::map<std::string, std::string> CSVStrMap::getRowMap()
