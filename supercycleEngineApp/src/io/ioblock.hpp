@@ -39,7 +39,6 @@ namespace io
 
   public:
     IOBlock(){};
-    ~IOBlock();
     //int init(int argc, char **argv);
     int init(std::map<std::string, std::string>);
     std::string getSCTableLink() const { return sctableRoot + "/" + SCTable; };

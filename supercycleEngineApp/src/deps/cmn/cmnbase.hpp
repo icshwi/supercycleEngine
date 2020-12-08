@@ -16,13 +16,14 @@
 //Common Libraries Namespace
 
 #define TSTFORMAT "%Y-%m-%dT%H:%M:%S.%06f"
-
+#define __COMPACT_PRETTY_FUNCTION__ cmn::compiler::funcName(__FUNCTION__, __PRETTY_FUNCTION__)
 namespace cmn
 {
   namespace compiler
   {
     std::string info();
     void assure(long ver = 201103L);
+    std::string funcName(const std::string &function, const std::string &prettyFunction);
   } // namespace compiler
 
   namespace file

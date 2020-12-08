@@ -13,13 +13,6 @@
 namespace io
 {
 
-  IOBlock::~IOBlock()
-  {
-    dlog::Print(dlog::DEBUG) << "IOBlock::~IOBlock()";
-    // Kill all not used processes
-    // SEVCHK(ca_task_exit(), "ERROR ca_task_exit failure");
-  }
-
   int IOBlock::init(std::map<std::string, std::string> argm)
   {
     if (cmn::file::exists(argm[GETVARNAME(databufferLink)]))
@@ -31,10 +24,10 @@ namespace io
     if (cmn::file::exists(argm[GETVARNAME(sctableRoot)]))
       sctableRoot = argm[GETVARNAME(sctableRoot)];
 
-    dlog::Print(dlog::INFO) << "IOBlock::init() databufferLink " << databufferLink;
-    dlog::Print(dlog::INFO) << "IOBlock::init() mevtsLink " << mevtsLink;
-    dlog::Print(dlog::INFO) << "IOBlock::init() sceconfigLink " << sceconfigLink;
-    dlog::Print(dlog::INFO) << "IOBlock::init() getSCTableLink() " << getSCTableLink();
+    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " databufferLink " << databufferLink;
+    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " mevtsLink " << mevtsLink;
+    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " sceconfigLink " << sceconfigLink;
+    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " getSCTableLink() " << getSCTableLink();
 
     DBuf_yml.init(databufferLink);
     SCEConfig_yml.init(sceconfigLink);

@@ -35,21 +35,20 @@ namespace dlog
 
   void Config::init(dlog::LevelTypes *level, std::function<std::string()> timestamp, bool headers)
   {
-    _level = level;
+    _plevel = level;
     _headers = headers;
     _tstf = timestamp != nullptr ? timestamp : dlog::_func_str_dlog;
   }
 
-  Print::Print(dlog::LevelTypes level)
+  Print::Print(dlog::LevelTypes level) : _msglevel(level), _cfg_level(*dlog::Config::instance()._plevel)
   {
-    _msglevel = level;
-    if (_config._headers && (_msglevel >= *_config._level))
+    if (_config._headers && (_msglevel >= _cfg_level))
       operator<<(_config._tstf() + " " + dlog::_LevelTypesMap.at(_msglevel) + " ");
   }
 
   Print::~Print()
   {
-    if (_msglevel >= *_config._level)
+    if (_msglevel >= _cfg_level)
       std::cout << std::endl;
   }
 

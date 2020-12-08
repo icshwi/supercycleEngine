@@ -2,7 +2,7 @@ record(stringout, "$(P)$(R=)$(S=:)SCTable-SP") {
   field(DTYP, "ControlStrOut")
   field(DESC, "Supercyle Table")
   field(PINI, "YES")
-  field(VAL,  "test-1Hz.csv")
+  field(VAL,  "test-1Hz-14c.csv")
   info(autosaveFields_pass0, "VAL")
 }
 

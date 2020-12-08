@@ -40,8 +40,8 @@ namespace dlog
 
   private:
     friend class Print;
-    dlog::LevelTypes _lv = INFO;
-    dlog::LevelTypes *_level = &_lv;
+    dlog::LevelTypes _level = INFO;
+    dlog::LevelTypes *_plevel = &_level;
     bool _headers = true;
     std::function<std::string()> _tstf;
   };
@@ -55,7 +55,7 @@ namespace dlog
     template <typename T>
     Print &operator<<(const T &msg)
     {
-      if (_msglevel >= *_config._level)
+      if (_msglevel >= _cfg_level)
         std::cout << msg;
 
       return *this;
@@ -64,6 +64,7 @@ namespace dlog
   private:
     dlog::Config &_config = dlog::Config::instance();
     dlog::LevelTypes _msglevel;
+    dlog::LevelTypes _cfg_level;
   };
 
 } // namespace dlog
