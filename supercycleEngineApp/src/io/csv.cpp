@@ -26,27 +26,26 @@ namespace io
   int CSVStrData::init(std::string file)
   {
     DPERFTIMERSCOPE(dperf::INFO);
+    DLOG(dlog::INFO) << " _file " << _file << " file " << file;
 
-    dlog::Print(dlog::INFO) << __COMPACT_PRETTY_FUNCTION__ << " _file " << _file << " file " << file;
-
-    std::ifstream ifs;
+    std::ifstream ifs_;
     if (file == _file)
       return 1;
     else
       _file = file;
 
-    ifs.open(file, std::ifstream::in);
+    ifs_.open(file, std::ifstream::in);
     //size_t _lnum_ = _getNumOfLines(ifs);
 
     _header.clear();
-    (void)std::getline(ifs, _header);
+    (void)std::getline(ifs_, _header);
 
     _rows.clear();
     //_rows.reserve(_lnum_);
-    for (std::string row; std::getline(ifs, row); /**/)
+    for (std::string row; std::getline(ifs_, row); /**/)
       _rows.push_back(row);
 
-    ifs.close();
+    ifs_.close();
 
     return 0;
   }

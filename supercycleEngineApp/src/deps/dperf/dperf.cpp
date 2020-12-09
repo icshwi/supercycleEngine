@@ -26,7 +26,7 @@ namespace dperf
   {
     _end = std::chrono::high_resolution_clock::now();
     _elasped = _end - _start;
-    std::cout << _func_name << " level " << _level << " Timer::_elasped " << std::fixed << std::setprecision(6) << _elasped.count() << " us" << std::endl;
+    std::cout << _func_name << " level " << _level << " Timer::_elasped " << std::fixed << std::setprecision(9) << _elasped.count() << " us" << std::endl;
   }
 
   void Config::init(dperf::LevelTypes *const plevel)

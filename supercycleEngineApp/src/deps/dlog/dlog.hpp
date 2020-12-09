@@ -19,7 +19,11 @@
 #include <iostream>
 #include <functional>
 
+#if defined(__COMPACT_PRETTY_FUNCTION__)
 #define DLOG(lv) dlog::Print(lv) << __COMPACT_PRETTY_FUNCTION__
+#else
+#define DLOG(lv) dlog::Print(lv)
+#endif
 
 namespace dlog
 {

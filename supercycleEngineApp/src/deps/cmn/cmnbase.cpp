@@ -183,31 +183,34 @@ namespace cmn
       size_t i = 0;
       size_t csv_num_ = 0;
 
-      for (const auto &c : str)
+      for (char const &c : str)
       {
         switch (c)
         {
         case '\r':
-          csv_num_++;
+        //case '\n': not necessary as it cannot happen
         case '"':
         case '\'':
         case ' ':
           str.erase(i, 1);
           break;
         case ',':
-        case '\n':
           csv_num_++;
           break;
         }
 
         i++;
       }
+
+      //Compensate the last value
+      csv_num_++;
+
       return csv_num_;
     }
 
     std::vector<std::string> csv2vect(std::string line)
     {
-      //DPERFTIMERSCOPE(dperf::INFO);
+      DPERFTIMERSCOPE(dperf::DEBUG1);
 
       std::vector<std::string> outv_;
       std::string tmp_;
