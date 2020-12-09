@@ -83,6 +83,7 @@ static long ioEngine(aSubRecord *prec)
   pvalaU64[0] = (epicsUInt64)io::RegisteredIOBlock().cId; // 0,1
   pvalaU32[2] = (epicsUInt32)io::RegisteredIOBlock().cPeriod;
   pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock()._CSVStrMap.getRowId();
+  pvalaU32[4] = (epicsUInt32)io::RegisteredIOBlock()._CSVStrMap.getCycleId();
   // Update the Dbuf - neva , novb (max)
   prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io::RegisteredIOBlock().dbuf.vallist());
   prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io::RegisteredIOBlock().Seq.getSeqTst());

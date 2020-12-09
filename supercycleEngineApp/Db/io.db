@@ -1,7 +1,7 @@
 record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
-  field(DESC, "Trigger Fanout")
+  field(DESC, "IO Trigger Fanout")
   field(SELM, "All")
-  #field(PINI, "RUNNING")
+  field(PINI, "RUNNING")
   #field(LNK1, "$(P)$(R=)$(S=:)IdCycle")
   field(LNK2, "$(P)$(R=)$(S=:)Period")
   field(LNK3, "$(P)$(R=)$(S=:)Databuffer")
@@ -9,6 +9,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(LNK5, "$(P)$(R=)$(S=:)Events")
   field(LNK6, "$(P)$(R=)$(S=:)Sequence")
   field(LNK7, "$(P)$(R=)$(S=:)ScRowId")
+  field(LNK8, "$(P)$(R=)$(S=:)ScCycleId")
 }
 
 #[TODO] To redesign
@@ -26,7 +27,7 @@ record(longin, "$(P)$(R=)$(S=:)Period") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
   field(EGU, "us")
-  field(INP, "$(P)$(R=)$(S=:)Period-subA_")
+  field(INP, "$(P)$(R=)$(S=:)Period-subA_ PP")
 
   #field(FLNK, "$(P)$(R=)$(S=:)Seq0-En-Cmd")
   field(HIHI, "91000")
@@ -44,7 +45,15 @@ record(longin, "$(P)$(R=)$(S=:)ScRowId") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
   field(EGU, "id")
-  field(INP, "$(P)$(R=)$(S=:)ScRowId-subA_")
+  field(INP, "$(P)$(R=)$(S=:)ScRowId-subA_ PP")
+}
+
+record(longin, "$(P)$(R=)$(S=:)ScCycleId") {
+  field(DESC, "Actuall Supercycle Cycle Id (amount of table loops)")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "id")
+  field(INP, "$(P)$(R=)$(S=:)ScCycleId-subA_ PP")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Databuffer") {
