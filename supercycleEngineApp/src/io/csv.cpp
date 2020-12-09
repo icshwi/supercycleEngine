@@ -5,6 +5,7 @@
  */
 
 #include <fstream>
+#include <sstream>
 
 #include "csv.hpp"
 #include "cmnbase.hpp"
@@ -58,12 +59,12 @@ namespace io
       return 1;
 
     _header.clear();
-    _header = cmn::str::csv2vect(_csvstr._header);
+    _header = _vect(_csvstr._header);
 
     _rows.clear();
     _rows.reserve(_csvstr._rows.size());
     for (auto const &it : _csvstr._rows)
-      _rows.emplace_back(cmn::str::csv2vect(it));
+      _rows.emplace_back(_vect(it));
 
     _row_id = 0;
     _cycle_id = 0;
@@ -106,6 +107,58 @@ namespace io
   std::map<std::string, std::string> CSVStrMap::checkRowMapNext()
   {
     return _readRowMap(_row_id);
+  }
+
+  size_t CSVStrMap::_clean_and_count(std::string &str)
+  {
+    //DPERFTIMERSCOPE(dperf::DEBUG3);
+
+    size_t i = 0;
+    size_t csv_num_ = 0;
+    char str_[str.size() + 1];
+
+    for (char const &c : str)
+    {
+      switch (c)
+      {
+      case '\r':
+      //case '\n': //not necessary as it cannot happen
+      case '\"':
+      case '\'':
+      case ' ':
+        break;
+      case ',':
+        csv_num_++;
+      default:
+        str_[i] = c;
+        i++;
+      }
+    }
+    str_[i] = '\0';
+    //assing the filtered string
+    str = str_;
+    //Compensate the last value
+    csv_num_++;
+    //return the amount of words
+    return csv_num_;
+  }
+
+  std::vector<std::string> CSVStrMap::_vect(std::string line)
+  {
+    //DPERFTIMERSCOPE(dperf::INFO);
+
+    std::vector<std::string> outv_;
+    std::string tmp_;
+
+    size_t wordnum_ = _clean_and_count(line);
+
+    std::stringstream ss_(line);
+
+    outv_.reserve(wordnum_);
+    while (std::getline(ss_, tmp_, ','))
+      outv_.emplace_back(tmp_);
+
+    return outv_;
   }
 
 } // namespace io

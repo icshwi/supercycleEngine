@@ -44,11 +44,12 @@ namespace cmn
 
   namespace str
   {
-    std::vector<std::string> split(std::string args, char c = ',');
-    std::string remove(std::string args, char c = ' ');
-    std::string convert(epicsUInt32 arg);
-    std::string convert(std::string arg);
-    std::vector<std::string> csv2vect(std::string);
+    std::vector<std::string> split(std::string, char c = ',');
+    std::string remove(std::string, char c = ' ');
+    std::string convert(epicsUInt32);
+    std::string convert(std::string);
+    void replace(std::string &, char c_old, char c_new);
+    void erase(std::string &, char);
   } // namespace str
 
 } // namespace cmn

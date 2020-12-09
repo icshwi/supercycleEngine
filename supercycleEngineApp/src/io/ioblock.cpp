@@ -45,16 +45,16 @@ namespace io
 
     for (auto const &it : argms)
     {
-      if (it.first.find(GETVARNAME(SCTable)))
+      if (it.first.find(GETVARNAME(SCTable)) != std::string::npos)
         SCTable = it.second;
-      if (it.first.find(GETVARNAME(PBState)))
+      else if (it.first.find(GETVARNAME(PBState)) != std::string::npos)
         PBState = it.second;
-      if (it.first.find(GETVARNAME(PBMod)))
+      else if (it.first.find(GETVARNAME(PBMod)) != std::string::npos)
         PBMod = it.second;
-      if (it.first.find(GETVARNAME(PBDest)))
+      else if (it.first.find(GETVARNAME(PBDest)) != std::string::npos)
         PBDest = it.second;
     }
-
+    //std::cout << argms << std::endl;
     return 0;
   }
 

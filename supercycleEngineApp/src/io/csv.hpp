@@ -43,6 +43,8 @@ namespace io
     CSVStrData _csvstr;
     size_t _row_id = 0, _cycle_id = 0;
     void _iterator();
+    size_t _clean_and_count(std::string &str);
+    std::vector<std::string> _vect(std::string line);
     std::vector<std::vector<std::string>> _rows;
     std::vector<std::string> _header;
   };

@@ -5,7 +5,6 @@
  */
 
 #include "cmnbase.hpp"
-#include "dperf.hpp"
 
 #include <sys/time.h>
 #include <string>
@@ -176,54 +175,6 @@ namespace cmn
     void erase(std::string &str, char c)
     {
       str.erase(std::remove(str.begin(), str.end(), c), str.end());
-    }
-
-    size_t clean_and_count_csv(std::string &str)
-    {
-      size_t i = 0;
-      size_t csv_num_ = 0;
-
-      for (char const &c : str)
-      {
-        switch (c)
-        {
-        case '\r':
-        //case '\n': not necessary as it cannot happen
-        case '"':
-        case '\'':
-        case ' ':
-          str.erase(i, 1);
-          break;
-        case ',':
-          csv_num_++;
-          break;
-        }
-
-        i++;
-      }
-
-      //Compensate the last value
-      csv_num_++;
-
-      return csv_num_;
-    }
-
-    std::vector<std::string> csv2vect(std::string line)
-    {
-      DPERFTIMERSCOPE(dperf::DEBUG1);
-
-      std::vector<std::string> outv_;
-      std::string tmp_;
-
-      size_t wordnum_ = cmn::str::clean_and_count_csv(line);
-
-      std::stringstream ss_(line);
-
-      outv_.reserve(wordnum_);
-      while (std::getline(ss_, tmp_, ','))
-        outv_.emplace_back(tmp_);
-
-      return outv_;
     }
 
   } // namespace str
