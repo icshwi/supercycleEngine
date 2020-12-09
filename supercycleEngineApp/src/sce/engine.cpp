@@ -76,11 +76,11 @@ int engineCycle(io::IOBlock &io)
   static epicsUInt32 tst = 0; // The timestamp holder
   // Start the cycle
   // ===============
-  std::map<std::string, std::string> cycle_row = io._CSVStrMap.getRowMap();
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
   DLOG(dlog::DEBUG) << " ScTableCycleId " << io._CSVStrMap.getCycleId() << " ScTableRowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
-
+  // ----------------------------------
+  std::map<std::string, std::string> cycle_row = io._CSVStrMap.getRowMap();
   //Do not do anything if the cycle is not ready
   if (cycle_row.empty())
     return 0;

@@ -150,8 +150,9 @@ namespace io
     std::size_t cnt = 0;
 
     for (auto const &it : get_PBSwOff_Evts())
-      if (cycle_row.count(it) == 0)
-        cnt++;
+      if (cycle_row.count(it) > 0)
+        if (cycle_row[it].empty() == true)
+          cnt++;
 
     if (cnt == get_PBSwOff_Evts().size())
       return "Off";
