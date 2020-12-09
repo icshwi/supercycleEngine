@@ -74,6 +74,7 @@ static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<
 int engineCycle(io::IOBlock &io)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
+  std::map<std::string, std::string> prev_cycle_row;
   // Start the cycle
   // ===============
   io.cPeriod = cmn::tst::period_us(tst);
@@ -121,5 +122,6 @@ int engineCycle(io::IOBlock &io)
   DLOG(dlog::DEBUG) << " io.SEQ.getSeq " << io.Seq.getSeqMap();
   DLOG(dlog::DEBUG) << " io.dbuf.getDbuf " << io.dbuf.getDbuf();
 
+  prev_cycle_row = cycle_row;
   return 0;
 }
