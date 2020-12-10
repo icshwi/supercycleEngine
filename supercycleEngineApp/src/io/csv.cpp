@@ -27,7 +27,7 @@ namespace io
   int CSVStrData::init(std::string file)
   {
     DPERFTIMERSCOPE(dperf::INFO);
-    DLOG(dlog::INFO) << " _file " << _file << " file " << file;
+    DLOG(dlog::INFO, << " _file " << _file << " file " << file)
 
     std::ifstream ifs_;
     if (file == _file)

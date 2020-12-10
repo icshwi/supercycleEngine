@@ -5,16 +5,16 @@
  */
 
 #include "engine.hpp"
-#include "dlog.hpp"
 #include "cmnbase.hpp"
+#include "dlog.hpp"
 
 #include "dbuf.hpp"
-#include "yml.hpp"
 #include "seq.hpp"
+#include "yml.hpp"
 
 #include "scenv.hpp"
 
-static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, const env::DBFIDX idx)
+static void io_dbuf_safe_write(sce::DBufPacket& dbuf, std::map<std::string, std::string>& row, const env::DBFIDX idx)
 {
   try
   {
@@ -23,11 +23,11 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    DLOG(dlog::WARNING) << " wrong_idx_value env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    DLOG(dlog::WARNING, << " wrong_idx_value env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx))
   }
 }
 
-static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std::string> &row, const env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
+static void io_dbuf_safe_write(sce::DBufPacket& dbuf, std::map<std::string, std::string>& row, const env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
 {
   try
   {
@@ -36,11 +36,11 @@ static void io_dbuf_safe_write(sce::DBufPacket &dbuf, std::map<std::string, std:
   catch (...)
   {
     dbuf.write(idx, 0); // Worse case selected so that the beam is on
-    DLOG(dlog::WARNING) << " wrong_idx_value env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx);
+    DLOG(dlog::WARNING, << " wrong_idx_value env::DBFIDX2Str.at(idx) " << env::DBFIDX2Str.at(idx))
   }
 }
 
-static void io_dbuf_safe_write_all(io::IOBlock &io, std::map<std::string, std::string> &cycle_row)
+static void io_dbuf_safe_write_all(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
 {
   io.dbuf.clear();
   // ProtNum
@@ -66,12 +66,12 @@ static void io_dbuf_safe_write_all(io::IOBlock &io, std::map<std::string, std::s
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 }
 
-static void cycle_row_insert(std::map<std::string, std::string> &rowm, std::map<std::string, std::string> argm)
+static void cycle_row_insert(std::map<std::string, std::string>& rowm, std::map<std::string, std::string> argm)
 {
   rowm.insert(argm.begin(), argm.end());
 }
 
-int engineCycle(io::IOBlock &io)
+int engineCycle(io::IOBlock& io)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
   std::map<std::string, std::string> prev_cycle_row;
@@ -79,7 +79,7 @@ int engineCycle(io::IOBlock &io)
   // ===============
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  DLOG(dlog::DEBUG) << " ScTableCycleId " << io._CSVStrMap.getCycleId() << " ScTableRowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod;
+  DLOG(dlog::DEBUG, << " ScTableCycleId " << io._CSVStrMap.getCycleId() << " ScTableRowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
   // ----------------------------------
   std::map<std::string, std::string> cycle_row = io._CSVStrMap.getRowMap();
   //Do not do anything if the cycle is not ready
@@ -111,7 +111,7 @@ int engineCycle(io::IOBlock &io)
   cycle_row["PBPresent"] = io.SCEConfig_yml.get_PBPresent(cycle_row);
 
   //Print the log
-  DLOG(dlog::DEBUG) << " cycle_row " << cycle_row;
+  DLOG(dlog::DEBUG, << " cycle_row " << cycle_row)
 
   // Update the event sequence container
   io.Seq.write(cycle_row);
@@ -119,8 +119,8 @@ int engineCycle(io::IOBlock &io)
   io_dbuf_safe_write_all(io, cycle_row);
 
   //Print the log
-  DLOG(dlog::DEBUG) << " io.SEQ.getSeq " << io.Seq.getSeqMap();
-  DLOG(dlog::DEBUG) << " io.dbuf.getDbuf " << io.dbuf.getDbuf();
+  DLOG(dlog::DEBUG, << " io.SEQ.getSeq " << io.Seq.getSeqMap())
+  DLOG(dlog::DEBUG, << " io.dbuf.getDbuf " << io.dbuf.getDbuf())
 
   prev_cycle_row = cycle_row;
   return 0;

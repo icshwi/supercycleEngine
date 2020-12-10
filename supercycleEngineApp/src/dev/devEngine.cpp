@@ -7,18 +7,18 @@
 #include <stdio.h>
 //#include <subRecord.h>
 #include <aSubRecord.h>
-#include <registryFunction.h>
 #include <epicsExport.h>
+#include <registryFunction.h>
 
-#include "engine.hpp"
-#include "ioblock.hpp"
 #include "cmnbase.hpp"
 #include "devStringoutCtrl.hpp"
 #include "dlog.hpp"
+#include "engine.hpp"
+#include "ioblock.hpp"
 
 #include "cmdMapStrOut.hpp"
-#include "object.hpp"
 #include "dperf.hpp"
+#include "object.hpp"
 
 //int and double only
 static int iodebug = 4;
@@ -30,11 +30,11 @@ epicsExportAddress(int, dperflvl);
 static int PscUs = 71428; //[us]
 epicsExportAddress(int, PscUs);
 
-static int sctableSwitch(io::IOBlock &io)
+static int sctableSwitch(io::IOBlock& io)
 {
   if (io.getSCTableLink().compare(io._CSVStrMap.getFile()) != 0)
   {
-    DLOG(dlog::INFO) << " OLD io._CSVStrMap.getFile() " << io._CSVStrMap.getFile() << " NEW io.getSCTableLink() " << io.getSCTableLink();
+    DLOG(dlog::INFO, << " OLD io._CSVStrMap.getFile() " << io._CSVStrMap.getFile() << " NEW io.getSCTableLink() " << io.getSCTableLink())
 
     io._CSVStrMap.init(io.getSCTableLink());
 
@@ -50,10 +50,10 @@ static long initEngine()
 {
   DPERFTIMERSCOPE(dperf::DEBUG1);
 
-  static dlog::LevelTypes *const piodebug = (dlog::LevelTypes *)&iodebug;
+  static dlog::LevelTypes* const piodebug = (dlog::LevelTypes*)&iodebug;
   dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
 
-  static dperf::LevelTypes *const dperflvlp = (dperf::LevelTypes *)&dperflvl;
+  static dperf::LevelTypes* const dperflvlp = (dperf::LevelTypes*)&dperflvl;
   dperf::Config::instance().init(dperflvlp);
 
   io::RegisteredIOBlock().cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
@@ -62,14 +62,14 @@ static long initEngine()
   //io_block.cId = 0;
   io::RegisteredIOBlock().init(RegisteredCmdMapStrOut);
 
-  DLOG(dlog::INFO) << " cmn::compiler::info " << cmn::compiler::info();
-  DLOG(dlog::INFO) << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")();
-  DLOG(dlog::INFO) << " iodebug " << iodebug << " PscUs " << PscUs;
+  DLOG(dlog::INFO, << " cmn::compiler::info " << cmn::compiler::info())
+  DLOG(dlog::INFO, << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")())
+  DLOG(dlog::INFO, << " iodebug " << iodebug << " PscUs " << PscUs)
 
   return 0;
 }
 
-static long ioEngine(aSubRecord *prec)
+static long ioEngine(aSubRecord* prec)
 {
   DPERFTIMERSCOPE(dperf::DEBUG);
   // Configure new cycle
@@ -78,8 +78,8 @@ static long ioEngine(aSubRecord *prec)
   // Engine cycle
   engineCycle(io::RegisteredIOBlock());
   // Update the meta
-  epicsUInt64 *pvalaU64 = (epicsUInt64 *)prec->vala;
-  epicsUInt32 *pvalaU32 = (epicsUInt32 *)prec->vala;
+  epicsUInt64* pvalaU64 = (epicsUInt64*)prec->vala;
+  epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
   pvalaU64[0] = (epicsUInt64)io::RegisteredIOBlock().cId; // 0,1
   pvalaU32[2] = (epicsUInt32)io::RegisteredIOBlock().cPeriod;
   pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock()._CSVStrMap.getRowId();
