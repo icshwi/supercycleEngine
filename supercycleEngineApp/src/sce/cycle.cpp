@@ -4,15 +4,13 @@
  * @date 2020-03-20
  */
 
-#include "engine.hpp"
-#include "cmnbase.hpp"
+#include "cycle.hpp"
+//#include "cmnbase.hpp"
 #include "dlog.hpp"
 
 #include "dbuf.hpp"
-#include "seq.hpp"
-#include "yml.hpp"
-
 #include "scenv.hpp"
+#include "seq.hpp"
 
 static void io_dbuf_safe_write(sce::DBufPacket& dbuf, const std::map<std::string, std::string>& row, const env::DBFIDX idx)
 {
@@ -84,7 +82,10 @@ TODO: write cycle variables for the future
 }
 */
 
-int databufferCycle(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
+namespace cycle
+{
+
+int databuffer(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
 {
   // Remove beam generation depending on the selected behaviour
   if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
@@ -113,7 +114,7 @@ int databufferCycle(io::IOBlock& io, std::map<std::string, std::string>& cycle_r
   return 0;
 }
 
-int sequenceCycle(sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row)
+int sequence(sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row)
 {
   // Update the event sequence container
   seq.write(cycle_row);
@@ -124,7 +125,7 @@ int sequenceCycle(sce::SequenceHandler& seq, const std::map<std::string, std::st
   return 0;
 }
 
-int statsCycle(io::IOBlock& io)
+int stats(io::IOBlock& io)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
   // State the cycle
@@ -134,3 +135,5 @@ int statsCycle(io::IOBlock& io)
 
   return 0;
 }
+
+} // namespace cycle

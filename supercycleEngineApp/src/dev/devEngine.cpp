@@ -11,9 +11,9 @@
 #include <registryFunction.h>
 
 #include "cmnbase.hpp"
+#include "cycle.hpp"
 #include "devStringoutCtrl.hpp"
 #include "dlog.hpp"
-#include "engine.hpp"
 #include "ioblock.hpp"
 
 #include "cmdMapStrOut.hpp"
@@ -85,7 +85,7 @@ static long ioEngine(aSubRecord* prec)
   //if (cycle_row_now.empty()) return 0;
 
   // Engine cycle
-  statsCycle(io::RegisteredIOBlock());
+  cycle::stats(io::RegisteredIOBlock());
   // Update the meta
   epicsUInt64* pvalaU64 = (epicsUInt64*)prec->vala;
   epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
@@ -97,13 +97,13 @@ static long ioEngine(aSubRecord* prec)
   // Update the Dbuf - neva , novb (max)
   if (!cycle_row_now.empty())
   {
-    databufferCycle(io::RegisteredIOBlock(), cycle_row_now);
+    cycle::databuffer(io::RegisteredIOBlock(), cycle_row_now);
     prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io::RegisteredIOBlock().dbuf.vallist());
   }
 
   if (!cycle_row_prev.empty())
   {
-    sequenceCycle(io::RegisteredIOBlock().Seq, cycle_row_prev);
+    cycle::sequence(io::RegisteredIOBlock().Seq, cycle_row_prev);
     prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io::RegisteredIOBlock().Seq.getSeqTst());
     prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io::RegisteredIOBlock().Seq.getSeqEvt());
     prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io::RegisteredIOBlock().Seq.getSeqVec());

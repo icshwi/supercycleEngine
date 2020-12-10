@@ -122,7 +122,7 @@ size_t CSVStrMap::_clean_and_count(std::string& str)
     switch (c)
     {
     case '\r':
-    //case '\n': //not necessary as it cannot happen
+    case '\n': //not necessary as it cannot happen
     case '\"':
     case '\'':
     case ' ':

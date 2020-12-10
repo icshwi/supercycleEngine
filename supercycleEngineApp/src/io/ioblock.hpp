@@ -30,7 +30,7 @@ private:
   std::string mevtsLink = "/opt/reftabs/init/mevts-ess.yml";
   std::string sceconfigLink = "/opt/reftabs/init/sceconfig-ess.yml";
   // Directories
-  std::string sctableRoot = "/opt/reftabs/supercycles";
+  std::string sctableRoot = "/opt/reftabs/supercycles/";
   // PVs
   std::string SCTable = "null.csv";
   std::string PBState = "Off";
@@ -41,7 +41,7 @@ public:
   IOBlock(){};
   //int init(int argc, char **argv);
   int init(std::map<std::string, std::string>);
-  std::string getSCTableLink() const { return sctableRoot + "/" + SCTable; };
+  std::string getSCTableLink() const { return (sctableRoot + SCTable); };
   std::string getPBState() const { return PBState; };
   std::string getPBMod() const { return PBMod; };
   std::string getPBDest() const { return PBDest; };

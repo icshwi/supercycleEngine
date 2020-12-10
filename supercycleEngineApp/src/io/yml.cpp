@@ -19,45 +19,43 @@ namespace io
 
 int YmlNode::init(std::string fname)
 {
-  dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname" << fname;
-  filename = fname;
-  node = YAML::LoadFile(filename);
+  _filename = fname;
+  _node = YAML::LoadFile(_filename);
 
-  for (auto const& it : node)
-    memberNames.push_back(it.first.as<std::string>());
+  for (auto const& it : _node)
+    _memberNames.push_back(it.first.as<std::string>());
 
-  dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
+  DLOG(dlog::DEBUG, << " fname " << fname << " _node " << _node << " _memberNames " << _memberNames)
   return 0;
 }
 
 int YmlNode::init(std::string fname, std::string nodeName)
 {
-  dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname " << fname << " nodeName " << nodeName;
-  filename = fname;
+  _filename = fname;
 
-  YAML::Node node_tmp = YAML::LoadFile(filename);
-  node = node_tmp[nodeName];
+  YAML::Node node_tmp = YAML::LoadFile(_filename);
+  _node = node_tmp[nodeName];
 
-  for (auto const& it : node)
-    memberNames.push_back(it.first.as<std::string>());
+  for (auto const& it : _node)
+    _memberNames.push_back(it.first.as<std::string>());
 
-  dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
+  DLOG(dlog::DEBUG, << " fname " << fname << " nodeName " << nodeName << " _node " << _node << " _memberNames " << _memberNames)
   return 0;
 }
 
 void YmlNode::Yml2Map(std::map<std::string, std::string>& argm, std::string key)
 {
-  for (auto const& it : memberNames)
+  for (auto const& it : _memberNames)
   {
-    argm[it] = node[it][key].as<std::string>();
+    argm[it] = _node[it][key].as<std::string>();
   }
 }
 
 void YmlNode::Yml2Map(std::map<std::string, epicsUInt32>& argm, std::string key)
 {
-  for (auto const& it : memberNames)
+  for (auto const& it : _memberNames)
   {
-    argm[it] = node[it][key].as<epicsUInt32>();
+    argm[it] = _node[it][key].as<epicsUInt32>();
   }
 }
 
@@ -66,16 +64,13 @@ int YmlSCEConfig::init(std::string fname)
   if (YmlNode::init(fname) != 0)
     return 1;
 
-  dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
+  _PBSwOff_Evts = _node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
+  _PBSwOff_States = _node["PBSwOff"]["States"].as<std::vector<std::string>>();
+  _PBSwOff_Mods = _node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
 
-  _PBSwOff_Evts = node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
-  _PBSwOff_States = node["PBSwOff"]["States"].as<std::vector<std::string>>();
-  _PBSwOff_Mods = node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
+  _ScTSwitch_Off = _node["ScTSwitch"]["Off"].as<int>();
 
-  _ScTSwitch_Off = node["ScTSwitch"]["Off"].as<int>();
-
-  dlog::Print(dlog::INFO) << "YmlSCEConfig::init() _PBSwOff_Evts " << _PBSwOff_Evts << " _PBSwOff_States " << _PBSwOff_States << " _PBSwOff_Mods " << _PBSwOff_Mods;
-
+  DLOG(dlog::INFO, << " fname " << fname << " _PBSwOff_Evts " << _PBSwOff_Evts << " _PBSwOff_States " << _PBSwOff_States << " _PBSwOff_Mods " << _PBSwOff_Mods)
   return 0;
 }
 
@@ -85,9 +80,8 @@ int YmlKeyValMap::init(std::string fname, std::string valName)
     return 1;
 
   Yml2Map(mapsi, valName);
-  dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
-                          << " fname " << fname << " valName " << valName << " mapsi " << mapsi;
 
+  DLOG(dlog::INFO, << " fname " << fname << " valName " << valName << " mapsi " << mapsi)
   return 0;
 }
 
@@ -166,15 +160,15 @@ int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valN
     return 1;
 
   Yml2Map(mapsi, valName);
-  dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
-                          << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi;
 
+  DLOG(dlog::INFO, << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi)
   return 0;
 }
 
 int YmlDatabuffer::init(std::string fname)
 {
-  dlog::Print(dlog::INFO) << "YmlDatabuffer::init fname " << fname;
+  DLOG(dlog::INFO, << " fname " << fname)
+
   YAML::Node node_tmp = YAML::LoadFile(fname);
   _ProtVer = node_tmp["ProtVer"].as<uint>();
   _ProtNum = node_tmp["ProtNum"].as<uint>();

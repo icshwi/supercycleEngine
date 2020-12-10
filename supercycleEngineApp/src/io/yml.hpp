@@ -25,9 +25,9 @@ namespace io
 class YmlNode
 {
 protected:
-  std::string filename;
-  YAML::Node node;
-  std::vector<std::string> memberNames;
+  std::string _filename;
+  YAML::Node _node;
+  std::vector<std::string> _memberNames;
 
 public:
   explicit YmlNode(std::string fname);

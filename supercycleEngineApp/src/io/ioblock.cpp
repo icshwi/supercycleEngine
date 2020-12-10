@@ -24,10 +24,7 @@ int IOBlock::init(std::map<std::string, std::string> argm)
   if (cmn::file::exists(argm[GETVARNAME(sctableRoot)]))
     sctableRoot = argm[GETVARNAME(sctableRoot)];
 
-  DLOG(dlog::INFO, << " databufferLink " << databufferLink)
-  DLOG(dlog::INFO, << " mevtsLink " << mevtsLink)
-  DLOG(dlog::INFO, << " sceconfigLink " << sceconfigLink)
-  DLOG(dlog::INFO, << " getSCTableLink() " << getSCTableLink())
+  DLOG(dlog::INFO, << " databufferLink " << databufferLink << " mevtsLink " << mevtsLink << " sceconfigLink " << sceconfigLink << " getSCTableLink() " << getSCTableLink())
 
   DBuf_yml.init(databufferLink);
   SCEConfig_yml.init(sceconfigLink);
