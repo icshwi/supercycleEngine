@@ -14,11 +14,11 @@
 
 #include "scenv.hpp"
 
-static void io_dbuf_safe_write(sce::DBufPacket& dbuf, std::map<std::string, std::string>& row, const env::DBFIDX idx)
+static void io_dbuf_safe_write(sce::DBufPacket& dbuf, const std::map<std::string, std::string>& row, const env::DBFIDX idx)
 {
   try
   {
-    dbuf.write(idx, std::stol(row[env::DBFIDX2Str.at(idx)]));
+    dbuf.write(idx, std::stol(row.at(env::DBFIDX2Str.at(idx))));
   }
   catch (...)
   {
@@ -27,11 +27,11 @@ static void io_dbuf_safe_write(sce::DBufPacket& dbuf, std::map<std::string, std:
   }
 }
 
-static void io_dbuf_safe_write(sce::DBufPacket& dbuf, std::map<std::string, std::string>& row, const env::DBFIDX idx, std::map<std::string, epicsUInt32> mapValKey)
+static void io_dbuf_safe_write(sce::DBufPacket& dbuf, const std::map<std::string, std::string>& row, const env::DBFIDX idx, const std::map<std::string, epicsUInt32>& mapValKey)
 {
   try
   {
-    dbuf.write(idx, mapValKey[row[env::DBFIDX2Str.at(idx)]]);
+    dbuf.write(idx, mapValKey.at(row.at(env::DBFIDX2Str.at(idx))));
   }
   catch (...)
   {
@@ -40,7 +40,7 @@ static void io_dbuf_safe_write(sce::DBufPacket& dbuf, std::map<std::string, std:
   }
 }
 
-static void io_dbuf_safe_write_all(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
+static void io_dbuf_safe_write_all(io::IOBlock& io, const std::map<std::string, std::string>& cycle_row)
 {
   io.dbuf.clear();
   // ProtNum
@@ -66,7 +66,7 @@ static void io_dbuf_safe_write_all(io::IOBlock& io, std::map<std::string, std::s
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 }
 
-static void cycle_row_insert(std::map<std::string, std::string>& rowm, std::map<std::string, std::string> argm)
+static void cycle_row_insert(std::map<std::string, std::string>& rowm, const std::map<std::string, std::string>& argm)
 {
   rowm.insert(argm.begin(), argm.end());
 }

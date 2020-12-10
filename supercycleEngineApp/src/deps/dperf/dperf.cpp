@@ -10,7 +10,7 @@
 
 namespace dperf
 {
-  Timer::Timer(std::string func_name, dperf::LevelTypes level) : _func_name(func_name), _level(level), _cfg_level(*dperf::Config::instance()._plevel)
+  Timer::Timer(const std::string& func_name, dperf::LevelTypes level) : _func_name(func_name), _level(level), _cfg_level(*dperf::Config::instance()._plevel)
   {
     if (_level >= _cfg_level)
       _start = std::chrono::high_resolution_clock::now();
