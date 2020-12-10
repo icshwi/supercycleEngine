@@ -4,14 +4,13 @@
  * @date 2020-03-20
  */
 
-#ifndef ENGINE_HPP_
-#define ENGINE_HPP_
+#pragma once
 
-#include "scenv.hpp"
 #include "ioblock.hpp"
+#include "scenv.hpp"
 
 #include <epicsTypes.h>
 
-int engineCycle(io::IOBlock &io);
-
-#endif // ENGINE_HPP
+int databufferCycle(io::IOBlock& io, std::map<std::string, std::string>& cycle_row);
+int sequenceCycle(sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row);
+int statsCycle(io::IOBlock& io);

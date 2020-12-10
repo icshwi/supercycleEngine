@@ -66,37 +66,31 @@ static void io_dbuf_safe_write_all(io::IOBlock& io, const std::map<std::string, 
   io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
 }
 
+/*
 static void cycle_row_insert(std::map<std::string, std::string>& rowm, const std::map<std::string, std::string>& argm)
 {
   rowm.insert(argm.begin(), argm.end());
 }
+*/
 
-int engineCycle(io::IOBlock& io)
+/*
+TODO: write cycle variables for the future
 {
-  static epicsUInt32 tst = 0; // The timestamp holder
-  std::map<std::string, std::string> prev_cycle_row;
-  // Start the cycle
-  // ===============
-  io.cPeriod = cmn::tst::period_us(tst);
-  io.cId++;
-  DLOG(dlog::DEBUG, << " ScTableCycleId " << io._CSVStrMap.getCycleId() << " ScTableRowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
-  // ----------------------------------
-  std::map<std::string, std::string> cycle_row = io._CSVStrMap.getRowMap();
-  //Do not do anything if the cycle is not ready
-  if (cycle_row.empty())
-    return 0;
-
-  // Write other cycle variables
+    // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
   // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str::convert(io.cOffset);
   // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
+}
+*/
 
+int databufferCycle(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
+{
   // Remove beam generation depending on the selected behaviour
   if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
     io.SCEConfig_yml.do_PBSwOff_Evts(cycle_row);
 
-  // SCTABLE operations
+  // sctable operations
   // PBState
   cycle_row["PBState"] = io.getPBState();
   io.SCEConfig_yml.do_PBSwOff_States(cycle_row);
@@ -110,18 +104,33 @@ int engineCycle(io::IOBlock& io)
   // PBPresent
   cycle_row["PBPresent"] = io.SCEConfig_yml.get_PBPresent(cycle_row);
 
-  //Print the log
-  DLOG(dlog::DEBUG, << " cycle_row " << cycle_row)
-
-  // Update the event sequence container
-  io.Seq.write(cycle_row);
   // Update the data buffer container
   io_dbuf_safe_write_all(io, cycle_row);
 
   //Print the log
-  DLOG(dlog::DEBUG, << " io.SEQ.getSeq " << io.Seq.getSeqMap())
   DLOG(dlog::DEBUG, << " io.dbuf.getDbuf " << io.dbuf.getDbuf())
 
-  prev_cycle_row = cycle_row;
+  return 0;
+}
+
+int sequenceCycle(sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row)
+{
+  // Update the event sequence container
+  seq.write(cycle_row);
+
+  //Print the log
+  DLOG(dlog::DEBUG, << " io.SEQ.getSeq " << seq.getSeqMap())
+
+  return 0;
+}
+
+int statsCycle(io::IOBlock& io)
+{
+  static epicsUInt32 tst = 0; // The timestamp holder
+  // State the cycle
+  io.cPeriod = cmn::tst::period_us(tst);
+  io.cId++;
+  DLOG(dlog::DEBUG, << " ScTableCycleId " << io._CSVStrMap.getCycleId() << " ScTableRowId " << io._CSVStrMap.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
+
   return 0;
 }

@@ -40,7 +40,7 @@ int IOBlock::init(std::map<std::string, std::string> argm)
   return 0;
 }
 
-int IOBlock::dbSync(std::map<std::string, std::string>& argms)
+int IOBlock::dbSync(const std::map<std::string, std::string>& argms)
 {
 
   for (auto const& it : argms)

@@ -5,186 +5,186 @@
  */
 
 #include "yml.hpp"
-#include "dlog.hpp"
 #include "cmnbase.hpp"
+#include "dlog.hpp"
 
-#include <yaml-cpp/yaml.h>
-#include <vector>
-#include <iostream>
-#include <fstream>
 #include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <yaml-cpp/yaml.h>
 
 namespace io
 {
 
-  int YmlNode::init(std::string fname)
+int YmlNode::init(std::string fname)
+{
+  dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname" << fname;
+  filename = fname;
+  node = YAML::LoadFile(filename);
+
+  for (auto const& it : node)
+    memberNames.push_back(it.first.as<std::string>());
+
+  dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
+  return 0;
+}
+
+int YmlNode::init(std::string fname, std::string nodeName)
+{
+  dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname " << fname << " nodeName " << nodeName;
+  filename = fname;
+
+  YAML::Node node_tmp = YAML::LoadFile(filename);
+  node = node_tmp[nodeName];
+
+  for (auto const& it : node)
+    memberNames.push_back(it.first.as<std::string>());
+
+  dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
+  return 0;
+}
+
+void YmlNode::Yml2Map(std::map<std::string, std::string>& argm, std::string key)
+{
+  for (auto const& it : memberNames)
   {
-    dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname" << fname;
-    filename = fname;
-    node = YAML::LoadFile(filename);
+    argm[it] = node[it][key].as<std::string>();
+  }
+}
 
-    for (auto const &it : node)
-      memberNames.push_back(it.first.as<std::string>());
+void YmlNode::Yml2Map(std::map<std::string, epicsUInt32>& argm, std::string key)
+{
+  for (auto const& it : memberNames)
+  {
+    argm[it] = node[it][key].as<epicsUInt32>();
+  }
+}
 
-    dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
-    return 0;
+int YmlSCEConfig::init(std::string fname)
+{
+  if (YmlNode::init(fname) != 0)
+    return 1;
+
+  dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
+
+  _PBSwOff_Evts = node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
+  _PBSwOff_States = node["PBSwOff"]["States"].as<std::vector<std::string>>();
+  _PBSwOff_Mods = node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
+
+  _ScTSwitch_Off = node["ScTSwitch"]["Off"].as<int>();
+
+  dlog::Print(dlog::INFO) << "YmlSCEConfig::init() _PBSwOff_Evts " << _PBSwOff_Evts << " _PBSwOff_States " << _PBSwOff_States << " _PBSwOff_Mods " << _PBSwOff_Mods;
+
+  return 0;
+}
+
+int YmlKeyValMap::init(std::string fname, std::string valName)
+{
+  if (YmlNode::init(fname) != 0)
+    return 1;
+
+  Yml2Map(mapsi, valName);
+  dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
+                          << " fname " << fname << " valName " << valName << " mapsi " << mapsi;
+
+  return 0;
+}
+
+std::string YmlSCEConfig::SCESwitchBehaviour(bool trig)
+{
+  static int counterdown = get_ScTSwitch_Off();
+  static bool trig_level = false;
+
+  if (trig_level == true)
+    counterdown--;
+
+  if (counterdown < 0)
+  {
+    counterdown = get_ScTSwitch_Off();
+    trig_level = false;
   }
 
-  int YmlNode::init(std::string fname, std::string nodeName)
+  if (trig == true)
   {
-    dlog::Print(dlog::DEBUG2) << "YmlNode::init() fname " << fname << " nodeName " << nodeName;
-    filename = fname;
-
-    YAML::Node node_tmp = YAML::LoadFile(filename);
-    node = node_tmp[nodeName];
-
-    for (auto const &it : node)
-      memberNames.push_back(it.first.as<std::string>());
-
-    dlog::Print(dlog::DEBUG) << "YmlNode::init() node " << node << " memberNames " << memberNames;
-    return 0;
+    counterdown = get_ScTSwitch_Off();
+    trig_level = true;
   }
 
-  void YmlNode::Yml2Map(std::map<std::string, std::string> &argm, std::string key)
-  {
-    for (auto const &it : memberNames)
-    {
-      argm[it] = node[it][key].as<std::string>();
-    }
-  }
+  if (trig_level == true)
+    return "Off";
 
-  void YmlNode::Yml2Map(std::map<std::string, epicsUInt32> &argm, std::string key)
-  {
-    for (auto const &it : memberNames)
-    {
-      argm[it] = node[it][key].as<epicsUInt32>();
-    }
-  }
+  return {};
+}
 
-  int YmlSCEConfig::init(std::string fname)
-  {
-    if (YmlNode::init(fname) != 0)
-      return 1;
+int YmlSCEConfig::do_PBSwOff_Evts(std::map<std::string, std::string>& cycle_row)
+{
+  for (auto& it : get_PBSwOff_Evts())
+    cycle_row.erase(it);
 
-    dlog::Print(dlog::DEBUG2) << "YmlSCEConfig::init() fname " << fname;
+  return 0;
+}
 
-    _PBSwOff_Evts = node["PBSwOff"]["Evts"].as<std::vector<std::string>>();
-    _PBSwOff_States = node["PBSwOff"]["States"].as<std::vector<std::string>>();
-    _PBSwOff_Mods = node["PBSwOff"]["Mods"].as<std::vector<std::string>>();
+int YmlSCEConfig::do_PBSwOff_States(std::map<std::string, std::string>& cycle_row)
+{
+  for (auto& state : get_PBSwOff_States())
+    if (cycle_row["PBState"] == state)
+      for (auto& it : get_PBSwOff_Evts())
+        cycle_row.erase(it);
 
-    _ScTSwitch_Off = node["ScTSwitch"]["Off"].as<int>();
+  return 0;
+}
 
-    dlog::Print(dlog::INFO) << "YmlSCEConfig::init() _PBSwOff_Evts " << _PBSwOff_Evts << " _PBSwOff_States " << _PBSwOff_States << " _PBSwOff_Mods " << _PBSwOff_Mods;
+int YmlSCEConfig::do_PBSwOff_Mods(std::map<std::string, std::string>& cycle_row)
+{
+  for (auto& state : get_PBSwOff_Mods())
+    if (cycle_row["PBMod"] == state)
+      for (auto& it : get_PBSwOff_Evts())
+        cycle_row.erase(it);
 
-    return 0;
-  }
+  return 0;
+}
 
-  int YmlKeyValMap::init(std::string fname, std::string valName)
-  {
-    if (YmlNode::init(fname) != 0)
-      return 1;
+std::string YmlSCEConfig::get_PBPresent(std::map<std::string, std::string>& cycle_row)
+{
+  std::size_t cnt = 0;
 
-    Yml2Map(mapsi, valName);
-    dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
-                            << " fname " << fname << " valName " << valName << " mapsi " << mapsi;
+  for (auto const& it : get_PBSwOff_Evts())
+    if (cycle_row.count(it) > 0)
+      if (cycle_row[it].empty() == true)
+        cnt++;
 
-    return 0;
-  }
+  if (cnt == get_PBSwOff_Evts().size())
+    return "Off";
 
-  std::string YmlSCEConfig::SCESwitchBehaviour(bool trig)
-  {
-    static int counterdown = get_ScTSwitch_Off();
-    static bool trig_level = false;
+  return "On";
+}
 
-    if (trig_level == true)
-      counterdown--;
+int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)
+{
+  if (YmlNode::init(fname, nodeName) != 0)
+    return 1;
 
-    if (counterdown < 0)
-    {
-      counterdown = get_ScTSwitch_Off();
-      trig_level = false;
-    }
+  Yml2Map(mapsi, valName);
+  dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
+                          << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi;
 
-    if (trig == true)
-    {
-      counterdown = get_ScTSwitch_Off();
-      trig_level = true;
-    }
+  return 0;
+}
 
-    if (trig_level == true)
-      return "Off";
+int YmlDatabuffer::init(std::string fname)
+{
+  dlog::Print(dlog::INFO) << "YmlDatabuffer::init fname " << fname;
+  YAML::Node node_tmp = YAML::LoadFile(fname);
+  _ProtVer = node_tmp["ProtVer"].as<uint>();
+  _ProtNum = node_tmp["ProtNum"].as<uint>();
 
-    return {};
-  }
-
-  int YmlSCEConfig::do_PBSwOff_Evts(std::map<std::string, std::string> &cycle_row)
-  {
-    for (auto &it : get_PBSwOff_Evts())
-      cycle_row.erase(it);
-
-    return 0;
-  }
-
-  int YmlSCEConfig::do_PBSwOff_States(std::map<std::string, std::string> &cycle_row)
-  {
-    for (auto &state : get_PBSwOff_States())
-      if (cycle_row["PBState"] == state)
-        for (auto &it : get_PBSwOff_Evts())
-          cycle_row.erase(it);
-
-    return 0;
-  }
-
-  int YmlSCEConfig::do_PBSwOff_Mods(std::map<std::string, std::string> &cycle_row)
-  {
-    for (auto &state : get_PBSwOff_Mods())
-      if (cycle_row["PBMod"] == state)
-        for (auto &it : get_PBSwOff_Evts())
-          cycle_row.erase(it);
-
-    return 0;
-  }
-
-  std::string YmlSCEConfig::get_PBPresent(std::map<std::string, std::string> &cycle_row)
-  {
-    std::size_t cnt = 0;
-
-    for (auto const &it : get_PBSwOff_Evts())
-      if (cycle_row.count(it) > 0)
-        if (cycle_row[it].empty() == true)
-          cnt++;
-
-    if (cnt == get_PBSwOff_Evts().size())
-      return "Off";
-
-    return "On";
-  }
-
-  int YmlKeyValMap::init(std::string fname, std::string nodeName, std::string valName)
-  {
-    if (YmlNode::init(fname, nodeName) != 0)
-      return 1;
-
-    Yml2Map(mapsi, valName);
-    dlog::Print(dlog::INFO) << "YmlKeyValMap::init()"
-                            << " fname " << fname << " nodeName " << nodeName << " valName " << valName << " mapsi " << mapsi;
-
-    return 0;
-  }
-
-  int YmlDatabuffer::init(std::string fname)
-  {
-    dlog::Print(dlog::INFO) << "YmlDatabuffer::init fname " << fname;
-    YAML::Node node_tmp = YAML::LoadFile(fname);
-    _ProtVer = node_tmp["ProtVer"].as<uint>();
-    _ProtNum = node_tmp["ProtNum"].as<uint>();
-
-    _PBStateIds.init(fname);
-    _PBModIds.init(fname);
-    _PBDestIds.init(fname);
-    _PBPresentIds.init(fname);
-    return 0;
-  }
+  _PBStateIds.init(fname);
+  _PBModIds.init(fname);
+  _PBDestIds.init(fname);
+  _PBPresentIds.init(fname);
+  return 0;
+}
 
 } // namespace io
 

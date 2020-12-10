@@ -5,53 +5,52 @@
  */
 
 #include "seq.hpp"
-#include "dlog.hpp"
 #include "cmnbase.hpp"
+#include "dlog.hpp"
 #include "scenv.hpp"
 
 namespace sce
 {
 
-  SequenceHandler::SequenceHandler(std::map<std::string, epicsUInt32> evtrm)
-  {
-    dlog::Print(dlog::DEBUG2) << "SequenceHandler::SequenceHandler()";
-    init(evtrm);
-  }
+SequenceHandler::SequenceHandler(const std::map<std::string, epicsUInt32>& evtrm)
+{
+  init(evtrm);
+}
 
-  SequenceHandler::~SequenceHandler()
-  {
-    dlog::Print(dlog::DEBUG2) << "SequenceHandler::~SequenceHandler()";
-  }
+SequenceHandler::~SequenceHandler()
+{
+  DLOG(dlog::DEBUG2, << "")
+}
 
-  void SequenceHandler::init(std::map<std::string, epicsUInt32> evtrm)
-  {
-    dlog::Print(dlog::DEBUG2) << "SequenceHandler::init()";
-    evtcoderef = evtrm;
-  }
+void SequenceHandler::init(const std::map<std::string, epicsUInt32>& evtrm)
+{
+  DLOG(dlog::DEBUG2, << "")
+  _evtcoderef = evtrm;
+}
 
-  void SequenceHandler::write(std::map<std::string, std::string> &rowm)
-  {
-    dlog::Print(dlog::DEBUG2) << "SequenceHandler::write()";
-    evt_tst_seq = {};
+void SequenceHandler::write(const std::map<std::string, std::string>& rowm)
+{
+  std::map<epicsUInt32, epicsUInt32> evt_tst_seq_ = {};
 
-    for (auto const &it : evtcoderef)
+  for (auto const& it : _evtcoderef)
+  {
+    if (rowm.find(it.first) != rowm.end())
     {
-      if (rowm[it.first].empty() == false)
-      {
-        evt_tst_seq[it.second] = std::stol(rowm[it.first]);
-      }
+      if (!rowm.at(it.first).empty())
+        evt_tst_seq_[it.second] = (epicsUInt32)std::stol(rowm.at(it.first));
     }
-
-    // Sort the timestamps
-    tst_evt_seq = cmn::flip_map<epicsUInt32, epicsUInt32>(evt_tst_seq);
-
-    if (tst_evt_seq.empty() == false)
-    {
-      // Terminate the sequence
-      tst_evt_seq[tst_evt_seq.rbegin()->first + 1] = env::SeqEnd;
-    }
-
-    dlog::Print(dlog::DEBUG1) << "SequenceHandler::write() rowm " << rowm << " tst_evt_seq " << tst_evt_seq;
   }
+
+  // Sort the timestamps
+  _tst_evt_seq = cmn::flip_map<epicsUInt32, epicsUInt32>(evt_tst_seq_);
+
+  if (_tst_evt_seq.empty() == false)
+  {
+    // Terminate the sequence
+    _tst_evt_seq[_tst_evt_seq.rbegin()->first + 1] = env::SeqEnd;
+  }
+
+  DLOG(dlog::DEBUG1, << " rowm " << rowm << " _tst_evt_seq " << _tst_evt_seq)
+}
 
 } // namespace sce
