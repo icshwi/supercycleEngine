@@ -19,6 +19,7 @@ struct DevSupReg
   DEVSUPFUN io;
   DEVSUPFUN special_linconv;
 };
+typedef struct DevSupReg DevSupReg;
 
 // struct DevPriv
 // {

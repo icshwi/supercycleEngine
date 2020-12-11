@@ -16,4 +16,4 @@ device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
 
 ## from devObjPropStringIO.cpp
 device(stringin, INST_IO, devStringinObjProp, "StringIOObjProp")
-#device(stringout, INST_IO, devSOFromString, "Obj Prop string")
+#device(stringout, INST_IO, devStringoutObjProp, "StringoutObjProp")

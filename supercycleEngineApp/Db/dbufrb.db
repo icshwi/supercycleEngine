@@ -1,7 +1,7 @@
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx0-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "0")
   field(NELM, "1") # "2046")
   field(MALM, "1") # "2046")
@@ -11,7 +11,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx0-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx1-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "1")
   field(NELM, "1") # "2046")
   field(MALM, "2") # "2046")
@@ -21,7 +21,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx1-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx2-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "2")
   field(NELM, "1") # "2046")
   field(MALM, "3") # "2046")
@@ -31,7 +31,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx2-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "3")
   field(NELM, "1") # "2046")
   field(MALM, "4") # "2046")
@@ -41,7 +41,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx3-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx4-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "4")
   field(NELM, "1") # "2046")
   field(MALM, "5") # "2046")
@@ -51,7 +51,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx4-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx5-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "5")
   field(NELM, "1") # "2046")
   field(MALM, "6") # "2046")
@@ -61,7 +61,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx5-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx6-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "6")
   field(NELM, "1") # "2046")
   field(MALM, "7") # "2046")
@@ -71,7 +71,7 @@ record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx6-subA_") {
 record(subArray, "$(P)$(R=)$(S=:)Databuffer-u32idx7-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
-  field(INP,  "$(P)$(R=)$(S=:)Databuffer CPP")
+  field(INP,  "$(P)$(R=)$(S=:)Databuffer")
   field(INDX, "7")
   field(NELM, "1") # "2046")
   field(MALM, "8") # "2046")

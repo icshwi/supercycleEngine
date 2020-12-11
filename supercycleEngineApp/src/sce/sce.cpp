@@ -5,10 +5,16 @@
  */
 
 #include "sce.hpp"
-#include "version.h"
+#include "ioblock.hpp"
 #include "object.hpp"
+#include "version.h"
 
 std::string SCE::getSwVersion()
 {
   return SCE_VERSION;
+}
+
+std::string SCE::getScTable()
+{
+  return io::RegisteredIOBlock().CSVTab.getFile();
 }

@@ -1,0 +1,21 @@
+record(fanout, "$(P)$(R=)$(S=:)Updater1s-Fout_")
+{
+  field(DESC, "Update the info")
+  field(SCAN, "1 second")
+  field(SELM, "All")
+  field(LNK1, "$(P)$(R=)$(S=:)ScTable-RB")
+}
+
+record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
+  field(DESC, "Software version")
+  field(DTYP, "StringIOObjProp")
+  field(INP , "@OBJ=$(OBJ=SCE), PROP=SwVer")
+  field(PINI, "YES")
+}
+
+record(stringin, "$(P)$(R=)$(S=:)ScTable-RB") {
+  field(DESC, "Supercyle Table Name Readback")
+  field(DTYP, "StringIOObjProp")
+  field(INP , "@OBJ=$(OBJ=SCE), PROP=ScTable")
+  field(PINI, "YES")
+}

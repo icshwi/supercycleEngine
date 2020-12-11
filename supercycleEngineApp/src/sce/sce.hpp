@@ -14,6 +14,7 @@ class SCE
 public:
   //! Software Version
   static std::string getSwVersion();
+  static std::string getScTable();
 };
 
 #endif // SCE_HPP_

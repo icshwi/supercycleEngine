@@ -5,20 +5,22 @@
  */
 
 #include "object.hpp"
+#include "ioblock.hpp"
 #include "sce.hpp"
 
 namespace dev
 {
 
-  ObjBase::ObjBase()
-  {
-    _ObjPropFunc["SCE"]["SwVer"] = SCE::getSwVersion;
-  }
+ObjBase::ObjBase()
+{
+  _ObjPropFunc["SCE"]["SwVer"] = SCE::getSwVersion;
+  _ObjPropFunc["SCE"]["ScTable"] = SCE::getScTable;
+}
 
-  ObjReg &ObjReg::instance()
-  {
-    static ObjReg instance;
-    return instance;
-  }
+ObjReg& ObjReg::instance()
+{
+  static ObjReg instance;
+  return instance;
+}
 
 } // namespace dev

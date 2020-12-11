@@ -29,16 +29,3 @@ record(stringout, "$(P)$(R=)$(S=:)PBDest-SP") {
   field(VAL,  "None")
   info(autosaveFields_pass0, "VAL")
 }
-
-record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
-  field(DTYP, "StringIOObjProp")
-  field(INP , "@OBJ=$(OBJ=SCE), PROP=SwVer")
-  field(PINI, "YES")
-  field(DESC, "Software version")
-}
-
-record(stringin, "$(P)$(R=)$(S=:)ScTable-RB") {
-  field(DTYP, "StringIOObjProp")
-  field(DESC, "Supercyle Table Name Readback")
-  field(INP , "@OBJ=$(OBJ=SCE), PROP=ScTable")
-}

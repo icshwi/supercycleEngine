@@ -1,6 +1,7 @@
 record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(DESC, "IO Trigger Fanout")
   field(SELM, "All")
+  field(SCAN, "Passive")
   field(PINI, "RUNNING")
   #field(LNK1, "$(P)$(R=)$(S=:)IdCycle")
   field(LNK2, "$(P)$(R=)$(S=:)Period")
