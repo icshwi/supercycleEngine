@@ -114,18 +114,17 @@ int databuffer(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
   return 0;
 }
 
-int sequence(sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row)
+int sequence(const sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row)
 {
   // Update the event sequence container
   seq.write(cycle_row);
-
   //Print the log
   DLOG(dlog::DEBUG, << " io.SEQ.getSeq " << seq.getSeqMap())
 
   return 0;
 }
 
-int stats(io::IOBlock& io)
+int stats(const io::IOBlock& io)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
   // State the cycle

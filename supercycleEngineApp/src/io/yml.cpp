@@ -85,7 +85,7 @@ int YmlKeyValMap::init(std::string fname, std::string valName)
   return 0;
 }
 
-std::string YmlSCEConfig::SCESwitchBehaviour(bool trig)
+std::string YmlSCEConfig::SCESwitchBehaviour(bool trig) const
 {
   static int counterdown = get_ScTSwitch_Off();
   static bool trig_level = false;
@@ -139,13 +139,13 @@ int YmlSCEConfig::do_PBSwOff_Mods(std::map<std::string, std::string>& cycle_row)
   return 0;
 }
 
-std::string YmlSCEConfig::get_PBPresent(std::map<std::string, std::string>& cycle_row)
+std::string YmlSCEConfig::get_PBPresent(const std::map<std::string, std::string>& cycle_row) const
 {
   std::size_t cnt = 0;
 
   for (auto const& it : get_PBSwOff_Evts())
     if (cycle_row.count(it) > 0)
-      if (cycle_row[it].empty() == true)
+      if (cycle_row.at(it).empty() == true)
         cnt++;
 
   if (cnt == get_PBSwOff_Evts().size())

@@ -72,7 +72,7 @@ int CSVStrMap::init(std::string file)
   return 0;
 }
 
-std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid)
+std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid) const
 {
   const std::vector<std::string>& row_ = _rows[rowid];
   std::map<std::string, std::string> rowmap_ = {};
@@ -84,7 +84,7 @@ std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid)
   return rowmap_;
 }
 
-void CSVStrMap::_iterator()
+void CSVStrMap::_iterator() const
 {
   if (_row_id < _rows.size() - 1)
     _row_id++;
@@ -95,7 +95,7 @@ void CSVStrMap::_iterator()
   }
 }
 
-std::map<std::string, std::string> CSVStrMap::getRowMap()
+std::map<std::string, std::string> CSVStrMap::getRowMap() const
 {
   const size_t _row_id_ = _row_id;
 
@@ -104,7 +104,7 @@ std::map<std::string, std::string> CSVStrMap::getRowMap()
   return _readRowMap(_row_id_);
 }
 
-std::map<std::string, std::string> CSVStrMap::checkRowMapNext()
+std::map<std::string, std::string> CSVStrMap::checkRowMapNext() const
 {
   return _readRowMap(_row_id);
 }

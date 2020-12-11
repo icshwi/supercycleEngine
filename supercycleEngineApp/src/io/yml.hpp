@@ -131,7 +131,7 @@ public:
   //YmlInhibitEvt(std::string fname);
   YmlSCEConfig(){};
   int init(std::string fname) override;
-  std::string SCESwitchBehaviour(bool trig = false);
+  std::string SCESwitchBehaviour(bool trig = false) const;
   std::vector<std::string> get_PBSwOff_Evts() const { return _PBSwOff_Evts; };
   std::vector<std::string> get_PBSwOff_States() const { return _PBSwOff_States; };
   std::vector<std::string> get_PBSwOff_Mods() const { return _PBSwOff_Mods; };
@@ -140,10 +140,10 @@ public:
   int do_PBSwOff_States(std::map<std::string, std::string>& cycle_row);
   int do_PBSwOff_Mods(std::map<std::string, std::string>& cycle_row);
 
-  std::string get_PBPresent(std::map<std::string, std::string>& cycle_row);
+  std::string get_PBPresent(const std::map<std::string, std::string>& cycle_row) const;
 
 protected:
-  int get_ScTSwitch_Off() { return _ScTSwitch_Off; };
+  int get_ScTSwitch_Off() const { return _ScTSwitch_Off; };
 
 private:
   int _ScTSwitch_Off = 0;

@@ -28,7 +28,7 @@ void SequenceHandler::init(const std::map<std::string, epicsUInt32>& evtrm)
   _evtcoderef = evtrm;
 }
 
-void SequenceHandler::write(const std::map<std::string, std::string>& rowm)
+void SequenceHandler::write(const std::map<std::string, std::string>& rowm) const
 {
   std::map<epicsUInt32, epicsUInt32> evt_tst_seq_ = {};
 

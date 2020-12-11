@@ -14,6 +14,6 @@
 namespace cycle
 {
 int databuffer(io::IOBlock& io, std::map<std::string, std::string>& cycle_row);
-int sequence(sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row);
-int stats(io::IOBlock& io);
+int sequence(const sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row);
+int stats(const io::IOBlock& io);
 } // namespace cycle

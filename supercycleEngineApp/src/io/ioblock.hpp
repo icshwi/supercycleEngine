@@ -46,8 +46,8 @@ public:
   std::string getPBMod() const { return PBMod; };
   std::string getPBDest() const { return PBDest; };
 
-  epicsUInt32 cPeriod = 0; //cycle period [us]
-  epicsUInt64 cId = 0;
+  mutable epicsUInt32 cPeriod = 0; //cycle period [us]
+  mutable epicsUInt64 cId = 0;
 
   io::YmlDatabuffer DBuf_yml;
   io::YmlSCEConfig SCEConfig_yml;

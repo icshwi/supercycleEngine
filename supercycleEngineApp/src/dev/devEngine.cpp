@@ -44,8 +44,6 @@ static int sctableSwitch(io::IOBlock& io)
   return 0;
 }
 
-#include <unistd.h>
-
 static long initEngine()
 {
   DPERFTIMERSCOPE(dperf::DEBUG1);
@@ -82,9 +80,6 @@ static long ioEngine(aSubRecord* prec)
   //Print the cycle content
   DLOG(dlog::DEBUG, << " cycle_row " << cycle_row_now)
   // Apply the flow: e0,d1,e1,d2
-  //if (cycle_row_now.empty()) return 0;
-
-  // Engine cycle
   cycle::stats(io::RegisteredIOBlock());
   // Update the meta
   epicsUInt64* pvalaU64 = (epicsUInt64*)prec->vala;
