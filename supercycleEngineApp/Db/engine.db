@@ -89,7 +89,7 @@ record(subArray, "$(P)$(R=)$(S=:)Period-subA_") {
   #field(FLNK, "$(P)$(R=)$(S=:)Period")
 }
 
-record(subArray, "$(P)$(R=)$(S=:)ScRowId-subA_") {
+record(subArray, "$(P)$(R=)$(S=:)ScTabRowId-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
   field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
@@ -97,10 +97,10 @@ record(subArray, "$(P)$(R=)$(S=:)ScRowId-subA_") {
   field(NELM, "1") # "2046")
   field(MALM, "4") # "2046")
   field(FTVL, "ULONG")
-  #field(FLNK, "$(P)$(R=)$(S=:)ScRowId.PROC")
+  #field(FLNK, "$(P)$(R=)$(S=:)ScTabRowId.PROC")
 }
 
-record(subArray, "$(P)$(R=)$(S=:)ScCycleId-subA_") {
+record(subArray, "$(P)$(R=)$(S=:)ScTabCycleId-subA_") {
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
   field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
@@ -108,5 +108,5 @@ record(subArray, "$(P)$(R=)$(S=:)ScCycleId-subA_") {
   field(NELM, "1") # "2046")
   field(MALM, "5") # "2046")
   field(FTVL, "ULONG")
-  #field(FLNK, "$(P)$(R=)$(S=:)ScCycleId.PROC")
+  #field(FLNK, "$(P)$(R=)$(S=:)ScTabCycleId.PROC")
 }

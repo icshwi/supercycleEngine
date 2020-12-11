@@ -8,8 +8,8 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-IO-FOut_") {
   field(LNK4, "$(P)$(R=)$(S=:)Timestamps")
   field(LNK5, "$(P)$(R=)$(S=:)Events")
   field(LNK6, "$(P)$(R=)$(S=:)Sequence")
-  field(LNK7, "$(P)$(R=)$(S=:)ScRowId")
-  field(LNK8, "$(P)$(R=)$(S=:)ScCycleId")
+  field(LNK7, "$(P)$(R=)$(S=:)ScTabRowId")
+  field(LNK8, "$(P)$(R=)$(S=:)ScTabCycleId")
 }
 
 #[TODO] To redesign
@@ -40,20 +40,20 @@ record(longin, "$(P)$(R=)$(S=:)Period") {
 	field(LLSV, "MAJOR")
 }
 
-record(longin, "$(P)$(R=)$(S=:)ScRowId") {
+record(longin, "$(P)$(R=)$(S=:)ScTabRowId") {
   field(DESC, "Actuall Supercycle Row Id")
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
   field(EGU, "id")
-  field(INP, "$(P)$(R=)$(S=:)ScRowId-subA_ PP")
+  field(INP, "$(P)$(R=)$(S=:)ScTabRowId-subA_ PP")
 }
 
-record(longin, "$(P)$(R=)$(S=:)ScCycleId") {
+record(longin, "$(P)$(R=)$(S=:)ScTabCycleId") {
   field(DESC, "Actuall Supercycle Cycle Id (amount of table loops)")
   field(DTYP, "Soft Channel")
   field(SCAN, "Passive")
   field(EGU, "id")
-  field(INP, "$(P)$(R=)$(S=:)ScCycleId-subA_ PP")
+  field(INP, "$(P)$(R=)$(S=:)ScTabCycleId-subA_ PP")
 }
 
 record(waveform, "$(P)$(R=)$(S=:)Databuffer") {

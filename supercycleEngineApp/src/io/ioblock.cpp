@@ -30,7 +30,7 @@ int IOBlock::init(std::map<std::string, std::string> argm)
   SCEConfig_yml.init(sceconfigLink);
   mEvts_yml.init(mevtsLink);
   //Managed by the ScTable switch
-  //_CSVStrMap.init(getSCTableLink());
+  //CSVTab.init(getSCTableLink());
 
   Seq.init(mEvts_yml.getMap());
 

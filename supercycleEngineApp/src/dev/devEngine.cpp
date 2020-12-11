@@ -32,11 +32,11 @@ epicsExportAddress(int, PscUs);
 
 static int sctableSwitch(io::IOBlock& io)
 {
-  if (io.getSCTableLink().compare(io._CSVStrMap.getFile()) != 0)
+  if (io.getSCTableLink().compare(io.CSVTab.getFile()) != 0)
   {
-    DLOG(dlog::INFO, << " OLD io._CSVStrMap.getFile() " << io._CSVStrMap.getFile() << " NEW io.getSCTableLink() " << io.getSCTableLink())
+    DLOG(dlog::INFO, << " OLD io.CSVTab.getFile() " << io.CSVTab.getFile() << " NEW io.getSCTableLink() " << io.getSCTableLink())
 
-    io._CSVStrMap.init(io.getSCTableLink());
+    io.CSVTab.init(io.getSCTableLink());
 
     // Trigger sctable switch behaviour
     io.SCEConfig_yml.SCESwitchBehaviour(true);
@@ -76,7 +76,7 @@ static long ioEngine(aSubRecord* prec)
   // Configure new cycle
   io::RegisteredIOBlock().dbSync(RegisteredStrOutMap);
   // Read the cycle
-  std::map<std::string, std::string> cycle_row_now = io::RegisteredIOBlock()._CSVStrMap.getRowMap();
+  std::map<std::string, std::string> cycle_row_now = io::RegisteredIOBlock().CSVTab.getRowMap();
   //Print the cycle content
   DLOG(dlog::DEBUG, << " cycle_row " << cycle_row_now)
   // Apply the flow: e0,d1,e1,d2
@@ -86,8 +86,8 @@ static long ioEngine(aSubRecord* prec)
   epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
   pvalaU64[0] = (epicsUInt64)io::RegisteredIOBlock().cId; // 0,1
   pvalaU32[2] = (epicsUInt32)io::RegisteredIOBlock().cPeriod;
-  pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock()._CSVStrMap.getRowId();
-  pvalaU32[4] = (epicsUInt32)io::RegisteredIOBlock()._CSVStrMap.getCycleId();
+  pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock().CSVTab.getRowId();
+  pvalaU32[4] = (epicsUInt32)io::RegisteredIOBlock().CSVTab.getCycleId();
 
   // Update the Dbuf - neva , novb (max)
   if (!cycle_row_now.empty())
