@@ -26,15 +26,17 @@ size_t CSVStrData::_getNumOfLines(std::ifstream& ifs)
 
 int CSVStrData::init(std::string file)
 {
-  DPERFTIMERSCOPE(dperf::INFO);
-  DLOG(dlog::INFO, << " _file " << _file << " file " << file)
-
-  std::ifstream ifs_;
+  //guard
+  if (cmn::file::exists(file) == false)
+    return 1;
   if (file == _file)
     return 1;
-  else
-    _file = file;
 
+  DPERFTIMERSCOPE(dperf::INFO);
+  DLOG(dlog::INFO, << " _file " << _file << " file " << file)
+  _file = file;
+
+  std::ifstream ifs_;
   ifs_.open(file, std::ifstream::in);
   //size_t _lnum_ = _getNumOfLines(ifs);
 

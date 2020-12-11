@@ -17,6 +17,7 @@ class CSVStrData
 {
 public:
   CSVStrData(){};
+  std::string getFile() const { return _file; };
 
 private:
   friend class CSVStrMap;
