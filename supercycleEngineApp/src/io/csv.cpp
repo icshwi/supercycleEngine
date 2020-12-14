@@ -32,7 +32,7 @@ int CSVStrData::init(std::string file)
   if (file == _file)
     return 1;
 
-  DPERFTIMERSCOPE(dperf::INFO);
+  DPERFLOG(dperf::INFO)
   DLOG(dlog::INFO, << " _file " << _file << " file " << file)
   _file = file;
 
@@ -55,7 +55,7 @@ int CSVStrData::init(std::string file)
 
 int CSVStrMap::init(std::string file)
 {
-  DPERFTIMERSCOPE(dperf::INFO);
+  DPERFLOG(dperf::INFO)
 
   if (CSVStrData::init(file) > 0)
     return 1;
@@ -115,7 +115,7 @@ std::string CSVStrData::getFileName() const
 
 size_t CSVStrMap::_clean_and_count(std::string& str) const
 {
-  //DPERFTIMERSCOPE(dperf::DEBUG3);
+  //DPERFLOG(dperf::DEBUG3)
   if (str.empty() == true)
     return 0;
 
@@ -151,7 +151,7 @@ size_t CSVStrMap::_clean_and_count(std::string& str) const
 
 std::vector<std::string> CSVStrMap::_vect(const std::string& line) const
 {
-  //DPERFTIMERSCOPE(dperf::INFO);
+  //DPERFLOG(dperf::INFO)
   if (line.empty() == true)
     return {};
 

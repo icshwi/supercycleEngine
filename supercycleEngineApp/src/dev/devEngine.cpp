@@ -46,7 +46,7 @@ static int sctableSwitch(io::IOBlock& io)
 
 static long initEngine()
 {
-  DPERFTIMERSCOPE(dperf::DEBUG1);
+  DPERFLOG(dperf::DEBUG1)
 
   static dlog::LevelTypes* const piodebug = (dlog::LevelTypes*)&iodebug;
   dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
@@ -71,7 +71,7 @@ static long ioEngine(aSubRecord* prec)
 {
   static std::map<std::string, std::string> cycle_row_prev = {};
   //---------------------------
-  DPERFTIMERSCOPE(dperf::DEBUG);
+  DPERFLOG(dperf::DEBUG)
   //---------------------------
   // Configure new cycle
   REGIO.dbSync(RegisteredStrOutMap);
