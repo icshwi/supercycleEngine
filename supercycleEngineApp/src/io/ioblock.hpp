@@ -41,7 +41,7 @@ public:
   IOBlock(){};
   //int init(int argc, char **argv);
   int init(std::map<std::string, std::string>);
-  std::string getSCTableLink() const { return (sctableRoot + ScTable); };
+  std::string getScTablePath() const { return (sctableRoot + ScTable); };
   std::string getPBState() const { return PBState; };
   std::string getPBMod() const { return PBMod; };
   std::string getPBDest() const { return PBDest; };
@@ -61,6 +61,8 @@ public:
 };
 
 IOBlock& RegisteredIOBlock();
+
+#define REGIO io::RegisteredIOBlock()
 
 } // namespace io
 

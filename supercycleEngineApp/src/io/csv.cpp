@@ -111,6 +111,11 @@ std::map<std::string, std::string> CSVStrMap::checkRowMapNext() const
   return _readRowMap(_row_id);
 }
 
+std::string CSVStrMap::getFileName() const
+{
+  return _csvstr._file.substr(_csvstr._file.find_last_of("/") + 1);
+}
+
 size_t CSVStrMap::_clean_and_count(std::string& str)
 {
   //DPERFTIMERSCOPE(dperf::DEBUG3);

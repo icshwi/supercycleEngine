@@ -6,6 +6,7 @@
 
 #include <functional>
 #include <string>
+#include <vector>
 
 #include <stringinRecord.h>
 //#include <stringoutRecord.h>
@@ -14,11 +15,11 @@
 #include <epicsExport.h>
 #include <recGbl.h>
 
-#include "devExtension.h"
+#include "devExtension.hpp"
 #include "dlog.hpp"
-#include "iobase.hpp"
 #include "object.hpp"
 #include "string.h"
+
 struct StrInFunc
 {
   std::function<std::string()> _func;
@@ -39,7 +40,7 @@ static long stringin_init_record(stringinRecord* prec)
   //DLOG(dlog::INFO, << "stringin_init_record------------------------------")
   char* parm = prec->inp.value.instio.string;
   std::string inp_str(parm);
-  StrInFunc* priv = new StrInFunc(dev::ObjReg::instance().get(io::db_inp_val(inp_str, "OBJ"), io::db_inp_val(inp_str, "PROP")));
+  StrInFunc* priv = new StrInFunc(dev::ObjReg::instance().get(dev::db_inp_val(inp_str, "OBJ"), dev::db_inp_val(inp_str, "PROP")));
   if (!priv)
   {
     recGblRecordError(S_db_noMemory, (void*)priv, "failed to allocate private struct");

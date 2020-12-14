@@ -15,5 +15,5 @@ function(ioASubBuf)
 device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
 
 ## from devObjPropStringIO.cpp
-device(stringin, INST_IO, devStringinObjProp, "StringIOObjProp")
+device(stringin, INST_IO, devStringinObjProp, "StringinObjProp")
 #device(stringout, INST_IO, devStringoutObjProp, "StringoutObjProp")

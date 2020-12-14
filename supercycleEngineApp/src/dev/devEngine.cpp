@@ -32,11 +32,11 @@ epicsExportAddress(int, PscUs);
 
 static int sctableSwitch(io::IOBlock& io)
 {
-  if (io.getSCTableLink().compare(io.CSVTab.getFile()) != 0)
+  if (io.getScTablePath().compare(io.CSVTab.getFilePath()) != 0)
   {
-    DLOG(dlog::INFO, << " OLD io.CSVTab.getFile() " << io.CSVTab.getFile() << " NEW io.getSCTableLink() " << io.getSCTableLink())
+    DLOG(dlog::INFO, << " OLD io.CSVTab.getFilePath() " << io.CSVTab.getFilePath() << " NEW io.getScTablePath() " << io.getScTablePath())
 
-    io.CSVTab.init(io.getSCTableLink());
+    io.CSVTab.init(io.getScTablePath());
 
     // Trigger sctable switch behaviour
     io.SCEConfig_yml.SCESwitchBehaviour(true);
@@ -54,11 +54,11 @@ static long initEngine()
   static dperf::LevelTypes* const dperflvlp = (dperf::LevelTypes*)&dperflvl;
   dperf::Config::instance().init(dperflvlp);
 
-  io::RegisteredIOBlock().cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
+  REGIO.cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
   //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / PscUs * 1000000);
   //io_block.cId = (epicsUInt64)1099511627776;
   //io_block.cId = 0;
-  io::RegisteredIOBlock().init(RegisteredCmdMapStrOut);
+  REGIO.init(RegisteredCmdMapStrOut);
 
   DLOG(dlog::INFO, << " cmn::compiler::info " << cmn::compiler::info())
   DLOG(dlog::INFO, << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")())
@@ -74,39 +74,39 @@ static long ioEngine(aSubRecord* prec)
   DPERFTIMERSCOPE(dperf::DEBUG);
   //---------------------------
   // Configure new cycle
-  io::RegisteredIOBlock().dbSync(RegisteredStrOutMap);
+  REGIO.dbSync(RegisteredStrOutMap);
   // Read the cycle
-  std::map<std::string, std::string> cycle_row_now = io::RegisteredIOBlock().CSVTab.getRowMap();
+  std::map<std::string, std::string> cycle_row_now = REGIO.CSVTab.getRowMap();
   //Print the cycle content
   DLOG(dlog::DEBUG, << " cycle_row " << cycle_row_now)
   // Apply the flow: e0,d1,e1,d2
-  cycle::stats(io::RegisteredIOBlock());
+  cycle::stats(REGIO);
   // Update the meta
   epicsUInt64* pvalaU64 = (epicsUInt64*)prec->vala;
   epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
-  pvalaU64[0] = (epicsUInt64)io::RegisteredIOBlock().cId; // 0,1
-  pvalaU32[2] = (epicsUInt32)io::RegisteredIOBlock().cPeriod;
-  pvalaU32[3] = (epicsUInt32)io::RegisteredIOBlock().CSVTab.getRowId();
-  pvalaU32[4] = (epicsUInt32)io::RegisteredIOBlock().CSVTab.getCycleId();
+  pvalaU64[0] = (epicsUInt64)REGIO.cId; // 0,1
+  pvalaU32[2] = (epicsUInt32)REGIO.cPeriod;
+  pvalaU32[3] = (epicsUInt32)REGIO.CSVTab.getRowId();
+  pvalaU32[4] = (epicsUInt32)REGIO.CSVTab.getCycleId();
 
   // Update the Dbuf - neva , novb (max)
   if (!cycle_row_now.empty())
   {
-    cycle::databuffer(io::RegisteredIOBlock(), cycle_row_now);
-    prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io::RegisteredIOBlock().dbuf.vallist());
+    cycle::databuffer(REGIO, cycle_row_now);
+    prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, REGIO.dbuf.vallist());
   }
 
   if (!cycle_row_prev.empty())
   {
-    cycle::sequence(io::RegisteredIOBlock().Seq, cycle_row_prev);
-    prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io::RegisteredIOBlock().Seq.getSeqTst());
-    prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io::RegisteredIOBlock().Seq.getSeqEvt());
-    prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io::RegisteredIOBlock().Seq.getSeqVec());
+    cycle::sequence(REGIO.Seq, cycle_row_prev);
+    prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, REGIO.Seq.getSeqTst());
+    prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, REGIO.Seq.getSeqEvt());
+    prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, REGIO.Seq.getSeqVec());
   }
 
   cycle_row_prev = cycle_row_now;
   // Change the table if requested and use the post processing free time
-  sctableSwitch(io::RegisteredIOBlock());
+  sctableSwitch(REGIO);
   return 0;
 }
 

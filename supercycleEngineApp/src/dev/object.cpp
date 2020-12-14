@@ -17,7 +17,7 @@ static std::string getSwVersion()
 
 static std::string getScTable()
 {
-  return io::RegisteredIOBlock().CSVTab.getFile();
+  return io::RegisteredIOBlock().CSVTab.getFileName();
 }
 
 } // namespace SCE

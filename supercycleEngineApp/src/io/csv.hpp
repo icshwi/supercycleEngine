@@ -37,7 +37,8 @@ public:
   std::map<std::string, std::string> checkRowMapNext() const;
   size_t getRowId() const { return _row_id; };
   size_t getCycleId() const { return _cycle_id; };
-  std::string getFile() const { return _csvstr._file; };
+  std::string getFilePath() const { return _csvstr._file; };
+  std::string getFileName() const;
 
 private:
   std::map<std::string, std::string> _readRowMap(const size_t l_rowid) const;
