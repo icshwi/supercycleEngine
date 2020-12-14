@@ -15,14 +15,14 @@
 namespace io
 {
 
-size_t CSVStrData::_getNumOfLines(std::ifstream& ifs)
-{
-  auto _lnum_ = std::count(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>(), '\n');
-  ifs.clear();
-  ifs.seekg(0);
+// size_t CSVStrData::_getNumOfLines(std::ifstream& ifs)
+// {
+//   auto _lnum_ = std::count(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>(), '\n');
+//   ifs.clear();
+//   ifs.seekg(0);
 
-  return _lnum_;
-}
+//   return _lnum_;
+// }
 
 int CSVStrData::init(std::string file)
 {
@@ -45,8 +45,8 @@ int CSVStrData::init(std::string file)
 
   _rows.clear();
   //_rows.reserve(_lnum_);
-  for (std::string row; std::getline(ifs_, row); /**/)
-    _rows.push_back(row);
+  for (std::string row_; std::getline(ifs_, row_); /**/)
+    _rows.push_back(row_);
 
   ifs_.close();
 
@@ -57,16 +57,16 @@ int CSVStrMap::init(std::string file)
 {
   DPERFTIMERSCOPE(dperf::INFO);
 
-  if (_csvstr.init(file) > 0)
+  if (CSVStrData::init(file) > 0)
     return 1;
 
-  _header.clear();
-  _header = _vect(_csvstr._header);
+  _keys.clear();
+  _keys = _vect(_header);
 
-  _rows.clear();
-  _rows.reserve(_csvstr._rows.size());
-  for (auto const& it : _csvstr._rows)
-    _rows.emplace_back(_vect(it));
+  //_rows.clear();
+  //_rows.reserve(_rows.size());
+  //for (auto const& it : _rows)
+  //  _rows.emplace_back(_vect(it));
 
   _row_id = 0;
   _cycle_id = 0;
@@ -76,12 +76,14 @@ int CSVStrMap::init(std::string file)
 
 std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid) const
 {
-  const std::vector<std::string>& row_ = _rows[rowid];
+  if (_rows.empty() == true)
+    return {};
+
+  std::vector<std::string> row_ = _vect(_rows[rowid]);
   std::map<std::string, std::string> rowmap_ = {};
 
-  for (size_t i = 0; i < _header.size(); i++)
-    //if (row_[i].empty() == false)
-    rowmap_[_header[i]] = row_[i];
+  for (size_t i = 0; i < _keys.size(); i++)
+    rowmap_[_keys[i]] = row_[i];
 
   return rowmap_;
 }
@@ -99,26 +101,23 @@ void CSVStrMap::_iterator() const
 
 std::map<std::string, std::string> CSVStrMap::getRowMap() const
 {
-  const size_t _row_id_ = _row_id;
+  const size_t row_id_ = _row_id;
 
   _iterator();
 
-  return _readRowMap(_row_id_);
+  return _readRowMap(row_id_);
 }
 
-std::map<std::string, std::string> CSVStrMap::checkRowMapNext() const
+std::string CSVStrData::getFileName() const
 {
-  return _readRowMap(_row_id);
+  return _file.substr(_file.find_last_of("/") + 1);
 }
 
-std::string CSVStrMap::getFileName() const
-{
-  return _csvstr._file.substr(_csvstr._file.find_last_of("/") + 1);
-}
-
-size_t CSVStrMap::_clean_and_count(std::string& str)
+size_t CSVStrMap::_clean_and_count(std::string& str) const
 {
   //DPERFTIMERSCOPE(dperf::DEBUG3);
+  if (str.empty() == true)
+    return 0;
 
   size_t i = 0;
   size_t csv_num_ = 0;
@@ -150,16 +149,20 @@ size_t CSVStrMap::_clean_and_count(std::string& str)
   return csv_num_;
 }
 
-std::vector<std::string> CSVStrMap::_vect(std::string line)
+std::vector<std::string> CSVStrMap::_vect(const std::string& line) const
 {
   //DPERFTIMERSCOPE(dperf::INFO);
+  if (line.empty() == true)
+    return {};
+
+  std::string line_ = line;
 
   std::vector<std::string> outv_;
   std::string tmp_;
 
-  size_t wordnum_ = _clean_and_count(line);
+  size_t wordnum_ = _clean_and_count(line_);
 
-  std::stringstream ss_(line);
+  std::stringstream ss_(line_);
 
   outv_.reserve(wordnum_);
   while (std::getline(ss_, tmp_, ','))
