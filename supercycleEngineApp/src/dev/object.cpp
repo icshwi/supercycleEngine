@@ -6,8 +6,21 @@
 
 #include "object.hpp"
 #include "ioblock.hpp"
-#include "sce.hpp"
 
+namespace SCE
+{
+
+static std::string getSwVersion()
+{
+  return SCE_VERSION;
+}
+
+static std::string getScTable()
+{
+  return io::RegisteredIOBlock().CSVTab.getFile();
+}
+
+} // namespace SCE
 namespace dev
 {
 
