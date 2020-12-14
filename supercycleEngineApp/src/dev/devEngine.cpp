@@ -58,7 +58,7 @@ static long initEngine()
   //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / PscUs * 1000000);
   //io_block.cId = (epicsUInt64)1099511627776;
   //io_block.cId = 0;
-  REGIO.init(RegisteredCmdMapStrOut);
+  REGIO.init();
 
   DLOG(dlog::INFO, << " cmn::compiler::info " << cmn::compiler::info())
   DLOG(dlog::INFO, << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")())

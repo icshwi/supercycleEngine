@@ -13,25 +13,16 @@
 namespace io
 {
 
-int IOBlock::init(std::map<std::string, std::string> argm)
+int IOBlock::init()
 {
-  if (cmn::file::exists(argm[GETVARNAME(databufferLink)]))
-    databufferLink = argm[GETVARNAME(databufferLink)];
 
-  if (cmn::file::exists(argm[GETVARNAME(mevtsLink)]))
-    mevtsLink = argm[GETVARNAME(mevtsLink)];
+  DLOG(dlog::INFO, << " DBufCfgPath " << MAPSTROUT["DBufCfgPath"] << " MEvtsCfgPath " << MAPSTROUT["MEvtsCfgPath"] << " ScECfgPath " << MAPSTROUT["ScECfgPath"] << " getScTablePath() " << getScTablePath())
 
-  if (cmn::file::exists(argm[GETVARNAME(sctableRoot)]))
-    sctableRoot = argm[GETVARNAME(sctableRoot)];
-
-  DLOG(dlog::INFO, << " databufferLink " << databufferLink << " mevtsLink " << mevtsLink << " sceconfigLink " << sceconfigLink << " getScTablePath() " << getScTablePath())
-
-  DBuf_yml.init(databufferLink);
-  SCEConfig_yml.init(sceconfigLink);
-  mEvts_yml.init(mevtsLink);
+  DBuf_yml.init(MAPSTROUT["DBufCfgPath"]);
+  SCEConfig_yml.init(MAPSTROUT["ScECfgPath"]);
+  mEvts_yml.init(MAPSTROUT["MEvtsCfgPath"]);
   //Managed by the ScTable switch
   //CSVTab.init(getSCTableLink());
-
   Seq.init(mEvts_yml.getMap());
 
   return 0;

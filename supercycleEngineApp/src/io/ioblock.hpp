@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 
+#include "cmdMapStrOut.hpp"
 #include "csv.hpp"
 #include "dbuf.hpp"
 #include "scenv.hpp"
@@ -25,12 +26,6 @@ namespace io
 class IOBlock
 {
 private:
-  // Links
-  std::string databufferLink = "/opt/reftabs/init/databuffer-ess.yml";
-  std::string mevtsLink = "/opt/reftabs/init/mevts-ess.yml";
-  std::string sceconfigLink = "/opt/reftabs/init/sceconfig-ess.yml";
-  // Directories
-  std::string sctableRoot = "/opt/reftabs/supercycles/";
   // PVs
   std::string ScTable = "null.csv";
   std::string PBState = "Off";
@@ -40,8 +35,8 @@ private:
 public:
   IOBlock(){};
   //int init(int argc, char **argv);
-  int init(std::map<std::string, std::string>);
-  std::string getScTablePath() const { return (sctableRoot + ScTable); };
+  int init();
+  std::string getScTablePath() const { return (MAPSTROUT["ScTableDir"] + ScTable); };
   std::string getPBState() const { return PBState; };
   std::string getPBMod() const { return PBMod; };
   std::string getPBDest() const { return PBDest; };
