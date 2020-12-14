@@ -41,8 +41,8 @@ std::string info()
   info_.append(cmn::str::convert(__cplusplus));
   //info_.append(" __STDC_VERSION__ ");
   //info_.append(cmn::str::convert(__STDC_VERSION__));
-  info_.append(" __STDC__ ");
-  info_.append(cmn::str::convert(__STDC__));
+  //info_.append(" __STDC__ ");
+  //info_.append(cmn::str::convert(__STDC__));
   info_.append(" __STDC_HOSTED__ ");
   info_.append(cmn::str::convert(__STDC_HOSTED__));
   //info_.append(" __FILE__ ");
@@ -50,10 +50,10 @@ std::string info()
   return info_;
 }
 
-void assure(long ver)
-{
-  assert((ver >= __cplusplus) && "The gcc version is too old.");
-}
+// void assure(long ver)
+// {
+//   assert((ver >= __cplusplus) && "The gcc version is too old.");
+// }
 
 std::string funcName(const std::string& function, const std::string& prettyFunction)
 {

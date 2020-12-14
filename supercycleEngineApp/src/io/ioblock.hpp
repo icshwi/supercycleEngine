@@ -32,7 +32,7 @@ private:
   // Directories
   std::string sctableRoot = "/opt/reftabs/supercycles/";
   // PVs
-  std::string SCTable = "null.csv";
+  std::string ScTable = "null.csv";
   std::string PBState = "Off";
   std::string PBMod = "None";
   std::string PBDest = "None";
@@ -41,7 +41,7 @@ public:
   IOBlock(){};
   //int init(int argc, char **argv);
   int init(std::map<std::string, std::string>);
-  std::string getSCTableLink() const { return (sctableRoot + SCTable); };
+  std::string getSCTableLink() const { return (sctableRoot + ScTable); };
   std::string getPBState() const { return PBState; };
   std::string getPBMod() const { return PBMod; };
   std::string getPBDest() const { return PBDest; };

@@ -64,6 +64,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-FOut_") {
 
   field(LNK0, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
   field(LNK1, "$(P)$(R=)$(S=:)COffset-Seq_")
+  field(LNK2, "$(P)$(R=)$(S=:)DBufRB-FOut_.PROC")
 }
 
 record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
@@ -79,34 +80,3 @@ record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
   #field(TPRO, "1")
 }
 
-record(subArray, "$(P)$(R=)$(S=:)Period-subA_") {
-  field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
-  field(INDX, "2")
-  field(NELM, "1") # "2046")
-  field(MALM, "3") # "2046")
-  field(FTVL, "ULONG")
-  #field(FLNK, "$(P)$(R=)$(S=:)Period")
-}
-
-record(subArray, "$(P)$(R=)$(S=:)ScTabRowId-subA_") {
-  field(DTYP, "Soft Channel")
-  field(SCAN, "Passive")
-  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
-  field(INDX, "3")
-  field(NELM, "1") # "2046")
-  field(MALM, "4") # "2046")
-  field(FTVL, "ULONG")
-  #field(FLNK, "$(P)$(R=)$(S=:)ScTabRowId.PROC")
-}
-
-record(subArray, "$(P)$(R=)$(S=:)ScTabCycleId-subA_") {
-  field(DTYP, "Soft Channel")
-  field(SCAN, "Passive")
-  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
-  field(INDX, "4")
-  field(NELM, "1") # "2046")
-  field(MALM, "5") # "2046")
-  field(FTVL, "ULONG")
-  #field(FLNK, "$(P)$(R=)$(S=:)ScTabCycleId.PROC")
-}

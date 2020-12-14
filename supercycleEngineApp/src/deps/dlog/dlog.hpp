@@ -19,7 +19,9 @@
 #include <functional>
 #include <iostream>
 
-#define DBGLOG_
+#ifndef __DBGLOG__
+#  define DBGLOG_
+#endif
 
 #if defined DBGLOG_
 #  if defined __COMPACT_PRETTY_FUNCTION__

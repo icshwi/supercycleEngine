@@ -42,8 +42,8 @@ int IOBlock::dbSync(const std::map<std::string, std::string>& argms)
 
   for (auto const& it : argms)
   {
-    if (it.first.find(GETVARNAME(SCTable)) != std::string::npos)
-      SCTable = it.second;
+    if (it.first.find(GETVARNAME(ScTable)) != std::string::npos)
+      ScTable = it.second;
     else if (it.first.find(GETVARNAME(PBState)) != std::string::npos)
       PBState = it.second;
     else if (it.first.find(GETVARNAME(PBMod)) != std::string::npos)
