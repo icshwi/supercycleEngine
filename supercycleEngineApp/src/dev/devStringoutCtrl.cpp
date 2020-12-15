@@ -16,13 +16,20 @@
 
 #include <stringoutRecord.h>
 
-std::map<std::string, std::string> RegisteredStrOutMap;
+namespace devreg
+{
+std::map<std::string, std::string>& StrOutCtrlMap()
+{
+  static std::map<std::string, std::string> reg_;
+  return reg_;
+}
+} // namespace devreg
 
 static long initStrOutCtrl(stringoutRecord* prec)
 {
   std::string key(prec->name);
   std::string val(prec->val);
-  RegisteredStrOutMap[key] = val;
+  devreg::StrOutCtrlMap()[key] = val;
   return 0;
 }
 
@@ -30,7 +37,7 @@ static long ioStrOutCtrl(stringoutRecord* prec)
 {
   std::string key(prec->name);
   std::string val(prec->val);
-  RegisteredStrOutMap[key] = val;
+  devreg::StrOutCtrlMap()[key] = val;
   return 0;
 }
 

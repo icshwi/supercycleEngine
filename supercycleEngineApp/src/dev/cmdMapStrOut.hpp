@@ -8,7 +8,7 @@
 
 #include <map>
 
-//extern std::map<std::string, std::string> RegisteredCmdMapStrOut;
-
-std::map<std::string, std::string>& RegisteredCmdMapStrOut();
-#define MAPSTROUT RegisteredCmdMapStrOut()
+namespace devreg
+{
+std::map<std::string, std::string>& CmdMapStrOut();
+}

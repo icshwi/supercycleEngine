@@ -4,11 +4,11 @@
  * @date 2020-03-20
  */
 
-#ifndef DEVSTRINGOUTCTRL_HPP_
-#define DEVSTRINGOUTCTRL_HPP_
+#pragma once
 
 #include <map>
 
-extern std::map<std::string, std::string> RegisteredStrOutMap;
-
-#endif // DEVSTRINGOUTCTRL_HPP_
+namespace devreg
+{
+std::map<std::string, std::string>& StrOutCtrlMap();
+} // namespace devreg

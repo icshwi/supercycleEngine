@@ -36,7 +36,7 @@ public:
   IOBlock(){};
   //int init(int argc, char **argv);
   int init();
-  std::string getScTablePath() const { return (MAPSTROUT["ScTableDir"] + ScTable); };
+  std::string getScTablePath() const { return (devreg::CmdMapStrOut()["ScTableDir"] + ScTable); };
   std::string getScTable() const { return ScTable; };
   std::string getPBState() const { return PBState; };
   std::string getPBMod() const { return PBMod; };

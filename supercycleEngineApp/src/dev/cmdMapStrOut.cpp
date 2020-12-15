@@ -9,11 +9,14 @@
 #include <epicsExport.h>
 #include <iocsh.h>
 
-std::map<std::string, std::string>& RegisteredCmdMapStrOut()
+namespace devreg
+{
+std::map<std::string, std::string>& CmdMapStrOut()
 {
   static std::map<std::string, std::string> reg_;
   return reg_;
 }
+} // namespace devreg
 
 static const iocshArg strArg0 = {"key", iocshArgString};
 static const iocshArg strArg1 = {"val", iocshArgString};
@@ -22,7 +25,7 @@ static const iocshFuncDef mapStrOutFuncDef = {"mapStrOut", 2, strArgs};
 
 static void mapStrOutCall(const iocshArgBuf* arg)
 {
-  RegisteredCmdMapStrOut()[arg[0].sval] = arg[1].sval;
+  devreg::CmdMapStrOut()[arg[0].sval] = arg[1].sval;
 }
 
 static void cmdMapStrOut(void)
