@@ -65,6 +65,7 @@ record(fanout, "$(P)$(R=)$(S=:)Trig-FOut_") {
   field(LNK0, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
   field(LNK1, "$(P)$(R=)$(S=:)COffset-Seq_")
   field(LNK2, "$(P)$(R=)$(S=:)DBufRB-FOut_.PROC")
+  field(LNK3, "$(P)$(R=)$(S=:)ScTableSw_")
 }
 
 record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
@@ -80,3 +81,8 @@ record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
   #field(TPRO, "1")
 }
 
+record(stringin, "$(P)$(R=)$(S=:)ScTableSw_") {
+  field(DTYP, "Function ScTable")
+  field(DESC, "Supercycle Table Switch")
+  field(PINI, "YES")
+}

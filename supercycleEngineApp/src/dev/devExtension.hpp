@@ -11,7 +11,6 @@
 
 extern "C"
 {
-
   struct DevSupReg
   {
     long num; // space for 6 functions

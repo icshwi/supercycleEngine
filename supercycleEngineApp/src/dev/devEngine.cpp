@@ -30,20 +30,6 @@ epicsExportAddress(int, dperflvl);
 static int PscUs = 71428; //[us]
 epicsExportAddress(int, PscUs);
 
-static int sctableSwitch(io::IOBlock& io)
-{
-  if (io.getScTablePath().compare(io.CSVTab.getFilePath()) != 0)
-  {
-    DLOG(dlog::INFO, << " OLD io.CSVTab.getFilePath() " << io.CSVTab.getFilePath() << " NEW io.getScTablePath() " << io.getScTablePath())
-
-    io.CSVTab.init(io.getScTablePath());
-
-    // Trigger sctable switch behaviour
-    io.SCEConfig_yml.SCESwitchBehaviour(true);
-  }
-  return 0;
-}
-
 static long initEngine()
 {
   DPERFLOG(dperf::DEBUG1)
@@ -105,8 +91,6 @@ static long ioEngine(aSubRecord* prec)
   }
 
   cycle_row_prev = cycle_row_now;
-  // Change the table if requested and use the post processing free time
-  sctableSwitch(REGIO);
   return 0;
 }
 
