@@ -11,18 +11,21 @@
 
 #include <string>
 
+#include "scenv.hpp"
+
+#define FHead_(obj) std::string get##obj()
 namespace devio
 {
 
-std::string getDbufCfgPath();
-std::string getMEvtsCfgPath();
-std::string getScECfgPath();
+FHead_(DBufCfgPath);
+FHead_(MEvtsCfgPath);
+FHead_(ScECfgPath);
 
-std::string getScTable();
-std::string getPBState();
-std::string getPBMod();
-std::string getPBDest();
+FHead_(ScTable);
+FHead_(PBState);
+FHead_(PBMod);
+FHead_(PBDest);
 
-std::string getScTablePath();
+FHead_(ScTablePath);
 
 } // namespace devio

@@ -1,7 +1,7 @@
 # vars
-variable(iodebug)
-variable(dperflvl)
-variable(PscUs)
+variable(DLogLvl)
+variable(DPerfLvl)
+variable(ScPeriodUs)
 
 # commands
 registrar(cmdMapStrOut)

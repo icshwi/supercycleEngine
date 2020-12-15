@@ -21,34 +21,34 @@
 #include "object.hpp"
 
 //int and double only
-static int iodebug = 4;
-epicsExportAddress(int, iodebug);
+static int DLogLvl = 4;
+epicsExportAddress(int, DLogLvl);
 
-static int dperflvl = 4;
-epicsExportAddress(int, dperflvl);
+static int DPerfLvl = 4;
+epicsExportAddress(int, DPerfLvl);
 
-static int PscUs = 71428; //[us]
-epicsExportAddress(int, PscUs);
+static int ScPeriodUs = 71428; //[us]
+epicsExportAddress(int, ScPeriodUs);
 
 static long initEngine()
 {
   DPERFLOG(dperf::DEBUG1)
 
-  static dlog::LevelTypes* const piodebug = (dlog::LevelTypes*)&iodebug;
-  dlog::Config::instance().init(piodebug, cmn::tst::epics_now);
+  static dlog::LevelTypes* const pDLogLvl = (dlog::LevelTypes*)&DLogLvl;
+  dlog::Config::instance().init(pDLogLvl, cmn::tst::epics_now);
 
-  static dperf::LevelTypes* const dperflvlp = (dperf::LevelTypes*)&dperflvl;
-  dperf::Config::instance().init(dperflvlp);
+  static dperf::LevelTypes* const pDPerfLvl = (dperf::LevelTypes*)&DPerfLvl;
+  dperf::Config::instance().init(pDPerfLvl);
 
-  REGIO.cId = (epicsUInt64)round(cmn::tst::sec_now() / PscUs * 1000000);
-  //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / PscUs * 1000000);
+  REGIO.cId = (epicsUInt64)round(cmn::tst::sec_now() / ScPeriodUs * 1000000);
+  //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / ScPeriodUs * 1000000);
   //io_block.cId = (epicsUInt64)1099511627776;
   //io_block.cId = 0;
   REGIO.init();
 
   DLOG(dlog::INFO, << " cmn::compiler::info " << cmn::compiler::info())
   DLOG(dlog::INFO, << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")())
-  DLOG(dlog::INFO, << " iodebug " << iodebug << " PscUs " << PscUs)
+  DLOG(dlog::INFO, << " DLogLvl " << DLogLvl << " DPerfLvl " << DPerfLvl << " ScPeriodUs " << ScPeriodUs)
 
   return 0;
 }

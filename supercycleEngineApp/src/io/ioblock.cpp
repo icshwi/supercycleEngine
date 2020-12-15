@@ -18,9 +18,9 @@ namespace io
 int IOBlock::init()
 {
 
-  DLOG(dlog::INFO, << " DBufCfgPath " << devio::getDbufCfgPath() << " MEvtsCfgPath " << devio::getMEvtsCfgPath() << " ScECfgPath " << devio::getScECfgPath() << " getScTablePath() " << devio::getScTablePath())
+  DLOG(dlog::INFO, << " getDBufCfgPath " << devio::getDBufCfgPath() << " MEvtsCfgPath " << devio::getMEvtsCfgPath() << " ScECfgPath " << devio::getScECfgPath() << " getScTablePath() " << devio::getScTablePath())
 
-  DBuf_yml.init(devio::getDbufCfgPath());
+  DBuf_yml.init(devio::getDBufCfgPath());
   SCEConfig_yml.init(devio::getScECfgPath());
   mEvts_yml.init(devio::getMEvtsCfgPath());
   //Managed by the ScTable switch
