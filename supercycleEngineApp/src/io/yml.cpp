@@ -14,7 +14,7 @@
 #include <vector>
 #include <yaml-cpp/yaml.h>
 
-namespace io
+namespace sce
 {
 
 int YmlNode::init(std::string fname)
@@ -180,7 +180,7 @@ int YmlDatabuffer::init(std::string fname)
   return 0;
 }
 
-} // namespace io
+} // namespace sce
 
 // YAML::Node node1 = YAML::LoadFile("/opt/reftabs/init/databuffer-ess.yml");
 // YAML::Node node2 = node1["PBState"];

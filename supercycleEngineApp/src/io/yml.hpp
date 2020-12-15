@@ -19,7 +19,7 @@
 
 //https://github.com/jbeder/yaml-cpp/wiki/Tutorial
 
-namespace io
+namespace sce
 {
 
 class YmlNode

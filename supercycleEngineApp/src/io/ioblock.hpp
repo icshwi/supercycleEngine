@@ -33,9 +33,9 @@ public:
   mutable epicsUInt32 cPeriod = 0; //cycle period [us]
   mutable epicsUInt64 cId = 0;
 
-  io::YmlDatabuffer DBuf_yml;
-  io::YmlSCEConfig SCEConfig_yml;
-  io::YmlMEvts mEvts_yml;
+  sce::YmlDatabuffer DBuf_yml;
+  sce::YmlSCEConfig SCEConfig_yml;
+  sce::YmlMEvts mEvts_yml;
   sce::csv::FileReader CSVReader;
   // Set the send buffer
   sce::DBufPacket dbuf;
