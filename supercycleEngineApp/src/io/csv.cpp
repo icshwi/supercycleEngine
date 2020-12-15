@@ -77,9 +77,19 @@ int CSVStrMap::init(std::string file)
 std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid) const
 {
   if (_rows.empty() == true)
+  {
+    DLOG(dlog::ERROR, << " (_rows.empty() == true) rowid " << rowid)
     return {};
+  }
 
   std::vector<std::string> row_ = _vect(_rows[rowid]);
+
+  if (row_.size() != _keys.size())
+  {
+    DLOG(dlog::ERROR, << " (row_.size() != _keys.size()) rowid " << rowid << " row_.size() " << row_.size() << " _keys.size() " << _keys.size())
+    return {};
+  }
+
   std::map<std::string, std::string> rowmap_ = {};
 
   for (size_t i = 0; i < _keys.size(); i++)
