@@ -10,13 +10,15 @@
 #include <string>
 #include <vector>
 
-namespace io
+namespace sce
+{
+namespace csv
 {
 
-class CSVStrData
+class FileString
 {
 public:
-  CSVStrData(){};
+  FileString(){};
   std::string getFilePath() const { return _file; };
   std::string getFileName() const;
   virtual int init(std::string file);
@@ -31,10 +33,10 @@ private:
   //size_t _getNumOfLines(std::ifstream& ifs);
 };
 
-class CSVStrMap : public CSVStrData
+class FileReader : public FileString
 {
 public:
-  CSVStrMap(){};
+  FileReader(){};
   int init(std::string file) override;
   std::map<std::string, std::string> getRowMap() const;
   size_t getRowId() const { return _row_id; };
@@ -49,4 +51,6 @@ private:
   std::vector<std::string> _keys = {};
 };
 
-} // namespace io
+} // namespace csv
+
+} // namespace sce

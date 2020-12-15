@@ -24,7 +24,7 @@ int IOBlock::init()
   SCEConfig_yml.init(devio::getScECfgPath());
   mEvts_yml.init(devio::getMEvtsCfgPath());
   //Managed by the ScTable switch
-  //CSVTab.init(getSCTableLink());
+  //CSVReader.init(getSCTableLink());
   Seq.init(mEvts_yml.getMap());
 
   return 0;

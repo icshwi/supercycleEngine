@@ -36,7 +36,7 @@ public:
   io::YmlDatabuffer DBuf_yml;
   io::YmlSCEConfig SCEConfig_yml;
   io::YmlMEvts mEvts_yml;
-  io::CSVStrMap CSVTab;
+  sce::csv::FileReader CSVReader;
   // Set the send buffer
   sce::DBufPacket dbuf;
   sce::SequenceHandler Seq;

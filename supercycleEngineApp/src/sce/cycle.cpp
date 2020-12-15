@@ -131,7 +131,7 @@ int stats(const io::IOBlock& io)
   // State the cycle
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  DLOG(dlog::DEBUG, << " ScTableCycleId " << io.CSVTab.getCycleId() << " ScTableRowId " << io.CSVTab.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
+  DLOG(dlog::DEBUG, << " ScTableCycleId " << io.CSVReader.getCycleId() << " ScTableRowId " << io.CSVReader.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
 
   return 0;
 }

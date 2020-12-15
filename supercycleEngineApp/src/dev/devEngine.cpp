@@ -60,7 +60,7 @@ static long ioEngine(aSubRecord* prec)
   DPERFLOG(dperf::DEBUG)
   //---------------------------
   // Read the cycle
-  std::map<std::string, std::string> cycle_row_now = REGIO.CSVTab.getRowMap();
+  std::map<std::string, std::string> cycle_row_now = REGIO.CSVReader.getRowMap();
   //Print the cycle content
   DLOG(dlog::DEBUG, << " cycle_row " << cycle_row_now)
   // Apply the flow: e0,d1,e1,d2
@@ -70,8 +70,8 @@ static long ioEngine(aSubRecord* prec)
   epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
   pvalaU64[0] = (epicsUInt64)REGIO.cId; // 0,1
   pvalaU32[2] = (epicsUInt32)REGIO.cPeriod;
-  pvalaU32[3] = (epicsUInt32)REGIO.CSVTab.getRowId();
-  pvalaU32[4] = (epicsUInt32)REGIO.CSVTab.getCycleId();
+  pvalaU32[3] = (epicsUInt32)REGIO.CSVReader.getRowId();
+  pvalaU32[4] = (epicsUInt32)REGIO.CSVReader.getCycleId();
 
   // Update the Dbuf - neva , novb (max)
   if (!cycle_row_now.empty())

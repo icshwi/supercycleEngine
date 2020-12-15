@@ -12,10 +12,12 @@
 #include "dlog.hpp"
 #include "dperf.hpp"
 
-namespace io
+namespace sce
+{
+namespace csv
 {
 
-// size_t CSVStrData::_getNumOfLines(std::ifstream& ifs)
+// size_t FileString::_getNumOfLines(std::ifstream& ifs)
 // {
 //   auto _lnum_ = std::count(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>(), '\n');
 //   ifs.clear();
@@ -24,7 +26,7 @@ namespace io
 //   return _lnum_;
 // }
 
-int CSVStrData::init(std::string file)
+int FileString::init(std::string file)
 {
   //guard
   if (cmn::file::exists(file) == false)
@@ -53,11 +55,11 @@ int CSVStrData::init(std::string file)
   return 0;
 }
 
-int CSVStrMap::init(std::string file)
+int FileReader::init(std::string file)
 {
   DPERFLOG(dperf::INFO)
 
-  if (CSVStrData::init(file) > 0)
+  if (FileString::init(file) > 0)
     return 1;
 
   _keys.clear();
@@ -74,7 +76,7 @@ int CSVStrMap::init(std::string file)
   return 0;
 }
 
-std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid) const
+std::map<std::string, std::string> FileReader::_readRowMap(const size_t rowid) const
 {
   if (_rows.empty() == true)
   {
@@ -98,7 +100,7 @@ std::map<std::string, std::string> CSVStrMap::_readRowMap(const size_t rowid) co
   return rowmap_;
 }
 
-void CSVStrMap::_iterator() const
+void FileReader::_iterator() const
 {
   if (_row_id < _rows.size() - 1)
     _row_id++;
@@ -109,7 +111,7 @@ void CSVStrMap::_iterator() const
   }
 }
 
-std::map<std::string, std::string> CSVStrMap::getRowMap() const
+std::map<std::string, std::string> FileReader::getRowMap() const
 {
   const size_t row_id_ = _row_id;
 
@@ -118,12 +120,12 @@ std::map<std::string, std::string> CSVStrMap::getRowMap() const
   return _readRowMap(row_id_);
 }
 
-std::string CSVStrData::getFileName() const
+std::string FileString::getFileName() const
 {
   return _file.substr(_file.find_last_of("/") + 1);
 }
 
-size_t CSVStrMap::_clean_and_count(std::string& str) const
+size_t FileReader::_clean_and_count(std::string& str) const
 {
   //DPERFLOG(dperf::DEBUG3)
   if (str.empty() == true)
@@ -159,7 +161,7 @@ size_t CSVStrMap::_clean_and_count(std::string& str) const
   return csv_num_;
 }
 
-std::vector<std::string> CSVStrMap::_vect(const std::string& line) const
+std::vector<std::string> FileReader::_vect(const std::string& line) const
 {
   //DPERFLOG(dperf::INFO)
   if (line.empty() == true)
@@ -181,4 +183,6 @@ std::vector<std::string> CSVStrMap::_vect(const std::string& line) const
   return outv_;
 }
 
-} // namespace io
+} // namespace csv
+
+} // namespace sce

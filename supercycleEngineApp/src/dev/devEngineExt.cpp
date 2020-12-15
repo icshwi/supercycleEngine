@@ -17,11 +17,11 @@
 
 static int sctableSwitch()
 {
-  if (devio::getScTablePath().compare(REGIO.CSVTab.getFilePath()) != 0)
+  if (devio::getScTablePath().compare(REGIO.CSVReader.getFilePath()) != 0)
   {
-    DLOG(dlog::DEBUG, << " OLD REGIO.CSVTab.getFilePath() " << REGIO.CSVTab.getFilePath() << " NEW devio::getScTablePath() " << devio::getScTablePath())
+    DLOG(dlog::DEBUG, << " OLD REGIO.CSVReader.getFilePath() " << REGIO.CSVReader.getFilePath() << " NEW devio::getScTablePath() " << devio::getScTablePath())
 
-    if (REGIO.CSVTab.init(devio::getScTablePath()) > 0) return 1;
+    if (REGIO.CSVReader.init(devio::getScTablePath()) > 0) return 1;
     // Trigger sctable switch behaviour
     REGIO.SCEConfig_yml.SCESwitchBehaviour(true);
   }
