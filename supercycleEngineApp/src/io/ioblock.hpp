@@ -25,22 +25,10 @@ namespace io
 
 class IOBlock
 {
-private:
-  // PVs
-  std::string ScTable = "null.csv";
-  std::string PBState = "Off";
-  std::string PBMod = "None";
-  std::string PBDest = "None";
-
 public:
   IOBlock(){};
   //int init(int argc, char **argv);
   int init();
-  std::string getScTablePath() const { return (devreg::CmdMapStrOut()["ScTableDir"] + ScTable); };
-  std::string getScTable() const { return ScTable; };
-  std::string getPBState() const { return PBState; };
-  std::string getPBMod() const { return PBMod; };
-  std::string getPBDest() const { return PBDest; };
 
   mutable epicsUInt32 cPeriod = 0; //cycle period [us]
   mutable epicsUInt64 cId = 0;
@@ -52,8 +40,6 @@ public:
   // Set the send buffer
   sce::DBufPacket dbuf;
   sce::SequenceHandler Seq;
-
-  int dbSync(const std::map<std::string, std::string>&);
 };
 
 IOBlock& RegisteredIOBlock();

@@ -3,6 +3,7 @@
  * @author Jerzy Jamroz (jerzy.jamroz@ess.eu)
  * @date 2020-03-20
  */
+#include "devIO.hpp"
 
 #include "cycle.hpp"
 //#include "cmnbase.hpp"
@@ -93,12 +94,12 @@ int databuffer(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
 
   // sctable operations
   // PBState
-  cycle_row["PBState"] = io.getPBState();
+  cycle_row["PBState"] = devio::getPBState();
   io.SCEConfig_yml.do_PBSwOff_States(cycle_row);
   // PBDest
-  cycle_row["PBDest"] = io.getPBDest();
+  cycle_row["PBDest"] = devio::getPBDest();
   // PBMod
-  cycle_row["PBMod"] = io.getPBMod();
+  cycle_row["PBMod"] = devio::getPBMod();
   io.SCEConfig_yml.do_PBSwOff_Mods(cycle_row);
   if (cycle_row["PBMod"] == "NoBeam")
     cycle_row["PBState"] = "Off";

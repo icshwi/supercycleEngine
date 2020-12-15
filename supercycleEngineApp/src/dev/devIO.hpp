@@ -8,14 +8,21 @@
 
 #include "cmdMapStrOut.hpp"
 #include "devStringoutCtrl.hpp"
+
 #include <string>
 
 namespace devio
 {
 
-std::string getDbufCfgPath() { return devreg::CmdMapStrOut()["DBufCfgPath"]; };
-std::string getMEvtsCfgPath() { return devreg::CmdMapStrOut()["MEvtsCfgPath"]; };
-std::string getScECfgPath() { return devreg::CmdMapStrOut()["ScECfgPath"]; };
-//std::string getDbufCfgPath() { return MAPSTROUT["DBufCfgPath"]; };
+std::string getDbufCfgPath();
+std::string getMEvtsCfgPath();
+std::string getScECfgPath();
+
+std::string getScTable();
+std::string getPBState();
+std::string getPBMod();
+std::string getPBDest();
+
+std::string getScTablePath();
 
 } // namespace devio

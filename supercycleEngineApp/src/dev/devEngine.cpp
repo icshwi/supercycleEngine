@@ -59,8 +59,6 @@ static long ioEngine(aSubRecord* prec)
   //---------------------------
   DPERFLOG(dperf::DEBUG)
   //---------------------------
-  // Configure new cycle
-  REGIO.dbSync(devreg::StrOutCtrlMap());
   // Read the cycle
   std::map<std::string, std::string> cycle_row_now = REGIO.CSVTab.getRowMap();
   //Print the cycle content

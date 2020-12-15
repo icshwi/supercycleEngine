@@ -13,14 +13,15 @@
 #include <stringinRecord.h>
 
 #include "devExtension.hpp"
+#include "devIO.hpp"
 
 static int sctableSwitch()
 {
-  if (REGIO.getScTablePath().compare(REGIO.CSVTab.getFilePath()) != 0)
+  if (devio::getScTablePath().compare(REGIO.CSVTab.getFilePath()) != 0)
   {
-    DLOG(dlog::DEBUG, << " OLD REGIO.CSVTab.getFilePath() " << REGIO.CSVTab.getFilePath() << " NEW REGIO.getScTablePath() " << REGIO.getScTablePath())
+    DLOG(dlog::DEBUG, << " OLD REGIO.CSVTab.getFilePath() " << REGIO.CSVTab.getFilePath() << " NEW devio::getScTablePath() " << devio::getScTablePath())
 
-    if (REGIO.CSVTab.init(REGIO.getScTablePath()) > 0) return 1;
+    if (REGIO.CSVTab.init(devio::getScTablePath()) > 0) return 1;
     // Trigger sctable switch behaviour
     REGIO.SCEConfig_yml.SCESwitchBehaviour(true);
   }
@@ -30,14 +31,14 @@ static int sctableSwitch()
 static long stringin_init_record(stringinRecord* prec)
 {
   if (sctableSwitch() > 0) return 0;
-  (void)strcpy(prec->val, REGIO.getScTable().c_str());
+  (void)strcpy(prec->val, devio::getScTable().c_str());
   return 0; /* success */
 }
 
 static long stringin_read(stringinRecord* prec)
 {
   if (sctableSwitch() > 0) return 0;
-  (void)strcpy(prec->val, REGIO.getScTable().c_str());
+  (void)strcpy(prec->val, devio::getScTable().c_str());
   prec->udf = 0;
   return 0; /* success */
 }
