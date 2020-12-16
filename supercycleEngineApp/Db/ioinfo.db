@@ -13,6 +13,13 @@ record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
   field(PINI, "YES")
 }
 
+record(stringin, "$(P)$(R=)$(S=:)SwBuild-I") {
+  field(DESC, "Software build date/timestamp")
+  field(DTYP, "StringinObjProp")
+  field(INP , "@OBJ=$(OBJ=SCE), PROP=SwBuild")
+  field(PINI, "YES")
+}
+
 record(stringin, "$(P)$(R=)$(S=:)ScTable-RB") {
   field(DESC, "Supercyle Table Name Readback")
   field(DTYP, "StringinObjProp")
