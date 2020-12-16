@@ -13,25 +13,31 @@
 #include "cmdMapStrOut.hpp"
 #include "csv.hpp"
 #include "dbuf.hpp"
-#include "scenv.hpp"
 #include "seq.hpp"
 #include "version.h"
 #include "yml.hpp"
 
 #include "epicsTypes.h"
 
-namespace mem
+namespace sce
 {
 
 class ScERegistry
 {
+private:
+  //mutable epicsUInt64 _id = (epicsUInt64)round(cmn::tst::sec_now() / ScPeriodUs * 1000000);
+  mutable epicsUInt64 _id = 0;
+  mutable epicsUInt32 _period = 0; //cycle period [us]
+
 public:
   ScERegistry(){};
   //int init(int argc, char **argv);
   int init();
-
-  mutable epicsUInt32 cPeriod = 0; //cycle period [us]
-  mutable epicsUInt64 cId = 0;
+  void initId(epicsUInt64 id) { _id = id; };
+  void incId() const { ++_id; };
+  epicsUInt64 getId() const { return _id; };
+  void putPeriod(epicsUInt32 period) const { _period = period; };
+  epicsUInt32 getPeriod() const { return _period; };
 
   sce::YmlDatabuffer DBuf;
   sce::YmlSCEConfig Config;
@@ -44,8 +50,8 @@ public:
 
 ScERegistry& RegisteredIOBlock();
 
-#define SCEMEMREG mem::RegisteredIOBlock()
+#define SCEMEMREG sce::RegisteredIOBlock()
 
-} // namespace mem
+} // namespace sce
 
 #endif // MENU_HPP_

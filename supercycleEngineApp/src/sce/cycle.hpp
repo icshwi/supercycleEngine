@@ -8,12 +8,12 @@
 
 #include <epicsTypes.h>
 
-#include "memreg.hpp"
+#include "reg.hpp"
 //#include "scenv.hpp"
 
 namespace cycle
 {
-int databuffer(mem::ScERegistry& io, std::map<std::string, std::string>& cycle_row);
+int databuffer(sce::ScERegistry&, std::map<std::string, std::string>& cycle_row);
 int sequence(const sce::SequenceHandler& seq, const std::map<std::string, std::string>& cycle_row);
-int stats(const mem::ScERegistry& io);
+int stats(const sce::ScERegistry&);
 } // namespace cycle

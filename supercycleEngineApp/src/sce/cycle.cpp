@@ -39,30 +39,30 @@ static void io_dbuf_safe_write(sce::DBufPacket& dbuf, const std::map<std::string
   }
 }
 
-static void io_dbuf_safe_write_all(mem::ScERegistry& io, const std::map<std::string, std::string>& cycle_row)
+static void io_dbuf_safe_write_all(sce::ScERegistry& scereg, const std::map<std::string, std::string>& cycle_row)
 {
-  io.DBufHandler.clear();
+  scereg.DBufHandler.clear();
   // ProtNum
-  io.DBufHandler.write(env::ProtNum, io.DBuf.getProtNum());
+  scereg.DBufHandler.write(env::ProtNum, scereg.DBuf.getProtNum());
   // ProtVer
-  io.DBufHandler.write(env::ProtVer, io.DBuf.getProtVer());
+  scereg.DBufHandler.write(env::ProtVer, scereg.DBuf.getProtVer());
   // IdCycle
-  io.DBufHandler.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
-  io.DBufHandler.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
+  scereg.DBufHandler.write(env::IdCycle, (epicsUInt32)scereg.getId());             //low 4bytes
+  scereg.DBufHandler.write(env::IdCycle + 4, (epicsUInt32)(scereg.getId() >> 32)); //high 4bytes
   // PBState
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBState, io.DBuf._PBStateIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBState, scereg.DBuf._PBStateIds.getMap());
   // PBDest
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBDest, io.DBuf._PBDestIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBDest, scereg.DBuf._PBDestIds.getMap());
   // PBMod
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBMod, io.DBuf._PBModIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBMod, scereg.DBuf._PBModIds.getMap());
   // PBPresent
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBPresent, io.DBuf._PBPresentIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBPresent, scereg.DBuf._PBPresentIds.getMap());
   // PBLen
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBLen);
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBLen);
   // PBEn
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBEn);
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBEn);
   // PBCurr
-  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBCurr);
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBCurr);
 }
 
 /*
@@ -77,7 +77,7 @@ TODO: write cycle variables for the future
 {
     // Write other cycle variables
   std::map<std::string, std::string> cycle_row_adds = {};
-  // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str::convert(io.cOffset);
+  // cycle_row_adds[env::EVT2Str.at(env::COFFSET)] = cmn::str::convert(scereg.cOffset);
   // Insert generated cycle variables into the cycle row
   cycle_row_insert(cycle_row, cycle_row_adds);
 }
@@ -86,31 +86,31 @@ TODO: write cycle variables for the future
 namespace cycle
 {
 
-int databuffer(mem::ScERegistry& io, std::map<std::string, std::string>& cycle_row)
+int databuffer(sce::ScERegistry& scereg, std::map<std::string, std::string>& cycle_row)
 {
   // Remove beam generation depending on the selected behaviour
-  if ("Off" == io.Config.SCESwitchBehaviour())
-    io.Config.do_PBSwOff_Evts(cycle_row);
+  if ("Off" == scereg.Config.SCESwitchBehaviour())
+    scereg.Config.do_PBSwOff_Evts(cycle_row);
 
   // sctable operations
   // PBState
   cycle_row["PBState"] = devio::getPBState();
-  io.Config.do_PBSwOff_States(cycle_row);
+  scereg.Config.do_PBSwOff_States(cycle_row);
   // PBDest
   cycle_row["PBDest"] = devio::getPBDest();
   // PBMod
   cycle_row["PBMod"] = devio::getPBMod();
-  io.Config.do_PBSwOff_Mods(cycle_row);
+  scereg.Config.do_PBSwOff_Mods(cycle_row);
   if (cycle_row["PBMod"] == "NoBeam")
     cycle_row["PBState"] = "Off";
   // PBPresent
-  cycle_row["PBPresent"] = io.Config.get_PBPresent(cycle_row);
+  cycle_row["PBPresent"] = scereg.Config.get_PBPresent(cycle_row);
 
   // Update the data buffer container
-  io_dbuf_safe_write_all(io, cycle_row);
+  io_dbuf_safe_write_all(scereg, cycle_row);
 
   //Print the log
-  DLOG(dlog::DEBUG, << " io.dbuf.getDbuf " << io.DBufHandler.getDbuf())
+  DLOG(dlog::DEBUG, << " scereg.dbuf.getDbuf " << scereg.DBufHandler.getDbuf())
 
   return 0;
 }
@@ -120,18 +120,18 @@ int sequence(const sce::SequenceHandler& seq, const std::map<std::string, std::s
   // Update the event sequence container
   seq.write(cycle_row);
   //Print the log
-  DLOG(dlog::DEBUG, << " io.SEQ.getSeq " << seq.getSeqMap())
+  DLOG(dlog::DEBUG, << " scereg.SEQ.getSeq " << seq.getSeqMap())
 
   return 0;
 }
 
-int stats(const mem::ScERegistry& io)
+int stats(const sce::ScERegistry& scereg)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
   // State the cycle
-  io.cPeriod = cmn::tst::period_us(tst);
-  io.cId++;
-  DLOG(dlog::DEBUG, << " io.CSVHandler.getCycleId() " << io.CSVHandler.getCycleId() << " io.CSVHandler.getRowId() " << io.CSVHandler.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
+  scereg.putPeriod(cmn::tst::period_us(tst));
+  scereg.incId();
+  DLOG(dlog::DEBUG, << " scereg.CSVHandler.getCycleId() " << scereg.CSVHandler.getCycleId() << " scereg.CSVHandler.getRowId() " << scereg.CSVHandler.getRowId() << " scereg.getId() " << scereg.getId() << " scereg.getPeriod() " << scereg.getPeriod())
 
   return 0;
 }

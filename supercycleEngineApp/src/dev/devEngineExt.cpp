@@ -8,7 +8,7 @@
 #include <string.h>
 
 #include "dlog.hpp"
-#include "memreg.hpp"
+#include "reg.hpp"
 
 #include <stringinRecord.h>
 

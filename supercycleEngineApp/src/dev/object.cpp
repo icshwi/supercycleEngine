@@ -5,7 +5,7 @@
  */
 
 #include "object.hpp"
-#include "memreg.hpp"
+#include "reg.hpp"
 
 namespace SCE
 {

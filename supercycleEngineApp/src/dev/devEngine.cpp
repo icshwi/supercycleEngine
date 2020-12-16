@@ -14,7 +14,7 @@
 #include "cycle.hpp"
 #include "devStringoutCtrl.hpp"
 #include "dlog.hpp"
-#include "memreg.hpp"
+#include "reg.hpp"
 
 #include "cmdMapStrOut.hpp"
 #include "dperf.hpp"
@@ -40,11 +40,8 @@ static long initEngine()
   static dperf::LevelTypes* const pDPerfLvl = (dperf::LevelTypes*)&DPerfLvl;
   dperf::Config::instance().init(pDPerfLvl);
 
-  SCEMEMREG.cId = (epicsUInt64)round(cmn::tst::sec_now() / ScPeriodUs * 1000000);
-  //io_block.cId = (epicsUInt64)round((cmn::tst::sec_now() - EPICS2020s) / ScPeriodUs * 1000000);
-  //io_block.cId = (epicsUInt64)1099511627776;
-  //io_block.cId = 0;
   SCEMEMREG.init();
+  SCEMEMREG.initId((epicsUInt64)round(cmn::tst::sec_now() / ScPeriodUs * 1000000));
 
   DLOG(dlog::INFO, << " cmn::compiler::info " << cmn::compiler::info())
   DLOG(dlog::INFO, << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")())
@@ -68,8 +65,8 @@ static long ioEngine(aSubRecord* prec)
   // Update the meta
   epicsUInt64* pvalaU64 = (epicsUInt64*)prec->vala;
   epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
-  pvalaU64[0] = (epicsUInt64)SCEMEMREG.cId; // 0,1
-  pvalaU32[2] = (epicsUInt32)SCEMEMREG.cPeriod;
+  pvalaU64[0] = (epicsUInt64)SCEMEMREG.getId(); // 0,1
+  pvalaU32[2] = (epicsUInt32)SCEMEMREG.getPeriod();
   pvalaU32[3] = (epicsUInt32)SCEMEMREG.CSVHandler.getRowId();
   pvalaU32[4] = (epicsUInt32)SCEMEMREG.CSVHandler.getCycleId();
 

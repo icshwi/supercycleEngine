@@ -8,11 +8,11 @@
 
 #include "cmnbase.hpp"
 #include "dlog.hpp"
-#include "memreg.hpp"
+#include "reg.hpp"
 
 #include <iostream>
 
-namespace mem
+namespace sce
 {
 
 int ScERegistry::init()
@@ -36,4 +36,4 @@ ScERegistry& RegisteredIOBlock()
   return io_block;
 }
 
-} // namespace mem
+} // namespace sce
