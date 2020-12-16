@@ -50,13 +50,13 @@ static void io_dbuf_safe_write_all(sce::ScERegistry& scereg, const std::map<std:
   scereg.DBufHandler.write(env::IdCycle, (epicsUInt32)scereg.getId());             //low 4bytes
   scereg.DBufHandler.write(env::IdCycle + 4, (epicsUInt32)(scereg.getId() >> 32)); //high 4bytes
   // PBState
-  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBState, scereg.DBuf._PBStateIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBState, scereg.DBuf.PBStateIds.getMap());
   // PBDest
-  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBDest, scereg.DBuf._PBDestIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBDest, scereg.DBuf.PBDestIds.getMap());
   // PBMod
-  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBMod, scereg.DBuf._PBModIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBMod, scereg.DBuf.PBModIds.getMap());
   // PBPresent
-  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBPresent, scereg.DBuf._PBPresentIds.getMap());
+  io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBPresent, scereg.DBuf.PBPresentIds.getMap());
   // PBLen
   io_dbuf_safe_write(scereg.DBufHandler, cycle_row, env::PBLen);
   // PBEn

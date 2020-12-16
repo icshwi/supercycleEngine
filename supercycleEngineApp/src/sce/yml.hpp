@@ -28,14 +28,14 @@ protected:
   std::string _filename;
   YAML::Node _node;
   std::vector<std::string> _memberNames;
+  void Yml2Map(std::map<std::string, std::string>& argm, std::string key);
+  void Yml2Map(std::map<std::string, epicsUInt32>& argm, std::string key);
 
 public:
   explicit YmlNode(std::string fname);
   YmlNode(){};
   virtual int init(std::string fname);
   virtual int init(std::string fname, std::string nodeName);
-  void Yml2Map(std::map<std::string, std::string>& argm, std::string key);
-  void Yml2Map(std::map<std::string, epicsUInt32>& argm, std::string key);
 };
 
 class YmlKeyValMap : public YmlNode
@@ -45,7 +45,7 @@ public:
   YmlKeyValMap(){};
   virtual int init(std::string fname, std::string valName) override;
   virtual int init(std::string fname, std::string nodeName, std::string valName);
-  epicsUInt32 getVal(std::string key) { return mapsi[key]; };
+  epicsUInt32 getVal(std::string key) const { return mapsi.at(key); };
   std::map<std::string, epicsUInt32> getMap() const { return mapsi; };
 
 private:
@@ -113,12 +113,12 @@ class YmlDatabuffer
 public:
   YmlDatabuffer(){};
   int init(std::string fname);
-  uint getProtVer() { return _ProtVer; };
-  uint getProtNum() { return _ProtNum; };
-  YmlPBStateIds _PBStateIds;
-  YmlPBModIds _PBModIds;
-  YmlPBDestIds _PBDestIds;
-  YmlPBPresentIds _PBPresentIds;
+  uint getProtVer() const { return _ProtVer; };
+  uint getProtNum() const { return _ProtNum; };
+  YmlPBStateIds PBStateIds;
+  YmlPBModIds PBModIds;
+  YmlPBDestIds PBDestIds;
+  YmlPBPresentIds PBPresentIds;
 
 private:
   uint _ProtVer = 0;
@@ -152,4 +152,4 @@ private:
   std::vector<std::string> _PBSwOff_Mods;
 };
 
-} // namespace io
+} // namespace sce

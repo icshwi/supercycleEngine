@@ -173,10 +173,10 @@ int YmlDatabuffer::init(std::string fname)
   _ProtVer = node_tmp["ProtVer"].as<uint>();
   _ProtNum = node_tmp["ProtNum"].as<uint>();
 
-  _PBStateIds.init(fname);
-  _PBModIds.init(fname);
-  _PBDestIds.init(fname);
-  _PBPresentIds.init(fname);
+  PBStateIds.init(fname);
+  PBModIds.init(fname);
+  PBDestIds.init(fname);
+  PBPresentIds.init(fname);
   return 0;
 }
 

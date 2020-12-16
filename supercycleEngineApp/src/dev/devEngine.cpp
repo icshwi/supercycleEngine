@@ -74,7 +74,7 @@ static long ioEngine(aSubRecord* prec)
   if (!cycle_row_now.empty())
   {
     cycle::databuffer(SCEMEMREG, cycle_row_now);
-    prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, SCEMEMREG.DBufHandler.vallist());
+    prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, SCEMEMREG.DBufHandler.getVals());
   }
 
   if (!cycle_row_prev.empty())

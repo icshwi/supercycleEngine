@@ -2,7 +2,7 @@ record(stringout, "$(P)$(R=)$(S=:)ScTable-SP") {
   field(DTYP, "ControlStrOut")
   field(DESC, "Supercyle Table Name Setpoint")
   field(PINI, "YES")
-  field(VAL,  "example-noCalib-1Hz-10000c.csv")
+  field(VAL,  "example-noCalib-2Hz-10000c.csv")
   info(autosaveFields_pass0, "VAL")
 }
 
