@@ -5,7 +5,7 @@
  */
 
 #include "object.hpp"
-#include "ioblock.hpp"
+#include "memreg.hpp"
 
 namespace SCE
 {
@@ -17,7 +17,7 @@ static std::string getSwVersion()
 
 static std::string getScTable()
 {
-  return io::RegisteredIOBlock().CSVReader.getFileName();
+  return SCEMEMREG.CSVHandler.getFileName();
 }
 
 } // namespace SCE

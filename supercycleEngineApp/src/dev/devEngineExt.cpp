@@ -8,7 +8,7 @@
 #include <string.h>
 
 #include "dlog.hpp"
-#include "ioblock.hpp"
+#include "memreg.hpp"
 
 #include <stringinRecord.h>
 
@@ -17,13 +17,13 @@
 
 static int sctableSwitch()
 {
-  if (devio::getScTablePath().compare(REGIO.CSVReader.getFilePath()) != 0)
+  if (devio::getScTablePath().compare(SCEMEMREG.CSVHandler.getFilePath()) != 0)
   {
-    DLOG(dlog::DEBUG, << " OLD REGIO.CSVReader.getFilePath() " << REGIO.CSVReader.getFilePath() << " NEW devio::getScTablePath() " << devio::getScTablePath())
+    DLOG(dlog::DEBUG, << " OLD SCEMEMREG.CSVHandler.getFilePath() " << SCEMEMREG.CSVHandler.getFilePath() << " NEW devio::getScTablePath() " << devio::getScTablePath())
 
-    if (REGIO.CSVReader.init(devio::getScTablePath()) > 0) return 1;
+    if (SCEMEMREG.CSVHandler.init(devio::getScTablePath()) > 0) return 1;
     // Trigger sctable switch behaviour
-    REGIO.SCEConfig_yml.SCESwitchBehaviour(true);
+    SCEMEMREG.Config.SCESwitchBehaviour(true);
   }
   return 0;
 }

@@ -8,32 +8,32 @@
 
 #include "cmnbase.hpp"
 #include "dlog.hpp"
-#include "ioblock.hpp"
+#include "memreg.hpp"
 
 #include <iostream>
 
-namespace io
+namespace mem
 {
 
-int IOBlock::init()
+int ScERegistry::init()
 {
 
   DLOG(dlog::INFO, << " getDBufCfgPath " << devio::getDBufCfgPath() << " MEvtsCfgPath " << devio::getMEvtsCfgPath() << " ScECfgPath " << devio::getScECfgPath() << " getScTablePath() " << devio::getScTablePath())
 
-  DBuf_yml.init(devio::getDBufCfgPath());
-  SCEConfig_yml.init(devio::getScECfgPath());
-  mEvts_yml.init(devio::getMEvtsCfgPath());
+  DBuf.init(devio::getDBufCfgPath());
+  Config.init(devio::getScECfgPath());
+  MEvts.init(devio::getMEvtsCfgPath());
   //Managed by the ScTable switch
-  //CSVReader.init(getSCTableLink());
-  Seq.init(mEvts_yml.getMap());
+  CSVHandler.init(devio::getScTablePath());
+  SeqHandler.init(MEvts.getMap());
 
   return 0;
 }
 
-IOBlock& RegisteredIOBlock()
+ScERegistry& RegisteredIOBlock()
 {
-  static IOBlock io_block;
+  static ScERegistry io_block;
   return io_block;
 }
 
-} // namespace io
+} // namespace mem

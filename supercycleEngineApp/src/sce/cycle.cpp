@@ -39,30 +39,30 @@ static void io_dbuf_safe_write(sce::DBufPacket& dbuf, const std::map<std::string
   }
 }
 
-static void io_dbuf_safe_write_all(io::IOBlock& io, const std::map<std::string, std::string>& cycle_row)
+static void io_dbuf_safe_write_all(mem::ScERegistry& io, const std::map<std::string, std::string>& cycle_row)
 {
-  io.dbuf.clear();
+  io.DBufHandler.clear();
   // ProtNum
-  io.dbuf.write(env::ProtNum, io.DBuf_yml.getProtNum());
+  io.DBufHandler.write(env::ProtNum, io.DBuf.getProtNum());
   // ProtVer
-  io.dbuf.write(env::ProtVer, io.DBuf_yml.getProtVer());
+  io.DBufHandler.write(env::ProtVer, io.DBuf.getProtVer());
   // IdCycle
-  io.dbuf.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
-  io.dbuf.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
+  io.DBufHandler.write(env::IdCycle, (epicsUInt32)io.cId);             //low 4bytes
+  io.DBufHandler.write(env::IdCycle + 4, (epicsUInt32)(io.cId >> 32)); //high 4bytes
   // PBState
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBState, io.DBuf_yml._PBStateIds.getMap());
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBState, io.DBuf._PBStateIds.getMap());
   // PBDest
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBDest, io.DBuf_yml._PBDestIds.getMap());
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBDest, io.DBuf._PBDestIds.getMap());
   // PBMod
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBMod, io.DBuf_yml._PBModIds.getMap());
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBMod, io.DBuf._PBModIds.getMap());
   // PBPresent
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBPresent, io.DBuf_yml._PBPresentIds.getMap());
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBPresent, io.DBuf._PBPresentIds.getMap());
   // PBLen
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBLen);
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBLen);
   // PBEn
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBEn);
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBEn);
   // PBCurr
-  io_dbuf_safe_write(io.dbuf, cycle_row, env::PBCurr);
+  io_dbuf_safe_write(io.DBufHandler, cycle_row, env::PBCurr);
 }
 
 /*
@@ -86,31 +86,31 @@ TODO: write cycle variables for the future
 namespace cycle
 {
 
-int databuffer(io::IOBlock& io, std::map<std::string, std::string>& cycle_row)
+int databuffer(mem::ScERegistry& io, std::map<std::string, std::string>& cycle_row)
 {
   // Remove beam generation depending on the selected behaviour
-  if ("Off" == io.SCEConfig_yml.SCESwitchBehaviour())
-    io.SCEConfig_yml.do_PBSwOff_Evts(cycle_row);
+  if ("Off" == io.Config.SCESwitchBehaviour())
+    io.Config.do_PBSwOff_Evts(cycle_row);
 
   // sctable operations
   // PBState
   cycle_row["PBState"] = devio::getPBState();
-  io.SCEConfig_yml.do_PBSwOff_States(cycle_row);
+  io.Config.do_PBSwOff_States(cycle_row);
   // PBDest
   cycle_row["PBDest"] = devio::getPBDest();
   // PBMod
   cycle_row["PBMod"] = devio::getPBMod();
-  io.SCEConfig_yml.do_PBSwOff_Mods(cycle_row);
+  io.Config.do_PBSwOff_Mods(cycle_row);
   if (cycle_row["PBMod"] == "NoBeam")
     cycle_row["PBState"] = "Off";
   // PBPresent
-  cycle_row["PBPresent"] = io.SCEConfig_yml.get_PBPresent(cycle_row);
+  cycle_row["PBPresent"] = io.Config.get_PBPresent(cycle_row);
 
   // Update the data buffer container
   io_dbuf_safe_write_all(io, cycle_row);
 
   //Print the log
-  DLOG(dlog::DEBUG, << " io.dbuf.getDbuf " << io.dbuf.getDbuf())
+  DLOG(dlog::DEBUG, << " io.dbuf.getDbuf " << io.DBufHandler.getDbuf())
 
   return 0;
 }
@@ -125,13 +125,13 @@ int sequence(const sce::SequenceHandler& seq, const std::map<std::string, std::s
   return 0;
 }
 
-int stats(const io::IOBlock& io)
+int stats(const mem::ScERegistry& io)
 {
   static epicsUInt32 tst = 0; // The timestamp holder
   // State the cycle
   io.cPeriod = cmn::tst::period_us(tst);
   io.cId++;
-  DLOG(dlog::DEBUG, << " ScTableCycleId " << io.CSVReader.getCycleId() << " ScTableRowId " << io.CSVReader.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
+  DLOG(dlog::DEBUG, << " io.CSVHandler.getCycleId() " << io.CSVHandler.getCycleId() << " io.CSVHandler.getRowId() " << io.CSVHandler.getRowId() << " io.cId " << io.cId << " io.cPeriod " << io.cPeriod)
 
   return 0;
 }

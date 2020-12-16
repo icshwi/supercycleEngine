@@ -20,32 +20,32 @@
 
 #include "epicsTypes.h"
 
-namespace io
+namespace mem
 {
 
-class IOBlock
+class ScERegistry
 {
 public:
-  IOBlock(){};
+  ScERegistry(){};
   //int init(int argc, char **argv);
   int init();
 
   mutable epicsUInt32 cPeriod = 0; //cycle period [us]
   mutable epicsUInt64 cId = 0;
 
-  sce::YmlDatabuffer DBuf_yml;
-  sce::YmlSCEConfig SCEConfig_yml;
-  sce::YmlMEvts mEvts_yml;
-  sce::csv::FileReader CSVReader;
+  sce::YmlDatabuffer DBuf;
+  sce::YmlSCEConfig Config;
+  sce::YmlMEvts MEvts;
+  sce::csv::FileReader CSVHandler;
   // Set the send buffer
-  sce::DBufPacket dbuf;
-  sce::SequenceHandler Seq;
+  sce::DBufPacket DBufHandler;
+  sce::SequenceHandler SeqHandler;
 };
 
-IOBlock& RegisteredIOBlock();
+ScERegistry& RegisteredIOBlock();
 
-#define REGIO io::RegisteredIOBlock()
+#define SCEMEMREG mem::RegisteredIOBlock()
 
-} // namespace io
+} // namespace mem
 
 #endif // MENU_HPP_
