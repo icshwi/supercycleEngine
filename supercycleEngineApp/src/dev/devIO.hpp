@@ -20,6 +20,7 @@ namespace devio
 FHead_(DBufCfgPath);
 FHead_(MEvtsCfgPath);
 FHead_(ScECfgPath);
+FHead_(ScTableDir);
 
 FHead_(ScTable);
 FHead_(PBState);

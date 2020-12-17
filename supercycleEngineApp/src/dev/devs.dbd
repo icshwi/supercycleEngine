@@ -17,5 +17,6 @@ device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
 device(stringin, CONSTANT, devStringinScTable, "Function ScTable")
 
 ## from devObjPropStringIO.cpp
-device(stringin, INST_IO, devStringinObjProp, "StringinObjProp")
+device(stringin, INST_IO, devStringinObjProp, "InstIOStringinObjProp")
 #device(stringout, INST_IO, devStringoutObjProp, "StringoutObjProp")
+device(lsi, INST_IO, devLsiObjProp, "InstIOLsiObjProp")

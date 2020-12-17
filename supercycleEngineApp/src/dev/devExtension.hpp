@@ -33,4 +33,4 @@ namespace dev
 
 std::string db_inp_val(std::string args, std::string key);
 
-}
+} // namespace dev
