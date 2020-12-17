@@ -1,5 +1,5 @@
 record(fanout, "$(P)$(R=)$(S=:)Trig0-FOut_") {
-  field(DESC, "Seq Selector Fanout")
+  field(DESC, "Half Cycle Trigger0 Fanout")
   field(SCAN, "Passive")
   field(SELM, "All")
 
@@ -8,13 +8,10 @@ record(fanout, "$(P)$(R=)$(S=:)Trig0-FOut_") {
   field(LNK2, "$(P)$(R=)$(S=:)Seq1-Tst-aSubBuf_.PROC")
   field(LNK3, "$(P)$(R=)$(S=:)Seq1-Evt-aSubBuf_.PROC")
   field(LNK4, "$(P)$(R=)$(S=:)Seq1-Ctrl-FOut_.PROC")
-  field(LNK5, "$(P)$(R=)$(S=:)Period-subA_.PROC")
-  field(LNK6, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
-  field(LNK7, "$(P)$(R=)$(S=:)COffset-Seq_")
 }
 
 record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
-  field(DESC, "Seq Selector Fanout")
+  field(DESC, "Half Cycle Trigger1 Fanout")
   field(SCAN, "Passive")
   field(SELM, "All")
 
@@ -23,9 +20,6 @@ record(fanout, "$(P)$(R=)$(S=:)Trig1-FOut_") {
   field(LNK2, "$(P)$(R=)$(S=:)Seq0-Tst-aSubBuf_.PROC")
   field(LNK3, "$(P)$(R=)$(S=:)Seq0-Evt-aSubBuf_.PROC")
   field(LNK4, "$(P)$(R=)$(S=:)Seq0-Ctrl-FOut_.PROC")
-  field(LNK5, "$(P)$(R=)$(S=:)Period-subA_.PROC")
-  field(LNK6, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
-  field(LNK7, "$(P)$(R=)$(S=:)COffset-Seq_")
 }
 
 record(calcout, "$(P)$(R=)$(S=:)Trig-Cnt_")
@@ -60,7 +54,18 @@ record(aSub, "$(P)$(R=)$(S=:)EngineCycle_") {
   #field(OUTC, "$ (PG)SoftSeq0-Timestamp-SP")
   #field(OUTD, "$ (PG)SoftSeq0-EvtCode-SP")
 
-  #field(FLNK, "$(P)$(R=)$(S=:)Trig-FOut_")
+  field(FLNK, "$(P)$(R=)$(S=:)Trig-FOut_")
+}
+
+record(fanout, "$(P)$(R=)$(S=:)Trig-FOut_") {
+  field(DESC, "Engine Cycle Trigger Fanout")
+  field(SCAN, "Passive")
+  field(SELM, "All")
+
+  field(LNK0, "$(P)$(R=)$(S=:)Trig-IO-FOut_.PROC")
+  field(LNK1, "$(P)$(R=)$(S=:)COffset-Seq_")
+  field(LNK2, "$(P)$(R=)$(S=:)DBufRB-FOut_.PROC")
+  field(LNK3, "$(P)$(R=)$(S=:)ScTableSw_")
 }
 
 record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
@@ -76,11 +81,8 @@ record(seq, "$(P)$(R=)$(S=:)COffset-Seq_") {
   #field(TPRO, "1")
 }
 
-record(subArray, "$(P)$(R=)$(S=:)Period-subA_") {
-  field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R=)$(S=:)EngineCycle_.VALA")
-  field(INDX, "2")
-  field(NELM, "1") # "2046")
-  field(MALM, "3") # "2046")
-  field(FTVL, "ULONG")
+record(stringin, "$(P)$(R=)$(S=:)ScTableSw_") {
+  field(DTYP, "Function ScTable")
+  field(DESC, "Supercycle Table Switch")
+  field(PINI, "YES")
 }

@@ -1,8 +1,8 @@
-record(stringout, "$(P)$(R=)$(S=:)SCTable-SP") {
+record(stringout, "$(P)$(R=)$(S=:)ScTable-SP") {
   field(DTYP, "ControlStrOut")
-  field(DESC, "Supercyle Table")
+  field(DESC, "Supercyle Table Name Setpoint")
   field(PINI, "YES")
-  field(VAL,  "probe-50us-MEBT-14Hz.csv")
+  field(VAL,  "example-noCalib-2Hz-10000c.csv")
   info(autosaveFields_pass0, "VAL")
 }
 
@@ -28,11 +28,4 @@ record(stringout, "$(P)$(R=)$(S=:)PBDest-SP") {
   field(PINI, "YES")
   field(VAL,  "None")
   info(autosaveFields_pass0, "VAL")
-}
-
-record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
-  field(DTYP, "ObjPropString")
-  field(INP , "@OBJ=$(OBJ=SCE), PROP=SwVer")
-  field(PINI, "YES")
-  field(DESC, "Software version")
 }

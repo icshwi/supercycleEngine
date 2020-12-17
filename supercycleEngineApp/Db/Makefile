@@ -8,11 +8,11 @@ include $(TOP)/configure/CONFIG
 # databases, templates, substitutions like this
 #DB += xxx.db
 DB += ctrl.db
+DB += dbufrb.db
 DB += engine.db
-DB += io.db
-DB += iofbk.db
 DB += gplug.db
-DB += states.db
+DB += io.db
+DB += ioinfo.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
@@ -21,4 +21,3 @@ DB += states.db
 include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
-

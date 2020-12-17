@@ -7,9 +7,9 @@
 #ifndef DBUF_HPP
 #define DBUF_HPP
 
+#include <epicsTypes.h>
 #include <map>
 #include <vector>
-#include <epicsTypes.h>
 
 namespace sce
 {
@@ -17,24 +17,26 @@ namespace sce
 class DBufPacket
 {
 public:
-    //DataBuffer();
-    DBufPacket(epicsUInt32 size = 8);
-    ~DBufPacket();
-    int write(epicsUInt32 idx, epicsUInt32 val);
-    int read(epicsUInt32 idx);
-    int clear();
-    size_t size();
-    size_t size_byte();
-    std::vector<epicsUInt32> keylist();
-    std::vector<epicsUInt32> vallist();
-    std::map<epicsUInt32, epicsUInt32> getDbuf() { return dbuf; };
+  //DataBuffer();
+  DBufPacket(epicsUInt32 size = 8);
+  ~DBufPacket();
+  int clear();
+  int write(epicsUInt32 idx, epicsUInt32 val);
+  std::vector<epicsUInt32> getKeys() const;
+  std::vector<epicsUInt32> getVals() const;
+  std::map<epicsUInt32, epicsUInt32> getDbuf() const { return dbuf; };
+
+protected:
+  int read(epicsUInt32 idx);
+  size_t size() const;
+  size_t size_byte() const;
 
 private:
-    std::map<epicsUInt32, epicsUInt32> dbuf;
+  std::map<epicsUInt32, epicsUInt32> dbuf;
 };
 
 //void demo1();
 
-} // namespace dbf
+} // namespace sce
 
 #endif // DBUF_HPP

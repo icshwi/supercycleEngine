@@ -1,15 +1,21 @@
+# vars
+variable(DLogLvl)
+variable(DPerfLvl)
+variable(ScPeriodUs)
 
-# engine
-variable(iodebug)
-variable(PscUs)
+# commands
+registrar(cmdMapStrOut)
+
+# functions
 function(initEngine)
 function(ioEngine)
+function(ioASubBuf)
 
 # devs
 device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
-registrar(cmdMapStrOut)
-function(ioASubBuf)
 
-# from devObjString.cpp
-device(stringin, INST_IO, devStrInFromStr, "ObjPropString")
-#device(stringout, INST_IO, devSOFromString, "Obj Prop string")
+device(stringin, CONSTANT, devStringinScTable, "Function ScTable")
+
+## from devObjPropStringIO.cpp
+device(stringin, INST_IO, devStringinObjProp, "StringinObjProp")
+#device(stringout, INST_IO, devStringoutObjProp, "StringoutObjProp")

@@ -4,33 +4,40 @@
  * @date 2020-03-20
  */
 
-#include "devExtension.h"
 #include "devStringoutCtrl.hpp"
+#include "devExtension.hpp"
 
-#include <stdlib.h>
+#include <alarm.h>
 #include <dbAccess.h>
 #include <devSup.h>
-#include <recGbl.h>
-#include <alarm.h>
 #include <iostream>
+#include <recGbl.h>
+#include <stdlib.h>
 
 #include <stringoutRecord.h>
 
-std::map<std::string, std::string> RegisteredStrOutMap;
+namespace devreg
+{
+std::map<std::string, std::string>& StrOutCtrlMap()
+{
+  static std::map<std::string, std::string> reg_;
+  return reg_;
+}
+} // namespace devreg
 
-static long initStrOutCtrl(stringoutRecord *prec)
+static long initStrOutCtrl(stringoutRecord* prec)
 {
   std::string key(prec->name);
   std::string val(prec->val);
-  RegisteredStrOutMap[key] = val;
+  devreg::StrOutCtrlMap()[key] = val;
   return 0;
 }
 
-static long ioStrOutCtrl(stringoutRecord *prec)
+static long ioStrOutCtrl(stringoutRecord* prec)
 {
   std::string key(prec->name);
   std::string val(prec->val);
-  RegisteredStrOutMap[key] = val;
+  devreg::StrOutCtrlMap()[key] = val;
   return 0;
 }
 

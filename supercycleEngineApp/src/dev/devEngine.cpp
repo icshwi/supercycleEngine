@@ -7,42 +7,85 @@
 #include <stdio.h>
 //#include <subRecord.h>
 #include <aSubRecord.h>
-#include <registryFunction.h>
 #include <epicsExport.h>
+#include <registryFunction.h>
 
-#include "engine.hpp"
-#include "ioblock.hpp"
 #include "cmnbase.hpp"
-#include "iocVars.hpp"
-#include "ioblock.hpp"
+#include "cycle.hpp"
 #include "devStringoutCtrl.hpp"
+#include "dlog.hpp"
+#include "reg.hpp"
+
+#include "cmdMapStrOut.hpp"
+#include "dperf.hpp"
+#include "object.hpp"
+
+//int and double only
+static int DLogLvl = 4;
+epicsExportAddress(int, DLogLvl);
+
+static int DPerfLvl = 4;
+epicsExportAddress(int, DPerfLvl);
+
+static int ScPeriodUs = 71428; //[us]
+epicsExportAddress(int, ScPeriodUs);
 
 static long initEngine()
 {
-  iocVars2IO();
+  DPERFLOG(dperf::DEBUG1)
+
+  static dlog::LevelTypes* const pDLogLvl = (dlog::LevelTypes*)&DLogLvl;
+  dlog::Config::instance().init(pDLogLvl, cmn::tst::epics_now);
+
+  static dperf::LevelTypes* const pDPerfLvl = (dperf::LevelTypes*)&DPerfLvl;
+  dperf::Config::instance().init(pDPerfLvl);
+
+  SCEMEMREG.init();
+  SCEMEMREG.initId((epicsUInt64)round(cmn::tst::sec_now() / ScPeriodUs * 1000000));
+
+  DLOG(dlog::INFO, << " cmn::compiler::info " << cmn::compiler::info())
+  DLOG(dlog::INFO, << " SCE::SwVer " << dev::ObjReg::instance().get("SCE", "SwVer")())
+  DLOG(dlog::INFO, << " DLogLvl " << DLogLvl << " DPerfLvl " << DPerfLvl << " ScPeriodUs " << ScPeriodUs)
+
   return 0;
 }
 
-static long ioEngine(aSubRecord *prec)
+static long ioEngine(aSubRecord* prec)
 {
-  static io::IOBlock &io_block = io::RegisteredIOBlock();
-  // Configure new cycle
-  io_block.dbSync(RegisteredStrOutMap);
-  // Change the table if requested
-  sctableSwitch(io_block);
-  // Engine cycle
-  engineCycle(io_block);
+  static std::map<std::string, std::string> cycle_row_prev = {};
+  //---------------------------
+  DPERFLOG(dperf::DEBUG)
+  //---------------------------
+  // Read the cycle
+  std::map<std::string, std::string> cycle_row_now = SCEMEMREG.CSVHandler.getRowMap();
+  //Print the cycle content
+  DLOG(dlog::DEBUG, << " cycle_row " << cycle_row_now)
+  // Apply the flow: e0,d1,e1,d2
+  cycle::stats(SCEMEMREG);
   // Update the meta
-  epicsUInt64 *pvalaU64 = (epicsUInt64 *)prec->vala;
-  epicsUInt32 *pvalaU32 = (epicsUInt32 *)prec->vala;
-  pvalaU64[0] = (epicsUInt64)io_block.cId; // 0,1
-  pvalaU32[2] = (epicsUInt32)io_block.cPeriod;
-  // Update the Dbuf - neva , novb (max)
-  prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, io_block.dbuf.vallist());
-  prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, io_block.Seq.getSeqTst());
-  prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, io_block.Seq.getSeqEvt());
-  prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, io_block.Seq.getSeqVec());
+  epicsUInt64* pvalaU64 = (epicsUInt64*)prec->vala;
+  epicsUInt32* pvalaU32 = (epicsUInt32*)prec->vala;
+  pvalaU64[0] = (epicsUInt64)SCEMEMREG.getId(); // 0,1
+  pvalaU32[2] = (epicsUInt32)SCEMEMREG.getPeriod();
+  pvalaU32[3] = (epicsUInt32)SCEMEMREG.CSVHandler.getRowId();
+  pvalaU32[4] = (epicsUInt32)SCEMEMREG.CSVHandler.getCycleId();
 
+  // Update the Dbuf - neva , novb (max)
+  if (!cycle_row_now.empty())
+  {
+    cycle::databuffer(SCEMEMREG, cycle_row_now);
+    prec->nevb = cmn::vec2p<epicsUInt32>(prec->valb, SCEMEMREG.DBufHandler.getVals());
+  }
+
+  if (!cycle_row_prev.empty())
+  {
+    cycle::sequence(SCEMEMREG.SeqHandler, cycle_row_prev);
+    prec->nevc = cmn::vec2p<epicsUInt32>(prec->valc, SCEMEMREG.SeqHandler.getSeqTst());
+    prec->nevd = cmn::vec2p<epicsUInt32>(prec->vald, SCEMEMREG.SeqHandler.getSeqEvt());
+    prec->neve = cmn::vec2p<epicsUInt32>(prec->vale, SCEMEMREG.SeqHandler.getSeqVec());
+  }
+
+  cycle_row_prev = cycle_row_now;
   return 0;
 }
 
