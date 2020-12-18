@@ -43,7 +43,7 @@ static long stringin_read(stringinRecord* prec)
   return 0; /* success */
 }
 
-static DevSupReg devStringinScTable = {
+static CmnDset devStringinScTable = {
     6,
     NULL,
     NULL,

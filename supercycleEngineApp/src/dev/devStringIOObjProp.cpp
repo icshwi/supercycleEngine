@@ -8,6 +8,7 @@
 //#include <stringoutRecord.h>
 #include <epicsExport.h>
 #include <lsiRecord.h>
+#include <waveformRecord.h>
 
 #include "devStringIOObjProp.hpp"
 #include "dlog.hpp"
@@ -22,49 +23,51 @@
 
 //stringinObjProp
 //===============
-static long init_record_stringinObjProp(stringinRecord* prec)
+static long init_record_StringinObjProp(stringinRecord* prec)
 {
   return dev::initRecStrInObjProp<stringinRecord>(prec);
 }
 
-static long read_string_stringinObjProp(stringinRecord* prec)
+static long read_string_StringinObjProp(stringinRecord* prec)
 {
   return dev::readRecStrInObjProp<stringinRecord>(prec);
 }
 
-static DevSupReg devStringinObjProp = {
-    6,
-    NULL,
-    NULL,
-    (DEVSUPFUN)init_record_stringinObjProp,
-    NULL,
-    (DEVSUPFUN)read_string_stringinObjProp,
-    NULL};
-
 //=================================================================================
-static long init_record_lsiObjProp(lsiRecord* prec)
+static long init_record_LsiObjProp(lsiRecord* prec)
 {
   prec->len = prec->sizv;
   return dev::initRecStrInObjProp<lsiRecord>(prec);
 }
 
-static long read_string_lsiObjProp(lsiRecord* prec)
+static long read_string_LsiObjProp(lsiRecord* prec)
 {
   return dev::readRecStrInObjProp<lsiRecord>(prec);
 }
 
-static lsidset devLsiObjProp = {
-    5,
-    NULL,
-    NULL,
-    (DEVSUPFUN)init_record_lsiObjProp,
-    NULL,
-    (DEVSUPFUN)read_string_lsiObjProp};
-
-#include <epicsExport.h>
-extern "C"
+//=================================================================================
+long readWaveformStrInObjProp(waveformRecord* prec)
 {
-  epicsExportAddress(dset, devStringinObjProp);
-  //epicsExportAddress(dset, devStringoutObjProp);
-  epicsExportAddress(dset, devLsiObjProp);
+  if (dev::recBodyObjProp<waveformRecord>(prec)) return 1;
+  dev::StrInFunc* priv = (dev::StrInFunc*)prec->dpvt;
+
+  prec->nelm = priv->_func().size() + 1;
+  prec->nord = prec->nelm;
+  (void)strncpy((char*)prec->bptr, priv->_func().c_str(), prec->nelm);
+
+  return 0; /* success */
 }
+
+static long init_record_WaveformStrInObjProp(waveformRecord* prec)
+{
+  return dev::initRecStrInObjProp<waveformRecord>(prec);
+}
+
+static long read_string_WaveformStrInObjProp(waveformRecord* prec)
+{
+  return readWaveformStrInObjProp(prec);
+}
+
+CMNDSET(WaveformStrInObjProp)
+CMNDSET(LsiObjProp)
+CMNDSET(StringinObjProp)

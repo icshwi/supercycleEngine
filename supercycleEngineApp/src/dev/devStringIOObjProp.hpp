@@ -43,21 +43,28 @@ long initRecStrInObjProp(T* prec)
 }
 
 template <typename T>
-long readRecStrInObjProp(T* prec)
+long recBodyObjProp(T* prec)
 {
   StrInFunc* priv = (StrInFunc*)prec->dpvt;
   if (!priv)
   {
     (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-    return 0;
+    return 1;
   }
-
   //if (std::is_same<T, lsiRecord>::value)
   //  prec->len = priv->_func().size();
-
-  (void)strncpy(prec->val, priv->_func().c_str(), priv->_func().size());
-
+  //(void)strncpy((char*)prec->val, priv->_func().c_str(), priv->_func().size());
   prec->udf = 0;
+  return 0; /* success */
+}
+
+template <typename T>
+long readRecStrInObjProp(T* prec)
+{
+  if (recBodyObjProp<T>(prec)) return 1;
+  StrInFunc* priv = (StrInFunc*)prec->dpvt;
+
+  (void)strncpy((char*)prec->val, priv->_func().c_str(), priv->_func().size());
   return 0; /* success */
 }
 

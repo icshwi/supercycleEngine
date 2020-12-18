@@ -1,9 +1,11 @@
+
 record(fanout, "$(P)$(R=)$(S=:)Updater1s-Fout_")
 {
   field(DESC, "Update the info")
   field(SCAN, "1 second")
   field(SELM, "All")
-  #field(LNK0, "$(P)$(R=)$(S=:)ScTable-RB")
+  field(LNK0, "$(P)$(R=)$(S=:)ScTable-RB")
+  field(LNK1, "$(P)$(R=)$(S=:)ScTables-I")
 }
 
 record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
@@ -14,25 +16,47 @@ record(stringin, "$(P)$(R=)$(S=:)SwVer-I") {
 }
 
 record(stringin, "$(P)$(R=)$(S=:)SwBuild-I") {
- field(DESC, "Software build date/timestamp")
+ field(DESC, "Software build timestamp")
  field(DTYP, "InstIOStringinObjProp")
  field(INP , "@OBJ=$(OBJ=SCE), PROP=SwBuild")
  field(PINI, "YES")
 }
 
-record(stringin, "$(P)$(R=)$(S=:)ScTable-RB") {
-  field(DESC, "Supercyle Table Name Readback")
-  field(DTYP, "InstIOStringinObjProp")
+# record(stringin, "$(P)$(R=)$(S=:)ScTable-RB") {
+#   field(DESC, "Supercyle Table Name Readback")
+#   field(DTYP, "InstIOStringinObjProp")
+#   field(INP , "@OBJ=$(OBJ=SCE), PROP=ScTable")
+#   field(PINI, "YES")
+# }
+
+record(waveform, "$(P)$(R=)$(S=:)ScTable-RB") {
+  field(DESC, "Selected ScTable")
+  field(DTYP, "InstIOWaveformStrInObjProp")
   field(INP , "@OBJ=$(OBJ=SCE), PROP=ScTable")
+  field(NELM, "128")
+  field(FTVL, "UCHAR")
   field(PINI, "YES")
 }
 
-record(lsi, "$(P)$(R=)$(S=:)ScTables-I") {
-  field(DESC, "List available supercycle tables")
-  field(DTYP, "InstIOLsiObjProp")
+#It waits for better implementation of lsi
+# record(lsi, "$(P)$(R=)$(S=:)ScTables-I") {
+#   field(DESC, "List available supercycle tables")
+#   field(DTYP, "InstIOLsiObjProp")
+#   field(INP , "@OBJ=SYS, PROP=ScTables")
+#   #field(INP , "@OBJ=$(OBJ=SCE), PROP=ScTable")
+#   field(SIZV, "10000")
+#   field(LEN, "10000")
+#   field(PINI, "YES")
+# }
+
+#STRING is an array of [40] char strings that should be managed but not UCHAR
+record(waveform, "$(P)$(R=)$(S=:)ScTables-I") {
+  field(DTYP, "InstIOWaveformStrInObjProp")
+  field(DESC, "Available ScTables")
+  #field( INP,  "@OBJ=$(EVG):SEQ0, CLASS=SeqManager, PARENT=$(EVG):SEQMGR, PROP=CODES")
+  #field( SCAN, "I/O Intr")
   field(INP , "@OBJ=SYS, PROP=ScTables")
-  #field(INP , "@OBJ=$(OBJ=SCE), PROP=ScTable")
-  field(SIZV, "10000")
-  field(LEN, "10000")
+  field(NELM, "2047")
+  field(FTVL, "UCHAR")
   field(PINI, "YES")
 }
