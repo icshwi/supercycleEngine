@@ -32,8 +32,8 @@ int ScERegistry::init()
 
 ScERegistry& RegisteredIOBlock()
 {
-  static ScERegistry io_block;
-  return io_block;
+  static ScERegistry reg_;
+  return reg_;
 }
 
 } // namespace sce

@@ -27,7 +27,7 @@ static std::string getScTable()
 static std::string getSwBuild()
 {
   std::string tmp_ = __DATE__;
-  tmp_ += " ";
+  tmp_ += ' ';
   tmp_ += __TIME__;
   return tmp_;
 }
