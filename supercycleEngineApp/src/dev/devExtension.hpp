@@ -11,7 +11,7 @@
 
 extern "C"
 {
-  struct DevSupReg
+  struct CmnDset
   {
     long num; // space for 6 functions
     DEVSUPFUN report;
@@ -21,8 +21,21 @@ extern "C"
     DEVSUPFUN io;
     DEVSUPFUN special_linconv;
   };
-  typedef struct DevSupReg DevSupReg;
+  typedef struct CmnDset CmnDset;
 }
+
+#define CMNDSET(obj)                    \
+  static CmnDset dev##obj = {           \
+      6, NULL, NULL,                    \
+      (DEVSUPFUN)init_record_##obj,     \
+      NULL,                             \
+      (DEVSUPFUN)read_string_##obj,     \
+      NULL};                            \
+  extern "C"                            \
+  {                                     \
+    epicsExportAddress(dset, dev##obj); \
+  }
+
 // struct DevPriv
 // {
 //   unsigned int seed;
@@ -33,4 +46,4 @@ namespace dev
 
 std::string db_inp_val(std::string args, std::string key);
 
-}
+} // namespace dev

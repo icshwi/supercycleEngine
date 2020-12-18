@@ -43,7 +43,7 @@ static long ioStrOutCtrl(stringoutRecord* prec)
 
 //Naming: devXxYyyy
 
-static DevSupReg devStrOutCtrl = {
+static CmnDset devStrOutCtrl = {
     6,
     NULL,
     NULL,

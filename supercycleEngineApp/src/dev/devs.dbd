@@ -1,21 +1,24 @@
-# vars
+## vars
 variable(DLogLvl)
 variable(DPerfLvl)
 variable(ScPeriodUs)
 
-# commands
+## commands
 registrar(cmdMapStrOut)
 
-# functions
+## functions
 function(initEngine)
 function(ioEngine)
 function(ioASubBuf)
 
-# devs
+## devs
 device(stringout, CONSTANT, devStrOutCtrl, "ControlStrOut")
 
+## specific
 device(stringin, CONSTANT, devStringinScTable, "Function ScTable")
 
-## from devObjPropStringIO.cpp
-device(stringin, INST_IO, devStringinObjProp, "StringinObjProp")
+## strings
+device(stringin, INST_IO, devStringinObjProp, "InstIOStringinObjProp")
 #device(stringout, INST_IO, devStringoutObjProp, "StringoutObjProp")
+device(lsi, INST_IO, devLsiObjProp, "InstIOLsiObjProp")
+device(waveform, INST_IO, devWaveformStrInObjProp, "InstIOWaveformStrInObjProp")

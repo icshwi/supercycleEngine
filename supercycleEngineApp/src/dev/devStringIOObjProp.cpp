@@ -4,84 +4,70 @@
  * @date 2020-12-01
  */
 
-#include <functional>
-#include <string>
-#include <vector>
-
 #include <stringinRecord.h>
 //#include <stringoutRecord.h>
-#include <alarm.h>
-#include <dbAccess.h>
 #include <epicsExport.h>
-#include <recGbl.h>
+#include <lsiRecord.h>
+#include <waveformRecord.h>
 
-#include "devExtension.hpp"
+#include "devStringIOObjProp.hpp"
 #include "dlog.hpp"
-#include "object.hpp"
-#include "string.h"
 
-struct StrInFunc
+// static long init_stringin(int pass)
+// {
+//   if (pass)
+//     return 0;
+
+//   return 0;
+// }
+
+//stringinObjProp
+//===============
+static long init_record_StringinObjProp(stringinRecord* prec)
 {
-  std::function<std::string()> _func;
-  StrInFunc(std::function<std::string()> func) : _func(func){};
-};
-
-static long stringin_init(int pass)
-{
-  //DLOG(dlog::INFO, << "stringin_init------------------------------")
-  if (pass)
-    return 0;
-
-  return 0;
+  return dev::initRecStrInObjProp<stringinRecord>(prec);
 }
 
-static long stringin_init_record(stringinRecord* prec)
+static long read_string_StringinObjProp(stringinRecord* prec)
 {
-  //DLOG(dlog::INFO, << "stringin_init_record------------------------------")
-  char* parm = prec->inp.value.instio.string;
-  std::string inp_str(parm);
-  StrInFunc* priv = new StrInFunc(dev::ObjReg::instance().get(dev::db_inp_val(inp_str, "OBJ"), dev::db_inp_val(inp_str, "PROP")));
-  if (!priv)
-  {
-    recGblRecordError(S_db_noMemory, (void*)priv, "failed to allocate private struct");
-    return S_db_noMemory;
-  }
-
-  prec->dpvt = (void*)priv;
-  //std::cout << "----------------= " << priv->_func() << std::endl;
-  return 0; /* success */
+  return dev::readRecStrInObjProp<stringinRecord>(prec);
 }
-
-static long stringin_read(stringinRecord* prec)
-{
-  //DLOG(dlog::INFO, << "stringin_read------------------------------")
-  StrInFunc* priv = (StrInFunc*)prec->dpvt;
-  if (!priv)
-  {
-    (void)recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-    return 0;
-  }
-
-  (void)strcpy(prec->val, priv->_func().c_str());
-
-  prec->udf = 0;
-  return 0; /* success */
-}
-
-static DevSupReg devStringinObjProp = {
-    6,
-    NULL,
-    (DEVSUPFUN)stringin_init,
-    (DEVSUPFUN)stringin_init_record,
-    NULL,
-    (DEVSUPFUN)stringin_read,
-    NULL};
 
 //=================================================================================
-
-#include <epicsExport.h>
-extern "C"
+static long init_record_LsiObjProp(lsiRecord* prec)
 {
-  epicsExportAddress(dset, devStringinObjProp);
-  //epicsExportAddress(dset, devStringoutObjProp);
+  prec->len = prec->sizv;
+  return dev::initRecStrInObjProp<lsiRecord>(prec);
 }
+
+static long read_string_LsiObjProp(lsiRecord* prec)
+{
+  return dev::readRecStrInObjProp<lsiRecord>(prec);
+}
+
+//=================================================================================
+long readWaveformStrInObjProp(waveformRecord* prec)
+{
+  if (dev::recBodyObjProp<waveformRecord>(prec)) return 1;
+  dev::StrInFunc* priv = (dev::StrInFunc*)prec->dpvt;
+
+  prec->nelm = priv->_func().size() + 1;
+  prec->nord = prec->nelm;
+  (void)strncpy((char*)prec->bptr, priv->_func().c_str(), prec->nelm);
+
+  return 0; /* success */
+}
+
+static long init_record_WaveformStrInObjProp(waveformRecord* prec)
+{
+  return dev::initRecStrInObjProp<waveformRecord>(prec);
+}
+
+static long read_string_WaveformStrInObjProp(waveformRecord* prec)
+{
+  return readWaveformStrInObjProp(prec);
+}
+
+CMNDSET(WaveformStrInObjProp)
+CMNDSET(LsiObjProp)
+CMNDSET(StringinObjProp)
